@@ -1,0 +1,113 @@
+{yun:}include file="$wapstyle/header_train.htm"{/yun}
+
+<div class="train_banner"><!--<img src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/7.png">-->
+<div class="swiper_banner" >
+	<div class="swiper-container" id="imgswiper">
+		<div class="swiper-wrapper">
+{yun:}adlist classid=81 item="lunbo" key=key{/yun}
+<div class="swiper-slide">
+<a href="{yun:}$lunbo.src{/yun}" ><img src="{yun:}$lunbo.pic{/yun}" width='100%'/></a>
+</div>
+{yun:}/adlist{/yun}
+</div>
+	</div>
+    	</div>
+</div>
+<div class="train_index_nav">
+<div class="train_index_nav_c">
+<ul class="train_index_nav_list">
+<li><a href="{yun:}url m=wap c=train a=subject{/yun}"><i class="train_indexnav_icon train_nav_icon_kc"></i>课程</a></li>
+<li><a href="{yun:}url m=wap c=train a=teacher{/yun}"><i class="train_indexnav_icon train_nav_icon_js"></i>讲师</a></li>
+<li><a href="{yun:}url m=wap c=train a=agency{/yun}"><i class="train_indexnav_icon train_nav_icon_jg"></i>机构</a></li>
+<li>
+{yun:}if $usertype=='4'{/yun}
+<a href="member/index.php?c=addsubject"><i class="train_indexnav_icon train_nav_icon_fb"></i>发布</a>
+{yun:}elseif $usertype&&$usertype!='4'{/yun}
+<a href="javascript:void(0)" onclick="istrainlogin()"><i class="train_indexnav_icon train_nav_icon_fb"></i>发布</a>
+{yun:}elseif $usertype==''{/yun}
+<a href="{yun:}url m=wap c=login{/yun}"><i class="train_indexnav_icon train_nav_icon_fb"></i>发布</a>
+{yun:}/if{/yun} 
+</li>
+<ul>
+</div>
+</div>
+<div class="train_index_bg">
+<div class="train_index_tit"><a href="{yun:}url m=wap c=train a=subject rec=1{/yun}">为你推荐课程</a></div>
+<div class="clear"></div>
+<ul class="train_index_list_box">
+{yun:}foreach item=v from=$recsubject{/yun}
+<li>
+<div  class="train_index_list">
+<a href="{yun:}url m=wap c=train a=subshow  id=$v.id{/yun}" class=""><img src="{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);"></a>
+<div class="train_index_pd"><div class="train_index_kcname">{yun:}$v.name{/yun}</div>
+<div class="train_index_jgname">{yun:}$v.comname{/yun}</div>
+<span class="train_index_money">￥{yun:}$v.price|floatval{/yun}</span>
+</div></div>
+</li>
+ {yun:}/foreach{/yun} 
+</ul>
+<div class="clear"></div>
+<div class="train_index_more"><a href="{yun:}url m=wap c=train a=subject{/yun}">更多课程</a></div>
+</div>
+<div class="clear"></div>
+
+<div class="train_index_tit "><a href="{yun:}url m=wap c=train a=agency rec=1{/yun}">推荐培训机构</a></div>
+<div class="clear"></div>
+<ul class="train_index_jglist">
+{yun:}foreach item=v from=$rectrain{/yun}
+<li>
+<div class="train_index_jglist_c">
+<a href="{yun:}url m=wap c=train a=agencyshow id=$v.uid{/yun}" class="train_index_jglist_pic"><img src="{yun:}$v.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);"></a>
+<div class="train_index_jglist_name"><a href="{yun:}url m=wap c=train a=agencyshow id=$v.uid{/yun}" class="">{yun:}$v.name{/yun}</a></div>
+</div>
+</li>
+ {yun:}/foreach{/yun} 
+</ul>
+<div class="clear"></div>
+<div class="train_index_more mt10"><a href="{yun:}url m=wap c=train a=agency{/yun}">更多机构</a></div>
+<div class="clear"></div>
+<div class="train_index_bg ">
+<div class="train_index_tit"><a href="{yun:}url m=wap c=train a=subject order=ctime t=desc {/yun}">最新课程</a></div>
+<div class="clear"></div>
+<ul class="train_index_list_box">
+ {yun:}foreach item=v from=$newsubject{/yun}
+<li>
+<div  class="train_index_list">
+<a href="{yun:}url m=wap c=train a=subshow  id=$v.id{/yun}" class=""><img src="{yun:}$v.pic{/yun}"></a>
+<div class="train_index_pd">
+<div class="train_index_kcname">{yun:}$v.name{/yun}</div>
+<div class="train_index_jgname">{yun:}$v.comname{/yun}</div>
+<span class="train_index_money">￥{yun:}$v.price|floatval{/yun}</span>
+</div></div>
+</li>
+ {yun:}/foreach{/yun}
+</ul>
+<div class="clear"></div>
+<div class="train_index_more"><a href="{yun:}url m=wap c=train a=subject{/yun}">更多课程</a></div>
+
+
+</div>
+<style>
+.swiper-container {
+    width: 100%;
+    height:160px;
+} 
+</style>
+<style>
+.tips{display:none;}
+</style>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/peixun.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+		var myimgswiper = new Swiper ('#imgswiper', {
+			direction: 'horizontal'
+			,autoplay:true
+			,loop: true
+		  });      
+    }); 
+</script>
+</body>
+</html>

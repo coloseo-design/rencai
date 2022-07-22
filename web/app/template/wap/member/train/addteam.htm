@@ -1,0 +1,263 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/member_style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/exif.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/member_caregory.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="yunset_list mt15">
+                    <li class="yunset_list_text"><span class="yunset_list_name">讲师姓名 </span><span class="yunset_list_commentary"> 
+					<input type="text" name="name" id='name' value="{yun:}$row.name{/yun}" placeholder="请填写讲师姓名" >
+					</span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">擅长领域</span><span class="yunset_list_commentary">
+					<button id='sidPicker' class="mui-btn mui-btn-block" type='button' data-sid="{yun:}$row.sid{/yun}">{yun:}if $row.sid{/yun}{yun:}$subject_name[$row.sid]{/yun}{yun:}else{/yun}请选择擅长领域{yun:}/if{/yun}</button>
+					<input type="hidden" id="sid" name="sid" value="{yun:}$row.sid{/yun}">
+					</span></li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">擅长行业</span><span class="yunset_list_commentary">
+					<button id='hyPicker' class="mui-btn mui-btn-block" type='button'  data-hy="{yun:}$row.hy{/yun}">{yun:}if $row.hy{/yun}{yun:}$industry_name[$row.hy]{/yun}{yun:}else{/yun}请选择擅长行业{yun:}/if{/yun}</button>
+					<input type="hidden" id="hy" name="hy" value="{yun:}$row.hy{/yun}">
+					</span></li>
+
+                    <li class="yunset_list_select"><span class="yunset_list_name">所在地区</span><span class="yunset_list_commentary">
+					<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}" data-cityid="{yun:}$row.cityid{/yun}" data-three_cityid="{yun:}$row.threecityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.threecityid]{/yun}{yun:}else{/yun}请选择所在地区{yun:}/if{/yun}</button>
+					<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+					<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+					<input type="hidden" id="three_cityid" name="threecityid" value="{yun:}$row.threecityid{/yun}">
+					</span></li>
+                </ul>
+                <ul class="yunset_list mt15">
+
+                    <li>
+                        <a href="#contenthtml" id="contenteditor" class=""><span class="yunset_list_name">讲师简介</span><span class="yunset_list_commentary yunset_list_js" id="contentshow">{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请输入讲师简介{yun:}/if{/yun}</span></a>
+                        <textarea style="display:none" id="content">{yun:}$row.content{/yun}</textarea>
+                    </li>
+                </ul>
+                <ul class="yunset_list">
+                    <li class="yunset_list_max">
+                        <span class="yunset_list_name">讲师形象</span>
+                        <span class="yunset_list_tx" id="previewshow" >
+                        	<img id="previewimg"  src="{yun:}if $row.pic{/yun}{yun:}$row.pic{/yun}{yun:}else{/yun}{yun:}$defaultpic{/yun}{yun:}/if{/yun}"  style="border-radius:0px; border:none;">
+                        </span>
+                      <div class="yunset_list_file">  <input type="file" id="pic" name="pic" onchange="previewImage(this,'preview')" accept="image/*"/>
+                      	<input type='hidden' name='preview' value='' id='preview'></div>
+					</li>
+				</ul>
+        <input type="hidden" name="r_status" id="r_status" value="{yun:}$info.r_status{/yun}" />
+				<div class="yunset_bth_box"> 
+					<button id="infosubmit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+					<input type="hidden" name="id" id="id" value="{yun:}$row.id{/yun}" /> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--页面主内容区结束-->
+</div>
+<!--单页面结束-->
+
+<div id="contenthtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+						<div class="yun_wap_addresume_box_nexttit"> 讲师简介 </div>
+						<textarea class="textAreaMsg tip" id="contenttext"  placeholder="请输入讲师简介500字以内">{yun:}$row.content{/yun}</textarea></div>
+					<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	weburl = "{yun:}$config.sy_weburl{/yun}";
+	var formData = new FormData(),
+        newuploadpic;
+</script>
+
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script>
+var cityParam={
+        sy_web_city_one:'{yun:}$config.sy_web_city_one{/yun}',
+        sy_web_city_two:'{yun:}$config.sy_web_city_two{/yun}',
+    };
+var cityData    =   cityCategory(cityParam);
+var jobData     =   jobCategory();
+UM.getEditor('contenttext',{
+	toolbar: false,elementPathEnabled:false,wordCount:false,autoHeightEnabled:false
+});
+mui.init();
+	var viewApi = mui('#app').view({
+		defaultPage: '#main'
+	});
+	//初始化单页的区域滚动
+	mui('.mui-scroll-wrapper').scroll({
+		scrollY: true, //是否竖向滚动
+		scrollX: false, //是否横向滚动
+		startX: 0, //初始化时滚动至x
+		startY: 0, //初始化时滚动至y
+		indicators: true, //是否显示滚动条
+		deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+		// bounce: true //是否启用回弹
+	});
+	var view = viewApi.view;
+	(function($) {
+		//处理view的后退与webview后退
+		var oldBack = $.back;
+		$.back = function() {
+			if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+				viewApi.back();
+			} else { //执行webview后退
+				oldBack();
+			}
+		};
+		view.addEventListener('pageShow', function(e) {
+            var edittarget = '';
+            if(e.detail.page.id == 'contenthtml') {
+                edittarget = 'contenttext';
+                var contenttext = document.getElementById('content').value;
+            }
+            if(contenttext) {
+               UM.getEditor(edittarget).setContent(contenttext, '');
+            }
+            //console.log(e);
+        });
+		view.addEventListener('pageBeforeBack', function(e) {
+			var content='', showid = '', textid ='';
+			if(e.detail.page.id == 'contenthtml'){
+				showid = 'contentshow';
+				textid ='content';
+				content = UM.getEditor('contenttext').getContent();
+			}
+			if(content != "") {
+				document.getElementById(showid).innerText = content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+				document.getElementById(textid).innerText = content;
+			}
+		});
+		
+	})(mui);
+	var sidData = [];
+	' {yun:}foreach from=$subject_index item=v{/yun}'
+		sidData.push({
+			value: '{yun:}$v{/yun}',
+			text: '{yun:}$subject_name[$v]{/yun}'
+		})
+	'{yun:}/foreach{/yun}'
+	var hyData = [];
+	' {yun:}foreach from=$industry_index item=v{/yun}'
+		hyData.push({
+			value: '{yun:}$v{/yun}',
+			text: '{yun:}$industry_name[$v]{/yun}'
+		})
+	'{yun:}/foreach{/yun}';
+
+(function() {
+	var submitBtn=document.getElementById('infosubmit')
+	if(submitBtn){
+		submitBtn.addEventListener('tap', function(){
+			var name=$.trim(document.getElementById('name').value),
+				sid=$.trim(document.getElementById('sid').value),
+				hy=$.trim(document.getElementById('hy').value),
+				provinceid=$.trim(document.getElementById('provinceid').value),
+				cityid=$.trim(document.getElementById('cityid').value),
+				threecityid=$.trim(document.getElementById('three_cityid').value),
+				content=$.trim(document.getElementById('content').value),
+				preview=$.trim(document.getElementById('preview').value),
+				r_status=$.trim(document.getElementById('r_status').value),
+				id=$.trim(document.getElementById('id').value);
+			if(name==""){
+				return mui.toast('讲师不能为空！');return false;
+			}
+			if(sid==""){
+				return mui.toast('请选择擅长领域！');return false;
+			}
+			if(hy==""){
+				return mui.toast('请选择擅长行业！');return false;
+			}
+			var cionly ='';
+			if(ct.length<=0 || ct=='new Array()'){
+				cionly = '1';
+			}
+			if(cionly == '1'){
+				if(provinceid == '') {
+					return mui.toast('请选择所在地区！');return false;
+				}
+			}else{
+				if(cityid==""){
+					return mui.toast('请选择所在地区！');return false;
+				}
+			}
+			
+			
+			if(content==''){
+				return mui.toast('讲师简介不能为空！');return false;
+			}
+			if(preview=='' && id==''){
+				return mui.toast('请上传讲师形象！');return false;
+			}
+			
+			formData.append('name', name);
+           	formData.append('sid', sid);
+            formData.append('hy', hy);
+            formData.append('provinceid', provinceid);
+            formData.append('cityid', cityid);
+            formData.append('threecityid', threecityid);
+            formData.append('content', content);
+            formData.append('preview', preview);
+            formData.append('r_status', r_status);
+            formData.append('id', id);
+            formData.append('submit', 'submit');
+            showLoading()
+            $.ajax({
+                url: "index.php?c=addteam",
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(res) {
+					hideLoading();
+                	var res = JSON.stringify(res);
+                    var data = JSON.parse(res);
+                    if(data.url) {
+                     	showToast(data.msg, 2, function() {
+                         	location.href = data.url;
+                     	});
+                 	} else {
+                    	showToast(data.msg, 2);
+                    	return false;
+                  	}
+              	}
+        	})
+		}, false)
+	}
+})();
+</script>
+</body>
+</html>

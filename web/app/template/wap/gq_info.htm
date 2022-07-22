@@ -1,0 +1,427 @@
+{yun:}include file="$wapstyle/fheader.htm"{/yun}
+<!-- <link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" /> -->
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+<script src="{yun:}$wap_style{/yun}/js/alloy/transform.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/alloy/alloy-finger.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/alloy-crop.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/exif.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<style type="text/css">
+    .van-uploader{
+        margin-left: 30%;
+    }
+</style>
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main">
+
+    <div id="app" v-show="appShow">
+        <!--页面主内容区开始-->
+        <ul class="yun_newwap_box">  
+            <li class="">
+                <span class="yun_newwap_text_name">头像</span>
+                <div class="yun_newwap_text_box" @click="logoShow">
+                    <span class="once_cont_wate_list_photo_pic" style="right:30px;"> 
+                        <img id="logopic" v-bind:src="imageSrc" style="border-radius:0px; width:40px;height:40px;" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}',2);">
+                    </span>
+                    <div class="once_cont_wate_list_photo"><div class="yunset_list_file"></div></div>
+                </div>
+             </li>
+        </ul>
+        <ul class="yun_newwap_box">
+            <li class="yun_newwap_text"><span class="yun_newwap_text_name"><b style="color:red;">*</b>姓名</span>
+                <span class="yun_newwap_text_box"> 
+                    <input type="text" id="name" name="name" v-model="name" class="reinputText" placeholder="请填写姓名">
+                </span>
+            </li>
+            <li >
+                <span class="yun_newwap_text_name"><b style="color:red;">*</b>性别</span>
+                <span class="yun_newwap_text_box" @click="sexShow=true">
+                    <input onfocus="this.blur()" type="text" class="mui-btn mui-btn-block" id="sex" name="sex" v-bind:value="sexTex"  placeholder="请选择性别">
+                </span>
+            </li>
+            
+            <li><span class="yun_newwap_text_name"><b style="color:red;">*</b>所在地区</span>
+                <span class="yun_newwap_text_box" @click="showArea=true"> 
+                    <input onfocus="this.blur()" type="text" class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$gqinfo.provinceid{/yun}" data-cityid="{yun:}$gqinfo.cityid{/yun}" data-three_cityid="{yun:}$gqinfo.three_cityid{/yun}" v-bind:value="city"  placeholder="请选择">
+                    <input type="hidden" id="provinceid" name="provinceid" v-model="provinceid">
+                    <input type="hidden" id="cityid" name="cityid" v-model="cityid">
+                    <input type="hidden" id="three_cityid" name="three_cityid" v-model="three_cityid">
+              </span>
+            </li>
+            <li>
+                <span class="yun_newwap_text_name"><b style="color:red;">*</b>提供服务</span>
+                <span class="yun_newwap_text_box" @click="serviceShow"> 
+                    <input onfocus="this.blur()" type="text" id="servicesshow" v-bind:value="servicesText | ellipsis" class="reinputText" placeholder="请填写提供服务">
+                </span>
+                <textarea style="display:none" id="servicestext" v-model="servicesText">{{servicesText}}
+                </textarea>
+            </li>
+            <li class="yun_newwap_text"><span class="yun_newwap_text_name"><b style="color:red;">*</b>技能特长</span>
+                <span class="yun_newwap_text_box"> 
+                <input type="text" id="speciality" name="speciality" v-model="speciality" class="reinputText" placeholder="请填写技能特长">
+                </span>
+            </li>
+            <li class="yun_newwap_text"><span class="yun_newwap_text_name"><b style="color:red;">*</b>工作薪资</span>
+                <span class="yun_newwap_text_box"> 
+                <input type="text" id="salary" name="salary" v-model="salary" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="reinputText" placeholder="请填写薪资 单位：元">
+                </span>
+            </li>
+            <li>
+                <span class="yun_newwap_text_name"><b style="color:red;">*</b>个人简介</span>
+                <span class="yun_newwap_text_box" @click="contentShow"> 
+                    <input onfocus="this.blur()" type="text" id="contentshow" v-bind:value="content | ellipsis" class="reinputText" placeholder="请填写简介">
+                </span>
+                 <textarea style="display:none" id="contenttext" v-model="content">{{content}}</textarea>
+            </li>
+        </ul>
+        <ul class="yun_newwap_box">      
+            <li class="yun_newwap_text">
+                <span class="yun_newwap_text_name"><b style="color:red;">*</b>联系电话</span>
+                <span class="yun_newwap_text_box"> 
+                    <input type="text" id="moblie" name="moblie" v-model="moblie" class="reinputText" placeholder="请填写联系电话">
+                </span>
+            </li>
+        </ul>
+
+        <div class="yun_newwap_bth">
+            <button id="infosubmit" type="button" class="mui-btn mui-btn-block mui-btn-primary" @click="checkinfos">提交操作</button>
+        </div>
+        <div style="height:30px;"></div>
+    </div>
+
+    <header v-show="headerShow">
+        <div @click="cancelHeader" class="header_bg ">
+            <a class="hd-lbtn" href="#" ><i class="header_top_l iconfont"></i></a>
+            <div class="header_h1">{yun:}$headertitle{/yun}</div>
+            
+        </div>
+    </header>
+    <div v-show="showLogohtml" >
+        <div class="photo_i_box_v">
+            <div id="showResult">
+                <div id="changeAvatar" class="photo_i_box">
+                    <img v-bind:src="imageSrc" width="120" height="120" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}',2);"> 
+                </div>
+                <div class="clear"></div>
+                <van-uploader :after-read="afterRead">
+                    <div class="photo_xz">选择上传logo</div>
+                </van-uploader>
+                <div class="yunset_identity_msg" style="font-size: 14px;"><i class="yunset_identity_msg_icon"></i>选择上传logo点击提交按钮即可上传</div>
+                <input type="hidden" value=""  id="preview">
+                <div class="photo_tj">
+                    <input type='hidden' name="txt" id="uimage" value="">
+                    <input name="submit" type="button" onclick="photo()" value="提交" class="yunset_bth" />
+                </div>
+            </div> 
+        </div>
+    </div>
+
+
+    <div class="yun_wap_info_brief" v-show="showServiceshtml">
+        <div class="yun_wap_info_brief_c">
+            <div class="yun_wap_addresume_box_nexttit"> 提供服务</div>
+            <textarea class="textAreaMsg tip servicestext" id="services" name="services" placeholder="请输入提供服务描述500字以内" v-model="servicesText">{{servicesText}}</textarea>
+        </div>
+        <a class="yun_wap_info_brief_tit_bc mui-action-back" @click="serviceShow(false)">确定</a>
+    </div>
+    
+    <div class="yun_wap_info_brief" v-show="showContenthtml">
+        <div class="yun_wap_info_brief_c">
+            <div class="yun_wap_addresume_box_nexttit"> 个人简介</div>
+            <textarea class="textAreaMsg tip contenttext" id="content" name="content" placeholder="请输入个人简介描述500字以内">{{content}}</textarea>
+        </div>
+        <a class="yun_wap_info_brief_tit_bc mui-action-back"  @click="contentShow(false)">确定</a>
+    </div>
+ 
+    
+
+    <van-popup v-model="sexShow" position="bottom"  >
+        <van-picker 
+            show-toolbar 
+            :columns="sexData" 
+            @confirm="onSexConfirm" 
+            @cancel="sexShow=false" 
+            :default-index=sexDefault>   
+        </van-picker>
+    </van-popup>
+
+    <van-popup v-model="showArea" round position="bottom">
+       <van-cascader
+        v-model="areaValue"
+        title="请选择地区"
+        :options="areaList"
+        @close="showArea = false"
+        @finish="onAreaFinish"
+       />
+    </van-popup>
+
+</div>
+
+<script>
+    weburl = "{yun:}$config.sy_weburl{/yun}";
+    var formData = new FormData(),
+        newuploadpic;
+</script>
+
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/freeinfo.js?v=99999" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+ <script language="javascript">
+    var sexData = [];
+    '{yun:}foreach from=$user_sex key=j item=v{/yun}'
+    sexData.push({
+        value: '{yun:}$j{/yun}',
+        text: '{yun:}$v{/yun}'
+    });
+    '{yun:}/foreach{/yun}'
+    var cityParam={
+            sy_web_city_one:'{yun:}$config.sy_web_city_one{/yun}',
+            sy_web_city_two:'{yun:}$config.sy_web_city_two{/yun}',
+        };
+    var searchUrlObj = {};
+    '{yun:}if $searchUrlObj{/yun}'
+    searchUrlObj = JSON.parse('{yun:}$searchUrlObj{/yun}');
+    '{yun:}/if{/yun}'
+    var cityData    =   cityCategory(cityParam);
+
+    var sexTex = '{yun:}if $gqinfo.sex{/yun}{yun:}$user_sex[$gqinfo.sex]{/yun}{yun:}/if{/yun}';
+    var sexDefault = sexTex == '女' ? 1 : 0;
+    var vm = new Vue({
+        el: '#main',
+        data:{
+            appShow:true,
+            showLogohtml:false,
+            showServiceshtml:false,
+            showContenthtml:false,
+            sexShow:false,
+            showArea: false,
+            headerShow:false,
+            areaValue:'',
+            city:'{yun:}if $gqinfo.provinceid{/yun}{yun:}$city_name[$gqinfo.provinceid]{/yun} {yun:}$city_name[$gqinfo.cityid]{/yun} {yun:}$city_name[$gqinfo.three_cityid]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}',
+            areaList: cityData,
+            uploader:[],
+            imageSrc:'{yun:}$gqinfo.photo_n{/yun}',
+            files:[],
+            servicesText:'{yun:}$gqinfo.services{/yun}',
+            content:'{yun:}$gqinfo.content{/yun}',
+            sexTex:sexTex,
+            sex:'{yun:}$gqinfo.sex{/yun}',
+            sexDefault:sexDefault,
+            name:'{yun:}$gqinfo.name{/yun}',
+            sexData:sexData,
+            provinceid:'{yun:}$gqinfo.provinceid{/yun}',
+            cityid:'{yun:}$gqinfo.cityid{/yun}',
+            three_cityid:'{yun:}$gqinfo.three_cityid{/yun}',
+            speciality:'{yun:}$gqinfo.speciality{/yun}',
+            salary:'{yun:}$gqinfo.salary{/yun}',
+            moblie:'{yun:}$gqinfo.moblie{/yun}',
+            formData:[],
+        },
+        filters: {
+            ellipsis (value) {
+              if (value && value.length > 10) {
+                return value.slice(0,10)+'...';
+              }
+              return value;
+            }
+          },
+        methods: {
+            afterRead(file) {
+                this.files['files']= [file.file];
+                previewImage(this.files,'preview');
+                if(/^image\/\w+$/.test(file.file.type)) {
+                    this.showLogohtml=false;
+                    toAlloyCrop(file.content);
+                } else {
+                    showMessage('请上传图片');
+                }
+            },
+            cutImage(base64){
+                if (base64) {
+                    this.imageSrc = base64;
+                    document.getElementById('uimage').value = base64;
+                }
+                this.showLogohtml=true;
+            },
+            logoShow(){ //头像展示
+                this.appShow = false;
+                this.showLogohtml = true;
+                this.headerShow= true;
+                $("#header_show").css('display', 'none');
+            },
+            cancelHeader(){
+                this.headerShow= false;
+                this.appShow=true;
+                this.showLogohtml=false;
+                this.showServiceshtml=false;
+                this.showContenthtml=false
+                $("#header_show a").attr('href', 'index.php?c=free');
+                $("#header_show").css('display', 'block');
+            },
+            serviceShow(flag = true){
+                this.servicesText = UM.getEditor('services').getContent().replace(/<\/?.+?>/g, "").replace(/ /g, "");
+                this.appShow = flag ? false : true;
+                this.showServiceshtml = flag ? true : false;  
+                if (flag) {
+                    this.headerShow= true;
+                    $("#header_show").css('display', 'none'); 
+                } else {
+                    this.headerShow= false;
+                    $("#header_show a").attr('href', 'index.php?c=free');
+                    $("#header_show").css('display', 'block');
+                }
+            },
+            contentShow(flag = true){
+                this.content = UM.getEditor('content').getContent().replace(/<\/?.+?>/g, "").replace(/ /g, "");
+                this.appShow = flag ? false : true;
+                this.showContenthtml = flag ? true : false;
+                if (flag) {
+                    this.headerShow= true;
+                    $("#header_show").css('display', 'none'); 
+                } else {
+                    this.headerShow= false;
+                    $("#header_show a").attr('href', 'index.php?c=free');
+                    $("#header_show").css('display', 'block');
+                }
+            },
+            onSexConfirm(value, index) {
+                this.sexTex = value.text;
+                this.sex = value.value;
+                this.sexShow = false;
+            }, 
+            onAreaFinish({ selectedOptions }) {
+                this.city = selectedOptions.map((option) => option.text).join(' ');
+                searchUrlObj.provinceid = searchUrlObj.cityid = searchUrlObj.three_cityid = '';
+
+                if(selectedOptions[0] && selectedOptions[0].value>0){
+                    searchUrlObj.provinceid = selectedOptions[0].value;
+                    this.provinceid = selectedOptions[0].value;
+                }
+                if(selectedOptions[1] && selectedOptions[1].value>0){
+                    searchUrlObj.cityid = selectedOptions[1].value;
+                    this.cityid = selectedOptions[1].value;
+                }
+                if(selectedOptions[2] && selectedOptions[2].value>0){
+                    searchUrlObj.three_cityid = selectedOptions[2].value;
+                    this.three_cityid = selectedOptions[2].value;
+                }
+                if (selectedOptions[0] && selectedOptions[0].value == '') {
+                   this.provinceid = this.cityid = this.three_cityid = '';
+                }
+                this.showArea = false;
+            },
+            checkinfos(){ 
+                if(this.name ==  ''){
+                    showToast('请填写姓名');return false;
+                }
+                if(this.sex  ==  ''){
+                    showToast('请选择性别');return false;
+                }
+                var cionly='';
+                if(ct.length<=0 || ct=='new Array()'){
+                    cionly = '1';
+                }
+                if(cionly=='1'){
+                    if(this.provinceid == '' || this.provinceid == '0') {
+                        showToast('请选择所在地！');return false;
+                    }
+                }else{
+                    if(this.cityid == '' || this.cityid == '0') {
+                        showToast('请选择所在地！');return false;
+                    }
+                }
+                
+                if(this.services==''){
+                   showToast('请填写提供服务！');return false;
+                }
+                if(this.speciality==''){
+                  showToast('请填写技能特长！');return false;
+                }
+                if(this.salary==''){
+                  showToast('请填写工作薪资');return false;
+                }
+                if(this.content==''){
+                  showToast('请填写个人简介！');return false;
+                }
+                if(this.moblie==''){
+                  showToast('请填写联系电话！');return false;
+                }
+                if(this.moblie != '' && !isjsMobile(this.moblie)) {  
+                    showToast('请填写正确联系电话格式！');
+                    return false;
+                }else{
+                    formData.append('name', this.name);
+                    formData.append('sex', this.sex);
+                    formData.append('provinceid', this.provinceid);
+                    formData.append('cityid', this.cityid);
+                    formData.append('three_cityid', this.three_cityid);
+                    formData.append('services', this.servicesText);
+                    formData.append('speciality', this.speciality);
+                    formData.append('salary', this.salary);
+                    formData.append('content', this.content);
+                    formData.append('moblie', this.moblie);
+                    formData.append('submit'  ,'submit');
+
+                    showLoading()
+                    $.post('index.php?c=free&a=freemoblie',{moblie:this.moblie},function(data){
+                        if(data==1){
+                           showToast('手机号码已存在，请重新输入！');return false;
+                        }else{
+                            showLoading()
+                            $.ajax({
+                                url:  "index.php?c=free&a=info",
+                                type: 'post',
+                                data :formData,
+                                contentType: false,
+                                processData: false,
+                                dataType: 'json',
+                                success: function(res) {
+                                    hideLoading();
+                                    var res = JSON.stringify(res);
+                                    var data = JSON.parse(res);
+                                    if(data.url){
+                                        showToast(data.msg, 2, function() {location.href = data.url;});
+                                    }else{
+                                        showToast(data.msg, 2);return false;
+                                    }
+                                }
+                            });
+                        } 
+                    });
+                }
+            }
+        }
+    });
+
+	function toAlloyCrop(pic){
+	    var mAlloyCrop;
+	    
+	    mAlloyCrop = new AlloyCrop({
+	        image_src: pic,
+	        width: 200,
+	        height: 200,
+	        output: 1,
+	        ok: function(base64, canvas) {
+                vm.cutImage(base64);
+	        },
+	        cancel: function() {
+                vm.cutImage('');	        
+            },
+	        ok_text: '确定',
+	        cancel_text: '取消'
+	    });
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <title>后台管理</title>
+    </head>
+
+    <body class="body_ifm">
+         {yun:}include file="siteadmin/member_send_email.htm"{/yun}
+        <div id="status_div" style="display:none; width: 350px; ">
+            <div class="" style=" margin-top:10px; ">
+                <form class="layui-form" action="index.php?m=admin_zzh&c=lock" target="supportiframe" method="post" id="lockform">
+                    <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+                        <tr>
+                            <th width="80">锁定操作：</th>
+                            <td align="left">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <div class="admin_examine_right">
+                                            <input name="status" id="status1" value="1" title="正常" type="radio" />
+                                            <input name="status" id="status2" value="2" title="锁定" type="radio" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>锁定说明：</th>
+                            <td align="left"> <textarea id="alertcontent" name="lock_info" class="admin_explain_textarea"></textarea> </td>
+                        </tr>
+                        <tr>
+                            <td colspan='2' align="center"><input type="button" value='确认' onClick="lockform();" class="admin_examine_bth">
+                                <input type="button" id="zxxCancelBtn" onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'></td>
+                        </tr>
+                    </table>
+                        <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+                        <input name="uid" value="0" type="hidden">
+                </form>
+            </div>
+        </div> 
+           <div class="infoboxp">
+        
+            <div class="admin_new_tip">
+                <a href="javascript:;" class="admin_new_tip_close"></a>
+                <a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+                    <div class="admin_new_tip_list">该页面展示了网站所有的子账户信息。</div>
+                    
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="admin_new_search_box">
+                <form action="index.php" name="myform" method="get">
+                    <input name="m" value="admin_zzh" type="hidden" />
+                    <div class="admin_new_search_name">搜索类型：</div>
+                    <div class="admin_Filter_text formselect" did='dkeytype'>
+                        <input type="button" {yun:}if $smarty.get.keytype=='' ||$smarty.get.keytype=='1' {/yun} value="部门" {yun:}elseif $smarty.get.keytype=='3' {/yun} value="用户ID" {yun:}/if{/yun} class="admin_Filter_but" id="bkeytype">
+
+                        <input type="hidden" name="type" id="keytype" {yun:}if $smarty.get.keytype=='' ||$smarty.get.keytype=='1' {/yun} value="1" {yun:}elseif $smarty.get.keytype=='3' {/yun} value="3" {yun:}/if{/yun}/>
+                        <div class="admin_Filter_text_box" style="display:none" id="dkeytype">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" onClick="formselect('1','keytype','部门')">部门</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="javascript:void(0)" onClick="formselect('3','keytype','用户ID')">用户ID</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="text" value="" placeholder="请输入你要搜索的关键字" name='keyword' class="admin_new_text">
+                    <input type="submit" value="搜索" name='search' class="admin_new_bth">
+                    <a href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();" class="admin_new_search_gj">高级搜索</a>
+                </form>
+                
+                {yun:}include file="siteadmin/admin_search.htm"{/yun} 
+		</div>
+            </div>
+            
+            <div class="clear"></div>
+            <div class="admin_statistics">
+                  数据统计：
+              <em class="admin_statistics_s">总数：<span class="ajaxall">0</span></em>
+              <em class="admin_statistics_s">已锁定：<span class="StatusNum4">0</span></em>
+              搜索结果：<span>{yun:}$total{/yun}</span>；
+            </div>
+            <div class="clear"></div>
+
+            <div class="table-list">
+                <div class="admin_table_border">
+                    <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                    <form action="index.php?m=admin_member&c=del" target="supportiframe" name="myform" method="post" id='myform'>
+                        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+                        <table width="100%">
+                            <thead>
+                                <tr class="admin_table_top">
+                                    <th style="width:20px;">
+                                      <label for="chkall"><input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)' /></label>
+                                    </th>
+                                    <th align="left"> 
+                                      {yun:}if $smarty.get.t=="uid" && $smarty.get.order=="asc"{/yun}
+                                        <a href="index.php?m=admin_zzh&order=desc&t=uid">用户ID<img src="images/sanj.jpg" /></a>
+                                      {yun:}else{/yun}
+                                        <a href="index.php?m=admin_zzh&order=asc&t=uid">用户ID<img src="images/sanj2.jpg" /></a> 
+                                      {yun:}/if{/yun}
+                                    </th>
+                                    <th align="center">子账户名</th>
+                                    <th align="center">所属企业</th>
+                                    <th align="center">部门</th>
+                                    <th align="center">登录/注册</th>  
+                                    <th align="center">来源</th>
+                                    <th align="center">站点</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {yun:}foreach item=v key=key from=$rows{/yun}
+                                <tr {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg" {yun:}/if{/yun} id="list{yun:}$v.uid{/yun}">
+                                    <td width="20"><input type="checkbox" value="{yun:}$v.uid{/yun}" class="check_all" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+                                    <td align="center" class="td1" style="width:60px;">
+                                        {yun:}$v.uid{/yun}
+                                    </td>
+                                    <td align="center">
+                                        {yun:}$v.childname{/yun}
+                                            
+                                    </td>
+                                  
+                                    <td align="center">
+                                        <div class="">
+                                            {yun:}$v.username{/yun}
+                                        </div>
+                                        <div class="mt5">
+                                            <a href="{yun:}url m=company c=show id=$v.comid{/yun}" target="_blank" class="admin_com_name" title="{yun:}$v.comname{/yun} {yun:}if $v.shortname{/yun}【简称：{yun:}$v.shortname{/yun}】{yun:}/if{/yun}">
+                                                {yun:}$v.comname|mb_substr:0:10:"utf-8"{/yun}
+                                                {yun:}if strlen($v.comname)>10{/yun}...{yun:}/if{/yun} 
+                                                {yun:}if $v.shortname{/yun}【{yun:}$v.shortname{/yun}】{yun:}/if{/yun}
+                                            </a>
+                                        </div>
+
+                                    </td>
+
+                                      <td align="center">
+                                        {yun:}$v.name{/yun}
+                                            
+                                    </td>
+                                    
+
+                                    <td class="td" align="center">
+                                    <div>{yun:}if $v.login_date!=""{/yun}{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun} 
+                                    {yun:}else{/yun}<font color="#FF0000">从未登录</font>
+                                    {yun:}/if{/yun}</div>
+                                    <div>{yun:}$v.reg_date|date_format:"%Y-%m-%d"{/yun}</div>
+                                    </td>
+                                    <td class="td" align="center">{yun:}$source[$v.source]{/yun}</td>
+                                    <td class="td" align="center">
+                                        <div>{yun:}$Dname[$v.did]{/yun}</div>
+                                        <div class="mt5">
+                                            <a href="javascript:;" onclick="checksite('{yun:}$v.username{/yun}','{yun:}$v.uid{/yun}','index.php?m=admin_zzh&c=checksitedid');" class="admin_cz_sc">重新分配</a>
+                                        </div>
+                                    </td>
+                                    <td align="center">{yun:}if $v.statuss=='1'{/yun}<span class="admin_com_Audited">已审核</span>{yun:}else{/yun}<span class="admin_com_Lock">已锁定</span>{yun:}/if{/yun}
+                                    </td>
+                                     
+                                    <td align="center">
+                                        <a href="javascript:;" class="admin_new_c_bth admin_new_c_bthsd status" pid="{yun:}$v.uid{/yun}" status="{yun:}$v.statuss{/yun}">锁定</a>
+                                        <a href="index.php?m=admin_zzh&c=edit&uid={yun:}$v.uid{/yun}" class="admin_new_c_bth admin_n_sc mt5">修改</a><br>
+                                        <a href="javascript:void(0);" onClick="resetpw('{yun:}$v.username{/yun}','{yun:}$v.uid{/yun}');" class="admin_new_c_bth admin_new_c_mmcz mt5">密码</a>
+                                        <a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=admin_zzh&c=del&del={yun:}$v.uid{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+                                    </td>
+                                </tr>
+                                {yun:}/foreach{/yun}
+                                <tr>
+                                <td align="center"><label for="chkall2"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></label></td>
+                                    <td colspan="12"><label for="chkAll2">全选</label> &nbsp;
+                                        <input class="admin_button" type="button" name="delsub" value="删除所选" onclick="return really('del[]')" />
+                                    </td>
+                                </tr>   
+                                {yun:}if $total > $config.sy_listnum {/yun}
+                                    <tr>
+                                        {yun:}if $pagenum==1{/yun}
+                                            <td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+                                        {yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+                                            <td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+                                        {yun:}else if $pagenum == $pages{/yun}
+                                            <td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+                                        {yun:}/if{/yun}
+                                        <td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+                                    </tr>
+                                {yun:}/if{/yun}
+                            </tbody>
+                        </table>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+         <script type="text/javascript">
+            layui.use(['layer', 'form'], function() {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.$;    
+            });
+            
+            $(document).ready(function(){
+                $(".job_name_all").hover(function(){
+                    var pid=$(this).attr('v');
+                    if($.trim(pid)!=''){
+                        layer.tips(pid, this, {guide: 1, style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']}); 
+                        $(".xubox_layer").addClass("xubox_tips_border");
+                    } 
+                },function(){
+                    layer.closeAll('tips');
+                });
+                $.get("index.php?m=admin_zzh&c=memNum", function(data) {
+                    var datas = eval('(' + data + ')');
+                    if(datas.memAllNum1) {
+                      $('.ajaxall').html(datas.memAllNum1);
+                    }
+                    if(datas.memStatusNum4) {
+                      $('.StatusNum4').html(datas.memStatusNum4);
+                    }
+                });
+                $(".status").click(function() {
+                    $("input[name=pid]").val($(this).attr("pid"));
+                    var uid = $(this).attr("pid");
+                    var status = $(this).attr("status");
+                    $("#status" + status).attr("checked", true);
+                    layui.use(['form'], function() {
+                        var form = layui.form;
+                        form.render();
+                    });
+                    $("input[name=uid]").val(uid);
+                    $.get("index.php?m=admin_zzh&c=lockinfo&uid=" + uid, function(msg) {
+                        $("#alertcontent").val($.trim(msg));
+                        status_div('锁定用户', '350', '240');
+                    });
+                });
+              });
+              function lockform(){
+                loadlayer();
+                $('#lockform').submit();
+              }
+              function statusform(){
+                loadlayer();
+                $('#statusform').submit()
+              }
+              
+              function resetpw(uname,uid){
+                var pytoken = $('#pytoken').val();
+                var pwcf = parent.layer.confirm("确定要重置密码吗？",function(){
+                  $.get("index.php?m=admin_zzh&c=reset_pw&uid="+uid+"&pytoken="+pytoken,function(data){
+                    parent.layer.close(pwcf);
+                    loadlayer();
+                    parent.layer.alert("用户："+uname+" 密码已经重置为123456！", 9);
+                    parent.layer.closeAll('loading');
+                    
+                  });
+                });
+              }
+
+        </script>
+        {yun:}include file="siteadmin/checkdomain.htm"{/yun}
+    </body>
+
+</html>

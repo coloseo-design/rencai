@@ -1,0 +1,208 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue" class="wap_member_box none">
+	<div class="wap_member_pt">
+		<div class="position_body_card" v-for="(item, lk) in list" :key="lk" @click="showPage(lk)">
+			<div class="position_body_card_top">
+				<div class="body_card_top_box">
+					<div class="body_card_top_name"> 
+						<a href="{yun:}url m=wap c=post a=jobcomshow id=$v.id{/yun}" class=" ">{{item.job_name}}</a> 
+					</div>
+				</div>
+				<div class="body_card_top_time">{{item.lastupdate_n}}</div>
+			</div>
+			<div class="position_body_card_center">
+				<div class="body_card_center_left">
+					<div class="more_position_quantity">
+						<div class="position_quantity_exposure">
+							<div class="quantity_exposure_q">状态：</div>
+							<div class="quantity_exposure_a">
+								<span v-if="item.status==1">已审核</span>
+								<span v-else-if="item.status==3" class="wap_member_wtg">未通过</span>
+								<span v-else-if="item.status==0">未审核</span>
+							</div>
+						</div>
+						<div class="position_quantity_exposure">
+							<div class="quantity_exposure_q">浏览量：</div>
+							<div class="quantity_exposure_a">{{item.hits}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="body_card_center_right">
+					<div class="more_position_deliver_number"></div>
+					<div class="more_position_deliver"></div>
+				</div>
+			</div>
+			<div class="position_body_card_moonlight">
+				<ul>
+					<li v-if="item.zp_status == 1" @click.stop="ltjobSet(item.id, 0, lk)">
+						<div class="body_card_bom_icon">
+							<img src="{yun:}$wap_style{/yun}/images/job_promotion.png" alt="">
+						</div>
+						<div class="body_card_bom_name">上架</div>
+					</li>
+					<li v-else @click.stop="ltjobSet(item.id, 1, lk)">
+						<div class="body_card_bom_icon">
+							<img src="{yun:}$wap_style{/yun}/images/job_promotion.png" alt="">
+						</div>
+						<div class="body_card_bom_name">下架</div>
+					</li>
+					<li @click.stop="ltjobRefresh(item.id)">
+						<div class="body_card_bom_icon">
+							<img src="{yun:}$wap_style{/yun}/images/job_refresh.png" alt="">
+						</div>
+						<div class="body_card_bom_name">刷新</div>
+					</li>
+					<li @click.stop="toPage('index.php?c=lt_jobadd&id=' + item.id)">
+						<div class="body_card_bom_icon">
+							<img src="{yun:}$wap_style{/yun}/images/job_modification.png" alt="">
+						</div>
+						<div class="body_card_bom_name">修改</div>
+					</li>
+					<li @click.stop="del(item.id, lk)">
+						<div class="body_card_bom_icon">
+							<img src="{yun:}$wap_style{/yun}/images/delete.png" alt="">
+						</div>
+						<div class="body_card_bom_name">删除</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div v-if="total >limit && islook">
+		<van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+	</div>
+	<span v-show="islook&&count==0">
+		<div class="wap_member_no">您还没有发布猎头职位</div>
+	</span>
+</div>
+
+<script src="{yun:}$wap_style{/yun}/js/com.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}') || 1;
+	var yunvue = new Vue({
+		el: '#yunvue',
+		data: {
+			list: [],
+			limit: 10,
+			total: 0,
+			page: currentPage,
+			islook: false
+		},
+		computed: {
+			count() {
+				if (this.total > this.limit) {
+					return 2;
+				} else if (this.list.length == 0) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		},
+		created() {
+			this.getList();
+		},
+		methods: {
+			getList: function() {
+				showLoading();
+				var that = this;
+				var paramer = {};
+				paramer['page'] = this.page;
+				paramer['limit'] = this.limit;
+				var url = '{yun:}url d=wxapp h=com m=ltjob c=joblist{/yun}';
+				$.post(url, paramer, function(data) {
+					hideLoading();
+					var res = data.data;
+					that.list = res.list;
+					that.total = res.total;
+					that.islook = true;
+					$("#yunvue").css('display', 'block');
+				}, 'json');
+			},
+			ltjobRefresh(id) {
+				var url = "{yun:}url d=wxapp h=com m=ltjob c=ltjobRefresh{/yun}";
+				comjobRefresh(url, {ltjobid: id,provider:'wap'}, function (res) {
+					modalVue.$data.singleid = id;
+					modalVue.$data.mb_content = res.msg;
+					modalVue.$data.cancelText = '不用了';
+					modalVue.$data.confirmText = '去购买';
+					modalVue.$data.yunModal = true;
+					modalType = 'sxltjob';
+				});
+			},
+			ltjobSet(id, status, key){
+				var self = this;
+				if(status == 1){
+					var msg = '确定要下架？';
+				}else{
+					var msg = '确定要上架?';
+				}
+				var url = '{yun:}url d=wxapp h=com m=ltjob c=ltjobSet{/yun}';
+				showConfirm(msg, function() {
+					showLoading('设置中');
+					$.post(url , {id: id, status: status}, function(data){
+						if (data.error == 1) {
+							self.list[key].zp_status = status;
+						}
+						showToast(data.msg);
+					},'json')
+				});
+			},
+			del(id, key){
+				var that = this;
+				var paramer = {id: id};
+				var url = '{yun:}url d=wxapp h=com m=ltjob c=ltjobdel{/yun}';
+				showConfirm('确定删除？', function() {
+					showLoading('删除中');
+					$.post(url , paramer, function(data){
+						if (data.error == 1) {
+							that.list.splice(key, 1);
+							showToast('删除成功');
+						}
+					},'json')
+				});
+			},
+			pageChange:function(e){
+				location.href = 'index.php?c=lt_job&page='+e;
+			},
+			showPage(key){
+				if(this.list[key].status == 3){
+					// 审核未通过的，点击展示原因
+					vant.Dialog.alert({
+						title: '未通过原因',
+						message: this.list[key].statusbody,
+						theme: 'round'
+					})
+				}else{
+					this.toPage(this.list[key].wapurl);
+				}
+			},
+			toPage: function(url){
+				window.location.href = url;
+			}
+		}
+	})
+	function addLtjob(){
+		var url = "{yun:}url d=wxapp h=com m=index c=addCheck{/yun}";
+		comjobAdd(url, {job: 'ltjob'}, function (res) {
+			if(res.msg){
+				// 套餐不足
+				modalVue.$data.mb_content = res.msg;
+				modalVue.$data.cancelText = '不用了';
+				modalVue.$data.confirmText = '去购买';
+				modalVue.$data.yunModal = true;
+				modalType = 'ltjob';
+			}else{
+				// 强制操作
+				certVue.$data.checked = res;
+				certVue.$data.yunCert = true;
+			}
+		});
+	}
+</script>
+<!-- 余额不足提示 -->
+{yun:}include file="$wapstyle/publichtm/yun_modal.htm"{/yun}
+<!-- 强制操作提醒弹出框 -->
+{yun:}include file="$wapstyle/publichtm/yun_cert.htm"{/yun}
+</body>
+</html>

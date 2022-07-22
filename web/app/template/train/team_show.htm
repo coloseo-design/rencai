@@ -1,0 +1,75 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<div class="clear"></div>
+<div class="training_content training_w980">
+  <div class="training_cur ftl">
+    <div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > <a href="{yun:}url m=train c=teacher{/yun}">培训师</a> > {yun:}$teacher.name{/yun}</div>
+  </div>
+  {yun:}include file="$trainstyle/top.htm"{/yun}
+  <div class="Courses_content_box  ftl ">
+    <div class="Courses_Table_detail ftl mt10">
+    <div class="team_show_box">    <div class="team_show_box_cont">
+    <div class="team_show_box_cont_pic"><img src="{yun:}$teacher.pic{/yun}" width="140" height="140" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxteacher_icon{/yun}',2);"></div>
+    <div  class="team_show_box_right">
+     <div  class="team_show_box_right_name">{yun:}$teacher.name{/yun}</div>
+      <div  class="team_show_box_right_p2">{yun:}$subject_name[$teacher.sid]{/yun}</div>
+     <div  class="team_show_box_right_p">所在地区：{yun:}$city_name[$teacher.cityid]{/yun}{yun:}if $city_name[$teacher.threecityid]{/yun}-{yun:}$city_name[$teacher.threecityid]{/yun}{yun:}/if{/yun}</div>
+     <div  class="team_show_box_right_p">擅长行业：{yun:}$industry_name[$teacher.hy]{/yun}</div>
+
+    </div>
+    </div>
+    <div class="clear"></div>
+
+      <div class="titHd_jianjie">【{yun:}$teacher.name{/yun}老师简介】</div>
+      <div class="Courses_news_cont">{yun:}$teacher.content{/yun}</div>
+      <div class="training_tit"><span class="training_span ftl">讲师的课程</span></div>
+      <div class="Courses_Table_detail_other">
+      
+           <ul> 
+		{yun:}foreach item=v from=$teachsub{/yun}
+               <li>
+                   <div class="train_class_img"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}"><img style="width:150px;height:90px;" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);"/></a></div>
+                   <div class="train_class_tit"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">{yun:}$v.name|mb_substr:0:15:'utf-8'{/yun}</a></div>
+                   <div class="train_class_lb">课程类别：{yun:}$subject_name[$v.tnid]{/yun}</div>
+                   <div class="train_class_c">
+                   <div class="train_class_m">{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}发布</div>
+                   <div class="train_class_city">{yun:}$city_name[$v.cityid]{/yun} {yun:}$city_name[$v.threecityid]{/yun}</div>
+                   </div>
+                   <div class="train_class_dw">
+                   <div class="train_class_tm">{yun:}$v.hours|mb_substr:0:6:'utf-8'{/yun}课时</div>
+                   <div><i class="train_class_my">￥{yun:}$v.price{/yun}</i></div>
+                   <div class="train_class_bm">
+				    {yun:}if $v.baoming{/yun}	
+                      <a  href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">已报名</a>
+					 {yun:}else{/yun}
+				   <a  href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">报名</a>
+                      {yun:}/if{/yun}	
+				   </div>
+                   </div>
+               </li>  
+			    {yun:}foreachelse{/yun}
+        
+                <div class="com_msg_no">
+                 <p>暂无培训课程信息</p>
+            
+            </div>
+		
+		{yun:}/foreach{/yun}
+      
+           </ul>      
+      </div>
+    </div></div>
+  </div>
+{yun:}include file="$trainstyle/reclist.htm"{/yun}
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$train_style{/yun}/js/train_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+{yun:}include file="$trainstyle/footer.htm"{/yun}

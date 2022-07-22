@@ -1,0 +1,139 @@
+{yun:}include file="$comstyle/header.htm"{/yun} 
+<div class="w1000">
+	<div class="admin_mainbody"> 
+	{yun:}include file="$comstyle/left.htm"{/yun}   
+	<div class="com_tit"><span class="com_tit_span">宣讲会</span>
+	
+	<div class="com_topbth_bigbox">
+		{yun:}if $company.yyzz_status=='1'{/yun}
+		<input class="com_topbigbth" onclick="xjhadd()" type="button" value="发布宣讲会" >
+		{yun:}else{/yun}
+			{yun:}if !empty($cert){/yun}
+				{yun:}if $cert.status==2{/yun}
+				<input class="com_topbigbth" onclick="layer.msg('企业资质未通过审核，请重新上传！',2,8);return false;" type="button" value="发布宣讲会"  >
+				{yun:}else{/yun}
+				<input class="com_topbigbth" onclick="layer.msg('企业资质审核中，请联系管理员审核！',2,8);return false;" type="button" value="发布宣讲会"  >
+				{yun:}/if{/yun}
+			{yun:}else{/yun}
+			<input class="com_topbigbth" onclick="layer.msg('企业资质还未上传，请先上传！',2,8);return false;" type="button" value="发布宣讲会" >
+			{yun:}/if{/yun}
+		{yun:}/if{/yun}
+
+	     </div>
+	</div>	<div class=right_box>
+			<div class=admincont_box>
+				
+				<div class="com_body">
+                <div class="com_new_tip">
+						<span class="com_new_tip_h">温馨小提示</span>发布校招宣讲会，更全面的宣传，更快的招聘效果。
+                    
+			
+					</div>
+					
+					<div class="clear"></div>
+					<div class="com_Release_job">
+						<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form action="index.php" target="supportiframe" method="get" id='myform' class='layui-form'>
+							<input type="hidden" name="c" value="xjh" />
+							<input type="hidden" name="act" value="del" />
+							<table class="com_table mt20">
+								{yun:}if $rows{/yun}
+								<tr>
+									<th>&nbsp;</th>
+									<th align="left">宣讲时间 </th>
+									<th align="left">宣讲城市 </th>
+									<th align="left">宣讲学校</th>
+									<th align="left" width="200">详细地点</th>
+									<th align="left">发布人</th>
+									<th align="left">发布时间</th>
+									<th align="left">关注人数</th>
+									<th align="left">审核状态</th>
+									<th>操作</th>
+								</tr>
+								{yun:}/if{/yun}
+								{yun:}foreach item=list from=$rows{/yun}
+								<tr>
+									<td><input type="checkbox" name="del[]" value="{yun:}$list.id{/yun}" class="com_job_list_check" lay-skin="primary"></td>
+									<td>{yun:}$list.stime|date_format:'%Y-%m-%d %H:%M'{/yun}-{yun:}$list.etime|date_format:'%H:%M'{/yun}</td>
+									<td>{yun:}$list.provinceid_n{/yun}-{yun:}$list.cityid_n{/yun}</td>
+									<td>{yun:}$list.sch_name{/yun}</td>
+									<td>{yun:}$list.address{/yun}</td>
+									<td>{yun:}$list.com_name{/yun}</td>
+									<td>{yun:}$list.ctime|date_format:'%Y-%m-%d'{/yun}</td>
+									<td>{yun:}if $list.atnnum{/yun}{yun:}$list.atnnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}人</td>
+									<td>{yun:}if $list.status==1{/yun}<font color="green">已审核</font>{yun:}elseif $list.status==2{/yun}<span class="tip_no"><i class="tip_no_icon"></i>未通过</span>{yun:}elseif $list.status==0{/yun}<font color="orange">未审核</font>{yun:}/if{/yun}{yun:}if $list.status==2{/yun} <a href="javascript:void(0);" class="wtg_ly cblue " id="statusbody{yun:}$list.id{/yun}" statusbody="{yun:}$list.statusbody{/yun}" onclick="statusbody('{yun:}$list.id{/yun}');" >查看原因</a> {yun:}/if{/yun}</td>
+									<td align="center">
+										{yun:}if $list.stime gt time(){/yun}<a href="javascript:void(0)" onclick="xjhedit('{yun:}$list.id{/yun}')"  class="com_bth cblue">修改</a>{yun:}/if{/yun}<a href="javascript:void(0)" onclick="layer_del('确定要删除？', 'index.php?c=xjh&act=del&id={yun:}$list.id{/yun}');" class="com_bth cblue">删除</a> 
+									</td>
+								</tr>
+								{yun:}foreachelse{/yun}
+								<tr>
+									<td colspan="10" class="table_end"><div class="msg_no"><p>亲；您暂未发布相关校招宣讲会信息哦~</p></div></td>
+								</tr>
+								{yun:}/foreach{/yun}
+								{yun:}if !empty($rows){/yun}
+									<tr>
+										<td colspan="10" class="table_end">
+											<div class="com_Release_job_bot mt20"> 
+												<span class="com_Release_job_qx"><input id='checkAll' lay-filter="allcom" type="checkbox" lay-skin="primary" class="com_Release_job_qx_check"> 全选</span>
+												<input class="c_btn_02 c_btn_02_w110" type="button" value="批量删除" onclick="return really('del[]');">
+											</div><div class="diggg">{yun:}$pagenav{/yun}</div>
+										</td>
+									</tr>
+								{yun:}/if{/yun}
+								
+							</table>
+						</form>
+						<div  class="clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="admin_Operating_sh" id="infobox" style="padding:10px;display:none;">
+  <div class="" style="padding:5px; height:auto;color:#C30; font-size:14px; line-height:23px;white-space: normal; word-break: break-all;" id="showbody"> </div>
+</div>
+<script>
+function xjhadd(){
+	layer.page($("#xjhadd"), '新增校招宣讲会', ['510px','335px']);
+}
+function xjhedit(id){
+	loadlayer();
+	$.get(weburl+'/member/index.php?c=xjh&act=edit',{id:id},function(data){
+		layer.closeAll('loading');
+		var data=eval('('+data+')');
+		if(data){
+			$("#provinceid").val(data.provinceid);
+			$("#provinceid").html(data.phtml);
+			$("#cityid").html(data.cityhtml);
+			$("#cityid").val(data.cityid);
+			$("#schoolid").val(data.schoolid);
+			$("#address").val(data.address);
+			$("#datetime").val(data.datetime);
+			$("#stime").val(data.sdate);
+			$("#etime").val(data.edate);
+			$("#id").val(data.id);
+			layui.use(['form'],function(){
+				var form = layui.form;
+				form.render();
+			});
+		}
+		layer.page($("#xjhadd"), '修改宣讲会', ['510px','335px']);
+	});
+}
+function statusbody(id){
+	var statusbody=$("#statusbody"+id).attr('statusbody');
+	$("#showbody").html(statusbody)
+	$.layer({
+		type : 1,
+		title : '审核说明',
+		closeBtn : [0 , true],
+		border : [10 , 0.3 , '#000', true],
+		area : ['270px','auto'],
+		page : {dom : '#infobox'}
+	});
+}
+</script> 
+{yun:}include file="$comstyle/xjhadd.htm"{/yun}
+{yun:}include file="$comstyle/footer.htm"{/yun}

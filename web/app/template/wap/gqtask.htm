@@ -1,0 +1,66 @@
+{yun:}include file="$wapstyle/header_gq.htm"{/yun}
+
+<form action="{yun:}$config_wapdomain{/yun}/index.php" method="get">
+	<input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}">
+	<input type="hidden" name="a" value="{yun:}$smarty.get.a{/yun}">
+	<div class="free_job_header_search">
+		<div class="free_job_header_search_c">
+			<input type="text" name="keyword" value="{yun:}$smarty.get.keyword{/yun}" class="free_job_header_search_text" placeholder="请输入业务关键词">
+		</div>
+	</div>
+</form>
+{yun:}task keyword='auto.keyword' ispage=1 limit=20 item=list{/yun}
+<div class="free_job_indexlist">
+	<a href="{yun:}url m=wap c=gqlist a=taskshow id=$list.id{/yun}">
+		<div class="free_job_user_pic">
+			<img src="{yun:}if $list.photo_n{/yun}{yun:}$list.photo_n{/yun}{yun:}else{/yun}{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}{yun:}/if{/yun}" width="60" height="60">
+		</div>
+		<div class="free_job_indexlist_tit">{yun:}$list.name{/yun}</div>
+		<div class="free_job_indexlist_p">需求：{yun:}$list.content{/yun}</div>
+		<span class="free_job_index_time">{yun:}$list.ctime{/yun}发布</span>
+		<span class="free_job_jg">{yun:}$list.salary{/yun}元</span>
+	</a>
+</div>
+{yun:}/task{/yun}
+<div id="app">
+{yun:}if $total<=0{/yun} 
+	<van-empty image="search" description="很抱歉,还没有任务！" />
+		{yun:}if $smarty.get.keyword!="" {/yun}
+		<van-button url="{yun:}url m=wap c='gqlist' a=task{/yun}" round type="info" class="bottom-button">重新搜索</van-button>
+		{yun:}/if{/yun} 
+	</van-empty>
+{yun:}else{/yun}
+	{yun:}if $total > 20{/yun}
+    	<van-pagination v-model="currentPage" :total-items="total" :items-per-page="perpage" force-ellipses @change="pageChange" />
+    {yun:}/if{/yun}
+{yun:}/if{/yun}
+ </div>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script type="text/javascript">
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}'),
+        total = parseInt('{yun:}$total{/yun}'),
+        pagelink = '{yun:}$pagelink{/yun}';
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //分页相关
+            currentPage: currentPage ? currentPage : 1,
+            total: total,
+            perpage: 20,
+        },
+        methods: {
+            pageChange: function (e) {
+                var pageurl = pagelink.replace('{{page}}', e);
+                location.href = pageurl;
+            }
+        }
+    })
+	function taskadd(msg, url) {
+		showModal(msg, function () {
+			window.location.href = url;
+		})
+	}
+</script>
+</body>
+</html>

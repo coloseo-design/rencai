@@ -1,0 +1,158 @@
+{yun:}foreach item=v from=$lists{/yun}
+
+ <section>
+  &nbsp;
+      <section style="">
+      <!-- 背景色 -->
+		<section style="padding: 20px 10px 10px 10px; background-color: #a9dafd;margin: 0 auto;;margin-bottom: 10px;">
+			<section style=" background-color: #ffffff; box-shadow: 4px 5px 15px 4px #81bde8;
+">
+            <section style="padding: 10px;">
+				<!-- 盒子标题 -->
+
+				<!-- 边框和四边形 -->
+                <section style="border: 1px solid #92c7ed;">
+                <section style="height:10px;">
+                  <section style="width:10px;height:10px; background:#92c7ed;transform:translateX(0);">   </section> 
+                     <section style="width:10px;height:10px; background:#92c7ed;transform:translateX(10px);">   </section> 
+                     </section> 
+                 <section> 
+                  <section style="width:120px;height:50px;margin:0 auto">
+                   <section style=" margin-bottom:-31px">
+                  
+                 <section style=" width: 0; height: 0; border-bottom: 10px solid #dd2a2a;border-left: 10px solid transparent; float:left"></section>	
+                <section style=" width: 100px; height: 50px; background-color: #ff8585;color: #ffffff; text-align:center; float:left"> 
+                <section style="font-size: 18px; padding-top: 5px;">职等你来</section>
+						<section style="font-size: 12px;">WE WANT YOU</section> 
+                </section>
+                <section style=" width: 0; height: 0; border-bottom: 10px solid #dd2a2a; border-right: 10px solid transparent; float:right"></section>
+                 </section>        </section>
+                  </section>
+                    <!-- <section style="height:60px;">
+                  <section >
+                   <section style="width:8px;height:8px; background:#92c7ed; float:left" ></section >
+                <section style="width:8px;height:8px; background:#92c7ed; float:right"></section >
+                </section >
+               
+                   </section> -->
+                      <section style="padding: 10px;">
+				<!-- 蓝框内容 -->
+				<section style="padding-bottom: 10px; border-bottom: 1px dashed #a7d9fc; height: 30px;line-height: 30px; text-align: center;">
+					<!-- 标题 -->
+					<section style="display: inline-block; width: 15px; height: 15px; background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/job/images/diagonal.png) no-repeat; background-size:100%; vertical-align:middle"></section> 
+					<section style="display: inline-block; font-size: 18px;color: #0f4870; font-weight:bold">{yun:}$v.name{/yun}</section>
+					<section style="display: inline-block; width: 15px; height: 15px; background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/job/images/diagonal.png) no-repeat; background-size:100%; vertical-align:middle"></section>
+					</section>
+					
+                    <section style="">
+                    	{yun:}if $v.job_salary{/yun}
+						<section style=" padding-top: 20px;">
+							<span style="color: #666666;">薪资：</span>
+							<span style="color: #dd2a2a;">{yun:}$v.job_salary{/yun}</span>
+						</section>
+						{yun:}/if{/yun}
+
+						{yun:}if $v.job_number{/yun}
+						<section style="display: inline-block; width: 48%;text-align: left;">
+
+							<span style="color: #666666;">人数：</span>
+							{yun:}if $v.job_number{/yun}
+							<span>{yun:}$v.job_number{/yun}</span>
+							{yun:}/if{/yun}
+						</section>
+						{yun:}/if{/yun}
+
+						
+
+						{yun:}if $v.job_sex{/yun}
+						<section style="display: inline-block; width: 48%;text-align: left;">
+							<span style="color: #666666;">性别：</span>
+
+							{yun:}if $v.job_sex{/yun}
+							<span>{yun:}$v.job_sex{/yun}</span>
+							{yun:}/if{/yun}
+						</section>
+						{yun:}/if{/yun}	
+						
+						
+						
+						{yun:}if $v.job_exp{/yun}
+						<section style="display: inline-block; width: 48%;padding-top: 20px;">
+							<span style="color: #666666;">经验：</span>
+							<span>{yun:}$v.job_exp{/yun}</span>
+						</section>
+						{yun:}/if{/yun}
+						{yun:}if $v.job_edu{/yun}
+						<section style="display: inline-block;width: 48%; text-align: left;">
+							<span style="color: #666666;">学历：</span>
+							<span>{yun:}$v.job_edu{/yun}</span>
+						</section>
+						{yun:}/if{/yun}
+						{yun:}if $v.job_age{/yun}
+						<section style="display:block; width: 48%;padding-top: 20px;">
+							<span style="color: #666666;">年龄：</span>
+							{yun:}if $v.job_age{/yun}
+							<span>{yun:}$v.job_age{/yun}</span>
+							{yun:}/if{/yun}
+						</section>
+						{yun:}/if{/yun}
+						{yun:}if $v.job_description{/yun}
+						<section style="padding-top: 20px;">
+							
+							<section style="display:block;width: 100%; text-align: left;">
+								<span style="color: #666666;">描述：</span>
+								<span>{yun:}$v.job_description{/yun}</span>
+							</section>
+						</section>
+						{yun:}/if{/yun}
+						<section style="margin-top: 20px; border-bottom: 1px dashed #a7d9fc; padding-bottom: 20px;">
+							<section style="margin-bottom: 14px;">
+								<span style="color: #666666;">公司：</span>
+								<span>{yun:}$v.com_name{/yun}</span>
+							</section>
+							{yun:}if $v.job_address{/yun}
+							<section>
+								<span style="color: #666666;">地址：</span>
+								<span>{yun:}$v.job_address{/yun}</span>
+							</section>
+							{yun:}/if{/yun}
+						</section>
+						{yun:}if $v.job_welfare{/yun}
+					<section style="padding-bottom:5px;padding-top:5px; font-weight:bold">职位福利</section>
+					<section> 
+					{yun:}foreach from=$v.job_welfare item = welv{/yun}
+					<span style="padding:0.1rem 0.5rem; background-color:#e6f8f4; border-radius:0.8rem;color:#18a3a2; margin-top:0.5rem;display: inline-block;">{yun:}$welv{/yun}</span> 
+					{yun:}/foreach{/yun}
+
+					 </section>
+					{yun:}/if{/yun}
+                          </section>
+						 <!--固定二维码-->
+						 {yun:}if $ewmtype != 'xcx'{/yun}
+						   <p style="text-align:center;"><img style="width:120px;height:120px;" src="{yun:}pubqrcode  toc=job toa=comapply toid=$v.id totype=$ewmtype{/yun}"> <br>扫码或长按二维码投递简历 </p>
+						 {yun:}else{/yun}
+							<p style="text-align:center; padding-top:20px;"><a data-miniprogram-type="text" data-miniprogram-appid="{yun:}$wxpaydata.sy_xcxappid{/yun}" data-miniprogram-path="/pages/job/show?id={yun:}$v.id{/yun}" class="weapp_text_link"  style="color: rgb(51, 51, 51);padding: 6px 1.4em;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;max-width: 100%;font-size: 14px;display: inline-block;border-radius: 50px;letter-spacing: 1.5px;background: rgba(247, 215, 73, 0.86);box-sizing: border-box !important;overflow-wrap: break-word !important;">查看详情</a></p>
+						   
+						{yun:}/if{/yun}	
+						<!-- 人图像 -->
+                        <p style="text-align: center">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                        <img src="{yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/job/images/person.png"> 
+                        </p>
+                        	</section>
+					 
+					
+					</section>
+			</section>
+            </section>
+			<!-- 底部 -->
+			<section style="text-align: center;">
+			<section style="font-size: 14px; color: #062942; margin-top: 10px;">{yun:}$config.sy_webname{/yun}</section>
+			<section style="font-size: 14px; color: #062942; margin-top: 5px;">{yun:}$config.sy_weburl{/yun}</section>
+			</section>
+		</section>	</section>
+        		</section>		</section>
+		
+		
+{yun:}foreachelse{/yun}
+
+{yun:}/foreach{/yun}

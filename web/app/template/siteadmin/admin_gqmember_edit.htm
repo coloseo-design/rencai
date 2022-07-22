@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<title>后台管理</title>
+		<style>
+			* {margin: 0;padding: 0;}
+			body, div {margin: 0;padding: 0;}
+		</style>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">该页面展示了网站供求会员信息。</div>
+				</div>
+			</div>
+
+			<div class="main_tag mt10">
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form class="layui-form" name="myform" target="supportiframe" action="index.php?m=admin_gqmember&c=savegqInfo" method="post" onsubmit="return gqinfoedit()" enctype="multipart/form-data">
+						<table width="100%" class="table_form table_form_thr" style="background:#fff;">
+							<tr>
+								<td colspan="4" bgcolor="#f0f6fb">
+									<div class="admin_bold">账号信息</div>
+								</td>
+							</tr>
+							<tr>
+								<th width="140">用户名：</th>
+								<td>
+									<input type="text" value="{yun:}$member.username{/yun}" name="username" id="username" class="admin_comedity_text" readonly="readonly">
+									<!--<a href="javascript:;" onClick="editname('{yun:}$member.username{/yun}');" class="admin_comedity_text_a">修改用户名</a>-->
+								</td>
+							</tr>
+							<tr>
+								<th width="160">密码：</th>
+								<td><input type="text" value="" name="password" class="admin_comedity_text">
+									<span class="admin_web_tip">不修改请留空!</span></td>
+							</tr>
+              
+              
+              
+							<tr>
+								<td colspan="4" bgcolor="#f0f6fb">
+									<div class="admin_bold">基本资料</div>
+								</td>
+							</tr>
+							<tr>
+								<th>姓名：</th>
+								<td><input id="name" name="name" type="text" maxlength="50" class="admin_comedity_text" value="{yun:}$row.name{/yun}" /></td>
+							</tr>
+							<tr>
+								<th>性别：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline">
+											<select name="sex" lay-filter="" id="sex">
+												<option>请选择</option>
+												{yun:}foreach from=$user_sex item=v key=j{/yun}
+												<option value="{yun:}$j{/yun}" {yun:}if $row.sex==$j{/yun} selected {yun:}/if{/yun}> {yun:}$v{/yun}
+												</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</td>
+							</tr>
+              	        	<tr class="admin_table_trbg">
+		          		<th>所在地区：</th>
+		          		<td>
+				  		   	<div class="layui-form-item">
+				  		   	
+					          	<div class="layui-input-inline">
+					            	<select name="provinceid" id="provinceid" lay-filter="citys">
+						              	<option value="">请选择</option>
+						              	{yun:}foreach from=$cache.city_index key=j item=v{/yun}
+						              		<option value="{yun:}$v{/yun}" {yun:}if $row.provinceid== $v{/yun} selected{yun:}/if{/yun} >{yun:}$cache.city_name[$v]{/yun} </option>
+						              	{yun:}/foreach{/yun}
+						         	</select>
+					          	</div>
+					          	
+					          	<div class="layui-input-inline">
+					            	<select name="cityid" lay-filter="citys" id="cityid">
+					              		<option value="">请选择</option>
+					              		{yun:}foreach from=$cache.city_type[$row.provinceid] key=j item=v{/yun}
+					              			<option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun} selected{yun:}/if{/yun} >{yun:}$cache.city_name[$v]{/yun}</option>
+					              		{yun:}/foreach{/yun}
+					            	</select>
+					          	</div>
+					          	
+					          	<div class="layui-input-inline">
+					            	<select name="three_cityid" lay-filter="three_cityid" id="three_cityid">
+					              		<option value="">请选择</option>
+					              		{yun:}foreach from=$cache.city_type[$row.cityid] key=j item=v{/yun}
+					              			<option value="{yun:}$v{/yun}" {yun:}if $row.three_cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$cache.city_name[$v]{/yun}</option>
+					              		{yun:}/foreach{/yun}
+					           		</select>
+					          	</div>
+		        			</div> 
+		            	</td>
+		        	</tr>
+              			<tr class="admin_table_trbg">
+								<th>提供服务：</th>
+								<td colspan="3"><textarea name="services" id="services" class="admin_comdit_textarea">{yun:}$row.services{/yun}</textarea></td>
+							</tr>
+							<tr>
+								<th>技能特长：</th>
+								<td><input id="speciality" name="speciality" type="text" class="input-text" maxlength="255" size="40" value="{yun:}$row.speciality{/yun}" /></td>
+							</tr>
+							
+							<tr>
+								<th>薪资待遇：</th>
+								<td><input id="salary" name="salary" type="text" class="input-text" maxlength="255" size="40" value="{yun:}$row.salary{/yun}" />元</td>
+							</tr>
+							
+							<tr class="admin_table_trbg">
+								<th width="160">头像：</th>
+								<td colspan="4">
+									<button type="button" class="yun_bth_pic noupload" lay-data="{imgid: 'photo'}">上传图片</button>
+									<input type="hidden" id="laynoupload" value="1" />
+									<img id="photo" src="{yun:}$row.photo_n{/yun}" width="60" height="60" {yun:}if !$row.photo{/yun}class="none"{yun:}/if{/yun}>
+								</td> 
+							</tr> 
+              <tr class="admin_table_trbg">
+								<th>联系手机：</th>
+								<td><input type="text" value="{yun:}$row.moblie{/yun}" id="moblie" name="moblie" class="input-text">
+									<font color="gray"></font>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th>个人简介：</th>
+								<td colspan="3"><textarea name="content" id="content" class="admin_comdit_textarea">{yun:}$row.content{/yun}</textarea></td>
+							</tr>
+							<tr>
+								<th>状态：</th>
+								<td colspan="3">
+									<div class="layui-form-item">
+										<div class="layui-input-block">
+											<div class="admin_examine_right">
+												<input name="status" id="status" {yun:}if $member.status=='1' {/yun}checked{yun:}/if{/yun} value="1" title="正常" type="radio" />
+												<input name="status" id="status"  {yun:}if $member.status=='2' {/yun}checked{yun:}/if{/yun} value="2" title="锁定" type="radio" />
+											</div>
+										</div>
+									</div>
+									<font color="gray"></font>
+								</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td colspan="3">
+									<input type="hidden" name="uid" id="uid" value="{yun:}$member.uid{/yun}" />
+									<input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+									<input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;修 改&nbsp;" />
+									<input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+								</td>
+							</tr>
+						</table>
+						<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+        layui.use(['layer', 'form', 'laydate'], function() {
+          var layer = layui.layer,
+            form = layui.form,
+            laydate = layui.laydate,
+            $ = layui.$;
+          });
+        
+			function gqinfoedit(){
+          var name = $.trim($("#name").val());
+          if(name==""){
+              parent.layer.msg('姓名不能为空！',2,8);return false;
+          }
+          var sex=$.trim($("#sex").val());
+          if(sex==""){
+             parent.layer.msg('请选择性别！',2,8);return false;
+          }
+          var cityid=$.trim($("#cityid").val());
+           if(cityid==""){
+             parent.layer.msg('请选择所在地区！',2,8);return false;
+          }
+          var services=$.trim($("textarea[name='services']").val());
+          if(services==""){
+             parent.layer.msg('请填写提供服务！',2,8);return false;
+          }
+          var salary=$.trim($("#salary").val());
+          if(services==""){
+             parent.layer.msg('请填写薪资待遇！',2,8);return false;
+          }
+		  var speciality=$.trim($("#speciality").val());
+          if(speciality==""){
+             parent.layer.msg('请填写技能特长！',2,8);return false;
+          }
+		  
+          var moblie=$.trim($("#moblie").val());
+          if(moblie==""){
+             parent.layer.msg('请填写联系手机！',2,8);return false;
+          }else{
+             if(isjsMobile(moblie)==false){
+                  parent.layer.msg('联系手机格式错误！',2,8);return false;
+              }
+          }
+          var content=$.trim($("textarea[name='content']").val());
+           if(content==""){
+             parent.layer.msg('请填写个人简介！',2,8);return false;
+          }
+
+          var status = $("input[name='status']:checked").val();
+            if(status==""){
+             parent.layer.msg('请选择状态！',2,8);return false;
+          }
+
+          
+			}
+		</script>
+    	<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+	<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

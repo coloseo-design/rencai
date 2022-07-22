@@ -1,0 +1,118 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+  <div class="training_cur ftl">
+    <div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > 机构首页 </div>
+  </div>
+  {yun:}include file="$trainstyle/top.htm"{/yun}
+  <div class="Courses_content_box  ftl">
+    <div class="Courses_Table_detail ftl mt10">
+      <div class="training_tit"><span class="training_span ftl">机构简介</span></div>
+      <div class="Agency_Int_p">
+      {yun:}if mb_strlen($row.content,'utf-8')>600{/yun}{yun:}$row.shortcontent{/yun}...
+      <a href="{yun:}url m=train c=intro id='`$row.uid`'{/yun}" class="Agency_Int_p_a">查看详情</a>
+      {yun:}else{/yun}{yun:}$row.content{/yun}{yun:}/if{/yun} 
+     </div>
+    </div>
+	
+	<div class="Courses_Table_detail  ftl mt10">
+		<div class="training_tit"><span class="training_span ftl">机构环境</span></div>
+		<div class="company_box_pic">
+			<ul id="rolling_img1">
+				{yun:}foreach item=v key=key from=$show{/yun}
+					<li style="margin-left:10px;">
+						<a href="javascript:void(0);">
+						<img src="{yun:}$v.picurl{/yun}" lay-src="{yun:}$v.picurl{/yun}"></a><br>
+						{yun:}$v.title|mb_substr:0:13:'utf-8'{/yun}
+					</li>
+				{yun:}foreachelse{/yun}
+                    <div class="com_msg_no">
+                 <p>暂未上传机构环境的图片</p>
+            
+            </div>
+				{yun:}/foreach{/yun}
+			</ul>
+		</div>
+	</div>
+
+    <div class="Courses_Table_detail  ftl mt10">
+      <div class="training_tit"><span class="training_span ftl">培训课程</span></div>
+	 
+      <div class="train_class">
+           <ul> 
+		    {yun:}foreach item=v from=$sublist{/yun}
+               <li>
+                   <div class="train_class_img"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}"><img style="width:150px;height:90px;" src="{yun:}$v.pic{/yun}"/></a></div>
+                   <div class="train_class_tit"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">{yun:}$v.name|mb_substr:0:15:'utf-8'{/yun}</a></div>
+                   <div class="train_class_lb">课程类别：{yun:}$subject_name[$v.tnid]{/yun}</div>
+                   <div class="train_class_m">{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}发布</div>
+                   <div class="train_class_city">{yun:}$city_name[$v.cityid]{/yun} {yun:}$city_name[$v.threecityid]{/yun}</div>
+                   <div class="train_class_dw">
+                   <div class="train_class_tm">{yun:}$v.hours|mb_substr:0:6:'utf-8'{/yun}课时</div>
+                   {yun:}if $v.baomingnum==""{/yun}
+				   0人报名
+				   {yun:}else{/yun}
+				   {yun:}$v.baomingnum{/yun}人报名
+                  
+				    {yun:}/if{/yun}
+                   <div class="train_class_money"><i class="train_class_my">￥{yun:}$v.price{/yun}</i></div>
+                    
+                   </div>
+               </li>  
+			    {yun:}foreachelse{/yun}
+        
+                <div class="com_msg_no">
+                 <p>暂无培训课程信息</p>
+            </div>
+		{yun:}/foreach{/yun}
+      
+           </ul>
+     </div>
+    </div>
+  </div>
+	{yun:}include file="$trainstyle/reclist.htm"{/yun}
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+<script src="{yun:}$style{/yun}/js/ScrollPic.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+layui.use(['layer'], function() {
+		var layer = layui.layer,
+			$ = layui.$;
+	});	
+$(function(){
+	setTimeout(function(){
+		layer.photos({
+			photos: '#rolling_img1',
+			anim: 5
+		});
+	},1000);
+})
+<!--//--><![CDATA[//><!--
+var li_num=$("#rolling_img1 li").length;
+if(li_num>3){//如果图片数量不足，就不执行切换
+	var scrollPic_02 = new ScrollPic();
+	scrollPic_02.scrollContId   = "rolling_img1"; //内容容器ID
+	scrollPic_02.arrLeftId      = "LeftArr";//左箭头ID
+	scrollPic_02.arrRightId     = "RightArr"; //右箭头ID
+	scrollPic_02.frameWidth     = 880;//显示框宽度
+	scrollPic_02.pageWidth      = 231; //翻页宽度
+	scrollPic_02.speed          = 10; //移动速度(单位毫秒，越小越快)
+	scrollPic_02.space          = 10; //每次移动像素(单位px，越大越快)
+	scrollPic_02.autoPlay       = true; //自动播放
+	scrollPic_02.autoPlayTime   = 2; //自动播放间隔时间(秒)
+	scrollPic_02.initialize(); //初始化
+}
+//--><!]]> 
+</script>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

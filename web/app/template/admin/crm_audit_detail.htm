@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+<div class="infoboxp">
+	<div class="tty-tishi_top">
+		<div class="crm_searctime">
+			<ul>
+				<li class='curr'><a href="index.php?m=crm_audit">返回</a></li>
+			</ul>
+		</div>
+	</div>
+<div class="tty_table-bom">
+	<div class="table-list">
+		<div class="admin_table_border">
+			
+			<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+			
+			<form action="index.php"  target="supportiframe" name="myform" method="get" id='myform'>
+				<table width="100%">
+					<thead>
+						<tr class="admin_table_top">
+							<th align="left">订单id</th>
+							<th align="left">订单号</th>
+							<th align="left">企业id/名称</th>
+							<th align="left">会员等级</th>
+							<th align="left">订单价格</th>
+							<th align="left">下单时间</th>
+							<th align="left">业务员id/姓名</th>
+						</tr>
+					</thead>
+					<tbody>
+						{yun:}foreach item=v key=key from=$order{/yun}
+							<tr {yun:}if ($key+1)%2=='0'{/yun} class="admin_com_td_bg" {yun:}/if{/yun}>
+								<td align="left" class="td1" >{yun:}$v.id{/yun}</td>
+								<td align="left" class="td1" >{yun:}$v.order_id{/yun}</td>
+								<td align="left" class="td1" >{yun:}$v.uid{/yun} / {yun:}$v.name{/yun}</td>
+								<td align="left" class="td1" >{yun:}$v.vip{/yun}</td>
+								<td align="left" class="td1" >￥{yun:}$v.order_price{/yun}</td>
+								<td align="left" class="td1" >{yun:}$v.order_time|date_format:"%Y-%m-%d  %H:%M:%S"{/yun}</td>
+								<td align="left" class="td1" >{yun:}$v.crm_uid{/yun} / {yun:}$v.crm_name{/yun}</td>
+							</tr>
+						{yun:}/foreach{/yun}
+						{yun:}if $total > $config.sy_listnum {/yun}
+							<tr>
+								{yun:}if $pagenum==1{/yun}
+									<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum == $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}/if{/yun}
+								<td colspan="4" class="digg">{yun:}$pagenav{/yun}</td>
+							</tr>
+						{yun:}/if{/yun}
+					</tbody>
+				</table>
+				<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+	layui.use(['layer', 'form'], function(){
+		var layer = layui.layer
+			,form = layui.form
+			,$ = layui.$;
+	});
+
+	var salesmanId = '{yun:}$uid{/yun}';
+	var pytoken = $("#pytoken").val();
+	//分配企业客户给业务员
+	function assign(comid){
+		loadlayer();
+		$.post('index.php?m=crm_salesman_list&c=ajax_assign',{ uid : salesmanId, comid : comid, pytoken: pytoken},function(data){
+			parent.layer.closeAll('loading');
+			if(data == 1){
+				layer.msg('分配成功', 2, 9, function(){
+					parent.layer.closeAll();
+					parent.window.location = parent.window.location;
+				});
+			}
+		});
+	}
+
+	//批量分配企业客户给业务员
+	function assignMulti(){
+ 		
+		var chk_value =[];
+
+		$('input[name="comids"]:checked').each(function(){
+			chk_value.push($(this).val());
+		}); 
+
+		if(chk_value.length == 0){
+			layer.msg('还未选择任何企业');
+			return false;
+		}
+		
+		var comid = chk_value.join(',');
+		assign(comid);
+	}
+</script>
+
+</body>
+</html>

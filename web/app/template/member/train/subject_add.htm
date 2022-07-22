@@ -1,0 +1,395 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="training_content training_w980">
+	{yun:}include file="$trainstyle/left.htm"{/yun}
+	<div class="right_column frt mt20">
+    <div class="right_column_border">
+      <div class="right_column_h1"><span class="right_column_h1_span flt">发布课程</span></div>
+	  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+      <form id="subjectform" name="myform" method="post" target="supportiframe" class="layui-form" action="index.php?c=subject_add&act=save" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="{yun:}$row.id{/yun}" />
+      <ul class="Basic_in">
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 课程名称：</div>
+          <div class="Basic_in_right">
+				
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="name" id="name"  lay-verify="required" placeholder="请输入课程名称" maxlength="20" value="{yun:}$row.name{/yun}"  style="display:inline;width:322px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			</div>	
+				
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 课程类别：</div>
+          <div class="Basic_in_right">
+            
+            <table><tr><td>
+		      <select name="nid" id='nid' lay-filter="seId">
+		     	{yun:}if $row.nid{/yun}
+					{yun:}foreach item=v from=$subject_index{/yun}
+						{yun:}if $v eq $row.nid{/yun}
+						<option value="{yun:}$v{/yun}" selected>{yun:}$subject_name[$v]{/yun}</option>
+						{yun:}else{/yun}
+						<option value="{yun:}$v{/yun}" >{yun:}$subject_name[$v]{/yun}</option>
+						{yun:}/if{/yun}
+					{yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+					{yun:}foreach item=v from=$subject_index{/yun}
+	                	<option value="{yun:}$v{/yun}">{yun:}$subject_name[$v]{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+			    
+		      </select>
+			</td>
+            <td>
+		      <select name="tnid" id='tnid' lay-filter="seIds">
+		     	{yun:}if $row.cityid{/yun}
+	 		  	{yun:}foreach item=v from=$subject_type[$row.nid]{/yun}
+                    {yun:}if $v eq $row.tnid{/yun}
+                    <option value="{yun:}$v{/yun}" selected>{yun:}$subject_name[$v]{/yun}</option>
+                    {yun:}else{/yun}
+                    <option value="{yun:}$v{/yun}" >{yun:}$subject_name[$v]{/yun}</option>
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+	            {yun:}/if{/yun}
+			    
+		        {yun:}if !$row.cityid{/yun}
+			        {yun:}foreach item=v from=$subject_type[$row.nid]{/yun}
+	                	<option value="{yun:}$v{/yun}">{yun:}$subject_name[$v]{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+            </td>
+            </tr></table>
+            
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 培训地点：</div>
+          <div class="Basic_in_right">
+          
+          
+          
+            <table><tr><td>
+            	<input type="hidden" id="cionly" name="cionly" value="{yun:}if empty($city_type){/yun}1{yun:}/if{/yun}">
+		      <select name="provinceid" id='provinceid' value="{yun:}$row.provinceid{/yun}" lay-filter="citys">
+		     	{yun:}if $row.provinceid{/yun}
+	 		  	{yun:}foreach item=v from=$city_index{/yun}
+                    {yun:}if $v eq $row.provinceid{/yun}
+                    <option value="{yun:}$v{/yun}" selected>{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}else{/yun}
+                    <option value="{yun:}$v{/yun}" >{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+	            {yun:}/if{/yun}
+			    
+		        {yun:}if !$info.id{/yun}
+			        {yun:}foreach item=v from=$city_index{/yun}
+	                	<option value="{yun:}$v{/yun}">{yun:}$city_name[$v]{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+          </td>
+          {yun:}if !empty($city_type){/yun}
+            <td>
+		      <select name="cityid" id='cityid' value="{yun:}$row.cityid{/yun}" lay-filter="citys">
+		     	{yun:}if $row.cityid{/yun}
+	 		  	{yun:}foreach item=v from=$city_type[$row.provinceid]{/yun}
+                    {yun:}if $v eq $row.cityid{/yun}
+                    <option value="{yun:}$v{/yun}" selected>{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}else{/yun}
+                    <option value="{yun:}$v{/yun}" >{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+	            {yun:}/if{/yun}
+			    
+		        {yun:}if !$row.cityid{/yun}
+			        {yun:}foreach item=v from=$city_type[$row.provinceid]{/yun}
+	                	<option value="{yun:}$v{/yun}">{yun:}$city_name[$v]{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+            </td>
+            <td id='cityshowth'>
+		      <select name="threecityid" id='three_cityid' value="{yun:}$row.threecityid{/yun}" lay-filter="swIdss">
+		     	{yun:}if $row.threecityid{/yun}
+	 		  	{yun:}foreach item=v from=$city_type[$row.cityid]{/yun}
+                    {yun:}if $v eq $row.threecityid{/yun}
+                    <option value="{yun:}$v{/yun}" selected>{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}else{/yun}
+                    <option value="{yun:}$v{/yun}" >{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}/if{/yun}
+                {yun:}/foreach{/yun}
+	            {yun:}else{/yun}
+	                <option value="">请选择</option>
+	            {yun:}/if{/yun}
+			    
+		        {yun:}if !$row.threecityid{/yun}
+			        {yun:}foreach item=v from=$city_type[$row.cityid]{/yun}
+	                	<option value="{yun:}$v{/yun}">{yun:}$city_name[$v]{/yun}</option>
+	                {yun:}/foreach{/yun}
+	            {yun:}/if{/yun}
+		      </select>
+            </td>
+            {yun:}/if{/yun}
+            </tr>
+			</table>
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 培训地址：</div>
+          <div class="Basic_in_right">
+            <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="address" id="address"  lay-verify="required" placeholder="请输入培训地址" value="{yun:}$row.address{/yun}"  style="display:inline;width:322px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			</div>	
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 课程学时：</div>
+          <div class="Basic_in_right">
+          	 <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="hours" id="hours"  lay-verify="required" placeholder="请输入课程学时" maxlength="6" value="{yun:}$row.hours{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" style="display:inline;width:202px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			 </div>
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 培训费用：</div>
+          <div class="Basic_in_right">
+             <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="price" id="price"  lay-verify="required" placeholder="请输入培训费用"  value="{yun:}$row.price{/yun}" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" maxlength='10'  style="display:inline;width:202px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			</div>
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font>收费方式：</div>
+          <div class="Basic_in_right">           
+          <div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <input type="radio" name="isprice" value="1" title="在线缴费" {yun:}if $row.isprice==1{/yun}checked{yun:}/if{/yun}>
+		      <input type="radio" name="isprice" value="2" title="到场缴费" {yun:}if $row.isprice==2{/yun}checked{yun:}/if{/yun}>
+		    </div>
+		  </div>
+           
+           
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 报名电话：</div>
+          <div class="Basic_in_right">
+          	 <div class="layui-form-item">
+				<div class="layui-input-block">
+				  <input type="text" name="moblie" id="moblie"  lay-verify="required" placeholder="请输入报名电话" maxlength="20" value="{yun:}$row.moblie{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" style="display:inline;width:202px;" autocomplete="off" class="layui-input input-text">
+				</div>
+			</div>
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 适合人群：</div>
+          <div class="Basic_in_right">
+            
+            <div class="layui-form-item">
+			  <div class="layui-input-block">
+				<textarea name="crowd" id="crowd" cols="55" rows="3" placeholder="请输入适合人群"   lay-verify="required" class="layui-input input-text"  style="display:inline;width:508px;height:62px;padding-left:10px;" autocomplete="off">{yun:}$row.crowd{/yun}</textarea>
+			  </div>
+			</div>
+            
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000"></font> 课程优势：</div>
+          <div class="Basic_in_right">
+            <div class="layui-form-item">
+			  <div class="layui-input-block">
+				<textarea name="superiority" cols="55" rows="3" placeholder="请输入课程优势"   lay-verify="required" class="layui-input input-text"  style="display:inline;width:508px;height:62px;padding-left:10px;" autocomplete="off">{yun:}$row.superiority{/yun}</textarea>
+			  </div>
+			</div>
+          </div>
+        </li>
+        <li>
+          <div  class="Basic_in_span"><font color="#FF0000">*</font> 课程介绍：</div>
+          <div class="Basic_in_right">
+ 			<script id="content" name="content" type="text/plain" style="width:500px; height:150px;"> {yun:}$row.content{/yun} </script>
+          </div>
+        </li>
+        <li>
+			<div  class="Basic_in_span"><font color="#FF0000">*</font> 开课类型：</div>
+			<div class="Basic_in_right">
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						{yun:}foreach item=v from=$subject_type_index{/yun}
+							<input type="checkbox" name="type[]" value='{yun:}$v{/yun}' title="{yun:}$subject_type_name[$v]{/yun}" {yun:}if in_array($v,$row.type){/yun}checked{yun:}/if{/yun} lay-skin="primary" />
+						{yun:}/foreach{/yun}
+					</div>
+				</div>
+			</div>
+        </li>
+		{yun:}if $teach{/yun}
+        <li>
+			<div  class="Basic_in_span"> 主讲老师：</div>
+			<div class="Basic_in_right">
+				<div class="Basic_in_right_w">
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							{yun:}foreach item=v from=$teachinfo{/yun}
+								<input type="checkbox" name="teachid[]" value='{yun:}$v.id{/yun}' title="{yun:}$v.name{/yun}" {yun:}if in_array($v.id,$row.teachid){/yun}checked{yun:}/if{/yun} lay-skin="primary"/>
+							{yun:}/foreach{/yun}
+						</div>
+					</div>
+				</div>
+			</div>
+        </li>
+		{yun:}else{/yun}
+		<li>
+			<div  class="Basic_in_span"> 主讲老师：</div>
+			<div class="Basic_in_right">
+				<div class="Basic_in_right_w">
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							暂无主讲老师
+						</div>
+					</div>
+				</div>
+			</div>
+        </li>
+       {yun:}/if{/yun}
+        <li>
+          <div  class="Basic_in_span">课程缩略图：</div>
+          <div class="Basic_in_right">
+            <button type="button" class="yun_bth_pic noupload" lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+			<input type="hidden" id="laynoupload" value="1"/>
+			
+			<span class="basic_size">最佳尺寸120*80 </span>
+		  </div>
+        </li>
+		<li id="imgparent" {yun:}if !$row.pic{/yun}class="none"{yun:}/if{/yun}>
+          <div  class="Basic_in_span">预览图片：</div>
+          <div class="Basic_in_right">
+          <img id="imgicon" src="{yun:}$row.pic{/yun}" width="100" height="60" />
+		  </div>
+        </li>
+        <input type="hidden" id="r_status" name="r_status" value="{yun:}$train.r_status{/yun}">
+        <li>
+          <div  class="Basic_in_span">&nbsp;</div>
+          <div class="Basic_in_right">
+            <input type="button" onclick="checkpost()" value="提交" class="Basic_in_bth">
+          </div>
+        </li>
+      </ul>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	function check_subject(id,name){
+		$("#nid").val(id);
+		$("#nid_button").val(name);
+		$("#job_nid").hide();
+		$.post(weburl+"/index.php?m=ajax&c=get_subject",{id:id},function(data){
+			$("#job_tnid").html(data);
+		})
+	}
+
+	function check_teach(id,name){
+		$("#teachid").val(id);
+		$("#teachid_button").val(name);
+		$("#job_teachid").hide();	
+	}
+ 
+	layui.use(['layer', 'form','element'], function(){
+		var layer = layui.layer
+			,form = layui.form
+			,element = layui.element
+			,$ = layui.$;
+
+		url = weburl+"/index.php?m=ajax&c=get_subject_option";
+		form.on('select(seId)',function(data){
+			val = $('#nid').val();
+			if(val>0){
+				$.post(url,{tnid : data.value},function(html){
+					$("#tnid").html(html);
+					form.render();
+				});
+			}
+		});
+	});
+
+	function checkpost(){
+		var cionly	=	$.trim($("#cionly").val());
+		if($.trim($("#name").val())==""){
+			layer.msg('课程名称不能为空！',2,8);return false;
+		}
+		if($("#tnid").val()==""){
+			layer.msg('请选择课程类别！',2,8);return false;
+		}
+		
+		if(cionly=='1'){
+			if($("#provinceid").val()==""){
+				layer.msg('请选择培训地点！',2,8);return false;
+			}
+		}else{
+			if($("#cityid").val()==""){
+				layer.msg('请选择培训地点！',2,8);return false;
+			}
+		}
+		if($.trim($("#address").val())==""){
+			layer.msg('培训地址不能为空！',2,8);return false;
+		}
+		if($.trim($("#hours").val())==""){
+			layer.msg('课程学时不能为空！',2,8);return false;
+		}
+		if($.trim($("#price").val())==""){
+			layer.msg('培训费用不能为空！',2,8);return false;
+		}
+		if($.trim($("input[name='isprice']:checked").val())==""){
+			layer.msg('请选择收费方式！',2,8);return false;
+		}
+		if($.trim($("#moblie").val())==""){
+			layer.msg('报名电话不能为空！',2,8);return false;
+		}
+		if($.trim($("#crowd").val())==""){
+			layer.msg('适合人群不能为空！',2,8);return false;
+		}
+		var html = UE.getEditor('content').getContent();
+		if(html==""){
+			layer.msg('课程介绍不能为空！',2,8);return false;
+		}
+		if($.trim($("input[name='type[]']:checked").val())==""){
+			layer.msg('请选择开课类型！',2,8);return false;
+		}
+		$("#subjectform").submit();
+		layer.load('执行中，请稍候...',0);
+	}
+</script>
+<style>
+.layui-form-item {margin-bottom: 0px;clear: both;}
+.layui-input-block {margin-left: 0px;}
+.Basic_in_span {line-height: 38px;}
+.layui-select-title{width:158px;}
+.layui-form-select{width:158px;margin-right:5px;}
+</style> 
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	var editor = UE.getEditor('content',{
+		toolbars:[[ 'Source','|', 'Undo', 'Redo','Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily', 'fontsize',  'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|','insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','simpleupload', '|', 'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify']],wordCount:false,elementPathEnabled:false,initialFrameHeight:150
+	});
+</script>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

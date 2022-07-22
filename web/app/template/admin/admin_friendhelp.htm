@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="tabs_info">
+					<ul>
+						<li class="curr">
+							<a href="index.php?m=friendhelp">参数配置</a>
+						</li>
+						<li>
+							<a href="index.php?m=friendhelp&c=list">助力记录</a>
+						</li>
+						
+					</ul>
+				</div>
+			
+				<div class="clear"></div>
+
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form id="pushform" class="layui-form" action="index.php?m=friendhelp&c=save" method="post" target="supportiframe">
+						<table width="100%" class="table_form">
+							<tr>
+								<th width="160">启用助力：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_help_open" lay-skin="switch" lay-text="开放|关闭" {yun:}if $config.sy_help_open=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+
+							<tr>
+								<th width="160" class="t_fr">任务时间限制：</th>
+								<td>
+									<div class="layui-input-block">
+										<input class="tty_input t_w480" type="text" name="sy_help_time" id="sy_help_time" value="{yun:}$config.sy_help_time{/yun}"
+										 size="50" maxlength="255" /> 小时
+									 <div class="layui-input-block">
+									<span class="admin_web_tip"> 按小时计算，例1，为1小时 </span>
+								</td>
+							</tr>
+
+							<tr>
+								<th class="t_fr">助力权益：</th>
+								<td colspan="3">
+
+									<div style="width: 450px;padding: 15px 15px 0 15px;border: 1px solid #dcdee2;border-radius: 4px;">
+										<ul class="admin_comclass_add_n ">
+											<li>
+												<span class="admin_comclass_add_n_s">刷新职位</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_breakjobnum"
+												 id="sy_help_breakjobnum" value="{yun:}$config.sy_help_breakjobnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">次</span>
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_breakjobnum_zl"
+												 id="sy_help_breakjobnum_zl" value="{yun:}$config.sy_help_breakjobnum_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+										<ul class="admin_comclass_add_n ">
+
+											<li>
+												<span class="admin_comclass_add_n_s">发布职位</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_jobnum"
+												 id="sy_help_jobnum" value="{yun:}$config.sy_help_jobnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">份</span>
+
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_jobnum_zl"
+												 id="sy_help_jobnum_zl" value="{yun:}$config.sy_help_jobnum_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+
+
+
+
+
+										<ul class="admin_comclass_add_n ">
+											<li>
+												<span class="admin_comclass_add_n_s">紧急职位</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_urgentnum"
+												 id="sy_help_urgentnum" value="{yun:}$config.sy_help_urgentnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">天</span>
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_urgentnum_zl"
+												 id="sy_help_urgentnum_zl" value="{yun:}$config.sy_help_urgentnum_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+										<ul class="admin_comclass_add_n ">
+											<li>
+												<span class="admin_comclass_add_n_s">推荐职位</span>
+												<input class="admin_comclass_add_n_text" type="text" name="sy_help_recnum" id="sy_help_recnum" value="{yun:}$config.sy_help_recnum{/yun}"
+												 onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">天</span>
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_recnum_zl"
+												 id="sy_help_recnum_zl" value="{yun:}$config.sy_help_recnum_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+										<ul class="admin_comclass_add_n ">
+
+											<li>
+												<span class="admin_comclass_add_n_s">置顶职位</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_topnum"
+												 id="sy_help_topnum" value="{yun:}$config.sy_help_topnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">天</span>
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_topnum_zl"
+												 id="sy_help_topnum_zl" value="{yun:}$config.sy_help_topnum_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+										<ul class="admin_comclass_add_n ">
+											<li>
+												<span class="admin_comclass_add_n_s">邀请面试</span>
+												<input class="admin_comclass_add_n_text" type="text" name="sy_help_inviteresume" id="sy_help_inviteresume"
+												 value="{yun:}$config.sy_help_inviteresume{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">份</span>
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_inviteresume_zl"
+												 id="sy_help_inviteresume_zl" value="{yun:}$config.sy_help_inviteresume_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+										<ul class="admin_comclass_add_n ">
+											<li>
+												<span class="admin_comclass_add_n_s">下载简历</span>
+												<input class="admin_comclass_add_n_text" type="text" name="sy_help_downresume" id="sy_help_downresume"
+												 value="{yun:}$config.sy_help_downresume{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">份</span>
+											</li>
+											<li>
+												<span class="admin_comclass_add_n_s">达标助力</span><input class="admin_comclass_add_n_text" type="text" name="sy_help_downresume_zl"
+												 id="sy_help_downresume_zl" value="{yun:}$config.sy_help_downresume_zl{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+												<span class="admin_comclass_add_n_dw">人</span>
+
+											</li>
+										</ul>
+
+									</div>
+									<span class="admin_web_tip" style="background-position: 0px 16px;font-size: 14px;line-height: 25px;">配置说明：助力权益按照梯次分配，每次好友助力达到设置的数量可以获取对应的权益</br>举例说明：</br>刷新职位1次，达标助力10人 : 代表
+										当助力人数到达10人时，企业可以获得一次职位刷新的权限.</br>下载简历1份，达标助力50人：当好友继续助力，人数达到50人，在原来已有的职位刷新1次权益基础上又新获得下载简历1份的权益。</br>以此类推，可以多项权益设置相同助力人数，达到助力指标则同时获得多项权益，任务结束按照助力总人数进行统计发放相关权益。</br>Ps：权益、达标助力参数设置为0或空，则该项权益不参与好友助力任务。</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th></th>
+								<td>
+									<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+									<input class="tty_sub" id="chatconfig" type="submit" value="提交" />&nbsp;&nbsp;
+									<input class="tty_cz" type="reset" value="重置" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,138 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<!-- 页面主体部分 -->
+
+<div class="m_tab">	
+<div class="m_tabbox">
+			<ul>
+				<li class="m_tabactive">分享职位</li>
+				<li onclick="navigateTo('index.php?c=jobpack&t=r')">悬赏职位</li>
+			</ul>
+		</div>	</div>
+		<div class="m_cardbgbox">
+			<div class="m_cardbox ">
+		<div id="yunvue" class="management_body_card_content" v-show="islook" style="display: none;">
+			<div class="cont active" v-if="total > 0">
+				<div class="body_card_content_box">
+					<div class="card_content_box_share" v-for="(item,index) in list" :key="index" @click="toPage(item.wapurl)">
+						<div class="share_top">
+							<div class="share_top_name">{{item.name}}</div>
+							<div class="share_top_time">{{item.lastupdate}}</div>
+						</div>
+						<div class="share_cen">
+							<ul>
+								<li>
+									<div class="share_cen_q">赏金总额</div>
+									<div class="share_cen_a">￥{{item.packprice}}</div>
+								</li>
+								<li>
+									<div class="share_cen_q">赏金单价</div>
+									<div class="share_cen_a">￥{{item.packmoney}}</div>
+								</li>
+								<li>
+									<div class="share_cen_q">剩余赏金</div>
+									<div class="share_cen_a">￥{{item.nowprice}}</div>
+								</li>
+							</ul>
+						</div>
+						<div class="share_bom">
+							<div class="share_bom_box">
+								<div class="share_cen_q">推广量</div>
+								<div class="share_cen_a">{{item.sharenum}}</div>
+							</div>
+							<object>
+								<a href="javascript:;">
+									<div class="share_bom_icon" @click.stop="deljobshare(item.jobid, index)">
+										<img src="{yun:}$wap_style{/yun}/images/share.png" alt="" width="100%" height="100%">
+									</div>
+								</a>
+							</object>
+						</div>
+					</div>
+				</div>
+				<div v-if="total > limit">
+					<van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange"/>
+				</div>
+			</div>
+			<div v-else>
+				<div class="wap_member_nobg">
+				<div class="wap_member_no">暂无记录</div>
+				<em class="wap_memberjob_fabu "></em>
+			</div></div>
+		</div>
+	</div>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                islook: false,
+                list: [],
+
+                total: 0,
+                pageTotal: 0,
+                page: 1,
+                limit: 20,
+            };
+        },
+        created() {
+            this.getSharejob();
+        },
+        methods: {
+            getSharejob: function () {
+                var that = this;
+
+                var paramer = {
+                    page: that.page,
+                    limit: that.limit
+                };
+                showLoading();
+                that.islook = false;
+                $.post('{yun:}url d=wxapp h=com m=job c=sharejob{/yun}', paramer, function (data) {
+                    hideLoading();
+                    if (data) {
+                        that.total = data.total;
+                        that.pageTotal = Math.ceil(data.total / that.limit);
+                        that.list = data.data.length > 0 ? data.data : [];
+                    }
+                    that.islook = true;
+					$("#yunvue").css('display', 'block');
+                }, 'json')
+            },
+            deljobshare: function (id, k) {
+                let that = this,
+                    param = {
+                        jobid: id,
+                    };
+
+                showConfirm('确定取消分享职位？', function () {
+                    showLoading('取消中');
+                    $.post('{yun:}url d=wxapp h=com m=job c=deljobshare{/yun}', param, function (data) {
+                        hideLoading();
+                        if (data.error == 0) {
+                            showToast("取消成功", 2, function () {
+                                that.list.splice(k, 1);
+                                if (that.list.length == 0) { // 无数据时重新加载页面
+                                    that.page = that.page > 1 ? (that.page - 1) : 1;
+                                    that.getSharejob();
+                                }
+                            });
+                        } else {
+                            showModal(data.msg);
+                        }
+                    }, 'json')
+                })
+            },
+            pageChange: function (page) {
+                this.page = page;
+                this.getSharejob();
+            },
+            toPage: function (url) {
+                window.location.href = url;
+            },
+        }
+    });
+</script>
+
+</body>
+</html>

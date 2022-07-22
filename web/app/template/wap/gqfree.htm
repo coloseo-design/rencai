@@ -1,0 +1,59 @@
+{yun:}include file="$wapstyle/header_gq.htm"{/yun}
+<!--自由职业者-->
+<form action="{yun:}$config_wapdomain{/yun}/index.php" method="get">
+<input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}">
+<input type="hidden" name="a" value="{yun:}$smarty.get.a{/yun}">
+<div class="free_job_header_search"><div class="free_job_header_search_c"><input type="text" name="keyword" value="{yun:}$smarty.get.keyword{/yun}" class="free_job_header_search_text" placeholder="请输入业务关键词"></div></div>
+</form>
+{yun:}foreach from=$rows item=v{/yun}
+<div class="free_job_userlist">
+<a href="{yun:}url m=wap c=gqlist a=freeshow id=$v.uid{/yun}">
+<div class="free_job_user_pic">
+{yun:}if $v.photo_status!=0{/yun}
+<img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}" width="60" height="60"></div>
+{yun:}else{/yun}
+<img src="{yun:}if $v.photo_n{/yun}{yun:}$v.photo_n{/yun}{yun:}else{/yun}{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}{yun:}/if{/yun}" width="60" height="60"></div>
+{yun:}/if{/yun}
+<div class="free_job_username">{yun:}$v.name{/yun}</div>
+<div class="free_job_userjob">{yun:}$v.services{/yun}</div>
+<span class="free_job_userfw">服务：{yun:}$v.services{/yun}</span>
+</a>
+</div>
+{yun:}/foreach{/yun}
+<div id="app">
+{yun:}if $total<=0{/yun} 
+	<van-empty image="search" description="很抱歉,暂无记录！" />
+		{yun:}if $smarty.get.keyword!="" {/yun}
+		<van-button url="{yun:}url m=wap c=gqlist a=free{/yun}" round type="info" class="bottom-button">重新搜索</van-button>
+		{yun:}/if{/yun} 
+	</van-empty>
+{yun:}else{/yun}
+	{yun:}if $total > 12{/yun}
+    	<van-pagination v-model="currentPage" :total-items="total" :items-per-page="perpage" force-ellipses @change="pageChange" />
+    {yun:}/if{/yun}
+{yun:}/if{/yun}
+</div>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script type="text/javascript">
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}'),
+        total = parseInt('{yun:}$total{/yun}'),
+        pagelink = '{yun:}$pagelink{/yun}';
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //分页相关
+            currentPage: currentPage ? currentPage : 1,
+            total: total,
+            perpage: 12,
+        },
+        methods: {
+            pageChange: function (e) {
+                var pageurl = pagelink.replace('{{page}}', e);
+                location.href = pageurl;
+            }
+        }
+    })
+</script>
+</body>
+</html>

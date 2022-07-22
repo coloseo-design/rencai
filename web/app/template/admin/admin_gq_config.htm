@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <title>后台管理</title>
+    </head>
+
+    <body class="body_ifm">
+        <div class="infoboxp">
+
+            <div class="tty-tishi_top">
+                <div class="clear"></div>
+                <div class="tag_box">
+                    <div>
+                        <form method="post" class="layui-form">
+                            <table width="100%" class="table_form">
+                               
+                                <tr class="admin_table_trbg once_price" >
+                                    <th width="220" class="t_fl">发布项目任务：</th>
+                                    <td>
+										<div class="layui-input-block">
+											<input class="tty_input t_w480" type="text" name="gq_pay_price" id="gq_pay_price" maxlength="6" value="{yun:}$config.gq_pay_price{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />元/条
+										</div>
+										<span class="admin_web_tip">提示：0为免费</span>
+										</td>
+                                </tr>
+                                 <tr class="admin_table_trbg">
+                                    <th width="220" class="t_fl">项目发布次数：</th>
+                                    <td>
+										<div class="layui-input-block">
+											<input class="tty_input t_w480" type="text" name="gq_number" id="gq_number" value="{yun:}$config.gq_number{/yun}" size="10" maxlength="255" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" /> 次/天
+										</div>
+										<span class="admin_web_tip">提示：当金额为0元，每天发布次数才会限制（0为不限）</span>
+									</td>
+                                </tr>
+                               
+                                <tr class="admin_table_trbg">
+                                    <th width="220" class="t_fl">项目任务刷新：</th>
+                                    <td>
+										<div class="layui-input-block">
+											<input class="tty_input t_w480" type="text" name="gq_refrsh_pay" id="gq_refrsh_pay" value="{yun:}$config.gq_refrsh_pay{/yun}" size="10" maxlength="255" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" /> 元/次
+										</div>
+										<span class="admin_web_tip">提示：0为不限</span>
+									</td>
+                                </tr>
+
+                                <tr class="admin_table_trbg">
+                                    <th width="220">查看供求项目任务联系方式：</th>
+                                    <td>
+										<div class="layui-input-block">
+											<input type="radio" name="gq_task_link" value="0" title="公开" {yun:}if $config.gq_task_link!=1{/yun}checked{yun:}/if{/yun}>
+											<input type="radio" name="gq_task_link" value="1" title="登录查看" {yun:}if $config.gq_task_link==1{/yun}checked{yun:}/if{/yun}>
+										</div>
+                                    </td>
+                                </tr>
+                                     <th width="220">查看供求用户联系方式：</th>
+                                    <td>
+										<div class="layui-input-block">
+											<input type="radio" name="gq_info_link" value="0" title="公开" {yun:}if $config.gq_info_link!=1{/yun}checked{yun:}/if{/yun}>
+											<input type="radio" name="gq_info_link" value="1" title="登录查看" {yun:}if $config.gq_info_link==1{/yun}checked{yun:}/if{/yun}>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr class="admin_table_trbg">
+                                    <th width="220">供求用户审核：</th>
+                                    <td>
+                                        <input type="checkbox" name="gq_fast_status" id="gq_fast_status" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.gq_fast_status=="0" {/yun} checked {yun:}/if{/yun} />
+                                    </td>
+                                </tr>
+                                
+                                <tr class="admin_table_trbg">
+                                    <th width="220">供求项目任务审核：</th>
+                                    <td>
+                                        <input type="checkbox" name="gq_task_status" id="gq_task_status" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.gq_task_status=="0" {/yun} checked {yun:}/if{/yun} />
+                                    </td>
+                                </tr>
+                                     <tr class="admin_table_trbg">
+                                    <th width="220">供求用户上传头像审核：</th>
+                                    <td>
+                                        <input type="checkbox" name="gq_photo_status" id="gq_photo_status" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.gq_photo_status=="1" {/yun} checked {yun:}/if{/yun} />
+                                    </td>
+                                </tr>
+      
+                                  <tr class="admin_table_trbg">
+                                    <th width="150" class="t_fr">默认供求头象：</th>
+                                    <td>
+										
+										<div class="admin_uppicbox">
+											<input type="hidden" id="layupload_type" value="2"/>
+											<div class="admin_uppicimg">
+												<img id="imgicon" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}" width="140" height="140" {yun:}if !$config.gq_photo{/yun}class="none"{yun:}/if{/yun}>
+											</div>
+											<span>
+												<button type="button" class="adminupbtn adminupload" lay-data="{name: 'gq_photo',imgid: 'imgicon',path:'logo'}">重新上传</button>	
+												<input type="hidden" name="gq_photo" id="gq_photo" value="{yun:}$config.gq_photo{/yun}"/>
+											</span>
+										</div>
+
+                                    </td>
+                                  </tr>
+                            
+                                 <tr>
+                                 <th style="border-bottom:none;">&nbsp;</th>
+                                      <td align="left" style="border-bottom:none;"> 
+                                       <input class="tty_sub" id="config" type="button" name="config" value="提交" />&nbsp;&nbsp;
+                                       <input class="tty_cz" type="reset" value="重置" /></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+		<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+        <script>
+            $(function() {
+                $(".tips_class").hover(function() {
+                    var msg_id = $(this).attr('id');
+                    var msg = $('#' + msg_id + ' + font').html();
+                    if($.trim(msg) != '') {
+                        layer.tips(msg, this, {
+                            guide: 1,
+                            style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+                        });
+                        $(".xubox_layer").addClass("xubox_tips_border");
+                    }
+                }, function() {
+                    var msg_id = $(this).attr('id');
+                    var msg = $('#' + msg_id + ' + font').html();
+                    if($.trim(msg) != '') {
+                        layer.closeAll('tips');
+                    }
+                });
+                $("#config").click(function() {
+                    loadlayer();
+                    $.post("index.php?m=admin_gqset&c=save", {
+                        config: $("#config").val(),
+                        gq_pay_price: $("#gq_pay_price").val(),
+                        gq_number: $("#gq_number").val(),
+                        gq_refrsh_pay: $("#gq_refrsh_pay").val(),
+                        gq_task_link: $("input[name=gq_task_link]:checked").val(),
+                        gq_task_status: $("input[name=gq_task_status]").is(":checked") ? 0 : 1,
+                        gq_info_link: $("input[name=gq_info_link]:checked").val(),
+                        gq_fast_status: $("input[name=gq_fast_status]").is(":checked") ? 0 : 1,
+                        gq_photo_status: $("input[name=gq_photo_status]").is(":checked") ? 1 : 0,
+                        pytoken: $("#pytoken").val()
+                    }, function(data, textStatus) {
+      
+                         parent.layer.closeAll('loading');
+                        config_msg(data);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    });
+                });
+            })
+        </script>
+        <script type="text/javascript">
+            layui.use(['layer', 'form'], function() {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.$;
+            });
+        </script>
+    </body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

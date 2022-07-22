@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div id="subboxdiv" style="width:100%;height:100%;display:none;position: absolute;"></div>
+
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+
+				<div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">设置后，可以在小程序里面快捷登录！</div>
+						<div class="admin_new_tip_list">设置后，联系授权客服提交代码！</div>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+
+				<div id="right" style="display:block">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form method="post" target="supportiframe" action="" name="config" class="layui-form">
+
+						<div>
+							<table width="100%" class="table_form">
+								<tr>
+									<th colspan="2" class="admin_bold_box">
+										<div class="admin_bold">微信小程序设置</div>
+									</th>
+								</tr>
+								<tr class="none">
+									<th class="t_fr">APPID:</th>
+									<td>
+										<div class="layui-input-inline t_w480">
+											<input type="text" class="layui-input" name="sy_wxpayappid" id="sy_wxpayappid" value="{yun:}$wxpaydata.sy_wxpayappid{/yun}"
+											 size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">绑定支付的APPID（必须配置，公众号平台可查看）</span>
+									</td>
+								</tr>
+								<tr class="none">
+									<th class="t_fr">AppSecret:</th>
+									<td>
+										<div class="layui-input-inline t_w480">
+											<input type="text" class="layui-input" name="sy_wxappsecret" id="sy_wxappsecret" value="{yun:}$wxpaydata.sy_wxappsecret{/yun}"
+											 size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">绑定支付的公众号AppSecret（必须配置，公众号平台可查看）</span>
+									</td>
+								</tr>
+								<tr class="none">
+									<th class="t_fr">商户号(MCHID):</th>
+									<td>
+										<div class="layui-input-inline t_w480">
+											<input type="text" class="layui-input" name="sy_wxpaymchid" id="sy_wxpaymchid" value="{yun:}$wxpaydata.sy_wxpaymchid{/yun}"
+											 size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">商户号（必须配置，开户邮件中可查看）</span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg none">
+									<th class="t_fr">商户密钥(KEY):</th>
+									<td>
+										<div class="layui-input-inline t_w480">
+											<input type="text" class="layui-input" name="sy_wxpaykey" id="sy_wxpaykey" value="{yun:}$wxpaydata.sy_wxpaykey{/yun}"
+											 size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">商户支付密钥，参考开户邮件设置（必须配置，登录商户平台自行设置）</span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg none">
+									<th class="t_fr">证书（pem格式）路径:</th>
+									<td>
+										<div class="layui-input-inline t_w480">
+											<input type="text" class="layui-input" name="sy_wxpem_cert" id="sy_wxpem_cert" value="{yun:}$wxpaydata.sy_wxpem_cert{/yun}"
+											 size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">微信商户平台-API安全-下载证书，证书不要存放于网站目录下，防止被恶意下载，请填绝对路径 如D:\wxca\apiclient_cert.pem</span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg none">
+									<th class="t_fr">证书密钥（pem格式）路径:</th>
+									<td>
+										<div class="layui-input-inline t_w480">
+											<input type="text" class="layui-input" name="sy_wxpem_key" id="sy_wxpem_key" value="{yun:}$wxpaydata.sy_wxpem_key{/yun}"
+											 size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">微信商户平台-API安全-下载证书，证书不要存放于网站目录下，防止被恶意下载，请填绝对路径 如D:\wxca\apiclient_key.pem</span>
+									</td>
+								</tr>
+
+								<tr>
+									<th class="t_fr">xcxAPPID:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" name="sy_xcxappid" id="sy_xcxappid" value="{yun:}$wxpaydata.sy_xcxappid{/yun}" size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">绑定支付的小程序APPID（必须配置，小程序平台可查看）</span>
+									</td>
+								</tr>
+								<tr>
+									<th class="t_fr">xcxAppSecret:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" name="sy_xcxsecret" id="sy_xcxsecret" value="{yun:}$wxpaydata.sy_xcxsecret{/yun}" size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">绑定支付的小程序AppSecret（必须配置，小程序平台可查看）</span>
+									</td>
+								</tr>
+								<tr>
+									<th class="t_fr">原始ID:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" name="sy_xcxysid" id="sy_xcxysid" value="{yun:}$wxpaydata.sy_xcxysid{/yun}" size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">微信小程序原始ID（使用视频面试功能必须配置，小程序平台-设置-基本设置中可查看）</span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg">
+									<th width="160" class="t_fr">微信小程序二维码：</th>
+									<td>
+										
+										<div class="admin_uppicbox">
+											<input type="hidden" id="layupload_type" value="2" />
+										
+											<div class="admin_uppicimg">
+												<img width="140" height="140" id="imgweixin" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_weixinxcxu_qcode{/yun}" {yun:}if !$config.sy_weixinxcxu_qcode{/yun}class="none"{yun:}/if{/yun}>
+											</div>
+										
+											<span>
+												<button type="button" class="adminupbtn adminupload" lay-data="{name: 'sy_weixinxcxu_qcode',imgid: 'imgweixin',path: 'logo',source:'back'}">重新上传</button>		
+											</span>
+										</div>
+									</td>
+								</tr>
+								
+								<tr>
+									<th class="t_fr">小程序名称:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" name="sy_xcxname" id="sy_xcxname" value="{yun:}$config.sy_xcxname{/yun}" size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">仅针对公众号关注回复、场景二维码生效。公众号必须关联小程序</span>
+									</td>
+								</tr>
+								<tr>
+									<th class="t_fr">小程序默认页面:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" name="sy_xcxpath" id="sy_xcxpath" value="{yun:}$config.sy_xcxpath{/yun}" size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">仅针对公众号关注回复、场景二维码生效，默认pages/index/index。公众号必须关联小程序</span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg">
+									<th width="160" class="t_fr">小程序封面：</th>
+									<td>
+										
+										<div class="admin_uppicbox" style="width:200px;height:160px;">
+										
+											<div class="admin_uppicimg">
+												<img width="200" height="160" id="imgxcxpic" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_xcxpic{/yun}" {yun:}if !$config.sy_xcxpic{/yun}class="none"{yun:}/if{/yun}>
+											</div>
+											
+											<span>
+												<button type="button" class="adminupbtn adminupload" lay-data="{name: 'sy_xcxpic',imgid: 'imgxcxpic',path: 'logo',source:'back'}">重新上传</button>		
+											</span>
+										</div>
+									</td>
+								</tr>
+								
+								<style>
+									.layui-form-switch{
+										margin-top: 0;
+									}
+								</style>
+								<tr>
+									<th width="160">微信小程序码展示：</th>
+									<td>
+										<div class="layui-input-block">
+											<div class="layui-input-inline" style="width: 80px;">
+												<input type="checkbox" name="sy_xcxQrcode" lay-skin="switch" lay-text="展示|关闭" {yun:}if $config.sy_xcxQrcode=="1"
+												 {/yun} checked {yun:}/if{/yun} />
+											</div>
+											<span class="admin_web_tip">电脑端职位详细页和企业详细页小程序码展示</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+								<th width="160">IOS支付功能：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline" style="width: 80px;">
+											<input type="checkbox" name="sy_wxxcx_iospay" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_wxxcx_iospay=="1"
+											 {/yun} checked {yun:}/if{/yun} />
+										</div>
+										<span class="admin_web_tip">IOS平台不支持虚拟产品购买，提交审核请关闭，否则将被驳回。<a href="https://developers.weixin.qq.com/miniprogram/product/#_5-13-%E8%99%9A%E6%8B%9F%E6%94%AF%E4%BB%98%E8%A1%8C%E4%B8%BA" target="_blank">微信小程序运营规范</a></span>
+									</div>
+								</td>
+							</tr>
+								{yun:}if $config.sy_spview_web=="1"{/yun}
+								<tr>
+									<th width="160">视频客服：</th>
+									<td>
+										<div class="layui-input-block">
+											<div class="layui-input-inline" style="width: 80px;">
+												<input type="checkbox" name="sy_xcx_contact" lay-skin="switch" lay-text="展示|关闭" {yun:}if $config.sy_xcx_contact=="1"{/yun} checked {yun:}/if{/yun} />
+											</div>
+											<span class="admin_web_tip">小程序内视频客服功能，工具-视频客服类目审核通过后，请关闭</span>
+										</div>
+									</td>
+								</tr>
+								{yun:}/if{/yun}
+								<tr>
+									<th class="t_fr">微信开放平台:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" value="{yun:}if !empty($config['mini_wxopen']){/yun}已绑定{yun:}else{/yun}未绑定{yun:}/if{/yun}" size="50" maxlength="255" readonly="readonly" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th class="t_fr">视频号ID:</th>
+									<td>
+										<div class="layui-input-block t_w480">
+											<input type="text" class="layui-input" name="sy_sphid" value="{yun:}$wxpaydata.sy_sphid{/yun}" size="50" maxlength="255" />
+										</div>
+										<span class="admin_web_tip">以“sph”开头的id，可在<a href="https://channels.weixin.qq.com" target="_blank">视频号助手</a>获取</span>
+									</td>
+								</tr>
+								<tr>
+									<th>&nbsp;</th>
+									<td align="left">
+										<input class="tty_sub" id="pay_config" type="submit" name="pay_config" value="&nbsp; 修 改 &nbsp;" />&nbsp;&nbsp;
+										<input class="tty_cz" type="reset" name="reset" value="&nbsp; 重 置 &nbsp;" />
+									</td>
+								</tr>
+							</table>
+						</div>
+						<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			var weburl = "{yun:}$config.sy_weburl{/yun}";
+			layui.use('form', function() {
+				var form = layui.form;
+			});
+		</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+	
+	<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	
+	<title>后台管理</title>
+	
+</head>
+
+<body class="body_ifm">
+	<div class="infoboxp">
+		<div class="tty-tishi_top"> 
+		<div class="tabs_info" style="height:36px;">
+           	<ul>
+	            <li class="curr">
+	                <a href="###">外出审批</a>
+	         	</li>
+           	</ul>	
+       	</div>
+		<div class="crm_searctime">
+			<ul>
+				<li {yun:}if $smarty.get.day==''{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_outall">全部</a></li>
+				<li {yun:}if $smarty.get.day==1{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_outall&day=1">今天</a></li>
+				<li {yun:}if $smarty.get.day==2{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_outall&day=2">昨天</a></li>
+				<li {yun:}if $smarty.get.day==3{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_outall&day=3">本周</a></li>
+				<li {yun:}if $smarty.get.day==4{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_outall&day=4">本月</a></li>
+			</ul>
+		</div>
+		
+		<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+		<form class="layui-form" action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+			
+			<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+			<input name="m" value="crm_outall" type="hidden"/>
+			<input name="day" value="{yun:}$smarty.get.day{/yun}" type="hidden"/>
+        	
+        	<div class="crm_newly_build_tit" style="padding:0px; padding-top:10px;">
+				<div class="layui-input-inline">
+					<select name="status" id="status" lay-filter='status'>
+						<option value="1" {yun:}if $smarty.get.status ==1{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='1' adt='status' untype='status'{/yun}">待审批</option>
+						<option value="2" {yun:}if $smarty.get.status ==2{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='2' adt='status' untype='status'{/yun}">已同意</option>
+						<option value="3" {yun:}if $smarty.get.status ==3{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='3' adt='status' untype='status'{/yun}">未同意</option>
+						<option value="4" {yun:}if $smarty.get.status==4 || !$smarty.get.status{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='4' adt='status' untype='status'{/yun}">全部</option>
+					</select>
+				</div>
+			</div>
+		</div>
+			
+        <div class="tty_table-bom"> 	
+        	<div class="table-list" style="color:#898989; margin-top:10px;">
+				<div class="admin_table_border">	
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th align="left" ><div style="padding-left:15px;">申请人</div></th>
+								<th align="left" >客户信息</th>
+								<th align="left" >联系人</th>
+								<th align="left" >外出原因</th>
+								<th align="left" >外出时间</th>
+								<th align="left">返回时间</th>
+								<th align="left" >备注</th>
+								<th align="left">申请时间</th>
+								<th align="left">状态</th>
+	 							<th >操作</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							{yun:}foreach item=v key=key from=$tasks{/yun}
+								<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+									<td align="left"><div style="padding-left:15px;">{yun:}$v.name{/yun}</div></td>									
+									<td align="left"><a href="{yun:}url m=company c=show id=$v.uid{/yun}" target="_blank" class="admin_com_name">{yun:}$v.comname{/yun}</a></td>
+									<td align="left">{yun:}$v.linkman{/yun}<br>{yun:}$v.linktel{/yun}</td>
+									<td align="left">{yun:}$crmClassName[$v.reason]{/yun}</td>
+									<td align="left">{yun:}$v.stime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+									<td align="left">{yun:}$v.etime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+									<td align="left">{yun:}$v.remark{/yun}</td>
+									<td align="left">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+									<td align="left">
+										{yun:}if $v.status==1{/yun}未审批
+										{yun:}elseif $v.status==2{/yun}已同意
+										{yun:}elseif $v.status==3{/yun}
+											未同意{yun:}if $v.statusbody{/yun}<br>原因：{yun:}$v.statusbody{/yun}{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									</td>
+									<td>
+										{yun:}if $v.status == '1'{/yun}
+											<a href="javascript:void(0)" onclick="setoutstatus('2','{yun:}$v.id{/yun}','index.php?m=crm_outall&c=setStatus')"  class="crm_submit_rw">同意</a><br>
+											<a href="javascript:void(0)" onclick="setoutstatus('3','{yun:}$v.id{/yun}','index.php?m=crm_outall&c=setStatus')"  class="crm_submit_jj" style="margin-top:8px; margin-bottom:8px;">拒绝</a><br>
+										{yun:}/if{/yun}
+										<a href="javascript:void(0);" onClick="layer_del('确定要删除？', 'index.php?m=crm_outall&c=del&id={yun:}$v.id{/yun}');" class="crm_submitqx  " >删除</a>
+									</td>
+								</tr>
+							{yun:}/foreach{/yun}
+							
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="6" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+		</form>
+	</div>
+	
+	<div id="outstatus" style="display:none; width: 430px;text-align:center; ">
+		<div class="">
+			<table cellspacing='1' cellpadding='1' class="admin_examine_table">
+				<tr>
+					<th>说明原因：</th>
+					<td align="left">
+						<textarea id="statusbody" name="statusbody" class="admin_explain_textarea" style="width: 350px;height:150px"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan='2' align="center">
+						<input type="hidden" name="outid" id="outid" value="">
+						<input type="button" onclick="setOutStatusu();" value='保存' class="admin_examine_bth">
+						<input type="button" class="admin_examine_bth_qx" onClick="layer.closeAll();" value='关闭'>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script>
+		var weburl="{yun:}$config.sy_weburl{/yun}";
+		layui.use(['form', 'laydate'], function(){
+			var form = layui.form
+				,laydate = layui.laydate
+				,$ = layui.$;
+			form.on('select(status)', function(data){
+				var url=$('#status option:selected').attr('data-url');
+				location.href=url;
+			});
+			laydate.render({
+				elem: '#stime'
+				,type: 'datetime'
+			});
+			laydate.render({
+				elem: '#etime'
+				,type: 'datetime'
+			});
+		});
+		function setoutstatus(status,id,url){
+			var pytoken = $('#pytoken').val();
+			if(status==2){
+				loadlayer();
+				$.post(url,{pytoken:pytoken,status:status,id:id},function(data){
+					parent.layer.closeAll('loading');
+					if(data==1){
+						location.reload();
+					}
+				});
+			}else if(status==3){
+				$('#outid').val(id);
+				$.layer({
+					type : 1,
+					title :'请说明不同意原因', 
+					closeBtn : [0 , true],
+					border : [10 , 0.3 , '#000', true],
+					area : ['450px','300px'],
+					offset: ['20px', ''],
+					page : {dom :"#outstatus"}
+				});
+			}
+		 }
+		 function setOutStatusu(){
+			var pytoken = $('#pytoken').val();
+			var id = $('#outid').val();
+			var statusbody = $('#statusbody').val();
+			if(!statusbody){
+				layer.msg('请说明不同意原因！',2,8);return false;
+			}
+			loadlayer();
+			$.post('index.php?m=crm_outall&c=setStatus',{pytoken:pytoken,status:3,id:id,statusbody:statusbody},function(data){
+				parent.layer.closeAll('loading');
+				if(data==1){
+					location.reload();
+				}
+			});
+		}
+ 	</script>
+</body>
+</html>

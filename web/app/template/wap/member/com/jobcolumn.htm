@@ -1,0 +1,112 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<style>
+    .management_header_title_icon a {
+        display: block;
+    }
+    .management_header_title_icon img {
+        display: block;
+    }
+</style>
+<!-- 页面头部部分 -->
+
+<!-- 页面主体部分 -->
+<div class="position_management_body">
+
+    <div class="management_body_card" style=" margin-top: 0rem;">
+        <ul>
+		  {yun:}if $config.sy_part_web==1{/yun}
+			<li onclick="navigateTo('index.php?c=part')">
+			    <div class="management_body_card_icon">
+			       <img src="{yun:}$wap_style{/yun}/images/com_icon1.png" alt="">
+			    </div>
+			    <div class="management_body_card_name">兼职招聘</div>
+			</li>
+			{yun:}/if{/yun}
+            {yun:}if $config.sy_zph_web==1{/yun}
+            <li onclick="navigateTo('index.php?c=zhaopinhui')">
+                <div class="management_body_card_icon">
+                   <img src="{yun:}$wap_style{/yun}/images/com_icon2.png" alt="">
+                </div>
+                <div class="management_body_card_name">招聘会记录</div>
+            </li>
+            {yun:}/if{/yun}
+            {yun:}if $config.sy_zphnet_web==1{/yun}
+            <li onclick="navigateTo('index.php?c=zphnet')">
+                <div class="management_body_card_icon">
+                    <img src="{yun:}$wap_style{/yun}/images/com_icon3.png" alt="">
+                </div>
+                <div class="management_body_card_name">网络招聘会记录</div>
+            </li>
+            {yun:}/if{/yun}
+            {yun:}if $config.sy_special_web==1{/yun}
+            <li onclick="navigateTo('index.php?c=special')">
+                <div class="management_body_card_icon">
+                    <img src="{yun:}$wap_style{/yun}/images/com_icon4.png" alt="">
+                </div>
+                <div class="management_body_card_name">专题招聘</div>
+            </li>
+            {yun:}/if{/yun}
+         
+        </ul>
+    </div>
+    <div class="management_body_card">
+        <ul>
+			{yun:}if $config.sy_school_web==1{/yun}
+			<li onclick="navigateTo('index.php?c=xjh')">
+			    <div class="management_body_card_icon">
+			        <img src="{yun:}$wap_style{/yun}/images/com_icon5.png" alt="">
+			    </div>
+			    <div class="management_body_card_name">校招宣讲会</div>
+			</li>
+			{yun:}/if{/yun}
+            {yun:}if $config.sy_lietou_web==1{/yun}
+            <li onclick="navigateTo('index.php?c=lt_job')">
+                <div class="management_body_card_icon">
+                    <img src="{yun:}$wap_style{/yun}/images/com_icon6.png" alt="">
+                </div>
+                <div class="management_body_card_name">猎头职位管理</div>
+            </li>
+            {yun:}/if{/yun}
+
+            {yun:}if $config.sy_reward_web==1{/yun}
+            <li onclick="navigateTo('index.php?c=jobpack')">
+                <div class="management_body_card_icon">
+                    <img src="{yun:}$wap_style{/yun}/images/com_icon7.png" alt="">
+                </div>
+                <div class="management_body_card_name">赏金推广职位</div>
+            </li>
+            {yun:}/if{/yun}
+			<li onclick="navigateTo('index.php?c=my_rebates');"> 
+			    <div class="management_body_card_icon">
+			        <img src="{yun:}$wap_style{/yun}/images/com_icon8.png" alt="">
+			    </div>
+			    <div class="management_body_card_name">悬赏简历</div>
+			</li>
+			
+			{yun:}if $config.sy_ask_web==1{/yun}
+			<li onclick="navigateTo('{yun:}url m=wap c=ask{/yun}');">
+			    <div class="management_body_card_icon">
+			        <img src="{yun:}$wap_style{/yun}/images/com_icon9.png" alt="">
+			    </div>
+			    <div class="management_body_card_name">职场问答</div>
+			</li>
+			
+		
+			{yun:}/if{/yun}
+			
+			{yun:}if $config.sy_train_web==1 && spid==0{/yun}
+			<li onclick="navigateTo('index.php?c=fav_subject');">
+			    <div class="management_body_card_icon">
+			        <img src="{yun:}$wap_style{/yun}/images/com_icon10.png" alt="">
+			    </div>
+			    <div class="management_body_card_name">职业培训</div>
+			</li>
+			
+			{yun:}/if{/yun}
+			
+        </ul>
+    </div>
+</div>
+<script src="{yun:}$wap_style{/yun}/js/flexible.js"></script>
+</body>
+</html>

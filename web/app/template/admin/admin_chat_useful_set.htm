@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="tabs_info">
+					<ul>
+						<li>
+							<a href="index.php?m=admin_chat_useful">用户常用语</a>
+						</li>
+						<li class="curr">
+							<a href="index.php?m=admin_chat_useful&c=usefulSet">自定义常用语</a>
+						</li>
+					</ul>
+				</div>				
+				<div class="clear"></div>
+				<div class="admin_new_search_box">					
+					<a id="addcc" href="javascript:void(0);" class="admin_new_cz_tj">+ 新增常用语</a>
+					<!--span>如果没有自定义，系统将使用<span class="red">默认</span>常用语</span-->
+				</div>
+				<div class="clear"></div>				
+			</div>
+			<div class="tty_table-bom">
+			<div class="table-list">
+				<div class="admin_table_border">
+					<div class="cyybox">	
+						<div class="cyyboxleft">			
+							<ul>
+								<li data-type="1" {yun:}if $type==1{/yun}class="cyyboxcur"{yun:}/if{/yun}>企业常用语<i class="cyyboxcurline"></i></li>
+								<li data-type="2" {yun:}if $type==2{/yun}class="cyyboxcur"{yun:}/if{/yun}>个人常用语<i class="cyyboxcurline"></i></li>
+								<!--li data-type="0" {yun:}if $type==0{/yun}class="cyyboxcur"{yun:}/if{/yun}>系统常用语<i class="cyyboxcurline"></i></li-->
+								<li data-type="3" {yun:}if $type==3{/yun}class="cyyboxcur"{yun:}/if{/yun}>企业打招呼语<i class="cyyboxcurline"></i></li>
+								<li data-type="4" {yun:}if $type==4{/yun}class="cyyboxcur"{yun:}/if{/yun}>个人打招呼语<i class="cyyboxcurline"></i></li>
+							</ul>
+						</div>
+						<div class="cyyboxright">
+						<table width="100%">
+							<tr>
+								<th>内容</th>
+								<th>排序号</th>
+								<th width="155">操作</th>
+							</tr>
+							{yun:}foreach item=v key=key from=$rows {/yun}
+							<tr>
+								<td>{yun:}$v.content{/yun}</td>
+								<td align="center">{yun:}$v.sort{/yun}</td>
+								<td align="center"><a href="javascript:void(0);" data-id="{yun:}$v.id{/yun}" data-content="{yun:}$v.content{/yun}" data-type="{yun:}$v.type{/yun}" data-sort="{yun:}$v.sort{/yun}" class="admin_new_c_bth admin_n_sc  editcc">修改</a>
+									<a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=admin_chat_useful&c=customdel&id={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a></td>
+							</tr>
+							{yun:}/foreach{/yun}
+						</table>  
+						</div>        
+					</div>
+				</div>
+			</div>
+			</div>			
+			<div id="customset" class="none">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form class="layui-form" action="index.php?m=admin_chat_useful&c=usefulSetAdd" target="supportiframe" method="post" onsubmit="return customset()"> <div class="cyy_tj">
+				<div class="cyy_tjlist">
+					<span class="cyy_tjlist_name">常用语类别</span>
+					<select name="type" id="type">
+						<!--option value="0">系统常用语</option-->
+						<option value="1">企业常用语</option>
+						<option value="2">个人常用语</option>
+						<option value="3">企业打招呼语</option>
+						<option value="4">个人打招呼语</option>
+					</select>
+				</div>
+				<div class="cyy_tjlist">
+					<span class="cyy_tjlist_name">常用语内容</span>
+					<input id="content" name="content" class="cyy_tjlist_text" />
+				</div>
+				<div class="cyy_tjlist">
+					<span class="cyy_tjlist_name">排序</span>
+					<input name="sort" id="sort" class="cyy_tjlist_text" autocomplete="off" />
+                    <div class=""><span class="admin_web_tip">序号越大越排前</span></div>
+				</div>
+					<div class="cyy_tjlist">
+					<input type="submit" name="submit" value="保存" class="cyy_tjlist_bth"/>
+					<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+					<input type="hidden" name="id" id='id'>
+				</div>
+				</form> </div>
+			</div>
+		</div>
+		<script>
+			var form="";
+			layui.use(['form','layer'], function(){
+				var 
+					layer = layui.layer,
+					$ = layui.$;
+					form = layui.form;
+				$('#addcc').on('click', function(){
+					$("#content").val('');
+					$("#id").val('');
+					$("#sort").val('');
+					$("#type").val('');
+					form.render();
+					$.layer({
+						type : 1,
+						title :'自定义常用语', 
+						closeBtn : [0 , true],
+						border : [10 , 0.3 , '#000', true],
+						area : ['400px','auto'],
+						page : {dom :"#customset"}
+					});
+				});
+				$('.editcc').on('click', function(){
+					var id = $(this).attr('data-id');
+					var content = $(this).attr('data-content');
+					var sort = $(this).attr('data-sort');
+					var type = $(this).attr('data-type');
+					$("#content").val(content);
+					$("#id").val(id);
+					$("#sort").val(sort);
+					$("#type").val(type);
+					form.render();
+					$.layer({
+						type : 1,
+						title :'自定义常用语', 
+						closeBtn : [0 , true],
+						border : [10 , 0.3 , '#000', true],
+						area : ['400px','auto'],
+						offset: ['20px', ''],
+						page : {dom :"#customset"}
+					});
+				});
+			});
+			$(".cyyboxleft li").on('click',function(){
+				var type = $(this).attr('data-type');
+				window.location.href="index.php?m=admin_chat_useful&c=usefulSet&type="+type
+			});
+			function customset(){
+				var content = $("#content").val();
+				var type = $("#type").val();
+				if(type==''){
+					layer.msg("请选择类别！", 2, 8);
+					return false;
+				}
+				if(content == ''){
+					layer.msg("请填写常用语！", 2, 8);
+					return false;
+				}
+				
+			}
+		</script>
+	</body>
+
+</html>

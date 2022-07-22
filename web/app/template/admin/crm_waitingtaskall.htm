@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+
+	<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp">
+	<div class="tty-tishi_top">
+		<div class="tabs_info" style="height:36px;">
+			<ul>
+				<li class="curr">
+					<a href="###">待办任务</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="crm_searctime">
+			<ul>
+				<li {yun:}if !$smarty.get.time{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtaskall">今天</a></li>
+				<li {yun:}if $smarty.get.time==1{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtaskall&time=1">明天</a></li>
+				<li {yun:}if $smarty.get.time==2{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtaskall&time=2">后天</a></li>
+				<li {yun:}if $smarty.get.time==3{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtaskall&time=3">一周内</a></li>
+				<li {yun:}if $smarty.get.time==4{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtaskall&time=4">所有任务</a></li>
+			</ul>
+		</div>
+
+
+		<form action="index.php" name="myform" method="get" class='layui-form'>
+			<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+			<input name="m" value="crm_waitingtaskall" type="hidden"/>
+			<input name="time" value="{yun:}$smarty.get.time{/yun}" type="hidden" />
+			<div class="crm_newly_build_tit" style="padding:0px; padding-top:10px;">
+
+				<div class="layui-input-inline">
+					<select name="status" id="status" lay-filter='status'>
+						<option value="1" {yun:}if $smarty.get.status ==1 || !$smarty.get.status{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='1' crmuid=$smarty.get.crmuid type=$smarty.get.type adt='status' untype='status'{/yun}">进行中</option>
+						<option value="2" {yun:}if $smarty.get.status ==2{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c crmuid=$smarty.get.crmuid type=$smarty.get.type adv='2' adt='status' untype='status'{/yun}">已完成</option>
+						<option value="3" {yun:}if $smarty.get.status ==3{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c crmuid=$smarty.get.crmuid type=$smarty.get.type adv='3' adt='status' untype='status'{/yun}">未完成</option>
+						<option value="4" {yun:}if $smarty.get.status ==4{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c crmuid=$smarty.get.crmuid type=$smarty.get.type adv='4' adt='status' untype='status'{/yun}">已取消</option>
+						<option value="5" {yun:}if $smarty.get.status==5{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c crmuid=$smarty.get.crmuid type=$smarty.get.type adv='5' adt='status' untype='status'{/yun}">全部</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select name="type" id="type" lay-filter='type'>
+						<option value='' data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c status=$smarty.get.status crmuid=$smarty.get.crmuid adv=$v adt='type' untype='type'{/yun}">任务类型</option>
+						{yun:}foreach from = $cache.crmdata.task_type item=v{/yun}
+						<option value="{yun:}$v{/yun}" {yun:}if $smarty.get.type ==$v{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c status=$smarty.get.status crmuid=$smarty.get.crmuid adv=$v adt='type' untype='type'{/yun}">{yun:}$cache.crmclass_name[$v]{/yun}</option>
+						{yun:}/foreach{/yun}
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select name="crmuid" id="crmuid" lay-filter="crmuid">
+						<option value="" data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c status=$smarty.get.status type=$smarty.get.type{/yun}">任务执行人</option>
+						{yun:}foreach from = $adminUserList key=key item = v{/yun}
+						<option value="{yun:}$v.uid{/yun}" {yun:}if $smarty.get.crmuid==$v.uid{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c status=$smarty.get.status type=$smarty.get.type adv=$v.uid adt='crmuid' untype='crmuid'{/yun}">{yun:}$v.name{/yun}</option>
+						{yun:}/foreach{/yun}
+					</select>
+				</div>
+
+				<div class="layui-input-inline">
+					<div class="crm_search_text"><input name="keyword" type="text" value="{yun:}$smarty.get.keyword{/yun}" class="layui-input" placeholder="输入关键字搜索"></div>
+					<input type="submit" class="layui-btn layui-btn-normal" value="搜索" style="margin-left:10px; background:#31b4e1" />
+				</div>
+			</div>
+		</form>
+
+		<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+
+		<form class="layui-form" action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+			<div class="tty_table-bom">
+				<div class="table-list" style="color:#898989; margin-top:10px;">
+					<div class="admin_table_border">
+						<table width="100%">
+							<thead>
+							<tr class="admin_table_top">
+								<th align="left"><div style="padding-left:15px;">任务类型</div></th>
+								<th align="left">任务内容</th>
+								<th align="left">任务时间</th>
+								<th align="left">客户信息	</th>
+								<th align="left">任务发布者</th>
+								<th align="left">执行人</th>
+								<th align="left">任务状态</th>
+								<th align="center">任务创建时间	</th>
+								<th align="center">客户管理	</th>
+							</tr>
+							</thead>
+							<tbody>
+							{yun:}foreach item=v key=key from=$tasks{/yun}
+							<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+
+								<td align="left">
+									<div style="padding-left:15px;">
+										<div class="mt5">{yun:}$cache.crmclass_name[$v.type]{/yun}</div>
+									</div>
+								</td>
+								<td align="left"> <div style="width:300px;">{yun:}$v.content{/yun}</div></td>
+								<td align="left">
+
+									{yun:}if $v.stime{/yun}
+									{yun:}$v.stime_n{/yun}
+									{yun:}if $v.stime lt time() && $v.status != 2{/yun}<div class="mt5"><font color='red'>【已过期】</font></div>{yun:}/if{/yun}
+									{yun:}else{/yun}
+									--
+									{yun:}/if{/yun}
+
+								</td>
+								<td align="left">
+									{yun:}$v.name{/yun}
+									<div class="mt5"><a href="javascript:OpenContact('{yun:}$v.comid{/yun}','index.php?m=crm_waitingtaskall&c=ComDetail')" title="联系方式" class="crm_comtel">联系方式</a></div>
+								</td>
+
+								<td align="left">
+
+									{yun:}$v.aname{/yun}
+								</td>
+								<td align="left">
+
+									{yun:}$v.cname{/yun}
+								</td>
+								<td align="left">
+
+									{yun:}if $v.status == '1'{/yun} <font color=''>进行中</font>
+									{yun:}else if $v.status == '2'{/yun} <font color='green'>已完成</font>
+									{yun:}else if $v.status == '3'{/yun} <font color='red'>未完成</font>
+									{yun:}else if $v.status == '4'{/yun} 已取消
+									{yun:}/if{/yun}
+
+
+									{yun:}if $v.status == '3'{/yun}
+
+									<a href="javascript:void(0)" onclick="javascript:CompleteDetail('{yun:}$v.id{/yun}','index.php?m=crm_waitingtaskall&c=reason')"  class="admin_com_name">未完成原因</a>
+
+									{yun:}/if{/yun}
+								</td>
+								<td>{yun:}$v.ctime_n{/yun}</td>
+								<td><a href="javascript:(0);" onclick="khgl('index.php?m=crm_customer&c=com&id={yun:}$v.comid{/yun}');" class="crm_submit">管理</a></td>
+							</tr>
+
+							{yun:}/foreach{/yun}
+
+							{yun:}if $total > $config.sy_listnum {/yun}
+							<tr>
+								{yun:}if $pagenum==1{/yun}
+								<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+								<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum == $pages{/yun}
+								<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}/if{/yun}
+								<td colspan="6" class="digg">{yun:}$pagenav{/yun}</td>
+							</tr>
+							{yun:}/if{/yun}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="taskstatus" style="display:none; width: 430px;text-align:center; ">
+		<div class="">
+			<table cellspacing='1' cellpadding='1' class="admin_examine_table">
+				<tr>
+					<th>说明原因：</th>
+					<td align="left">
+						<textarea id="reason" name="reason" class="admin_explain_textarea" style="width: 350px;height:150px"></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<input type="hidden" name="taskid" id="taskid" value="">
+
+	<script>
+		var weburl="{yun:}$config.sy_weburl{/yun}";
+		layui.use(['form', 'laydate'], function(){
+			var form = layui.form
+					,laydate = layui.laydate
+					,$ = layui.$;
+
+			form.on('select(status)', function(data){
+				var url=$('#status option:selected').attr('data-url');
+				location.href=url;
+			});
+			form.on('select(type)', function(data){
+				var url=$('#type option:selected').attr('data-url');
+				location.href=url;
+			});
+			form.on('select(crmuid)', function(data){
+				var url=$('#crmuid option:selected').attr('data-url');
+				location.href=url;
+			});
+			laydate.render({
+				elem: '#stime'
+				,type: 'datetime'
+			});
+		});
+
+		function khgl(url) {
+
+			layer.open({
+				type: 2,
+				title: '客户管理',
+				shadeClose: true,
+				shade: false,
+				maxmin: true, //开启最大化最小化按钮
+				area: ['80%', '100%'],
+				content: url,
+				anim: 2,
+				offset: 'r'
+			});
+		}
+
+
+	</script>
+	{yun:}include file="$adminstyle/crm_public.htm"{/yun}
+</body>
+</html>

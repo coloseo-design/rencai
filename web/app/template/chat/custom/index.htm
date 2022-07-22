@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/app/template/chat/custom/custom.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+	</head>
+	<body style="background:#f8f8f8">
+		<div class="pc_kf_box">
+			<div class="pc_kf_name">在线客服</div>
+			<div  id="custom" class="pc_kefu_chat_cont">
+				<div id="chat_content" class="pc_kefu_chat_cont_p">
+					<template v-for="(item, ck1) in logList" :key="ck1">
+						<!--聊天-->
+						<div class="pc_kefu_chat_time" v-if="item.timeval">{{item.timeval}}</div>
+						<!--左-->
+						<div class="pc_kefu_chat_pleft" v-if="item.auid != 0">
+							<img :src="item.avatar" width="50" height="50" class="pc_kefu_chat_pic">
+							<div class="pc_kefu_chat_p" v-html="item.content"></div>
+						</div>
+						<!--右-->
+						<div class="pc_kefu_chat_prightbox" v-else>
+							<div class="pc_kefu_chat_pright"> 
+								<img :src="item.avatar" width="50" height="50" class="pc_kefu_chat_pic">
+								<div class="pc_kefu_chat_p" v-html="item.content"></div>
+							</div>
+						</div>
+						<!--聊天-->
+					</template>
+				</div>
+			</div>
+			<!--输入框-->
+			<div class="pc_kefu_chat_textareabox">
+				<div class="pc_kefu_chat_cz">
+					<iframe id="cs_iframe" name="cs_iframe"></iframe>
+					<form id="imgform" target="cs_iframe" method="post" enctype="multipart/form-data" action="{yun:}$config.sy_weburl{/yun}/index.php?m=chat&c=uploadImage">
+						<div class="pc_kefu_chat_cz_bq_box">
+							<i id="face" title="笑脸" class="pc_kefu_chat_cz_icon sendbq_i"></i>
+							<div id="commonly" class="showbq none"></div>
+						</div>
+						<span class="pc_kefu_chat_tp_icon">
+							<input type="file" name="file" accept="image/*" onchange="upImage(this)" value="" class="chat_footer_czk_tj_bth">
+						</span>
+					</form>
+				</div>
+				<div class="pc_kefu_chat_textarea">
+					<textarea id="send_content"></textarea>
+				</div>
+				<div class="pc_kefu_chat_textarea_p"> 按Enter发送
+					<input id="send" type="submit" value="发送" class="chat_footer_bth disclick">
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var isAdmin = false,
+				socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+				weburl = "{yun:}$config.sy_weburl{/yun}",
+				toid = "{yun:}$custom_id{/yun}",
+				totype = 0,
+				pickid = "{yun:}$pickid{/yun}",
+				page = 1;
+		</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/app/template/chat/custom/socket.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script>
+			var app = new Vue({
+					el: '#custom',
+					data: {
+						logList: []
+					},
+					created() {
+						this.cslog();
+					},
+					methods:{
+						// 查询聊天记录
+						cslog(){
+							$.ajax({
+								url: weburl + "/index.php?m=chat&c=cslog",
+								data: {page: page},
+								type: 'POST',
+								dataType: 'json',
+								success:function(res){
+									page++;
+									if(res.list.length > 0){
+										for (let i = 0; i < res.list.length; i++){
+											res.list[i].content = rexContent(res.list[i].content);
+										}
+										app.$data.logList = app.$data.logList.concat(res.list);
+										setTimeout(function(){
+											var scroll = document.getElementById('chat_content').scrollHeight;
+											chatScrollTo(scroll);
+										},100);
+									}
+									ismore = res.ismore;
+								}
+							})
+						}
+					}
+				});
+		</script>
+	</body>
+</html>

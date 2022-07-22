@@ -1,0 +1,192 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+        <div class="yun_com_tit"><span class="yun_com_tit_s">视频面试</span>
+            <div class="com_topbth_box" style="width:138px; ">
+                <a href="javascript:;" onclick="addSpview('{yun:}$spviewNum{/yun}','{yun:}$config.integral_spview{/yun}','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');" class="com_topbth" style="width:100px; ">发布视频面试</a>
+            </div>
+        </div>
+        <div class="right_box">
+            <div class="vip_boxshow">
+                <div class="vip_boxshow_c">
+                    <div class="report_uaer_list ">
+                        <div class="report_uaer_list_h1">在线面试</div>
+                        <div class="report_uaer_list_p">提高人才选拔为招聘提效赋能</div>
+
+                        <div class="spms_h1list spms_h1listicon1">
+                            <div class="spms_h1">创建面试间</div>
+                            <div class="spms_p">快速创建面试房间</div>
+                        </div>
+
+                        <div class="spms_h1list spms_h1listicon2">
+                            <div class="spms_h1">邀约通知</div>
+                            <div class="spms_p">短信/邮件/电话/微信多重渠道通知</div>
+                        </div>
+
+                        <div class="spms_h1list spms_h1listicon3">
+                            <div class="spms_h1">在线面试</div>
+                            <div class="spms_p">随时随地，方便灵活</div>
+                        </div>
+
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <div class="vip_box" style="margin-top: 0px;;">
+                        <div class=" vip_box_sppd">
+                            <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                            <form action="index.php?c=spview&act=delSp" target="supportiframe" method="post" id='myform' class='layui-form'>
+
+                                {yun:}if $rows{/yun}
+
+                                {yun:}foreach item=v from=$rows{/yun}
+
+                                <div class="new_spms_box">
+                                    <div class="new_spms_tit">
+                                        <a href="javascript:void(0);" onclick="goRoom('{yun:}$v.id{/yun}','{yun:}$v.status{/yun}')" class="new_spms_a">进入面试房间</a>
+                                        <span class="new_spms_tit_zt">
+                                            {yun:}if $v.status == 1{/yun}<font color='green'>已审核</font>
+										    {yun:}elseif $v.status == 2{/yun}<font color='red'>未通过</font>
+										    {yun:}else{/yun}未审核
+										    {yun:}/if{/yun}
+                                        </span>
+                                    </div>
+                                    <div class="new_spms_yuybox">
+                                        <div class="new_spms_yuy">
+                                            <a href="index.php?c=spview&act=spresume&sid={yun:}$v.id{/yun}"><span class="new_spms_yuy_n">{yun:}if $v.subnum{/yun}{yun:}$v.subnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}</span>预约简历</a>
+                                        </div>
+                                        <div class="new_spms_list">
+                                            <span class="new_spms_list_n">面试时间</span>
+                                            {yun:}$v.sdate_n{/yun}
+                                        </div>
+                                        <div class="new_spms_list">
+                                            <span class="new_spms_list_n">备注信息</span>
+                                            {yun:}$v.remark{/yun}
+                                        </div>
+                                        <div class="new_spms_list">
+                                            <span class="new_spms_list_n">房间状态</span>
+                                            {yun:}if $v.roomstatus == 1{/yun}关闭{yun:}else{/yun}启用{yun:}/if{/yun}
+                                            <span class="new_spms_list_n" style="margin-left: 50px;;">浏览量</span> {yun:}$v.hits{/yun}
+                                        </div>
+                                    </div>
+                                    <div class="new_spms_cz">
+                                        <a href="javascript:void(0);" style="margin-right: 5px;" onclick="layer_del('确定要删除？', 'index.php?c=spview&act=delSp&id={yun:}$v.id{/yun}');" class="com_bth cblue">删除</a>
+                                        {yun:}if $v.starttime > time(){/yun}
+                                            <a href="index.php?c=spviewadd&act=edit&id={yun:}$v.id{/yun}" style="margin-right: 5px;" class="com_bth cblue">修改</a>
+                                        {yun:}else{/yun}
+                                            <a href="javascript:;" onclick="layer.msg('视频面试已开始，无法修改！',2,8);return false;" style="margin-right: 5px;" class="com_bth cblue">修改</a>
+                                        {yun:}/if{/yun}
+                                    </div>
+                                </div>
+                                {yun:}/foreach{/yun}
+                                {yun:}else{/yun}
+                                <tr>
+                                    <td colspan="8" class="table_end">
+                                        <div class="msg_no">
+                                            <p>快速创建面试房间</p>
+                                            <a href="javascript:;" onclick="addSpview('{yun:}$spviewNum{/yun}','{yun:}$config.integral_spview{/yun}','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');" class="com_msg_no_bth com_submit">发布视频面试</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {yun:}/if{/yun}
+                                </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    layui.use(['form', 'layer', 'laydate'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer;
+
+        form.on('checkbox(allcom)', function (data) {
+            $("input[name='delid[]']").each(function () {
+                this.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+    });
+
+    function goRoom(id, status) {
+        if (status == '1') {
+            window.location.href = 'index.php?c=spview&act=sproom&id=' + id;
+        } else if (status == '2') {
+            return layer.msg('视频面试审核未通过，无法进入', 2, 8);
+        } else {
+            return layer.msg('视频面试审核未审核，无法进入', 2, 8);
+        }
+    }
+
+    /**
+     * @desc    点击发布视频面试
+     *
+     * @param num    1：正常发布 2：会员套餐已用完 0：会员过期
+     * @param integral_spview：购买发布视频面试所需要金额
+     * @param online    1 金额抵扣模式 2 金额模式 3积分模式 4套餐模式
+     * @param pro：    积分比例
+     * @returns
+     */
+    function addSpview(num, integral_spview, online, pro) {
+
+        var gourl = 'index.php?c=spviewadd';
+        var url = weburl + '/index.php?m=ajax&c=ajax_day_action_check';
+
+        layer.load('执行中，请稍候...', 3);
+
+        $.post(url, {'type': 'spview'}, function (data) {
+
+            layer.closeAll();
+
+            data = eval('(' + data + ')');
+
+            if (data.status == -1) {
+
+                layer.msg(data.msg, 2, 8);
+                return false;
+
+            } else if (data.status == 1) {
+
+                if (num == 1 || (integral_spview == 0 && num == 2)) {
+
+                    window.location.href = gourl;
+                    window.event.returnValue = false;
+
+                } else {
+
+                    if (data.spid) {
+                        layer.alert('当前账户套餐余量不足，请联系主账户增配！', {icon: 5});
+                    } else {
+
+                        if (num == 2) {
+
+                            server_single('spview');
+                        }
+
+                        firstTab();
+                        var msglayer = layer.open({
+                            type: 1,
+                            title: '发布视频面试',
+                            closeBtn: 1,
+                            border: [10, 0.3, '#000', true],
+                            area: ['810px', 'auto'],
+                            content: $("#tcmsg"),
+                            cancel: function () {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+{yun:}include file="$comstyle/footer.htm"{/yun}

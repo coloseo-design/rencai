@@ -1,0 +1,41 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<div class="main_member_cot_box">
+ <ul class="yun_m_tit_four">
+
+<li> <a href="index.php?c=atncom">企业</a></li>
+{yun:}if $config.sy_lietou_web==1{/yun}
+<li><a href="index.php?c=atnlt">猎头</a></li>
+{yun:}/if{/yun}
+<li><a href="index.php?c=atnacademy">院校</a></li>
+<li class="yun_m_tit_cur"><a href="index.php?c=atnxjh">宣讲会</a></li>
+</ul>
+<div class="wap_member_post_list">
+{yun:}foreach item=v from=$rows{/yun}
+<div class="com_member_hr">
+ <div class="com_member_hr_name"> 
+    
+    <a href="{yun:}url m=wap c=school a=schoolacademyshow id=$v.schoolid{/yun}"  class="wap_member_com_name  com_member_hr_cblue">{yun:}$v.schoolname{/yun}</a>
+</div>
+ <div class="user_member_box">
+ <div class="com_member_hr_p1">校招宣讲会企业： <a href="{yun:}url m=wap c=company a=show id='`$v.sc_uid`'{/yun}"  class="com_member_hr_cblue">{yun:}$v.comname_n{/yun}</a></div>
+  <div class="com_member_hr_p1">宣讲时间：{yun:}$v.stime|date_format:'%Y-%m-%d'{/yun}  -   {yun:}$v.etime|date_format:'%Y-%m-%d'{/yun}</div>
+ <div class="com_member_hr_p1"><span class="member_c9">关注时间：</span>{yun:}$v.time|date_format:"%Y-%m-%d"{/yun}</div>
+ </div>
+<div class="com_member_hr_cz">
+<a href="javascript:void(0)" onclick="layer_del('是否取消关注？','index.php?c=atnxjh&id={yun:}$v.id{/yun}&uid={yun:}$v.uid{/yun}')" class="yun_member_hr_bth">取消关注</a>
+<a href="{yun:}url m=wap c=company a=show id='`$v.sc_uid`'{/yun}" class="yun_member_hr_bth">查看详情</a>
+</div>
+</div>
+
+{yun:}foreachelse{/yun}
+<div class="wap_member_no">
+暂无关注的校招宣讲会<div><a class="wap_member_no_submit" href="{yun:}url m=wap c=school a=xjh{/yun}">去搜索我感兴趣的校招宣讲会</a></div>
+</div>
+{yun:}/foreach{/yun}
+</div>
+
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+</div>
+</div>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

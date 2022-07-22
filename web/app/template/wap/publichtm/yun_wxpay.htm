@@ -1,0 +1,61 @@
+<!-- yun_wxpay.htm  H5支付结果确认提示-->
+<style>
+.zf_box{width:8rem; background:#fff;border-radius:0.213333rem;}
+.zf_box_t{ padding:15px; text-align: center; font-size: 15px;;}
+.zf_box_tbr{border-bottom:1px solid #eee;border-top:1px solid #eee;color:#2778f8;}
+.zf_box_t_cx{color:#999}
+</style>
+ 
+<div id="wxpayVue" class="none">
+	<van-popup v-model="yunWxpay" round @click-overlay="boxClosed">
+		<div class="zf_box">
+			<div class="zf_box_t">请确认微信支付是否已完成</div> 
+			<div class="zf_box_t zf_box_tbr" @click="fkSuccess">已完成支付</div> 
+			<div class="zf_box_t zf_box_t_cx" @click="refk">支付遇到问题，重新支付</div> 
+		</div>
+	</van-popup>
+</div>
+<script>
+var payCheckint = null,
+	payChecknum = 0;
+var wxpayVue = new Vue({
+        el: '#wxpayVue',
+        data: {
+			yunWxpay: false
+		},
+		mounted(){
+			document.getElementById('wxpayVue').style.display = 'block';
+		},
+		methods:{
+			fkSuccess(){
+				this.yunWxpay = false;
+				showLoading('确认中');
+				payCheckint = setInterval("wxpayCheck()", 3000);
+			},
+			refk(){
+				this.yunWxpay = false;
+			},
+			boxClosed(){
+				window.location.reload();
+			}
+		}
+	});
+	function wxpayCheck() {
+		$.post('{yun:}$config.sy_weburl{/yun}/api/wxpay/wxorder.php', {rand: Math.random()}, function(data) {
+			if (data == 1) {
+				clearInterval(payCheckint);
+				showToast('支付成功！', 2, function() {
+					window.location.reload();
+				});
+			}else{
+				payChecknum++;
+				if(payChecknum > 3){
+					hideLoading();
+					showModal('支付结果确认超时', function(){
+						window.location.reload();
+					});
+				}
+			}
+		});
+	}
+</script>

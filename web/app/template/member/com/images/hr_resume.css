@@ -1,0 +1,30 @@
+/*简历详细*/
+.hr_resumebox{width:800px; float:left;  padding:15px 0 80px 0}
+.hr_resume_pic{width:70px; float:left; padding-left: 20px; position: relative;;}
+.hr_resume_pic img{border-radius: 50%;;}
+.hr_resume_tr{width:600px; float: left; padding-left: 20px;;}
+.hr_resume_username{ font-size: 16px; font-weight: bold;}
+.hr_resume_tag{ display: inline-block; background-color: #e9f1fe;color: #2778F8; margin-right: 10px; margin-top: 5px;padding:3px 8px;border-radius:3px;}
+.hr_resume_time{color:#999; font-size: 12px; padding-top: 10px; padding-bottom: 20px;}
+.hr_resume_time_l{ display: inline-block;; margin-right: 15px;}
+.hr_resume_info{ color:#666; padding-top: 10px; padding-bottom: 10px;;}
+.hr_resume_pd{ padding-left: 30px;;}
+.hr_resume_tit_name{ font-size: 16px; font-weight: bold;}
+.hr_resume_list{width:100%; float:left}
+.hr_resume_list li{ line-height:36px;color:#666;margin-top:20px; padding-left:30px;border-left:1px solid #eee; position:relative}
+.hr_resume_listicon{width:11px;height:11px; background:#1c99ef;border-radius:50%; position:absolute;left:-6px;top:13px; display:inline-block}
+.hr_resumeboxbth{width:100%; position: fixed;left:0px;bottom:0px; text-align: center; z-index: 1000; background-color: #fff;padding:10px 0px;box-shadow: 0 0 0.266666rem #ccc;
+}
+
+.hr_resumeboxbth_ms{ display: inline-block;width:180px;height:45px; line-height: 45px; text-align: center; background-color: #3d7dfd;border-radius:40px;color:#fff;}
+.hr_resumeboxbth_xz{ display: inline-block;width:180px;height:45px; line-height: 45px; text-align: center; background-color: #f9bb2c;border-radius:40px;color:#fff; margin-right: 20px;}
+	
+.hr_resumeboxbth_chat{ display: inline-block;width:180px;height:45px; line-height: 45px; text-align: center; background-color: #00b38a;border-radius:40px;color:#fff; margin-left: 20px;;}
+.look_resume{ padding-top: 30px;width:100%; float: left;}
+.look_resume a{ display: inline-block;width:180px;height:33px; line-height: 33px; text-align: center; background-color: #e9f1fe;
+    color: #2778F8;border-radius:40px; }
+
+.resume_xbn{width:18px;height:18px; background:url(../images/n.png) no-repeat; position: absolute ;right:0px;bottom:0px;display: inline-block;border-radius:50%;}	
+	
+	.resume_xbnv{width:18px;height:18px; background:url(../images/nv.png) no-repeat; position: absolute ;right:0px;bottom:0px;display: inline-block;border-radius:50%;}	
+	

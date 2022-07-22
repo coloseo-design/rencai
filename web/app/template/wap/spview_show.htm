@@ -1,0 +1,420 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="spview_show_bg">
+	<div class="spview_show_bg_C">
+		<div class="">欢迎来到！</div>
+		<div class="spview_show_com">{yun:}$com.name{/yun}面试间</div>
+		<div class="">
+			视频面试时间：<span class="spview_show_time">{yun:}$spview.sdate_n{/yun}( {yun:}$week{/yun})</span>
+		</div>
+	</div>
+</div>
+<!--1.可预约情况-->
+{yun:}if $issub==3{/yun}
+<div class="">
+	<div class="spview_show_djs">
+		<div class="spview_show_djs_c">
+			<div class="spview_show_djs_b">
+				<div id="yunvue" class="spview_show_djs_box">
+					<van-count-down time="{yun:}$countDown{/yun}" @finish="timeOver">
+						<template #default="timeData">
+							<span>剩余报名时间：</span>
+							<span class="spview_show_djs_n">{{ timeData.days }}</span>天
+							<span class="spview_show_djs_n">{{ timeData.hours }}</span>时
+							<span class="spview_show_djs_n">{{ timeData.minutes }}</span>分
+							<span class="spview_show_djs_n">{{ timeData.seconds }}</span>秒
+						</template>
+					</van-count-down>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="spview_show_jobtit">
+		<span class="spview_show_tit"><i class="spview_show_titline"></i>选择面试职位<i
+			class="spview_show_titline2"></i></span>
+	</div>
+	<div class="spview_show_jobbox">
+		<!--循环职位-->
+		{yun:}foreach from=$spjobs item=job{/yun}
+		<div class="spview_show_joblist">
+			<div class="spview_show_job_pd">
+				<div class="spview_show_job_name">
+					{yun:}$job.name{/yun} <span class="spview_show_jobxz">{yun:}$job.job_salary{/yun}</span>
+				</div>
+				<div class="spview_show_job_p">
+				
+				{yun:}if $job.job_sex || $job.job_age || $job.job_exp || $job.job_edu{/yun}
+					
+					
+					<!--性别{yun:}$job.job_sex{/yun}-->
+					<!--<span style=" display:inline-block;padding:0px 5px;color:#999">|</span>-->
+
+					{yun:}$job.job_exp{/yun}经验
+					<span style=" display:inline-block;padding:0px 5px;color:#999">|</span>
+					{yun:}$job.job_edu{/yun}学历
+				
+				{yun:}else{/yun}
+					<div class="">企业没有特殊要求，符合职位要求即可参与面试哦~</div>
+				{yun:}/if{/yun}
+				</div>
+			</div>
+			<div class="spview_show_job_cz">
+				<a href="javascript:void(0);" onclick="jobDetail('{yun:}$job.id{/yun}');" class="spview_show_job_czbth spview_show_job_czbthline">
+					<span class="spview_show_job_cz_icon">查看详情</span>
+				</a> 
+				{yun:}if $uid{/yun}
+					{yun:}if $usertype==1{/yun}
+					<a href="javascript:void(0)" onclick="chooseResume('{yun:}$job.id{/yun}');" class="spview_show_job_czbth">
+						<span class="spview_show_job_cz_msicon">预约面试</span>
+					</a>
+					{yun:}/if{/yun}
+				{yun:}else{/yun}
+				<a  href="javascript:void(0)" onclick="showToast('请先登录个人账号！',2,function(){location.href='index.php?c=login';});return false;" class="spview_show_job_czbth">
+					<span class="spview_show_job_cz_msicon">预约面试</span>
+				</a>
+				{yun:}/if{/yun}
+			</div>
+		</div>
+		{yun:}/foreach{/yun}
+		
+		<!--循环职位 end-->
+
+	</div>
+</div>
+{yun:}/if{/yun}
+<!--不可预约情况-->
+{yun:}if $issub==4 || $issub==5{/yun}
+<div>
+	<div class="sp_show_yksbox">
+		<div class="sp_show_yks">
+			<div class="sp_show_yks_c">
+				<div class="sp_show_yks_box">
+					<div class="sp_show_yks_icon"></div>
+					<div class="sp_show_yks_p">很抱歉，视频面试{yun:}if $issub==4{/yun}已停止预约{yun:}elseif $issub==5{/yun}已开始{yun:}/if{/yun}</div>
+					<div class="sp_show_yks_p2">您可以通过投递简历方式获得该公司职业机会</div>
+					<div class="sp_show_yks_bth">
+						<a href="{yun:}url m=wap c=company a=show id=$spview.uid{/yun}"
+							target="_blank">查看招聘职位</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{yun:}/if{/yun}
+
+{yun:}if $issub==1 || $issub==2 {/yun}
+<!--预约好情况-->
+<div>
+	<div class="sp_show_yksztbox">
+		<div class="sp_show_yks">
+			<div class="sp_show_yks_c">
+				<div class="sp_show_yks_box">
+					{yun:}if $issub==1{/yun}
+					<div class="sp_show_yks_cg">你预约面试的职位为</div>
+					<div class="sp_show_yks_p sp_show_yks_p_c">{yun:}$subinfo.jobname{/yun}</div>
+
+					<div class="sp_show_yks_p2">
+						视频面试将于<span class="sp_show_yks_time">{yun:}$spview.sdate_n{/yun}</span>正式开始
+					</div>
+					<div class="sp_show_yks_p2">请提前做好准备，祝您面试成功</div>
+					<div class="sp_show_yks_dd">
+						<div class="sp_show_yks_dd_bth">等待面试中...</div>
+					</div>
+					{yun:}/if{/yun}
+
+					{yun:}if $issub==2 {/yun}
+
+						<div class="sp_show_yks_cg">你预约面试的职位为</div>
+						<div class="sp_show_yks_p sp_show_yks_p_c">{yun:}$subinfo.jobname{/yun}</div>
+						{yun:}if $linenum > 0{/yun}
+						<div class="sp_show_yks_p2">
+							当前待面试人数 <span class="sp_show_yks_time">{yun:}$linenum{/yun}</span> 人
+						</div>
+						{yun:}/if{/yun}
+						
+						{yun:}if $subinfo.status ==0 {/yun}
+							{yun:}if $msnum > 0{/yun}
+							<div class="tips2">已面试&nbsp;<span class="sp_show_state_pdrs">{yun:}$msnum{/yun}</span>&nbsp;位</div>
+							{yun:}/if{/yun}
+							{yun:}if $subinfo.rtime >0 {/yun}
+							<div class="sp_show_state_btn" style="margin-top:10px;height:90px;">
+								<a href="javascript:void(0);" class="wait">已进入面试间，等待面试</a>
+							</div>
+							{yun:}else{/yun}
+							<div class="sp_show_yks_p2">请做好准备，祝您面试成功</div>
+							<div class="sp_show_yks_bth">
+								<a href="javascript:void(0);" onclick="goRoom('{yun:}$spview.id{/yun}')">进入面试间</a>
+							</div>
+							{yun:}/if{/yun}
+						{yun:}elseif $subinfo.status ==1{/yun}
+							<div class="sp_show_yks_bth" style="margin-top:10px">
+								<div class="">	<a href="javascript:void(0);" class="wait">企业已邀请面试</a>	</div>
+							</div>
+						{yun:}elseif $subinfo.status ==2{/yun}
+							<div class="sp_show_state_btn" style="margin-top:10px">
+								<div class="sp_show_yks_dd_bth">	<a href="javascript:void(0);" class="wait">面试已结束</a>	</div>
+							</div>
+						{yun:}/if{/yun}
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{yun:}/if{/yun}
+<!--进入面试间end-->
+
+<div class="spview_show_mstip">
+	<div class="spview_show_mstip_c">
+
+		<div class="spview_show_mstip_h1_c">
+			<div class="spview_show_mstip_h1">在参加面试之前请确认是否符合以下条件：</div>
+		</div>
+		<div class="spview_show_mstip_list_b">
+			<div class="spview_show_mstip_list"><i class="spview_msicon spview_msiconmdr"></i>安静舒适的面试环境10-15分钟不被人打扰</div>
+			<div class="spview_show_mstip_list"><i class="spview_msicon spview_msiconwx" ></i>衣冠整洁，放松心情展现出最好的一面</div>
+			<div class="spview_show_mstip_list"><i class="spview_msicon"></i>面试官将根据你的简历提问，请先完善简历</div>
+		</div>
+	</div>
+</div>
+<!--职位展示弹出框-->
+<div id="spviewjob"  style="display: none">
+	<div class="spview_jobshowbg"></div>
+	<div class="spview_jobshow">
+
+		<div class="spview_jobshowtit">
+			<span class="spview_jobshowtitname">职位详细</span><a href="javascript:void(0);" class="spview_jobshowgb" onclick="$('#spviewjob').hide();return false;"></a>
+		</div>
+		<div class="spview_jobshow_c">
+			<div id="spviewjobshow" class="spview_jobshow_h">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--职位展示 end-->
+
+{yun:}if $uid{/yun}
+<!-- 简历弹出框 -->
+<div id="bg" style="display:none; z-index:1000000000"></div>
+<div class="wap_tips_jobapplyjob" style="display:none;">
+	<div class="wap_tips">
+		<div class="job_prompt_sendresume">
+	    	<div class="wap_tips_tit"><span class="wap_tips_tit_name">预约视频面试</span><a href="javascript:closeshow();" class="wap_tips_tit_close"></a></div>
+	  
+		
+			<div class="job_prompt_sendresume_job">请选择您要预约的简历</div>
+			<div class="job_prompt_sendresume_joball"><div  class="POp_up_r"></div>
+			</div>
+			<div class="job_prompt_ps"> <a id="subbtn" href="javascript:void(0);" onclick="viewSub();" class="job_prompt_box_ok_bth login_button2">立即预约</a></div>
+			<input id="resumenum" type="hidden" value="{yun:}$resumenum{/yun}" />
+		</div>
+	</div>
+</div>
+<!--预约面试弹出框-->
+<div id="yytips" style="display: none">
+	<div class="spview_jobshowbg"></div>
+	<div class="spview_jobshow">
+
+		<div class="spview_jobshowtit">
+			<span class="spview_jobshowtitname">预约视频面试</span><a href="javascript:void(0);" onclick="$('#yytips').hide();" 
+				class="spview_jobshowgb"></a>
+		</div>
+		<div class="spview_jobshow_ytip"><i class="spview_jobshow_tipicon"></i>提示：简历需满足企业设置的要求才可预约视频面试</div>
+		<div class="spview_yq_height">
+		<div class="spview_jobshow_c">
+			<div class="spview_jlyq">简历要求</div>
+			
+				<div id="hy_check" class="spview_yq_list"> 
+					<div class="spview_yq_tit">
+						<span class="spview_yq_tit_n">求职意向</span>  
+						<span class="spview_yq_tit_b">不符合</span> 
+					</div>
+					<div class="spview_yq_dbox">
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c spview_yq_db_cline">
+								<div id="need_hy" class="spview_yq_db_ame"></div>  
+								<div class="spview_yq_db_u">企业要求</div>
+							</div>
+						</div>
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c">
+								<div id="my_hy" class="spview_yq_db_ame"></div> 
+								<div class="spview_yq_db_u">我的</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+				 
+				<div id="exp_check" class="spview_yq_list"> 
+					<div class="spview_yq_tit">
+						<span class="spview_yq_tit_n">工作经验</span>  
+						<span class="spview_yq_tit_b">不符合</span>
+					</div>
+					<div class="spview_yq_dbox">
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c spview_yq_db_cline">
+								<div id="need_work" class="spview_yq_db_ame"></div>  
+								<div class="spview_yq_db_u">企业要求</div>
+							</div>
+						</div>
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c">
+								<div id="my_work" class="spview_yq_db_ame"></div> 
+								<div class="spview_yq_db_u">我的</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+				 
+				<!--<div id="sex_check" class="spview_yq_list"> -->
+				<!--	<div class="spview_yq_tit">-->
+				<!--		<span class="spview_yq_tit_n">性别要求</span>  -->
+				<!--		<span class="spview_yq_tit_b">不符合</span> -->
+				<!--	</div>-->
+				<!--	<div class="spview_yq_dbox">-->
+				<!--		<div class="spview_yq_db">-->
+				<!--			<div class="spview_yq_db_c spview_yq_db_cline">-->
+				<!--				<div id="need_sex" class="spview_yq_db_ame"></div>  -->
+				<!--				<div class="spview_yq_db_u">企业要求</div>-->
+				<!--			</div>-->
+				<!--		</div>-->
+				<!--		<div class="spview_yq_db">-->
+				<!--			<div class="spview_yq_db_c">-->
+				<!--				<div id="my_sex" class="spview_yq_db_ame"></div> -->
+				<!--				<div class="spview_yq_db_u">我的</div>-->
+				<!--			</div> -->
+				<!--		</div>-->
+				<!--	</div>-->
+				<!--</div>-->
+				<div id="age_check" class="spview_yq_list"> 
+					<div class="spview_yq_tit">
+						<span class="spview_yq_tit_n">年龄要求</span>  
+						<span class="spview_yq_tit_b">不符合</span> 
+					</div>
+					<div class="spview_yq_dbox">
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c spview_yq_db_cline">
+								<div id="need_age" class="spview_yq_db_ame"></div>  
+								<div class="spview_yq_db_u">企业要求</div>
+							</div>
+						</div>
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c">
+								<div id="my_age" class="spview_yq_db_ame"></div> 
+								<div class="spview_yq_db_u">我的</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+				 
+				<div id="edu_check" class="spview_yq_list"> 
+					<div class="spview_yq_tit">
+						<span class="spview_yq_tit_n">学历要求</span>  
+						<span class="spview_yq_tit_b">不符合</span> 
+					</div>
+					<div class="spview_yq_dbox">
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c spview_yq_db_cline">
+								<div id="need_edu" class="spview_yq_db_ame"></div>  
+								<div class="spview_yq_db_u">企业要求</div>
+							</div>
+						</div>
+						<div class="spview_yq_db">
+							<div class="spview_yq_db_c">
+								<div id="my_edu" class="spview_yq_db_ame"></div> 
+								<div class="spview_yq_db_u">我的</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+				<div id="sp_other">
+					<div class="spview_jlyq spview_jlyqpd">简历完善度要求</div>
+
+					<div class="spview_yq_list"> 
+						<div class="spview_yq_wzdbox">您的
+							<span id="exp_edu" class="spview_yq_wzd">教育经历</span>
+							<span id="exp_work" class="spview_yq_wzd">工作经历</span>
+							<span id="exp_pro" class="spview_yq_wzd">项目经历</span>
+							完整度<br>不够,无法预约该职位
+						</div>
+						<div class="spview_yq_wzdbthbox"><a href="{yun:}url m=wap{/yun}member/index.php?c=resume" class="spview_yq_wzdbth">立即完善</a></div>
+					</div>
+				</div> 
+				
+		</div>
+	</div>
+</div>
+</div>
+<!--预约面试 end-->
+<div id="wxvue" class="none">
+	<van-popup v-model="wxbox" position="center" round @closed="wxboxClose">
+		<div class="wx_bdtck_pic" style="width:300px; text-align:center">
+			<img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_qcode{/yun}" width="200" height="200">
+		</div>
+		<div class="wx_bdtck_p">关注公众号及时接收面试消息</div>
+	</van-popup>
+</div>
+{yun:}/if{/yun}
+
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script>
+	var usertype = '{yun:}$usertype{/yun}';
+	
+	var config = {
+		url : '{yun:}url m=wap c=spview a=show id=$row.uid{/yun}',
+		title : '{yun:}$row.name{/yun}-{yun:}$config.sy_webname{/yun}',
+		desc : '',
+		img : '{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+		img_title : '{yun:}$row.name{/yun}',
+		from : '{yun:}$config.sy_webname{/yun}'
+	};
+
+	var sid = '{yun:}$spview.id{/yun}',
+		issub = '{yun:}$issub{/yun}',
+		isweiixn = '{yun:}$isweixin{/yun}',
+		getwxurl = '{yun:}url m=wap c=login a=wxlogin{/yun}',
+		getwxstatusurl = '{yun:}url m=wap c=login a=getwxloginstatus{/yun}';
+	
+	'{yun:}if !empty($subinfo) && $subinfo.status ==1 && $smarty.get.fr=="wxtz"{/yun}'
+	showLoading('邀请加载中');
+	setTimeout(function(){
+		hideLoading();
+	},6000);
+	'{yun:}/if{/yun}'
+	'{yun:}if !$uid && $smarty.get.fr=="wxtz"{/yun}'
+	pleaselogin('请先登录');
+	'{yun:}/if{/yun}'
+	
+	
+	var yunvue = new Vue({
+		el: '#yunvue',
+		methods:{
+			timeOver(){
+				window.location.reload();
+			}
+		}
+	});
+	var wxvue = new Vue({
+		el: '#wxvue',
+		data() {
+			return {
+				wxbox: false
+			}
+		},
+		mounted() {
+			$("#wxvue").css('display','block');
+		},
+		methods: {
+			wxboxClose(){
+				window.location.reload();
+			}
+		}
+	})
+</script>
+<script src="{yun:}$wap_style{/yun}/chat/chat.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/spview.js?v={yun:}$config.cachecode{/yun}"></script>
+</body>
+</html>

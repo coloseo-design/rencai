@@ -1,0 +1,70 @@
+{yun:}if $smarty.get.c=='ltresume' || $smarty.get.c=='ltjob'{/yun}
+	<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" /> 
+{yun:}/if{/yun}
+
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.previewimage.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.zoom.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.previewimage.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+    $(function() {
+        //企业详情页
+        $(".muipreview").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '1');
+        });
+		mui.previewImage();
+		// mui(".muipreview").on('tap','a',function(){
+		// 	var href = this.getAttribute('href');
+		// 	if(href && href.indexOf('javascript')<0){
+		// 		location.href = href;
+		// 	}
+		// })	
+        /*
+        //职位详情页
+        $("#description").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '1');
+            mui.previewImage();
+        });
+        //兼职详情页
+        $("#partcontent").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '1');
+            mui.previewImage();
+        });
+        //简历详情页
+        $("#resume_photo").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '1');
+            mui.previewImage();
+        });
+        $("#resume_skill").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '2');
+            mui.previewImage();
+        });
+        $("#resume_usershow").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '3');
+            mui.previewImage();
+        });
+        //猎头职位详情页
+        $("#job_desc").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '1');
+            mui.previewImage();
+        });
+        $("#eligible").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '2');
+            mui.previewImage();
+        });
+        $("#desc").find('img').each(function() {
+            $(this).attr('data-preview-src', '');
+            $(this).attr('data-preview-group', '3');
+            mui.previewImage();
+        });
+        */
+    })
+</script>

@@ -1,0 +1,375 @@
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<!--推广弹出框-->
+<div style="width:100%;height:100%; background:rgba(51,51,51,0.5); position:fixed;left:0px;top:0px;z-index:1000000;display:none" id="jobserver">
+	<div style="width:100%; position:absolute;left:0px;top:40px;">
+		<div style=" padding:20px;">
+			<div class="job_extension_tck" style="display:block">
+				<div class="job_extension_tck_tit">职位推广<span onclick="$('#jobserver').hide();" style="float:right">关闭</span></div>
+				<ul class="serverul">
+					{yun:}if $smarty.get.c == 'part'{/yun}
+					<!--兼职推荐-->
+					<li onclick="ckserver('5');" class="server5" data-type="5"><a href="javascript:void(0)"><i class="job_extension_tck_icon "></i>职位推荐</a></li>
+					{yun:}else{/yun}
+					<li onclick="ckserver('2');" class="server2" data-type="2"><a href="javascript:void(0)"><i class="job_extension_tck_icon"></i>职位置顶</a></li>
+					<li onclick="ckserver('3');" class="server3" data-type="3"><a href="javascript:void(0)"><i class="job_extension_tck_icon "></i>职位推荐</a></li>
+					<li onclick="ckserver('4');" class="server4" data-type="4"><a href="javascript:void(0)"><i class="job_extension_tck_icon "></i>紧急招聘</a></li>
+					{yun:}if !$spid{/yun}
+					{yun:}if $config.com_job_reserve == 1{/yun}
+					<li onclick="ckserver('7');" class="server7 job_extension_tck_yse" data-type="7"><a href="javascript:void(0)"><i class="job_extension_tck_icon "></i>预约刷新</a></li>
+					{yun:}else{/yun}
+					<li onclick="ckserver('1');" class="server1 job_extension_tck_yse" data-type="1"><a href="javascript:void(0)"><i class="job_extension_tck_icon "></i>自动刷新</a></li>
+					{yun:}/if{/yun}
+					<li onclick="ckserver('6');" class="server6" data-type="6"><a href="javascript:void(0)"><i class="job_extension_tck_icon "></i>悬赏招聘</a></li>
+					{yun:}/if{/yun}
+					{yun:}/if{/yun}
+				</ul>
+				<input id="is_job_tg" value='1' type="hidden"/>
+				<input id="jobid" value='{yun:}$job.id{/yun}' type="hidden"/>
+				<div class="job_extension_tck_bth"><a href="javascript:void(0)" onclick="forserver()" class="job_extension_tck_sub">确定</a></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--天数选择-->
+<div style="width:100%;height:100%; background:rgba(51,51,51,0.5); position:fixed;left:0px;top:0px;z-index:1000000; display:none;" id='promote_div'>
+	<div style="width:100%; position:absolute;left:0px;top:40px;">
+		<div style=" padding:20px;">
+			<div class="job_extension_tck">
+				<div class="job_extension_tck_tit"><em id='promote_title'>职位推广</em><span onclick="$('#promote_div').hide();location.reload();" style="float:right">关闭</span></div>
+				<div class="job_day_box">
+					<div class="job_day_box_hi">尊敬的用户您好！</div>
+					<div class="job_day_box_yl" id='promote_tc'>您的职位置顶套餐剩余 <span class="job_day_box_yl_n">0</span> 天</div>
+					<div class="job_day_box_set"> 设置推广天数
+						<input type="text" value="" class="" id='promote_day' name='promote_day' maxlength='3' onkeyup="checkPromoteDay();" oninput="myFunction(this)">天
+					</div>
+					<input type="hidden" name="promote_jobid" id="promote_jobid" value=""/>
+					<input type="hidden" name="promote_type" id="promote_type" value=""/>
+					<div class="job_day_box_bth">
+						<input type="submit" value="确定" onClick="setJobPromote();" class="job_day_box_bth_b">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+	.job_day_box {padding: 20px;color: #666}
+	.job_day_box_hi {font-size: 16px;}
+	.job_day_box_yl {padding: 10px 0;}
+	.job_day_box_yl_n {color: #f00}
+	.job_day_box_set input {width: 90px;height: 35px;line-height: 35px;padding: 0;margin: 0 10px;}
+	.job_day_box_bth {padding-top: 20px;}
+	.job_day_box_bth .job_day_box_bth_b {width: 100%;height: 38px;line-height: 38px;margin: 0;padding: 0}
+	.sx_controls_dw_p{color:#999}
+</style>
+<!--天数选择 end-->
+
+<div style="width:100%;height:100%; background:rgba(0,0,0,.3); position: fixed; left: 0px; bottom: 0px; z-index: 1; display: none;" id="reserve_box">
+	<div style="background: #fff;bottom: 50px;position: fixed;width: 100%;left: 0px;margin-top: 10px;">
+		<div class="aisx_job_left">
+			<div class=""><span class="aisx_job_lefttit">预约刷新</span><span onclick="$('#reserve_box').hide();" class="aisx_job_righttit">关闭</span></div>
+			<div class="aisx_job_list"><span class="aisx_job_name">刷新状态：</span>
+				<div class="sx_zt" >
+					<span class="aisx_kq" id="status1" onclick="choseStatus(1);">开启</span>
+					<span class="aisx_kq" id="status2" onclick="choseStatus(2);">关闭</span>
+					<input type="hidden" id="reserve_status" value="" />
+				</div>
+			</div>
+
+			<div class="aisx_job_list"><span class="aisx_job_name">刷新间隔：</span>
+				<div class="sx_controls">
+					<input type="text" id="interval" onblur="checkInterval(this);" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="{yun:}$config.sy_reserve_refresh_interval{/yun}" class="sx_text">
+					<span class="sx_controls_dw">分钟</span>
+				</div>
+			</div>
+			<div class="aisx_job_list"><span class="aisx_job_name">截止日期：</span>
+				<div class="sx_controls sx_controlstime" style="padding-left: 0px;">
+					<button id="reservetimePicker" data-options='{"type":"date"}' style="border:none; width: 100%; height: 20px;">不限</button>
+					<input type="hidden" id="reservetime" name="reservetime" value="">
+				</div>
+			</div>
+			<div class="aisx_zy" style="padding-bottom:0px;"> 可预约 <span class="aisx_zy_n" style="font-size:16px;">{yun:}intval($statis.breakjob_num/$config.sy_reserve_refresh_price){/yun}</span> 次自动刷新          </div>
+			<div class="aisx_zy" style="padding-top:5px;"> 剩余刷新资源 <span class="aisx_zy_n" style="font-size:16px;">{yun:}$statis.breakjob_num{/yun}</span> 份 <a href="index.php?c=server&serviceId={yun:}$config.sy_reserve_service_id{/yun}" class="aisx_zy_buy">购买资源</a>
+			</div>
+			<div class="aisx_zytip">
+				<div class="">预约刷新规则：</div>
+				<div class="">截止日期不得设置今天，超过截止日期，自动关闭预约设置</div>
+				<div class="">刷新资源不足，将会自动停止，购买后需重新设置</div>
+			</div>
+			<div class="aisx_zybth_box"><a href="javascript:;" onclick="setReserveRefreshJob();" class="aisx_zybth">确定设置</a></div>
+		</div>
+	</div>
+</div>
+
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/jsMath.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+	function showserver(id, status, space, end) {
+		$('#jobid').val(id);
+
+		if (status) {
+			$('#reserve_status').val(status);
+			$('#status'+status).addClass('aisx_kq_cur');
+		}else{
+			$('.aisx_kq').removeClass('aisx_kq_cur');
+			$('#reserve_status').val('');
+		}
+		if (space) {
+			$('#interval').val(space);
+		}else{
+			$('#interval').val('');
+		}
+		if (end) {
+			$('#reservetime').val(end);
+			$('#reservetimePicker').html(end);
+		}else{
+			$('#reservetime').val('');
+			$('#reservetimePicker').html('');
+		}
+		$('#jobserver').show();
+	}
+
+	function ckserver(type) {
+		$(".serverul li").removeClass("job_extension_tck_yse");
+		$(".server" + type).addClass("job_extension_tck_yse");
+	}
+
+	function forserver(server) {
+
+		if (!server) {
+			$('#is_job_tg').val('2')
+			server = $(".serverul").find(".job_extension_tck_yse").attr('data-type');
+		} else {
+			$('#is_job_tg').val('1')
+		}
+		var jobid = $("#jobid").val();
+
+		if (server == 7) {
+
+			$('#jobserver').hide();
+			$('#reserve_box').show();
+		} else if (server == '6') {
+
+			window.location.href = "index.php?c=addreward&type=share&jobid=" + jobid;
+		} else if (server < 6 && server > 0) {
+
+			$.post("index.php?c=promotion", {server: server}, function (data) {
+
+				var data = eval('(' + data + ')');
+
+				if (data.status == 1) {	//	套参数充足
+
+					var num = data.num;
+					var price = data.price;
+
+					$('#promote_jobid').val(jobid);	// 推广职位ID
+
+					if (server == 1) {
+
+						$("#promote_title").html('自动刷新');
+						if (price == 0) {
+							$('#promote_tc').html('<font color="red">限时福利：</font>自动刷新金额 <font color="red">0</font> 元');
+						}
+						$('#promote_type').val('autojob');
+					} else if (server == 2) {
+
+						$("#promote_title").html('职位置顶');
+						if (price == 0) {
+							$('#promote_tc').html('<font color="red">限时福利：</font>职位置顶金额 <font color="red">0</font> 元');
+						} else {
+							$('#promote_tc').html('您的职位置顶套餐剩余：<span class="job_day_box_yl_n promote_tc">' + num + '</span>天');
+						}
+						$('#promote_type').val('top');
+					} else if (server == 3) {
+
+						$("#promote_title").html('职位推荐');
+						if (price == 0) {
+							$('#promote_tc').html('<font color="red">限时福利：</font>职位推荐金额 <font color="red">0</font> 元');
+						} else {
+							$('#promote_tc').html('您的职位推荐套餐剩余：<span class="job_day_box_yl_n promote_tc">' + num + '</span>天');
+						}
+						$('#promote_type').val('rec');
+					} else if (server == 4) {
+
+						$("#promote_title").html('职位紧急招聘');
+						if (price == 0) {
+							$('#promote_tc').html('<font color="red">限时福利：</font>紧急招聘金额 <font color="red">0</font> 元');
+						} else {
+							$('#promote_tc').html('您的职位紧急招聘套餐剩余：<span class="job_day_box_yl_n promote_tc">' + num + '</span>天');
+						}
+						$('#promote_type').val('urgent');
+					} else if (server == 5) {
+
+						$("#promote_title").html('职位推荐');
+						if (price == 0) {
+							$('#promote_tc').html('<font color="red">限时福利：</font>职位推荐金额 <font color="red">0</font> 元');
+						} else {
+							$('#promote_tc').html('您的职位推荐套餐剩余：<span class="job_day_box_yl_n promote_tc">' + num + '</span>天');
+						}
+						$('#promote_type').val('recpart');
+					}
+
+					$("#jobserver").hide();
+					$("#promote_div").show();
+
+				} else if (data.status == 2) {
+
+					if (data.single == 2) {
+						var msg = data.msg;
+					} else if (data.online == 3 && data.meal != 1) {
+						var msg = "您的等级特权已用完，继续操作将消费" + data.jifen + integral_pricename + "，是否继续？";
+					} else {
+						var msg = "您的等级特权已用完，继续操作将消费" + data.price + "元，是否继续？";
+					}
+
+					if (server == '1') {
+						server = 'autojob';
+					} else if (server == '2') {
+						server = 'jobtop';
+					} else if (server == '3') {
+						server = 'jobrec';
+					} else if (server == '4') {
+						server = 'joburgent'
+					} else if (server == '5') {
+						server = 'partrec'
+					}
+
+					layer.open({
+						title: ['温馨提示', 'background-color: #FF4351; color:#fff;'],
+						content: msg,
+						btn: ['继续', '取消'],
+						shadeClose: false,
+						yes: function () {
+							window.location.href = "index.php?c=server&server=" + server + "&id=" + jobid;
+						}
+					});
+
+				} else {
+
+					layermsg(data.msg, 2);
+					return false;
+				}
+			});
+		}
+	}
+
+	function myFunction(_this) {
+		_this.value = _this.value.replace(/[^0-9]/g, '');
+	}
+
+	function checkPromoteDay() {
+
+		var promote_tc = $('.promote_tc').html();
+		var promote_day = $('#promote_day').val();
+
+		if (parseInt(promote_tc) < parseInt(promote_day)) {
+			$('#promote_day').val(parseInt(promote_tc));
+		}
+	}
+
+	/* 职位推广设置 */
+	function setJobPromote() {
+
+		var jobid = $("#promote_jobid").val();
+		var days = $("#promote_day").val();
+		var type = $("#promote_type").val();
+
+		if (days == '') {
+
+			layermsg('请填写职位推广天数！');
+			return false;
+		}
+
+		layer_load('执行中，请稍候！');
+
+		$.post('index.php?c=setJobPromote', {jobid: jobid, type: type, days: days}, function (data) {
+
+			layer.closeAll();
+
+			var data = eval('(' + data + ')');
+			var errcode = data.errcode;
+
+			var msg = data.msg;
+
+			if (errcode == 7) {
+
+				layermsg(msg);
+				return false;
+			} else {
+
+				layermsg(msg);
+				var is_job_tg = $('#is_job_tg').val();
+				if (is_job_tg == '1') {
+					location.href = wapurl + "member/?c=job";
+				} else {
+					location.reload();
+				}
+			}
+		});
+	}
+
+	function choseStatus(status) {
+		$('#reserve_status').val(status);
+		$('.aisx_kq').removeClass('aisx_kq_cur');
+		$('#status'+status).addClass('aisx_kq_cur');
+	}
+
+	function checkInterval(obj) {
+
+		var minInterval = '{yun:}$config.sy_reserve_refresh_interval{/yun}',
+				interval = $('#interval').val();
+		if (parseInt(interval) < parseInt(minInterval)) {
+			$('#interval').val(minInterval);
+		}
+		
+	}
+
+	function setReserveRefreshJob() {
+
+		var job_id = $("#jobid").val();
+		var status = $('#reserve_status').val();
+		var end_time = $('#reservetime').val();
+		var interval = $('#interval').val();
+
+		if (job_id == '') {
+			layermsg('参数错误');
+			return false;
+		}
+		if (status == ''){
+			layermsg('请选择预约状态');
+		}
+		if(status == 1){
+			if (interval == '') {
+				layermsg('请填写刷新时间间隔');
+				return false;
+			}
+		}
+
+		layer_load();
+
+		$.ajax({
+			async: false,
+			type: "POST",
+			global: false,
+			url: "index.php?c=reserveUp",
+			data: {job_id: job_id, status: status, interval: interval, end_time: end_time},
+			success: function (data) {
+				layer.closeAll();
+				var data = eval('(' + data + ')');
+				if (data.error == 0) {
+
+					layermsg(data.msg);
+				} else if (data.error == 1) {
+
+					layermsg(data.msg);
+					location.reload();
+				}
+			}
+		});
+
+	}
+
+</script>

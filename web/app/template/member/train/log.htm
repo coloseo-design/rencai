@@ -1,0 +1,42 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+<div class="training_cur flt">
+<div class="training_cur_l flt"><a href="index.php">首页</a> > 会员中心</div>
+</div>
+{yun:}include file="$trainstyle/left.htm"{/yun}
+<div class="right_column frt mt10">
+<div class="right_column_border">
+<div class="right_column_h1"><span class="right_column_h1_span flt">操作日志</span></div>
+<div class="right_column_news">
+      <div class="Reservation_list">
+        <div class="Reservation_list_singup"> 
+       <div class="Reservation_list_span Reservation_list_name">编号 </div>
+       <div class="Reservation_list_span Reservation_list_cont">内容  </div>
+        <div class="Reservation_list_span Reservation_list_time">IP  </div>
+        <div class="Reservation_list_span Reservation_list_cz">时间 </div> </div>
+        <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+		<form action="{yun:}$now_url{/yun}" method="post" target="supportiframe" id='myform'>
+		  {yun:}if $total{/yun}
+       {yun:}foreach item=v from=$rows{/yun}
+         <div class="Reservation_list_singup"> 
+          <div  class="Reservation_list_span Reservation_list_name">{yun:}$v.id{/yun} </div>
+        <div  class="Reservation_list_span Reservation_list_cont">{yun:}$v.content{/yun} </div>
+          <div class="Reservation_list_span Reservation_list_cz">{yun:}$v.ip{/yun} </div>
+         <div  class="Reservation_list_span Reservation_list_time">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun} </div> 
+          </div>
+       {yun:}/foreach{/yun}
+	         <div class="clear"></div>
+      {yun:}else{/yun}
+      <div class="msg_no">暂无相关信息</div>
+      {yun:}/if{/yun}
+        </form>
+      </div>	
+        <div class="pages">  {yun:}$pagenav{/yun}</div>
+</div>
+</div>
+</div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

@@ -1,0 +1,91 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+	<div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+	<div class="com_tit"><span class="com_tit_span">会员服务</span></div>
+    	<div class=right_box>
+		<div class="vip_boxshow">	<div class="vip_boxshow_c">
+		
+		<div class="report_uaer_list ">
+			<div class="report_uaer_list_h1">开通超级会员</div>
+			<div class="report_uaer_list_p">为企业提供多样化的套餐服务</div>
+		     <ul>
+		       {yun:}if $config.com_vip_type==2{/yun}
+		       <li><a href="index.php?c=right" >套餐会员</a></li>
+		       {yun:}/if{/yun}
+		       
+		       {yun:}if $config.com_vip_type==1{/yun}
+		       <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+		       {yun:}/if{/yun}
+		       
+		       {yun:}if $config.com_vip_type==0{/yun}
+		       <li><a href="index.php?c=right" >套餐会员</a></li>
+		       <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+		       {yun:}/if{/yun}
+		       {yun:}if $statis.rating_type != 2 && !$vipIsDown && $config.com_integral_online != 4 {/yun}
+							<li><a href="index.php?c=right&act=added" >增值包</a></li>
+					  {yun:}/if{/yun}
+		     <li><a href="index.php?c=ad" > 购买广告位</a></li>
+		     <li ><a href="index.php?c=pay" >充值服务</a></li>
+		     <li><a href="index.php?c=paylogtc" >我的服务</a></li>
+		     <li><a href="index.php?c=paylog&consume=ok" >订单管理</a></li>
+		     {yun:}if $config.sy_com_invoice == 1{/yun}
+	             <li><a href="index.php?c=invoice"  >发票管理</a></li>
+	           {yun:}/if{/yun}
+		     <li><a href="index.php?c=coupon_list" >优惠卡券</a></li>
+		     <li  class="report_uaer_list_cur"><a href="index.php?c=jobpack&act=loglist"  >赏金收益</a></li>
+				 {yun:}if $config.sy_help_open == 1{/yun}
+				 <li><a href="index.php?c=friendhelp" >好友助力</a></li>
+				 {yun:}/if{/yun}
+		     <li><a  href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}管理</a></li>
+		     </ul>
+		   </div>
+		         
+		
+				
+				
+				<div class="com_body">
+					<div class="clear"></div>
+					
+					<div class="packloglost_box"> 
+						我的钱包：<span class="packloglost_box_money">￥{yun:}$statis.packpay{/yun}</span>&nbsp;&nbsp;&nbsp;		   
+						冻结金额：<span class="packloglost_box_money">￥{yun:}$statis.freeze_n{/yun}</span> 
+						{yun:}if $config.sy_withdraw==1{/yun} <a href="index.php?c=jobpack&act=withdraw" class="packloglost_box_money_bth">提现</a> {yun:}/if{/yun}
+						<a href="index.php?c=jobpack&act=change" class="packloglost_box_money_bth">转换成账户{yun:}$config.integral_pricename{/yun}</a>
+					</div>
+
+					{yun:}if $rows{/yun}
+						<div class="packloglost_box_l_b">
+							
+							<div class="packloglost_box_tit">赏金收益列表</div>
+							
+							<ul class="packloglost_box_list">
+								
+								{yun:}foreach from=$rows item=v{/yun}
+									<li>
+										<div class="packloglost_box_yt">微信转发职位：{yun:}$v.jobname{/yun} </div>
+										<div class="packloglost_box_time">时间：{yun:}$v.time|date_format:"%Y-%m-%d %H:%M:%S"{/yun} </div>
+										<span class="packloglost_box_list_n"><font color="#f00">+{yun:}$v.packmoney{/yun}</font> 元</span> 
+									</li>
+								{yun:}/foreach{/yun}
+
+							</ul>
+
+						</div>
+
+						<div class="clear"></div>
+						
+						<div class="diggg">{yun:}$pagenav{/yun}</div>
+						<div class="clear"></div>
+
+					{yun:}else{/yun}
+
+						<div class="msg_no">您还没有赏金收益。</div>
+
+					{yun:}/if{/yun}
+				  
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun} 

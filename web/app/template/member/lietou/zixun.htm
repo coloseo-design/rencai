@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+{yun:}include file="$lietoustyle/public.htm"{/yun} 
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/jianli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+</head>
+
+<body>
+{yun:}include file="$lietoustyle/header.htm"{/yun}
+<!--内容部分content-->
+<div class="m_content">
+<div class="wrap">
+{yun:}include file="$lietoustyle/left.htm"{/yun}
+    
+    <div class="m_inner_youb fr">
+     <div class="lt_m_tit"><span class="lt_m_tit_s">求职咨询</span></div>
+          <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+          <form action="index.php?c=zixun&act=del" target="supportiframe" method="post" name='myform' id='myform' class="layui-form">
+    	<div class="lt_m_table">
+        <table>
+        {yun:}if !empty($rows){/yun}
+        	<tr>
+         
+                <th></th>
+                 <th><span>咨询人</span></th>
+                 <th><span>公司名称</span></th>
+                <th><span>职位名称</span></th>
+                 <th><span>咨询时间</span></th>
+                <th><span>状态</span></th>
+                <th>操 作</th>
+     
+            </tr>
+       		{yun:}foreach from=$rows item=item{/yun}
+            <tr>
+           <td><input class="m_cont_check " type="checkbox" value="{yun:}$item.id{/yun}" name="delid[]" lay-skin="primary"></td>
+                <td><a href="{yun:}url m=resume c=show id=$item.eid{/yun}" class="sent_star" style="width:180px;height:20px; overflow:hidden">{yun:}$item.username{/yun}</a></td>
+                <td>{yun:}$item.com_name|mb_substr:0:12:'utf-8'{/yun}</td>
+               <td><a href="{yun:}url m=lietou c=jobshow id=$item.jobid{/yun}" target="_blank">{yun:}$item.job_name|mb_substr:0:7:'utf-8'{/yun}</a></td>
+               <td>{yun:}$item.datetime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+              <td>{yun:}if $item.reply!=""{/yun}<font color="green">已回复</font> {yun:}else{/yun}<font color="#FF0000">未回复</font>{yun:}/if{/yun}</td>
+              <td align="center"><a href="javascript:void(0)"  onclick="layer_del('确定要删除？', 'index.php?c=zixun&act=del&id={yun:}$item.id{/yun}');" class="cont_del">删除</a><span class="hunter_line">丨</span><a href="index.php?c=zixun&act=replys&id={yun:}$item.id{/yun}" class="cont_del">{yun:}if $item.reply!=""{/yun}查看{yun:}else{/yun}回复{yun:}/if{/yun}</a></td>
+            </tr>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+          <tr><td colspan="7"><div  class="member_no_content">暂无信息！</div></td></tr>
+          {yun:}/if{/yun}
+         
+         {yun:}if !empty($rows){/yun}
+           <tr><td colspan="7" class="lt_m_table_end">
+        <div class="m_browse_del">
+        <div style=" padding-left:10px;">
+        <input id='checkAll'  type="checkbox" lay-filter="allLt"  lay-skin="primary" class="m_del_che">
+          全选<a href="javascript:void(0);" onclick="return really('delid[]');">批量删除</a> </div></div>
+        <div class="clear"></div>
+        <div class="pages">{yun:}$pagenav{/yun}</div>
+        </td></tr>
+        
+        {yun:}/if{/yun}
+		</table>
+        </form>
+      </div>
+</div>
+
+</div>
+</div>
+<div class="clear"></div>
+
+<script>
+	layui.use(['form','layer', 'laydate'], function(){
+    	var $ = layui.$,
+			form = layui.form,
+			laydate = layui.laydate,
+			layer = layui.layer;
+    	
+    	form.on('checkbox(allLt)', function (data) {
+       	 	$("input[name='delid[]']").each(function () {
+            	this.checked = data.elem.checked;
+        	});
+        	form.render('checkbox');
+      	});
+  	});
+</script>
+<!--内容结束-->
+{yun:}include file="$lietoustyle/footer.htm"{/yun} 

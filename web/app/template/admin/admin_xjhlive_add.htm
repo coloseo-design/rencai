@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<style>
+			* {margin: 0 ;padding: 0;}
+			body,div{ margin: 0 ;padding: 0;}
+			.layui-form-item {margin-bottom: 0px;clear: both;}
+			.t_box{width:150px;height:90px;border:1px solid #eee;position: relative; margin-right:20px; display:inline-block}
+			.t_box img{width:150px;height:90px;}
+			.t_box .delPic{ position: absolute ;right:-10px;top:-5px; padding:3px 8px; line-height:15px;font-size:12px; background:#72bb38;color:#fff;border-radius:20px;}
+		</style>
+		<title>后台管理</title>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">管理员根据自己需求，填写直播宣讲会常规设置</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form id="xjhform" name="myform" target="supportiframe" action="index.php?m=admin_xjhlive&c=save" method="post" encType="multipart/form-data" class="layui-form" autocomplete="off">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<tr class="admin_table_trbg">
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">添加直播宣讲会信息</div>
+							</th>
+						</tr>
+						<tr>
+							<th width="120">名称：</th>
+							<td>
+								<div class="layui-input-inline">
+									<input type="text" name="name" id="name" lay-verify="required" placeholder="请输入名称" value="{yun:}$info.name{/yun}" size="60" class="layui-input">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>使用范围：</th>
+							<td>
+								<input type="button" value="{yun:}if $info.did{/yun}{yun:}$Dname[$info.did]{/yun}{yun:}else{/yun}总站{yun:}/if{/yun}"
+								 class="city_news_but" onClick="add_site('{yun:}$info.did{/yun}','{yun:}$Dname[$info.did]{/yun}');">
+								<input id="did" type="hidden" name="did" value="{yun:}$info.did{/yun}" />
+							</td>
+						</tr>
+						<tr>
+							<th width="120" class="t_fl">简介：</th>
+							<td>
+								<script id="content" name="body" type="text/plain" style="width:820px;height:300px;">{yun:}$info.body{/yun}</script>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">开始时间：</th>
+							<td>
+								<div class="layui-input-inline">
+									<input name="stime" id="stime" type="text" maxlength="50" value="{yun:}$info.stime_n{/yun}" class="input-text" placeholder="开始时间" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="120">封面图片：</th>
+							<td>
+								<div style="height: 40px;">
+									<input type="hidden" id="laynoupload" value="1" />
+									<button id="noupload" type="button" class="yun_bth_pic adminupload" lay-data="{parentid: 'imgparent',path: 'xjh'}">上传图片</button>
+								</div>
+								
+								<div class="layui-upload {yun:}if empty($info.picarr){/yun}none{yun:}/if{/yun}" id="xjhpics">
+									<blockquote  class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">预览图：
+									    <div class="layui-upload-list" id="imgparent">
+									    	{yun:}foreach  item=pic from=$info.picarr{/yun}
+									    	<div id="pic_{yun:}$pic.id{/yun}" class="t_box">
+									    		<img  src="{yun:}$pic.url{/yun}">
+									    		<a href="javascript:void(0);" class="delPic" data-pid="{yun:}$pic.id{/yun}" data-id="pic_{yun:}$pic.id{/yun}" data-url="index.php?m=admin_xjhlive&c=delPic" onclick="delPic(this)">删除</a>
+									    	</div>
+									    	{yun:}/foreach{/yun}
+									    </div>
+									</blockquote>
+								</div>
+							</td> 
+						</tr> 
+						 
+						<tr>
+							<th>直播时长：</th>
+							<td colspan="3">
+								<div class="layui-input-inline">
+									<select name="playtime" lay-filter="playtime">
+										<option value="">请选择</option>
+										{yun:}foreach from=$playtime key=j item=v{/yun}
+										<option value="{yun:}$j{/yun}" {yun:}if $info.playtime==$j{/yun}selected{yun:}/if{/yun}>{yun:}$v{/yun} </option>
+										 {yun:}/foreach{/yun} 
+									 </select> 
+								 </div> 
+							 </td> 
+						 </tr> 
+						<tr>
+							<th class="t_fl">上架设置：</th>
+							<td colspan="3">
+								<div class="layui-input-block" style="margin-bottom: 10px;">
+									<input type="radio" name="state" value="1" title="立即上架" lay-filter="state" {yun:}if $info.state==1 ||
+									 !$info.state{/yun}checked{yun:}/if{/yun} />
+									<input type="radio" name="state" value="2" title="定时上架" lay-filter="state" {yun:}if $info.state==2{/yun}checked{yun:}/if{/yun} />
+									<input type="radio" name="state" value="3" title="暂不上架" lay-filter="state" {yun:}if $info.state==3{/yun}checked{yun:}/if{/yun} />
+								</div>
+								<div id="dsdiv" class="layui-input-block" style="{yun:}if $info.state != 2{/yun}display: none;{yun:}/if{/yun}">
+									<input type="text" name="statetime" id="statetime" value="{yun:}$info.statetime_n{/yun}" class="layui-input"
+									 style="width:225px;display: inline-block;" placeholder="请选择上架时间">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th class="t_fr">回放设置：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="radio" name="playback" value="1" title="开启" {yun:}if $info.playback==1 || !$info.playback{/yun}checked{yun:}/if{/yun} />
+										<input type="radio" name="playback" value="2" title="关闭" {yun:}if $info.playback==2{/yun}checked{yun:}/if{/yun} />
+									</div>
+									<span class="admin_web_tip">开启回放，直播结束后直播间将播放回放视频。关闭回放，直播结束后直播间不播放回放视频</span>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th></th>
+							<td>
+								{yun:}if is_array($info){/yun}
+								<input type="hidden" name="id" value="{yun:}$info.id{/yun}" />
+								<input class="tty_sub" type="button" onclick="checkform()" value="&nbsp;修 改&nbsp;" />
+								{yun:}else{/yun}
+								<input class="tty_cz" type="button" onclick="checkform()" value="&nbsp;添 加&nbsp;" />
+								{yun:}/if{/yun}
+								<input class="tty_cz" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+		<div id="news_preview" style="display:none;width:560px ">
+			<div style="height:300px; overflow:auto;width:560px;">
+				<div class="job_box_div" style="text-align:center;margin-top:10px;"></div>
+			</div>
+		</div>
+		{yun:}include file="$adminstyle/checkdomain.htm"{/yun}
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/formSelects-v4.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/formSelects-v4.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script language="javascript">
+			layui.use(['layer', 'form', 'element', 'laydate', 'upload'], function() {
+				var layer = layui.layer
+					,form = layui.form
+					,element = layui.element
+					,upload = layui.upload
+					,formSelects = layui.formSelects
+					,$ = layui.$;
+				var laydate = layui.laydate;
+				laydate.render({
+					elem: '#stime',
+					type: 'datetime',
+					min: '{yun:}$now{/yun}',
+					format: 'yyyy-MM-dd HH:mm'
+				});
+				laydate.render({
+					elem: '#statetime',
+					type: 'datetime',
+					min: '{yun:}$now{/yun}',
+					format: 'yyyy-MM-dd HH:mm'
+				});
+				form.on('radio(state)', function(data) {
+					if (data.value == '2') {
+						$("#statetime").val('');
+						$("#dsdiv").show();
+					} else {
+						$("#dsdiv").hide();
+					}
+				});
+				var layupload_type = $("#layupload_type").val();   //文件上传方式   2、选完文件后自动上传
+				var laynoupload = $("#laynoupload").val(); 		   //1、选完不上传            
+				//选完不上传，url暂未用到，只是需要其样式
+				
+				if (laynoupload == 1){
+					var layfiletype = $("#layfiletype").val();
+					//上传文件类型
+					if (layfiletype == 2){
+						var layaccept = 'file', layexts = 'doc|docx|rar|zip|pdf';
+					}else{
+						var layaccept = 'images', layexts = 'jpg|png|gif|bmp|jpeg';
+					}
+					var uploadListIns=upload.render({
+						elem: '#noupload'
+						,auto: false
+						,bindAction: '#test9'   //触发上传的对象，暂未用到
+						,accept: layaccept
+						,multiple:true
+						,field:'files[]'
+						,exts: layexts
+						,choose: function(obj){
+							var parentid = null;
+						
+							parentid = this.parentid;
+
+							obj.preview(function(index, file, result){
+								if(parentid){
+									var timestamp = (new Date()).getTime();
+									$('#xjhpics').removeClass('none');
+									$('#'+parentid).removeClass('none');
+									var id ='picadd_'+timestamp+'_'+index;
+
+
+									var imghtml	=	'<div id="'+id+'"class="t_box">';
+									imghtml		+=	'<img  src="'+result+'" >';
+									imghtml		+=	'<a id="" href="javascript:void(0);" class="delPic" data-pid="" data-id="'+id+'" data-url="" onclick="delPic(this)">删除</a>';
+									imghtml		+=	'<input name="preview[]" type="hidden" value="'+result+'"/>';
+									imghtml		+=	'</div>';
+
+
+									$('#'+parentid).append(imghtml);
+								}
+								//删除
+								$('.delPic').on('click', function(){
+									
+									uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+									delPic(this);
+								  
+								});
+							});
+							
+						}
+					});
+				}
+			});
+			var editor = UE.getEditor('content', {
+				toolbars: [
+					['Source', '|', 'Undo', 'Redo', 'Bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'fontfamily',
+						'fontsize', 'forecolor', 'backcolor', 'removeformat', 'autotypeset', 'pasteplain', '|', 'insertorderedlist',
+						'insertunorderedlist', 'selectall', 'cleardoc', '|', 'simpleupload', '|', 'link', 'unlink', 'indent', '|',
+						'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify'
+					]
+				],
+				wordCount: false,
+				elementPathEnabled: false,
+				initialFrameHeight: 300
+			});
+			
+			function delPic(obj){
+				var picid	=	$(obj).attr('data-id'),
+					pid		=	$(obj).attr('data-pid'),
+					url		=	$(obj).attr('data-url');
+				if(url){
+					var pytoken = $('#pytoken').val();
+					parent.layer.confirm('确认删除？', function(){
+						loadlayer();
+						$.post(url,{pid:pid,pytoken:pytoken},function(data){
+							parent.layer.closeAll();
+							if(data=='1'){
+								$('#'+picid).remove();
+								parent.layer.msg('删除成功', 2, 9);
+							}else{
+								parent.layer.msg('删除失败', 2, 8);
+							}
+						});
+					});
+				}else{
+					$('#'+picid).remove();
+				}
+			}
+			function checkform() {
+
+				var name = $.trim($("#name").val());
+				if (name == '') {
+					parent.layer.msg('请填写标题！', 2, 8);
+					return false;
+				}
+
+				var description = editor.getContent();
+				if ($.trim(description) == '') {
+					layer.msg('宣讲会简介不能为空！', 2, 8);
+					return false;
+				}
+				if ($("#stime").val() == '') {
+					layer.msg('宣讲会开始时间不能为空！', 2, 8);
+					return false;
+				}
+				if($("#imgparent").find('img').length < 1){
+					layer.msg('请上传封面图片！', 2, 8);return false;
+				}
+				if ($("#playtime").val() == '') {
+					layer.msg('请选择直播时长！', 2, 8);
+					return false;
+				}
+				if ($("input[name=state]:checked").val() == '2') {
+					if ($("#statetime").val() == '') {
+						layer.msg('请选择定时上架时间', 2, 8);
+						return false;
+					}
+				}
+				loadlayer();
+				$("#xjhform").submit();
+			}
+		</script>
+	</body>
+</html>

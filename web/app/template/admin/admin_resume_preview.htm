@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/data/plus/jobparent.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<script src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/data/plus/cityparent.cache.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/newclass.public.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/newclass.public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		
+		<title>后台管理</title>
+		<style type="text/css">
+			
+			.chat_addresume{width:100%; font-family: "microsoft yahei";}
+			.chat_resumetit{ width:100%; position: relative; margin-top: 20px; padding-bottom: 20px;}
+			.chat_resumetit_n{ font-weight: bold; font-size: 16px;color:#333;;}
+			.chat_resume_listbox{
+			    padding: 20px 20px;
+			    background: #f9fbfd;
+			    border-radius: 8px;
+			}
+			.chat_resume_list{ padding-left: 80px; position: relative; min-height: 36px; margin-top: 10px;;}
+			.chat_resume_list_name{width:80px; position: absolute;left:0px;top:0px;line-height: 38px}
+			.chat_resume_list .layui-form-item{ margin-bottom: 0px;;}
+			.chat_user_hy{color:#999;padding:10px 0;}
+			.chat_user_xz{color:#2d8cf0; font-size: 16px;}
+			.chat_user_info{ font-size: 14px; padding-top: 10px;color:#666;font-family: "microsoft yahei";}
+			.chat_user_p{color:#999; line-height: 25px;}
+			.admin_yunnew_user_name_c{ position: relative;}
+
+			.admin_saversume_tit{color:#333}
+			.chat_addresume::-webkit-scrollbar {
+				/*滚动条整体样式*/
+				width: 6px;
+				/*高宽分别对应横竖滚动条的尺寸*/
+				height: 1px;
+			}
+			.chat_addresume::-webkit-scrollbar-thumb {
+				/*滚动条里面小方块*/
+				border-radius: 10px;	
+				background: #ccc9c7;
+			}
+			.chat_addresume::-webkit-scrollbar-track {
+				/*滚动条里面轨道*/
+				border-radius: 10px;
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div id="leftbox" class="admin_jobleft" style="width:700px; padding-right: 30px; height: auto;">
+				<div class="chat_addresume">
+					<div class="addresume_box  " style="border:none;padding:0px 20px 0px 0px">
+						<div id="info" class="admin_yunnew_user_show">
+							<div class="admin_yunnew_user_img">
+								<img src="{yun:}$resumeinfo.photo{/yun}">
+							</div>
+							<div class="admin_yunnew_user_name_c">
+								<div class="admin_yunnew_user_name">{yun:}$resumeinfo.name{/yun}</div>
+							</div>
+							<div class="admin_yunnew_user_info">
+								{yun:}$resumeinfo.exp_n{/yun}经验 · {yun:}$resumeinfo.edu_n{/yun} · {yun:}$resumeinfo.age{/yun}岁
+							
+							</div>
+							<div style="padding-bottom: 10px">
+								{yun:}if !$matching{/yun}
+								{yun:}if $resumeinfo.telphone{/yun}
+								手机号：{yun:}$resumeinfo.telphone{/yun}
+								{yun:}/if{/yun}
+								{yun:}if $resumeinfo.email{/yun}
+								· 邮箱：{yun:}$resumeinfo.email{/yun}
+								{yun:}/if{/yun}
+								{yun:}/if{/yun}
+							</div>
+
+							<div class="admin_yunnew_user_ah">{yun:}$resumeinfo.description{/yun}</div>
+						</div>
+						 
+						
+						<div class="chat_resumetit"><span class="chat_resumetit_n">求职意向</span>
+						</div>
+					</div>
+
+					<div>
+						
+						<div class="chat_user_info"><span class=""> {yun:}$expect.name{/yun} </span> · <span> {yun:}$expect.city_classname{/yun}</span>  · <span> {yun:}$expect.report_n{/yun} </span>
+						  · <span> {yun:}$expect.type_n{/yun}</span>
+						  · <span> {yun:}$expect.jobstatus_n{/yun}</span></div>
+						<div class="chat_user_hy"> {yun:}$expect.hy_n{/yun}</div> 
+						<span class="chat_user_xz"> {yun:}$expect.salary{/yun}</span>
+					</div>
+			
+					{yun:}if $work{/yun}
+						<div class="chat_resumetit"><span class="chat_resumetit_n">工作经历</span>  </div>
+						{yun:}foreach from=$work item=work_l{/yun}
+						<div class="admin_saversume_list">
+							<div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+								<div class="admin_saversume_tit">
+									<span class="admin_saversume_tit_b">{yun:}$work_l.name{/yun}</span>
+									{yun:}if $work_l.title{/yun}<span class="admin_saversume_tit_b">{yun:}$work_l.title{/yun}</span>{yun:}/if{/yun}
+								</div>
+								<div>{yun:}$work_l.sdate_n{/yun} ~ {yun:}$work_l.edate_n{/yun}</div>
+								<div class="chat_user_p">{yun:}$work_l.content{/yun}</div>
+								<div class="admin_saversume_cz">
+								</div>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+					{yun:}/if{/yun}
+
+					{yun:}if $edu{/yun}
+						<div class="chat_resumetit"><span class="chat_resumetit_n">教育经历</span></div>
+						{yun:}foreach from=$edu item=edu_l{/yun}
+						<div class="admin_saversume_list">
+							<div class="admin_saversume_pd">
+								<i class="admin_saversume_pd_icon"></i>
+								<div class="admin_saversume_tit">
+									<span class="admin_saversume_tit_b">{yun:}$edu_l.name{/yun}</span>
+								</div>
+								<div>{yun:}$edu_l.sdate_n{/yun} ~ {yun:}$edu_l.edate_n{/yun}</div>
+								<div class="chat_user_p">
+									最高学历：{yun:}$edu_l.education_n{/yun} 
+									&nbsp;
+									{yun:}if $edu_l.specialty{/yun}
+									所学专业：{yun:}$edu_l.specialty{/yun}
+									{yun:}/if{/yun}
+								</div>
+							</div>
+							<div class="admin_saversume_cz">
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+					{yun:}/if{/yun}
+			
+					{yun:}if $training{/yun}
+						<div class="chat_resumetit"><span class="chat_resumetit_n">培训经历</span></div>
+						{yun:}foreach from=$training item=training_l{/yun}
+						<div class="admin_saversume_list">
+							<div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+								<div class="admin_saversume_tit"><span class="admin_saversume_tit_b">{yun:}$training_l.name{/yun}</span>
+									{yun:}if $training_l.title{/yun}培训方向： <span class="admin_saversume_tit_b">{yun:}$training_l.title{/yun}</span>{yun:}/if{/yun}
+								</div>
+								<div>{yun:}$training_l.sdate_n{/yun} ~ {yun:}$training_l.edate_n{/yun}</div>
+								<div class="chat_user_p">{yun:}$training_l.content{/yun}</div>
+								<div class="admin_saversume_cz">
+								</div>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+					{yun:}/if{/yun}
+
+					{yun:}if $skill{/yun}
+						<div class="chat_resumetit"><span class="chat_resumetit_n">职业技能</span></div>
+						{yun:}foreach from=$skill item=skill_l{/yun}
+						<div class="admin_saversume_list">
+							<div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+								<div class="admin_saversume_tit"><span class="admin_saversume_tit_b">{yun:}$skill_l.name{/yun}</span>
+									{yun:}if $skill_l.longtime{/yun}掌握时间：<span class="admin_saversume_tit_b">{yun:}$skill_l.longtime{/yun}年</span>{yun:}/if{/yun} </div>
+									
+								<div>
+									熟练程度：{yun:}$skill_l.ing_n{/yun} 
+									&nbsp;
+								</div>	
+								<div> {yun:}if $skill_l.pic{/yun}
+									技能证书：<img src="{yun:}$skill_l.pic{/yun}" width="95" height="70">
+									{yun:}/if{/yun}</div>
+								<div class="admin_saversume_cz">
+								</div>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+					{yun:}/if{/yun} 
+
+					{yun:}if $project{/yun}
+						<div class="chat_resumetit"><span class="chat_resumetit_n">项目经历</span></div>
+						{yun:}foreach from=$project item=project_l{/yun}
+						<div class="admin_saversume_list">
+							<div class="admin_saversume_pd"> <i class="admin_saversume_pd_icon"></i>
+								<div class="admin_saversume_tit">
+									<span class="admin_saversume_tit_b">{yun:}$project_l.name{/yun}</span>
+									{yun:}if $project_l.title{/yun}<span class="admin_saversume_tit_b">{yun:}$project_l.title{/yun}</span>{yun:}/if{/yun}
+								</div>
+								<div>{yun:}$project_l.sdate_n{/yun} ~ {yun:}$project_l.edate_n{/yun}
+								</div>
+								<div class="chat_user_p">{yun:}$project_l.content{/yun}</div>
+								<div class="admin_saversume_cz">
+								</div>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+					{yun:}/if{/yun} 
+					
+					{yun:}if $other{/yun}
+						<div class="chat_resumetit"><span class="chat_resumetit_n">其他描述</span></div>
+						{yun:}foreach from=$other item=other_l{/yun}
+						<div class="admin_saversume_list">
+							<div class="admin_saversume_pd"> 
+								<i class="admin_saversume_pd_icon"></i>
+								<div class="admin_saversume_tit">
+									<span class="admin_saversume_tit_b">{yun:}$other_l.name{/yun}</span>
+								</div>
+								<div class="chat_user_p">{yun:}$other_l.content{/yun}</div>
+								<div class="admin_saversume_cz">
+								</div>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+					{yun:}/if{/yun} 
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

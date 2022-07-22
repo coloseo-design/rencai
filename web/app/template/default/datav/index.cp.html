@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>大屏数据</title>
+  <script src="./js/vue.min.js"></script>
+  <!--调试版-->
+  <script src="./js/datav.map.vue.min.js"></script>
+  <!-- <script src="https://unpkg.com/@jiaminghi/data-view/dist/datav.map.vue.min.js"></script> -->
+  <!--压缩版 生产版本-->
+  <!-- <script src="./js/datav.min.vue.min.js"></script> -->
+  <!-- <script src="https://unpkg.com/@jiaminghi/data-view/dist/datav.min.vue.min.js"></script> -->
+  <script src="./js/echarts.min.js"></script>
+  <link rel="stylesheet" href="./index.css">
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="./element-ui.css">
+  <link rel="stylesheet" href="./liMarquee.css">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+  <!-- 引入组件库 -->
+  <script src="./js/element-ui.js"></script>
+ 
+  <script src="./js/jquery-1.8.3.min.js"></script>
+  <script src="./js/jquery.liMarquee.js"></script>
+  <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+  <link rel="icon" href="data:;base64,=">
+  <style>
+
+  </style>
+</head>
+
+<body >
+  <div id="app">
+    <!-- 头部logo -->
+    <div class="header">
+      <div class="left-line">
+        <img src="./img/left-background-1.png" alt="" class="background-1">
+      </div>
+      <img src="./img/left-background-2.png" alt="" class="background-2">
+      <img src="./img/right-background-2.png" alt="" class="background-3">
+      <div class="right-line">
+         <img src="./img/right-background-1.png" alt="" class="background-4">
+        </div>
+      <div id="show">
+      </div>
+    </div>
+    <!-- 页面整体部分 -->
+    <div class="box">
+      <!-- 左边第一个格子内内容 -->
+      <div class="left1">
+          <div class="upward">
+            <div class="profile-photo">
+              <img src="./img/142.png" alt="">
+              <i class="job">求职者eeee</i>
+            </div>
+            <div class="triangle"></div>
+            <div id="data">
+                <i class="new">程军生跟新了简历</i>
+                <div id="show1">2021-06-04</div>
+            </div>
+          </div>
+          <div class="separate"></div>
+          <div class="gender">
+            <div class="gender1">行业分布</div>
+            <div id="main">
+            </div>
+          </div>
+          <div class="salary-expectation">
+            <div class="salary">期望薪资</div>
+            <div id="main1">
+            </div>
+          </div>
+          <div class="education">
+            <div class="education1">学历</div>
+            <div id="main2"></div>
+          </div>
+          <div class="work-experience">
+            <div class="salary">工作经历</div>
+            <div id="main3"></div>
+          </div>
+          <div class="bott">
+          </div>
+      </div>
+      <!-- 左边第二个格子内内容 -->
+      <div class="left2">
+        <div class="station">
+          <div class="fire"></div>
+          <i class="hot">最热门的岗位(TOP10)</i>
+        </div>
+        <div class="separate-1"></div>
+        <!-- 表格内容 -->
+        <div class="table-wrapper">
+          <el-table :data="tableData" stripe style="width: 95%">
+            <el-table-column prop="date" label="排名" width="50">
+            </el-table-column>
+            <el-table-column prop="name" label="岗位" width="120">
+            </el-table-column>
+            <el-table-column prop="address" label="投递数量（人）" width="170">
+            </el-table-column>
+            <el-table-column prop="quarters" label="当前岗位数（人）" width="150">
+            </el-table-column>
+          </el-table>
+        </div>
+        <div class="bott"></div>
+      </div>
+      <!-- 中间的大格子内容 -->
+      <div class="middle">
+        <div class="mid1">
+            <div class="mid-box">
+              <div class="mid-box1">
+              <div class="mid-boxshow">
+              <div class="mid-box_esp">
+              <div class="espbox">
+                <span class="espbox_n">12668</span>
+                <span class="espbox_p">企业</span>
+                </div>
+                <img src="./img/esp_bg.png" class="esp-icon">
+                </div>
+                <span class="imger"></span>
+                <span class="newly-increased">
+                  今日新增 <i class="espbox_new">0</i> 家
+                </span>
+              </div>  </div>
+               <div class="mid-box1">
+              <div class="mid-boxshow">
+              <div class="mid-box_esp">
+              <div class="espbox">
+                <span class="espbox_n">12668</span>
+                <span class="espbox_p">求职</span>
+                </div>
+                <img src="./img/esp_bg.png" class="esp-icon">
+                </div>
+                <span class="imger"></span>
+                <span class="newly-increased">
+                  今日新增 <i class="espbox_new">0</i> 家
+                </span>
+              </div> </div>
+               <div class="mid-box1">
+             <div class="mid-boxshow">
+              <div class="mid-box_esp">
+              <div class="espbox">
+                <span class="espbox_n">12668</span>
+                <span class="espbox_p">招聘</span>
+                </div>
+                <img src="./img/esp_bg.png" class="esp-icon">
+                </div>
+                <span class="imger"></span>
+                <span class="newly-increased">
+                  今日新增 <i class="espbox_new">0</i> 家
+                </span>
+              </div> </div>
+               <div class="mid-box1">
+             <div class="mid-boxshow">
+              <div class="mid-box_esp">
+              <div class="espbox">
+                <span class="espbox_n">12668</span>
+                <span class="espbox_p">招聘会</span>
+                </div>
+                <img src="./img/esp_bg.png" class="esp-icon">
+                </div>
+                <span class="imger"></span>
+                <span class="newly-increased">
+                  今日新增 <i class="espbox_new">0</i> 家
+                </span>
+              </div> </div>
+
+            </div>
+            <div class="base"></div>
+        </div>
+        <div class="mid2">
+         
+            <div class="bgc"></div>
+            <div class="upward-1">
+              <div class="profile-photo">
+                <img src="./img/142.png" alt="">
+                <i class="job1">最近一年求职动态</i>
+              </div>
+              <div class="triangle-1"></div>
+
+              <div id="long">
+                <i class="new">2021年相聚夏天，构建未来...</i>
+                <div id="show2"></div>
+              </div>
+
+            </div>
+            <div class="separate1"></div>
+            <div id="main4">
+            </div>
+            <div id="main5">
+              <div class="mian5-1">
+                <i class="amount">最近一个月注册总数</i>
+                <i class="number">11250</i>
+                <i class="people">人次</i>
+                <div class="register">今日新增5人</div>
+              </div>
+              <div class="mian5-2">
+                <div class="mian5-2-1">
+                  <i class="cent1">12668</i>
+                  <div class="word">份</div>
+                  <i class="deliver">投递简历</i>
+                </div>
+                <div class="mian5-2-2">
+                  <i class="cent1">12668</i>
+                  <div class="word">次</div>
+                  <i class="deliver">面试邀请</i>
+                </div>
+                <div class="mian5-2-3">
+                  <i class="cent1">50万+</i>
+                  <div class="word">次</div>
+                  <i class="deliver">直聊沟通</i>
+                </div>
+                <div class="mian5-2-4">
+                  <i class="cent1">12668</i>
+                  <div class="word">次</div>
+                  <i class="deliver">简历关注</i>
+                </div>
+                <div class="mian5-2-5">
+                  <i class="cent1">8千万+</i>
+                  <div class="word">次</div>
+                  <i class="deliver">岗位浏览</i>
+                </div>
+              </div>
+              <div class="base1"></div>
+            </div>
+        
+        </div>
+        <div class="mid3">
+            <div class="upward">
+              <div class="profile-photo">
+                <img src="./img/164.png" alt="" class="photo">
+                <i class="job1">最近一年招聘企业数趋势</i>
+                <div class="firm">
+                  <i class="firm1">企业总数：</i>
+                  <i class="firm2">12668家</i>
+                </div>
+              </div>
+            </div>
+            <!-- 蓝色指示条 -->
+            <div class="separate1"></div>
+            <div id="main6">
+            </div>
+            <div class="base2"></div>
+        </div>
+      </div>
+      <!-- 右边大格子内容 -->
+      <div class="right">
+        <!-- 右边第一个盒子 -->
+        <div class="right1">
+            <div class="upward">
+              <div class="profile-photo">
+                <img src="./img/437.png" alt="">
+                <i class="job">企业</i>
+              </div>
+              <div class="triangle"></div>
+              <div id="data-1">
+                  <i class="new1">程军生...</i>
+                  <i class="publish">发布了安全工程师</i>
+                  <div id="show3">2021-06-04</div>
+              </div>
+
+            </div>
+            <div class="separate"></div>
+            <div class="big-box">
+              <div class="gender1">行业分部</div>
+              <div id="main7"></div>
+            </div>
+            <div class="boutto-box">
+              <div class="boutto-box1">
+                <div class="gender1">企业分部</div>
+                <div id="main8"></div>
+              </div>
+              <div class="boutto-box2">
+                <div class="gender1">企业规模</div>
+                <div id="main9"></div>
+              </div>
+            </div>
+            <div class="bott"></div>
+        </div>
+        <!-- 右边第二个盒子 -->
+        <div class="right2">
+          <div class="station">
+            <div class="fire"></div>
+            <i class="hot">最热门的行业(TOP10)</i>
+          </div>
+          <div class="separate-1"></div>
+          <!-- 表格内容 -->
+          <div class="table-wrapper">
+            <el-table :data="tableData" stripe style="width: 95%">
+              <el-table-column prop="date" label="排名" width="50">
+              </el-table-column>
+              <el-table-column prop="name" label="岗位" width="120">
+              </el-table-column>
+              <el-table-column prop="address" label="投递数量（人）" width="170">
+              </el-table-column>
+              <el-table-column prop="quarters" label="当前岗位数（人）" width="150">
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="bott"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+    <script src="./js/data.js"></script>
+</body>
+
+<script>
+
+    $(function(){
+        $('#data').liMarquee({
+          direction: 'up',
+          scrollamount: 30
+         });
+     });
+ 
+    $(function(){
+       $('#data-1').liMarquee({
+          direction: 'up',
+          scrollamount: 30
+       });
+    });
+
+    $(function(){
+        $('#long').liMarquee({
+          direction: 'up',
+          scrollamount: 30
+         });
+     });
+
+  var app = new Vue({
+    el: '#app',
+    data() {
+      return {
+        tableData: [{
+          date: '1',
+          name: '医院',
+          address: '958445',
+          quarters: '34635'
+        }, {
+          date: '2',
+          name: '医疗',
+          address: '634634',
+          quarters: '5646'
+        }, {
+          date: '3',
+          name: '护理',
+          address: '654524',
+          quarters: '2432'
+        }, {
+          date: '4',
+          name: '养护',
+          address: '456445',
+          quarters: '2424'
+        }, {
+          date: '5',
+          name: '运营',
+          address: '654524',
+          quarters: '2432'
+        }]
+      }
+    }
+
+  })
+  // 行业分部的图标信息
+  var chartDom = document.getElementById('main');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    title: {
+      text: '',
+      subtext: '',
+      left: 'center'
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'top',
+      top: 50,
+      textStyle: { //图例文字的样式
+        color: '#fff',
+        // fontSize: 16
+      }
+    },
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: '50%',
+        // 设置饼状图位置的
+        center: ["65%", "50%"],
+        data: [
+          { value: 484, name: '男', itemStyle: { color: '#045DCE' }},
+          { value: 300, name: '女',itemStyle: { color: '#f90' }}
+        ],
+        label: { //去除饼图的指示折线label
+          normal: {
+            show: false,
+            position: 'inside',
+            formatter: "{b}:{d}%"
+          },
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+
+  //  期望薪资的图标信息
+  var chartDom = document.getElementById('main1');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: '5%',
+      // 让左边提示文字垂直排列
+      orient: 'vertical',
+      textStyle: { //图例文字的样式
+        color: '#fff',
+        // fontSize: 16
+      }
+      // left: 'center'
+    },
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: ['70%', '40%'],
+        center: ["65%", "50%"],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          // borderColor: '#fff',
+          borderWidth: 2
+        },
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            // fill:'#000',
+            fontSize: '20',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 1048, name: '2k以下', itemStyle: { color: '#0671D4' } },
+          { value: 735, name: '2k-4k',itemStyle: {color:'#9760E5'} },
+          { value: 580, name: '4k-6k',itemStyle: {color:'#36C9CA'} },
+          { value: 484, name: '6k-8k',itemStyle: {color:'#FBD436'} },
+          { value: 300, name: '8k-10k',itemStyle: {color:'#36C9CA'} },
+          { value: 484, name: '10k以上' ,itemStyle: {color:'#4ACC72'}},
+          { value: 484, name: '20k以上' ,itemStyle: {color:'#9760E5'}}
+        ],
+
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+
+  // 学历的图标信息
+  var chartDom = document.getElementById('main2');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    legend: {
+      top: '1',
+      left: '2',
+      orient: 'vertical',
+      textStyle: { //图例文字的样式
+        color: '#fff',
+        // fontSize: 16
+      }
+    },
+    series: [
+      {
+        name: '面积模式',
+        type: 'pie',
+        radius: ['7%', '60%'],
+        center: ['65%', '50%'],
+        roseType: 'area',
+        itemStyle: {
+          borderRadius: 8
+        },
+        label: {
+          normal: {
+            position: 'inner',
+            show: false
+          }
+        },
+        data: [
+          { value: 40, name: '初中' , itemStyle: { color: '#02CDFB' } },
+          { value: 38, name: '高中' , itemStyle: { color: '#CE5A4D' }},
+          { value: 32, name: '中专' , itemStyle: { color: '#FBD436' }},
+          { value: 30, name: '大专' , itemStyle: { color: '#36C9CA' }},
+          { value: 28, name: '本科' , itemStyle: { color: '#4ACC72' }},
+          { value: 26, name: '硕士' , itemStyle: { color: '#0671D4  ' }},
+          { value: 22, name: '博士', itemStyle: { color: '#02CDFB' } },
+          { value: 18, name: '博后' , itemStyle: { color: '#9760E5' }},
+          { value: 18, name: '不限' , itemStyle: { color: '#D0C27C' }}
+        ]
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+
+  // 工作经历的图标信息
+  var chartDom = document.getElementById('main3');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: '5%',
+      // 让左边提示文字垂直排列
+      orient: 'vertical',
+      textStyle: { //图例文字的样式
+        color: '#fff',
+        // fontSize: 16
+      }
+      // left: 'center'
+    },
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: ['70%', '40%'],
+        center: ["65%", "50%"],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          // borderColor: '#fff',
+          borderWidth: 2
+        },
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '20',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 1048, name: '无' , itemStyle: { color: '#02CDFB' }},
+          { value: 735, name: '一年以下' , itemStyle: { color: '#CE5A4D' }},
+          { value: 580, name: '1-3年' , itemStyle: { color: '#FBD436' }},
+          { value: 484, name: '3-5年' , itemStyle: { color: '#36C9CA' }},
+          { value: 300, name: '5-10年', itemStyle: { color: '#4ACC72' } },
+          { value: 484, name: '10年以上' , itemStyle: { color: '#4ACC72' }}
+        ],
+
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+
+  // 求职者图标信息
+  var chartDom = document.getElementById('main4');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    title: {
+      text: '求职注册',
+      textStyle: {
+        color: '#fff'
+      },
+      subtext: '单位：人次',
+      subtextStyle: {
+        color: '#fff'
+      },
+      padding: [0, 100, 100, 30]  // 位置
+    },
+    textStyle: {  // 图列内容样式
+      color: '#fff',  // 字体颜色
+      backgroundColor: 'black'  // 字体背景色
+    },
+    xAxis: {
+      axisLine: {
+        lineStyle: {
+          type: 'solid',
+          color: '#02AAC4',//左边线的颜色
+          width: '1',//坐标线的宽度
+
+        }
+      },
+      axisLabel: {
+        interval: 0,//横轴信息全部显示  
+        //rotate:-20,//-30度角倾斜显示  
+      },
+      // splitLine:{show: false},//去除网格线
+      type: 'category',
+      data: ['20年5月', '20年6月', '20年7月', '20年8月', '20年9月', '20年10月', '20年11月', '20年12月', '21年1月', '20年2月']
+    },
+    yAxis: {
+      splitLine: { show: false },//去除网格线
+      axisLine: {
+        lineStyle: {
+          type: 'solid',
+          color: '#02AAC4',
+          width: '1.5'
+        }
+      },
+      type: 'value'
+    },
+    series: [{
+      data: [120, 200, 150, 80, 70, 110, 130, 105, 130, 110],
+      type: 'bar',
+      // 柱状图的宽度
+      barWidth: 20,
+      itemStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(
+            0, 0, 0, 1,
+            [
+              { offset: 0, color: '#01FDFF' },                   //柱图渐变色
+              // {offset: 0.5, color: '#44C0C1'},                 //柱图渐变色
+              { offset: 1, color: '#00A7FF' },                   //柱图渐变色
+            ]
+          )
+        },
+      }
+      // color: 'linear-gradient(180deg, #01FDFF 0%, #00A7FF 100%)'
+      // background: 'linear-gradient(180deg, #01FDFF 0%, #00A7FF 100%);'
+    }]
+  };
+  option && myChart.setOption(option);
+
+  // 招聘企业数趋势
+  var chartDom = document.getElementById('main6');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    title: {
+
+      subtext: '单位：家',
+      subtextStyle: {
+        color: '#fff'
+      },
+      padding: [10, 80, 100, 40]  // 位置
+    },
+    xAxis: {
+      axisLine: {
+        interval: 0,//X轴信息全部展示
+        lineStyle: {
+          // type: 'solid',
+          color: '#fff',//左边线的颜色
+          width: '1'//坐标线的宽度
+        }
+      },
+      axisLabel: {
+        interval: 0,//横轴信息全部显示  
+        //  rotate:-20,//-30度角倾斜显示  
+      },
+      type: 'category',
+      data: ['20年7月', '20年8月', '20年9月', '20年10月', '20年11月', '20年12月', '21年1月', '21年2月', '21年3月', '21年4月', '21年5月', '21年6月']
+    },
+    yAxis: {
+      splitLine: { show: false },//去除网格线
+      axisLine: {
+        lineStyle: {
+          type: 'solid',
+          color: '#fff',//左边线的颜色
+          width: '1'//坐标线的宽度
+        }
+      },
+      type: 'value'
+    },
+    series: [{
+      itemStyle: {
+        normal: {
+          //  color: "#3C76F4",       //改变折线点的颜色
+          label: { show: true },   //顶部显示数值
+          lineStyle: {
+            //  color: "#3C76F4"      //改变折线颜色
+          }
+        }
+      },
+      data: [1620, 932, 2000, 934, 1290, 1730, 820, 1465, 1353, 2374, 1448, 1355, 1463],
+      type: 'line',
+      color: 'skyblue',
+      smooth: true,
+      areaStyle: {         // 颜色自上而下渐变
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 0.8, [{        // 1代表上面
+          offset: 0,
+          color: '#01FDFF'
+        }, {
+          offset: 1,
+          color: '#00A7FF'
+        }]),
+
+      },
+    }]
+  };
+  option && myChart.setOption(option);
+
+  //  企业行业分部
+  var chartDom = document.getElementById('main7');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      // data: ["正常区域", "预警区域", "高发区域", '不发区域'],
+      orient: 'vertical',
+      left: 'left',
+      textStyle: { //图例文字的样式
+        color: '#fff',
+
+        // fontSize: 16
+      }
+    },
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: '50%',
+        radius: ['35%', '60%'],
+        // 设置饼状图位置的
+        center: ["60%", "38%"],
+        // 让指示线的文字百分比显示
+        label: {
+          normal: {
+            formatter: '{d}%',
+            show: true,
+            position: 'left'
+          },
+        },
+        data: [
+          { value: 1048, name: '计算机软件/硬件/系统/维修' , itemStyle: { color: '#02CDFB' }},
+          { value: 735, name: '通信/设备/运营/服务' , itemStyle: { color: '#9760E5' }},
+          { value: 580, name: '互联网/电子商务/IT服务' , itemStyle: { color: '#FBD436' }},
+          { value: 484, name: '电子/半导体/集成电器' , itemStyle: { color: '#36C9CA' }},
+          { value: 300, name: '仪器/仪表/工业自动化' , itemStyle: { color: '#4ACC72' }},
+          { value: 484, name: '其他', itemStyle: { color: '#1E8DF3' } }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+
+  // 企业分部
+  var chartDom = document.getElementById('main8');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: '5%',
+      // 让左边提示文字垂直排列
+      orient: 'vertical',
+      textStyle: { //图例文字的样式
+        color: '#fff',
+        // fontSize: 16
+      }
+
+    },
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: ['25%', '45%'],
+        center: ["70%", "60%"],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '15',
+            fontWeight: 'bold',
+            color: '#fff'
+          }
+        },
+
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 1048, name: '扎下' , itemStyle: { color: '#02CDFB' }},
+          { value: 735, name: '马厂' , itemStyle: { color: '#9760E5' }},
+          { value: 580, name: '胡集' , itemStyle: { color: '#FBD436' }},
+          { value: 484, name: '钱集' , itemStyle: { color: '#36C9CA' }},
+          { value: 300, name: '陇集' , itemStyle: { color: '#4ACC72' }},
+          { value: 1048, name: '唐沟', itemStyle: { color: '#C306D4' } },
+          { value: 1048, name: '庙头', itemStyle: { color: '#F5A623' } },
+          { value: 1048, name: '华冲', itemStyle: { color: '#B8E986' } },
+        ]
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+
+  // 企业规模图标信息
+  var chartDom = document.getElementById('main9');
+  var myChart = echarts.init(chartDom);
+  var option;
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: '5%',
+      // 让左边提示文字垂直排列
+      orient: 'vertical',
+      textStyle: { //图例文字的样式
+        color: '#fff',
+        // fontSize: 16
+      }
+
+    },
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: ['25%', '45%'],
+        center: ["70%", "60%"],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '9',
+            fontWeight: 'bold',
+            color: '#fff'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 1048, name: '20人以下' , itemStyle: { color: '#02CDFB' }},
+          { value: 735, name: '20-99人' , itemStyle: { color: '#9760E5' }},
+          { value: 580, name: '100-400人'  , itemStyle: { color: '#FBD436' }},
+          { value: 484, name: '500-999人' , itemStyle: { color: '#36C9CA' }},
+          { value: 300, name: '1000-9999人' , itemStyle: { color: '#B8E986' }},
+          { value: 1048, name: '10000人以上', itemStyle: { color: '#F5A623' } },
+        ]
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+   
+</script>
+
+</html>

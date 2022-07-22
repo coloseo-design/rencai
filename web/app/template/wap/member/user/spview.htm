@@ -1,0 +1,137 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+
+<div id="yunvue" class="none">
+<div class="issue_post_body">
+    <div class="video_interview_card" v-for="(item, infokey) in list" :key="infokey">
+        <div class="interview_card_top">            
+            <div class="interview_card_top_box" v-if="item.canroom" @click="goRoom(item.sid)">
+                <div class="top_box_icon">
+                    <img src="{yun:}$wap_style{/yun}/images/video_icon.png" alt="" width="100%" height="100%">
+                </div>
+                <div class="top_box_text">进入面试间</div>
+            </div>
+            <div class="interview_card_top_state" v-if="item.status==1">{{item.status_n}}</div>
+            <div class="interview_card_top_state" v-else-if="item.status==2">{{item.status_n}}</div>
+            <div class="interview_card_top_state" v-else>{{item.status_n}}</div>
+        </div>
+        <div class="video_interview_template">
+            <div class="interview_template_q">面试时间</div>
+            <div class="interview_template_a">{{item.ctime_n}}</div>
+        </div>
+        <div class="video_interview_template">
+            <div class="interview_template_q">预约职位</div>
+            <div class="interview_template_a" @click="pageTo(item.wapjob_url)">{{item.jobname}}</div>
+        </div>
+        <div class="video_interview_template">
+            <div class="interview_template_q">备注信息</div>
+            <div class="interview_template_remark">{{item.remark}}</div>
+        </div>
+        <div class="video_interview_del">
+            <div class="video_interview_name" @click="pageTo(item.wapcom_url)">{{item.comname}}</div>
+                <div class="video_interview_icon" @click="del(item.id,infokey)">
+                    <img src="{yun:}$wap_style{/yun}/images/resume_del.png" alt="" width="100%" height="100%">
+                </div>
+        </div>
+     </div>
+   
+     <div v-if="count ==2">
+    <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+    </div>
+	
+	<div class="wap_member_no" v-show="islook&&count==0">
+		暂无预约记录<div><a class="wap_member_no_submit" href="{yun:}url m=wap c=spview{/yun}">去搜索视频面试</a></div>
+	</div>
+	
+</div>
+</div>
+<script>  
+  var currentPage = parseInt('{yun:}$smarty.get.page{/yun}');   
+  var wapurl = "{yun:}url m=wap{/yun}";
+      new Vue({
+        el: '#yunvue',
+        data: {
+          list: [],
+          limit:20,       
+          total:0,
+          page: currentPage ? currentPage : 1,
+          islook :false
+        },
+        computed: {
+          count(){
+            if(this.total > this.limit){
+              return 2;
+            }else if(this.list.length==0){
+              return 0;
+            }else{
+                return 1;
+            }
+          }
+        },
+        created() {   
+         this.getSub();
+        },
+        methods:{
+          getSub:function(){
+            showLoading();
+            var that = this;
+            var paramer = {};
+                paramer['page'] = that.page;
+                paramer['limit'] = that.limit;     
+            $.post('{yun:}url d=wxapp h=user m=spview c=index{/yun}',paramer,function(res){
+              hideLoading();      
+             
+              that.list = res.data.list;
+              that.total = res.total;
+              that.page = currentPage ? currentPage : 1;
+              that.islook = true 
+               $("#yunvue").css('display', 'block');
+            },'json');
+          },
+          goRoom:function(sid){
+              let param = {               
+                sid: sid
+              };
+              showLoading();
+              $.post('{yun:}url d=wxapp m=spview c=goRoom{/yun}',param,function(res){
+                hideLoading();      
+                  if(res.error==1){
+                      window.location.href = wapurl +'/member/?c=sproom&id=' + sid
+                  }else{
+                    showToast(res.msg);
+                  }
+               
+               },'json');
+          },          
+          del:function(id,key){
+              let that = this
+              let param = {
+                id: id
+              };
+             
+             showConfirm('确定删除', () => {
+                showLoading('删除中...')
+                $.post('{yun:}url d=wxapp h=user m=spview c=delSub{/yun}', param, function(data){
+                  hideLoading();
+                  if (data.error == 1) {
+                    showToast(data.msg,2, function() {
+                      that.list.splice(key, 1);   
+                    });
+                  } else {
+                    showToast(data.msg);
+                  }
+                });
+             });   
+             
+          },
+           pageChange:function(e){
+          
+            location.href = 'index.php?c=spview&page='+e;
+          },
+          pageTo:function(url){
+              window.location.href = url;
+          }
+        } 
+      });
+</script>
+</body>
+</html>

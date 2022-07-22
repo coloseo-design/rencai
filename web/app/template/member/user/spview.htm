@@ -1,0 +1,61 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+        <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">视频面试</span> <i class="member_right_h1_icon user_bg"></i></div>
+   		<div id="gms_showclew"></div>
+        <div class="resume_box_list mt20">
+
+			{yun:}if !empty($rows){/yun}
+            <div class="attention_enterprises_tit">
+                <div style="width:300px; padding-left:20px;" class="attention_enterprises_span attention_enterprises_job">企业名称</div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_job">预约职位</div>
+				<div style="width:150px;" class="attention_enterprises_span attention_enterprises_job">面试时间</div>
+                <div style="width:220px; text-align:center; float:right" class="attention_enterprises_span attention_enterprises_cz">操作</div>
+            </div>
+            {yun:}/if{/yun}
+
+            {yun:}foreach item=log from=$rows{/yun}
+            <div class="attention_enterprises_list">
+                <div style="width:300px;" class="attention_enterprises_span attention_enterprises_job mt15">
+                    <a href="{yun:}url m=company c=show id='`$log.comid`'{/yun}" target="_blank" class="attention_enterprises_name_a">{yun:}$log.comname{/yun}&nbsp;</a>
+                </div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_job mt15">
+					<a href="{yun:}url m=job c=comapply id='`$log.jobid`'{/yun}" target="_blank">{yun:}$log.jobname{/yun}&nbsp;</a>
+                </div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_time mt15">{yun:}$log.sdate_n{/yun}</div>
+                <div  style="width:220px; text-align:center; float:right" class="attention_enterprises_span attention_enterprises_cz mt15">
+                    {yun:}if $log.canroom==1{/yun}
+                    <a href="javascript:void(0)" onclick="goRoom('{yun:}$log.sid{/yun}');" class="cblue">进入房间</a>
+                    <span class="jobnotice_cz_line">|</span>
+					{yun:}/if{/yun}
+					
+					<a href="javascript:void(0)" onclick="layer_del('您确定要取消预约？', 'index.php?c=spview&act=delSub&del={yun:}$log.id{/yun}');" class="cblue">取消预约</a>
+					<span class="jobnotice_cz_line">|</span>
+					<a href="{yun:}url m=spview c=show id='`$log.sid`'{/yun}" target="_blank" class="cblue">查看</a>
+                </div>
+            </div>
+            {yun:}foreachelse{/yun}
+			<div class="msg_no">
+				<p>亲爱的用户，目前您未预约任何视频面试</p>
+				<a href="{yun:}url m=spview{/yun}" target="_blank" class="msg_no_sq uesr_submit">立即搜索</a>
+			</div>
+            {yun:}/foreach{/yun}
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function goRoom(sid) {
+        loadlayer();
+        $.post('{yun:}url m=spview c=goRoom{/yun}', {
+            sid: sid
+        }, function(data) {
+			window.localStorage.removeItem("isspview");
+            window.location.href = weburl + '/member/?c=spview&act=sproom&id=' + sid;
+        });
+    }
+</script>
+{yun:}include file="$userstyle/footer.htm"{/yun} 

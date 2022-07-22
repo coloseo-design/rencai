@@ -1,0 +1,202 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link href="{yun:}$wap_style{/yun}/css/member/memberuserwap.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<style type="text/css" media="screen">
+	.deposit_header_reminder div{display: inline-block}
+</style>
+<div id="yunvue" class="none">
+	
+	<div class="tx_wxtsbg">
+	<div class="tx_wxts">
+		温馨提示：
+			{{packprice_min_recharge >0 ? '单笔转换金额必须达到'+packprice_min_recharge+ '元,': ''}}
+			<span v-if="fkpack_max_recharge>=0">每日最多转换 {{fkpack_max_recharge}} 次</span>
+			<span v-else>次数不限</span>
+			{{changeNum > 0 ? ',已经转换'+changeNum+'次': ''}}。
+		   </div>  
+		
+
+	<div class="tx_body">
+        <div class="deposit_body_card">
+            <div class="deposit_money_body_card">
+                <div class="money_card_box">
+                    <div class="card_box_name">我的钱包</div>
+                    <div class="card_box_number">
+                        <i class="card_number_icon">￥</i> {{packfk}}</div>
+                </div>
+                <div class="money_card_hint"></div>
+                <div class="money_card_box">
+                    <div class="card_box_name">冻结金额</div>
+                    <div class="card_box_number">
+                        <i class="card_number_icon">￥</i> {{freeze}}</div>
+                </div>
+               
+            </div>
+            
+            <div class="deposit_card_namebox">
+                <div class="deposit_card_name">转换金额</div>
+                <div class="deposit_card_import">
+                    <input @input="change" type="text" v-model="fkprice" class="yunset_sjtext" name="changeprice" placeholder="输入转换金额" >
+                </div>
+            </div>
+            <div class="deposit_card_namebox">
+                <div class="deposit_card_name">转换{{integral_pricename}}</div>
+                <div class="deposit_card_integral">
+                   <i class="card_integral_number">{{changeintegral}}</i>{{integral_pricename}}
+                </div>
+            </div>
+
+        </div>
+        <div class="deposit_body_btn" @click="changeSubmit" v-if="statis.packfk>0">转换</div>
+        	<div class="deposit_body_btn" v-else>不可转换</div>
+        	 </div>
+    </div>
+</div>
+
+<script>  
+  new Vue({
+    el: '#yunvue',
+    data: {
+        changeintegral: 0,
+		packprice_min_recharge: 0,
+		fkpack_max_recharge: 0,
+		changeNum: 0,
+		integral_pricename: '',
+		integral_proportion: 0,
+		fkprice: '',
+		packfk: 0,
+		freeze: 0,
+		statis: {},
+		changeprice: 0,
+		inputVal:''	
+    },watch: {
+    	fkprice(newval){
+    		this.fkprice = newval;
+    	}
+    },
+    created() {   
+     this.getStatis();
+    },
+    methods:{
+    	changeSubmit:function(){
+    		var that = this;
+    		var minchangeprice = that.packprice_min_recharge;
+    		if(that.fkprice == 0){
+    			that.fkprice = '';
+				that.changeintegral = '';
+				showToast('请正确填写转换金额');
+    		}else if (minchangeprice > 0 && parseInt(that.fkprice) < minchangeprice) {
+				that.fkprice = '';
+				that.changeintegral = '';
+				return showToast('转换金额不能小于' + minchangeprice + '元,请重新填写 ！');
+			} else {
+				var paramer = {
+					'changeprice': that.fkprice,
+					'changeintegral': that.changeintegral,
+					
+				};
+				$.post('{yun:}url d=wxapp h=user m=finance c=change{/yun}',paramer,function(data){
+	          		hideLoading();      
+	         		
+		          	if (data.error == 1) {
+						showToast(data.msg,2, function() {
+                      		window.location.href="index.php?c=paylog&type=changelist";
+                    	});
+					}else{
+						 showToast(data.msg);
+					}
+	           
+	        	},'json');
+			}
+    	},       
+    	change:function(e){
+    		var changeprice =  e.target.value;
+			var packfk = this.statis.packfk;
+			var proportion = this.integral_proportion;
+			var fkprice = '';
+				changeprice = changeprice.replace(/^[0]/gi, "");
+				changeprice = changeprice.replace(/[^\d.]/g, "");
+				changeprice = changeprice.replace(/\.{2,}/g, ".");
+				changeprice = changeprice.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+				changeprice = changeprice.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+			if (changeprice != "") {
+				
+				changeprice = parseFloat(changeprice);
+				if (changeprice <= packfk) {
+			
+					var integraltotal = parseInt(this.accMul(proportion, changeprice));
+					var integralFact = this.accMul(proportion, changeprice);
+					if (integralFact > integraltotal) {
+						integraltotal = this.accAdd(integraltotal, 1);
+					}
+					this.changeintegral = integraltotal;
+					fkprice = changeprice;
+				} else {
+					var integraltotal = parseInt(this.accMul(proportion, packfk));
+					var integralFact = this.accMul(proportion, packfk);
+					if (integralFact > integraltotal) {
+						integraltotal = this.accAdd(integraltotal, 1);
+					}
+					this.changeintegral = integraltotal;
+					fkprice = packfk;
+				}
+			} else {
+				this.changeintegral = 0;
+				fkprice = ''
+			}
+
+			this.fkprice =fkprice;
+
+    	},
+      	getStatis:function(){
+    		showLoading();
+        	var that = this;
+        	var paramer = {rand: Math.random()};
+       		$.post('{yun:}url d=wxapp h=com m=finance c=getStatis{/yun}',paramer,function(data){
+          		hideLoading();      
+	          	if (data.error == 1) {
+					that.statis = data.data.statis;
+					that.packprice_min_recharge = data.data.packprice_min_recharge;
+					that.fkpack_max_recharge = data.data.fkpack_max_recharge;
+					that.integral_pricename = data.data.integral_pricename;
+					that.integral_proportion = data.data.integral_proportion;
+					that.changeNum = data.data.changeNum;
+					that.packfk = that.statis.packfk > 0 ? that.statis.packfk : 0;
+					that.freeze = that.statis.freeze > 0 ? that.statis.freeze : 0;
+				}
+           		 $("#yunvue").css('display', 'block');
+        	},'json');
+      	},
+      	accMul: function(arg1, arg2) {
+			var m = 0,
+				s1 = arg1.toString(),
+				s2 = arg2.toString();
+			try {
+				m += s1.split(".")[1].length
+			} catch (e) {}
+			try {
+				m += s2.split(".")[1].length
+			} catch (e) {}
+		
+			return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+		},
+		//加
+		accAdd: function(arg1, arg2) {
+			var r1, r2, m;
+			try {
+				r1 = arg1.toString().split(".")[1].length
+			} catch (e) {
+				r1 = 0
+			}
+			try {
+				r2 = arg2.toString().split(".")[1].length
+			} catch (e) {
+				r2 = 0
+			}
+			m = Math.pow(10, Math.max(r1, r2))
+			return (arg1 * m + arg2 * m) / m
+		}
+    } 
+  });
+</script>
+</body>
+</html>

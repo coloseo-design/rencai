@@ -1,0 +1,121 @@
+<div class="sidebar">
+	<div class="left_box">
+		<ul class="left_nav_ul">
+			<li  {yun:}if $smarty.get.c==''{/yun}class="left_nav_newcur"{yun:}/if{/yun}><span><a href="index.php?" title="首页" class="new_com_nav_a"><i class="com_left_icon com_left_icon1"></i>企业中心</a></span></li>
+
+			<li  {yun:}if $smarty.get.c=='job'{/yun}class="left_nav_newcur"{yun:}/if{/yun}>
+				<span>
+					<a href="index.php?c=job&w=1" title="发布中的职位" class="new_com_nav_a"><i class="com_left_icon com_left_icon2"></i>职位管理</a>
+				</span>
+			</li>
+
+
+			<li {yun:}if $smarty.get.c=="hr" || $smarty.get.c=="down" || $smarty.get.c=="look_job"|| $smarty.get.c=="attention_me"|| $smarty.get.c=="talent_pool" ||
+				$smarty.get.c=="look_resume" || $smarty.get.c=="record" {/yun} class=" left_nav_newcur" {yun:}else{/yun}
+			class=" " {yun:}/if{/yun}>
+			<span>
+				    <a href="index.php?c=hr" title="人才管理"class="new_com_nav_a">{yun:}if $newResumeNum> 0{/yun}{yun:}/if{/yun}<i class="com_left_icon com_left_icon4"></i>简历管理</a>
+                </span>
+			</li>
+
+
+			<li {yun:}if $smarty.get.c=="invite" {/yun} class="style01 left_nav_newcur" {yun:}else{/yun} class="style03" {yun:}/if{/yun}>
+			<span><a href="index.php?c=invite" title="面试管理"  class="new_com_nav_a"><i class="com_left_icon com_left_icon10"></i>面试管理</a></span>
+			</li>
+			<li {yun:}if $smarty.get.c=="resume" {/yun} class="left_nav_newcur" {yun:}else{/yun} {yun:}/if{/yun}>
+			<span>
+					<a href="index.php?c=resume" class="new_com_nav_a"><i class="com_left_icon com_left_icon3"></i>人才库<i class="com_icon com_icon_new"></i></a>
+				</span>
+			</li>
+			<!-- 聊天 -->
+			{yun:}if $config.sy_chat_open == 1{/yun}
+			<li {yun:}if $smarty.get.c=='chat'{/yun}class="left_nav_newcur"{yun:}/if{/yun}>
+				<span>
+                    <a title="互动沟通 " href="index.php?c=chat" class="new_com_nav_a"><i class="com_left_icon com_left_icon5"></i>{yun:}$config.sy_chat_name{/yun}</a>
+                </span>
+			</li>
+			{yun:}/if{/yun}
+			<li {yun:}if $smarty.get.c=="zphnet"|| $smarty.get.c=="zphnet" || $smarty.get.c=="zhaopinhui" {/yun} class="left_nav_newcur" {yun:}else{/yun} {yun:}/if{/yun}>
+				<span>
+                    <a href="index.php?c=zhaopinhui"class="new_com_nav_a"><i class="com_left_icon com_left_icon12" ></i>招聘会</a>
+                </span>
+			</li>
+			{yun:}if $config.sy_spview_web == 1 && empty($spid){/yun}
+			<li {yun:}if $smarty.get.c=="spview" || $smarty.get.c=="spviewadd" {/yun} class="style01 left_nav_newcur" {yun:}else{/yun} class="style07" {yun:}/if{/yun}>
+			<span>
+                    <a href="index.php?c=spview"class="new_com_nav_a"><i class="com_left_icon com_left_icon6" ></i>视频面试</a>
+                </span>
+			</li>
+			{yun:}/if{/yun}
+
+			{yun:}if empty($spid){/yun}
+			<li {yun:}if $smarty.get.c=="right" && $smarty.get.act=="" || $smarty.get.c=="right" &&
+				$smarty.get.act=="time" || $smarty.get.c=="right" && $smarty.get.act=="added"|| $smarty.get.c=="ad"|| $smarty.get.c=="pay"|| $smarty.get.c=="paylogtc"|| $smarty.get.c=="paylog"|| $smarty.get.c=="invoice"|| $smarty.get.c=="coupon_list"|| $smarty.get.c=="jobpack"|| $smarty.get.c=="friendhelp"|| $smarty.get.c=="integral"|| $smarty.get.c=="right" {/yun}
+			class="style01 left_nav_newcur" {yun:}else{/yun} class="style12" {yun:}/if{/yun}>
+			<span>
+					<a href="index.php?c=right" class="new_com_nav_a"><i class="com_left_icon com_left_icon7"></i>会员服务<i class="com_icon com_icon_new"></i></a>
+				</span>
+			</li>
+			{yun:}/if{/yun}
+
+			<li {yun:}if $smarty.get.c=="info"|| $smarty.get.c=="uppic"||$smarty.get.c=="comtpl"|| $smarty.get.c=="map"|| $smarty.get.c=="news" || $smarty.get.c=="show" || $smarty.get.c=="product"{/yun} class="style01 left_nav_newcur" {yun:}else{/yun} class="style01"
+			{yun:}/if{/yun}>
+			<span>
+                    <a href="index.php?c=info" title="企业资料" class="new_com_nav_a"><i class="com_left_icon com_left_icon8"></i>企业资料</a>
+                </span>
+			</li>
+
+			<li {yun:}if $smarty.get.c=="binding"|| $smarty.get.c=="child"|| $smarty.get.c=="vs"{/yun} class="style01 left_nav_newcur" {yun:}else{/yun} class="style01" {yun:}/if{/yun}>
+			<span>
+                    <a href="index.php?c=binding" title="账号设置" class="new_com_nav_a"><i class="com_left_icon com_left_icon11"></i>账号设置</a>
+                </span>
+			</li>
+			<li class="more_box" style="position: relative; z-index: 100;" onMouseOver="leftmoreShow('show')" onMouseOut="leftmoreShow('hide')">
+				<span><a title="更多服务"class="new_com_nav_a"><i class="com_left_icon com_left_icon9" ></i>更多服务</a></span>
+				<div class="user_more" style="display: none;">
+					<div class="user_more_list">
+						<span class="user_more_name">招聘管理 ></span>
+						<a href="index.php?c=partok&w=1" class="user_more_a">兼职管理</a>
+						<a href="index.php?c=partapply" class="user_more_a">兼职报名</a>
+						<a href="index.php?c=jobpack" class="user_more_a">赏金职位</a>
+						<a href="index.php?c=tongji" class="user_more_a">招聘分析</a>
+					</div>
+
+					<div class="user_more_list">
+						<span class="user_more_name">猎头服务 ></span>
+						<a href="index.php?c=lt_job" class="user_more_a">猎头职位</a>
+						<a href="index.php?c=my_rebates"class="user_more_a">猎头悬赏</a>
+					</div>
+
+					<div class="user_more_list">
+						<span class="user_more_name">人才管理 ></span>
+						<a href="index.php?c=record"class="user_more_a">推送简历</a>
+						<a href="index.php?c=subscribe"class="user_more_a">简历订阅</a>
+						<a href="index.php?c=finder"class="user_more_a">人才搜索器</a>
+					</div>
+
+					<div class="user_more_list">
+						<span class="user_more_name">其他服务 ></span>
+						<a href="index.php?c=xjh" class="user_more_a">宣讲会</a>
+						<a href="index.php?c=baoming_subject" class="user_more_a">培训管理</a>
+						<a href="index.php?c=special" class="user_more_a">专题招聘</a>
+						<a href="index.php?c=report&act=show" title="投诉记录"  class="user_more_a">投诉记录</a>
+						<a href="{yun:}url m=ask c=friend a=myquestion uid=$uid{/yun}" target="_blank" title="我的问答" class="user_more_a">我的问答</a>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script>
+	$(function() {
+		$('.left_box_nav_list li').click(function() {
+			var datadef = $(this).attr('data-def');
+			$('.left_nav_ul').addClass('none');
+			$('#def' + datadef).removeClass('none');
+			$('.left_box_nav_cur').removeClass('left_box_nav_cur');
+			$(this).addClass('left_box_nav_cur');
+		});
+	})
+</script>

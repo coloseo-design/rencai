@@ -1,0 +1,73 @@
+{yun:}foreach item=v from=$lists{/yun}
+ <section>
+ &nbsp;
+<section style="box-sizing: border-box; margin:0px 0 15px 0px;">
+<section style="text-align: center; box-sizing: border-box;">
+<section style="display: inline-block; box-sizing: border-box; background-color: #fefefe; display:flex; display:-webkit-flex; justify-content:center;-webkit-justify-content:center;">
+<section style="display: inline-block; height: 30px; width: 10px; vertical-align: top; border-right: 10px solid #0070c0; box-sizing: border-box; border-top: 15px solid transparent !important; border-bottom: 15px solid transparent !important;" data-width="10px"></section>
+<section style="display: inline-block; height: 30px; width: 10px; vertical-align: top; border-right-width: 10px; border-right-style: solid; border-right-color: #fefefe; margin-left: -8px; border-top-width: 15px !important; border-top-style: solid !important; border-top-color: transparent !important; border-bottom-width: 15px !important; border-bottom-style: solid !important; border-bottom-color: transparent !important; box-sizing: border-box;" data-width="10px"></section>
+<section style="display: inline-block; height: 30px; width: 10px; vertical-align: top; border-right: 10px solid #0070c0; box-sizing: border-box; border-top: 15px solid transparent !important; border-bottom: 15px solid transparent !important;" data-width="10px"></section>
+<section  data-brushtype="text" style="display: inline-block; vertical-align: top; height: 30px; line-height: 30px; padding-right: 0.5em; padding-left: 0.5em; color: #ffffff; box-sizing: border-box; background-color: #0070c0;"> <span style="font-size: 15px;">诚聘</span> </section>
+<section style="display: inline-block; height: 30px; width: 10px; vertical-align: top; border-left: 10px solid #0070c0; box-sizing: border-box; border-top: 15px solid transparent !important; border-bottom: 15px solid transparent !important;" data-width="10px"></section>
+<section style="display: inline-block; height: 30px; width: 10px; vertical-align: top; border-left: 10px solid #0070c0; margin-left: 2px; box-sizing: border-box; border-top: 15px solid transparent !important; border-bottom: 15px solid transparent !important;" data-width="10px"></section>
+<section style="display: inline-block; height: 30px; width: 10px; vertical-align: top; border-left-width: 10px; border-left-style: solid; border-left-color: #fefefe; margin-left: -12px; border-top-width: 15px !important; border-top-style: solid !important; border-top-color: transparent !important; border-bottom-width: 15px !important; border-bottom-style: solid !important; border-bottom-color: transparent !important; box-sizing: border-box;" data-width="10px"></section>
+</section>
+<section  data-style="text-align: justify; line-height: 1.75em; white-space: normal;color: rgb(63, 63, 63); font-size: 14px;" style="border: 2px solid #0070c0; padding: 10px 15px 15px; margin-top: -16px; box-sizing: border-box;">
+<section style="font-size:14px; margin: 20px auto 5px auto;"> <strong style="font-size:18px;">{yun:}$v.name{/yun}</strong> </section>
+<section style="font-size:14px; color:#888888;">
+{yun:}if $v.job_salary{/yun}
+<p>月薪：{yun:}$v.job_salary{/yun} </p>
+{yun:}/if{/yun}
+<section style=" text-align:left; line-height:25px; padding-top:10px;">
+<p style="text-align:left"> 企业：{yun:}$v.com_name{/yun} </p>
+{yun:}if $v.job_number{/yun}
+<section style="width:135px;display:inline-block;  ">人数：{yun:}$v.job_number{/yun}</section>
+{yun:}/if{/yun}
+{yun:}if $v.job_age{/yun}                         
+<section style="width:135px; display:inline-block;">年龄：{yun:}$v.job_age{/yun}</section>
+{yun:}/if{/yun}
+{yun:}if $v.job_sex{/yun}
+<section style="width:135px;display:inline-block;">性别：{yun:}$v.job_sex{/yun}</section>
+{yun:}/if{/yun}
+{yun:}if $v.job_exp{/yun}
+ <section style="width:135px; display:inline-block;">经验：{yun:}$v.job_exp{/yun} </section>
+{yun:}/if{/yun}
+{yun:}if $v.job_edu{/yun}
+ <section style="width:135px; display:inline-block;">学历：{yun:}$v.job_edu{/yun} </section>
+{yun:}/if{/yun}
+{yun:}if $v.job_address{/yun}
+<section >地点：{yun:}$v.job_address{/yun}</section>
+{yun:}/if{/yun}
+
+{yun:}if $v.job_description{/yun}
+<p>描述：{yun:}$v.job_description{/yun}</p>
+{yun:}/if{/yun}
+</section>
+{yun:}if $v.job_welfare{/yun}
+<section style="padding-bottom:5px;padding-top:5px; font-weight:bold">职位福利</section>
+<section> 
+{yun:}foreach from=$v.job_welfare item = welv{/yun}
+<span style="padding:0.1rem 0.5rem; background-color:#f8f8f8; border-radius:0.8rem;color:#333; margin-top:0.5rem;display: inline-block;">{yun:}$welv{/yun}</span> 
+{yun:}/foreach{/yun}
+
+ </section>
+{yun:}/if{/yun}
+{yun:}if $ewmtype != 'xcx'{/yun}
+<p style="text-align:center;" align="center"> <img style="width:50%; max-width:180px;" src="{yun:}pubqrcode  toc=job toa=comapply toid=$v.id totype=$ewmtype{/yun}"> <br>扫码或长按二维码识别投递简历 </p>
+ {yun:}else{/yun}
+	<p style="text-align:center; padding-top:20px;"><a data-miniprogram-type="text"  data-miniprogram-appid="{yun:}$wxpaydata.sy_xcxappid{/yun}" data-miniprogram-path="/pages/job/show?id={yun:}$v.id{/yun}" class="weapp_text_link" href="" style="color: rgb(51, 51, 51);padding: 6px 1.4em;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;max-width: 100%;font-size: 14px;display: inline-block;border-radius: 50px;letter-spacing: 1.5px;background: rgba(247, 215, 73, 0.86);box-sizing: border-box !important;overflow-wrap: break-word !important;">查看详情</a></p>
+   
+{yun:}/if{/yun}	
+<p style="text-align:center;color:#0070c0;" align="center"> 求职招聘，就上{yun:}$config.sy_webname{/yun} <br>{yun:}$config.sy_weburl{/yun} </p>
+
+</section>
+</section>
+</section>
+<section style="margin-top: -20px; box-sizing: border-box;">
+<section style="border-color: transparent transparent #0070c0; border-style: solid; border-width: 10px; float: none; height: 0px; margin-top: -10px; margin-right: auto; margin-left: auto; width: 0px; box-sizing: border-box;" data-width="0px"></section>
+<section style="border-color: transparent transparent #fefefe; border-style: solid; border-width: 10px; height: 0px; margin-top: -18px; margin-right: auto; margin-left: auto; width: 0px; color: inherit; box-sizing: border-box;" data-width="0px"></section>
+<section style="border-color: transparent transparent #0070c0; border-style: solid; border-width: 10px; float: none; height: 0px; margin-top: -15px; margin-right: auto; margin-left: auto; width: 0px; box-sizing: border-box;" data-width="0px"></section>
+</section>
+</section>
+</section>
+{yun:}/foreach{/yun}

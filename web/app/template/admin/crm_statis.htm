@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+<form action="index.php?m=admin_message&c=show" method="post" id='checkform'>
+    <input type="hidden" name="userid" id="userid" value="">
+    <input type="hidden" id="pytoken" name="pytoken" value="{yun:}$pytoken{/yun}">
+</form>
+
+<div class="infoboxp">
+    <div class="tty-tishi_top">
+        <div class="tabs_info" style="height:36px;">
+            <ul>
+                <li class="curr">
+                    <a href="index.php?m=crm_statis">业务统计</a>
+                </li>
+            </ul>
+        </div>
+        <form class="layui-form" action="index.php"  method="get" id='myform'>
+
+            <input type="hidden" name="m" value="crm_statis" />
+
+            <div class="crm_searctime">
+                <ul>
+                    <li {yun:}if $smarty.get.time=='' && !$smarty.get.stime && !$smarty.get.etime{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m untype='time'{/yun}">全部</a></li>
+                    <li {yun:}if $smarty.get.time==-1{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m adv=-1 adt='time' untype='time'{/yun}">今天</a></li>
+                    <li {yun:}if $smarty.get.time==1{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m adv=1 adt='time' untype='time'{/yun}">昨天</a></li>
+                    <li {yun:}if $smarty.get.time==7{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m adv=7 adt='time' untype='time'{/yun}">7天内</a></li>
+                    <li {yun:}if $smarty.get.time==30{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m adv=30 adt='time' untype='time'{/yun}">30天内</a></li>
+                    <li {yun:}if $smarty.get.time==90{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m adv=90 adt='time' untype='time'{/yun}">90天内</a></li>
+                    <li>
+                        自定义：
+                        <div class="layui-input-inline">
+                            <input type="text" id="stime" class="comy_time_text" name="stime" style="width:110px;" value="{yun:}if !$smarty.get.time{/yun}{yun:}$smarty.get.stime{/yun}{yun:}/if{/yun}" autocomplete="off">
+                            <i class="t_tc_icon_time"></i>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" id="etime" class="comy_time_text" name="etime" style="width:110px;" value="{yun:}if !$smarty.get.time{/yun}{yun:}$smarty.get.etime{/yun}{yun:}/if{/yun}" autocomplete="off">
+                            <i class="t_tc_icon_time"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select name="uid" id="uid">
+                        <option value="" {yun:}if !$smarty.get.uid{/yun}selected{yun:}/if{/yun}>全部</option>
+                        {yun:}foreach item=v from=$auser{/yun}
+                        <option value="{yun:}$v.uid{/yun}" {yun:}if $smarty.get.uid==$v.uid{/yun}selected{yun:}/if{/yun}>{yun:}$v.name{/yun}</option>
+                        {yun:}/foreach{/yun}
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即搜索</button>
+                    <button type="reset" class="layui-btn layui-btn-primary" onclick="location.href='index.php?m=crm_statis'">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="clear"></div>
+
+    {yun:}if !$smarty.get.uid{/yun}
+    <div style="display: flex; justify-content: space-between;">
+
+        <div class="crm_mypre" style="width: 58%;" >
+            <div class="crm_newly_build_tit_news">
+                <span class="crm_newly_build_tit_n">数据统计</span>
+            </div>
+            <div class="crm_mypre_datalist_boxn capacity_new">
+                <div class="crm_mypre_datalist">
+                    <div class="fz14 panel-banner-box-title"></i>总客户数</div>
+                    <div class="fz20">
+                        {yun:}if $smarty.get.time{/yun}
+                            <a href="index.php?m=crm_salesman_list&c=customer_list&iscrm=1&time={yun:}$smarty.get.time{/yun}" class='allNum'>0</a>
+                        {yun:}else if $smarty.get.stime{/yun}
+                            <a href="index.php?m=crm_salesman_list&c=customer_list&iscrm=1&stime={yun:}$smarty.get.stime{/yun}&etime={yun:}$smarty.get.etime{/yun}" class='allNum'>0</a>
+                        {yun:}else{/yun}
+                            <a href="index.php?m=crm_salesman_list&c=customer_list&iscrm=1" class='allNum'>0</a>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+                <div class="crm_mypre_datalist">
+
+                    <div class="fz14 panel-banner-box-title"></i>待跟进客户数</div>
+                    <div class="fz20">
+                        <a href="index.php?m=crm_salesman_list&c=customer_list&isfollow=2&&iscrm=1" class='concernNum'>0</a>
+                    </div>
+                </div>
+                <div class="crm_mypre_datalist">
+
+                    <div class="fz14 panel-banner-box-title"></i>已跟进客户数</div>
+                    <div class="fz20">
+                        {yun:}if $smarty.get.time{/yun}
+                        <a href="index.php?m=crm_salesman_list&c=customer_list&isfollow=1&iscrm=1&time={yun:}$smarty.get.time{/yun}" class='concernedNum'>0</a>
+                        {yun:}else if $smarty.get.stime{/yun}
+                        <a href="index.php?m=crm_salesman_list&c=customer_list&isfollow=1&iscrm=1&stime={yun:}$smarty.get.stime{/yun}&etime={yun:}$smarty.get.etime{/yun}" class='concernedNum'>0</a>
+                        {yun:}else{/yun}
+                        <a href="index.php?m=crm_salesman_list&c=customer_list&isfollow=1&&iscrm=1" class='concernedNum'>0</a>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+                <div class="crm_mypre_datalist">
+
+                    <div class="fz14 panel-banner-box-title">待回访客户数</div>
+                    <div class="fz20">
+                        <a href="index.php?m=crm_waitingtaskall&time=4&type=22" class='visitNum'>0</a>
+                    </div>
+                </div>
+                <div class="crm_mypre_datalist">
+
+                    <div class="fz14 panel-banner-box-title">签单总数</div>
+                    <div class="fz20">
+                        {yun:}if $smarty.get.time{/yun}
+                        <a href="index.php?m=crm_audit&iscrm=1&time={yun:}$smarty.get.time{/yun}" class='orderNum'>0</a>
+                        {yun:}else if $smarty.get.stime{/yun}
+                        <a href="index.php?m=crm_audit&iscrm=1&stime={yun:}$smarty.get.stime{/yun}&etime={yun:}$smarty.get.etime{/yun}" class='orderNum'>0</a>
+                        {yun:}else{/yun}
+                        <a href="index.php?m=crm_audit&iscrm=1" class='orderNum'>0</a>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+                <div class="crm_mypre_datalist">
+
+                    <div class="fz14 panel-banner-box-title">签单金额</div>
+                    <div class="fz20">
+                        {yun:}if $smarty.get.time{/yun}
+                        <a href="index.php?m=crm_audit&iscrm=1&time={yun:}$smarty.get.time{/yun}" class='orderPrice'>0</a>
+                        {yun:}else if $smarty.get.stime{/yun}
+                        <a href="index.php?m=crm_audit&iscrm=1&stime={yun:}$smarty.get.stime{/yun}&etime={yun:}$smarty.get.etime{/yun}" class='orderPrice'>0</a>
+                        {yun:}else{/yun}
+                        <a href="index.php?m=crm_audit&iscrm=1" class='orderPrice'>0</a>
+                        {yun:}/if{/yun}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {yun:}/if{/yun}
+	<div class="crm_mypre">
+		<div class="crm_newly_build_tit">
+			<span class="crm_newly_build_tit_n">业务数据</span>
+		</div>
+		<table width="100%" class="table_form table_form_thr">
+			<tr class="admin_comclass_add_list">
+				<td align="left">ID</td>
+				<td align="left">姓名</td>
+				<td align="left">总客户数</td>
+				<td align="left">待跟进客户</td>
+				<td align="left">已跟进客户</td>
+				<td align="left">待回访客户</td>
+				<td align="left">签单数</td>
+				<td align="left">签单金额（元）</td>
+				<td align="left">业务详情</td>
+			</tr>
+
+			{yun:}foreach from=$userrows item=v key=k{/yun}
+			<tr class="admin_comclass_add_list">
+				<td>{yun:}$v.uid{/yun}</td>
+				<td>{yun:}$v.name{/yun}</td>
+				<td>{yun:}$v.cNum{/yun}</td>
+				<td>{yun:}$v.concernNum{/yun}</td>
+				<td>{yun:}$v.concernedNum{/yun}</td>
+				<td>{yun:}$v.returnVisitNum{/yun}</td>
+				<td>{yun:}$v.orderNum{/yun}</td>
+				<td>{yun:}$v.orderPrice{/yun}</td>
+                {yun:}if $smarty.get.time{/yun}
+                <td><a href="index.php?m=crm_statis&c=performance&uid={yun:}$v.uid{/yun}&time={yun:}$smarty.get.time{/yun}">查看详情</a></td>
+                {yun:}else if $smarty.get.stime{/yun}
+                <td><a href="index.php?m=crm_statis&c=performance&uid={yun:}$v.uid{/yun}&stime={yun:}$smarty.get.stime{/yun}&etime={yun:}$smarty.get.etime{/yun}">查看详情</a></td>
+                {yun:}else{/yun}
+                <td><a href="index.php?m=crm_statis&c=performance&uid={yun:}$v.uid{/yun}">查看详情</a></td>
+                {yun:}/if{/yun}
+			</tr>
+			{yun:}/foreach{/yun}
+		</table>
+	</div>
+
+    <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script>
+
+    layui.use(['form', 'laydate'], function () {
+        var laydate = layui.laydate,
+            form = layui.form,
+            $ = layui.$;
+
+        laydate.render({
+            elem: '#stime'
+            , type: 'date'
+        });
+
+        laydate.render({
+            elem: '#etime'
+            , type: 'date'
+        });
+
+        var param = {
+
+            time: '{yun:}$smarty.get.time{/yun}',
+            stime: '{yun:}$smarty.get.stime{/yun}',
+            etime: '{yun:}$smarty.get.etime{/yun}',
+            pytoken: $('#pytoken').val()
+        };
+
+        $.post('index.php?m=crm_statis&c=getTjData', param, function (data) {
+            if (data) {
+                var data = eval('(' + data + ')');
+                if (data.allNum){
+                    $('.allNum').html(data.allNum);
+                }
+                if (data.concernNum){
+                    $('.concernNum').html(data.concernNum);
+                }
+                if (data.concernedNum){
+                    $('.concernedNum').html(data.concernedNum);
+                }
+                if (data.visitNum){
+                    $('.visitNum').html(data.visitNum);
+                }
+                if (data.orderNum){
+                    $('.orderNum').html(data.orderNum);
+                }
+                if (data.orderPrice){
+                    $('.orderPrice').html(data.orderPrice);
+                }
+
+            }
+        });
+    });
+
+    function searchForm() {
+        layer.open({
+            type: 1,
+            anim: 5,
+            title: '自定义搜索',
+            content: $('#search_form'),
+            area: ["450px", "280"],
+            offset: ['20px', ''],
+        });
+    }
+</script>
+{yun:}include file="$adminstyle/checkdomain.htm"{/yun}
+</body>
+</html>

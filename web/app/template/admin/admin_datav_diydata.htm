@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="../js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="../js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="../js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+
+				<div class="clear"></div>
+
+				<style type="text/css">
+					.layui-form-switch {
+						margin-top: 0;
+					}
+				</style>
+
+				<div>
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form method="post" target="supportiframe" action="index.php?m=admin_datav_config&c=diyDataSave" class="layui-form">
+				<table>
+						<tr>
+							<th width="160" class="t_fr">大屏名称：</th>
+							<td>
+								<div class="layui-input-block t_w480">
+									<input name="datavtitle" autocomplete="off" class="layui-input" type="text" value="{yun:}$diydata.datavtitle{/yun}" size="50" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="220"  >顶部数据总览：</th>
+							<td>
+								<ul class="admin_comclass_add_n" style="width:950px; padding-top: 20px;" >
+									<li>
+										<span class="admin_comclass_add_n_s">企业总数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="allcomnum" value="{yun:}$diydata.allcomnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+									</li>
+									<li >
+										<span class="admin_comclass_add_n_s">今日新增企业</span>
+										<input class="admin_comclass_add_n_text" type="text" name="daycomnum" value="{yun:}$diydata.daycomnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">求职总数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="allusernum" value="{yun:}$diydata.allusernum{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">今日新增求职</span>
+										<input class="admin_comclass_add_n_text" type="text" name="dayusernum" value="{yun:}$diydata.dayusernum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">招聘总数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="alljobnum" value="{yun:}$diydata.alljobnum{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">今日新增招聘</span>
+										<input class="admin_comclass_add_n_text" type="text" name="dayjobnum" value="{yun:}$diydata.dayjobnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">招聘会总数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="allzphnum" value="{yun:}$diydata.allzphnum{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">今日新增招聘会</span>
+										<input class="admin_comclass_add_n_text" type="text" name="dayzphnum" value="{yun:}$diydata.dayzphnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th width="220" >最近一年求职动态：</th>
+							<td>
+								<ul class="admin_comclass_add_n" style="width:950px">
+									<li>
+										<span class="admin_comclass_add_n_s">每月求职注册</span>
+										<input class="admin_comclass_add_n_text" type="text" name="yearuser_monthreg" value="{yun:}$diydata.yearuser_monthreg{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+									<li style="margin-right: 0;">
+										<span class="admin_comclass_add_n_s">每月浮动范围</span>
+										<input class="admin_comclass_add_n_text" type="text" name="yearuser_monthreg_rand" value="{yun:}$diydata.yearuser_monthreg_rand{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"  />
+									</li>
+								</ul>
+								<ul class="admin_comclass_add_n" style="width:950px">
+									<li>
+										<span class="admin_comclass_add_n_s">近一个月注册</span>
+										<input class="admin_comclass_add_n_text" type="text" name="monthreg_user" value="{yun:}$diydata.monthreg_user{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">今日新增注册</span>
+										<input class="admin_comclass_add_n_text" type="text" name="dayreg_user" value="{yun:}$diydata.dayreg_user{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								</ul>
+								<ul class="admin_comclass_add_n" style="width:950px">
+									<li>
+										<span class="admin_comclass_add_n_s">投递简历</span>
+										<input class="admin_comclass_add_n_text" type="text" name="year_sqnum" value="{yun:}$diydata.year_sqnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+								<li>
+										<span class="admin_comclass_add_n_s">面试邀请</span>
+										<input class="admin_comclass_add_n_text" type="text" name="year_yqnum" value="{yun:}$diydata.year_yqnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">直聊沟通</span>
+										<input class="admin_comclass_add_n_text" type="text" name="year_chatnum" value="{yun:}$diydata.year_chatnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"  /> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">简历浏览</span>
+										<input class="admin_comclass_add_n_text" type="text" name="year_lrnum" value="{yun:}$diydata.year_lrnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">岗位浏览</span>
+										<input class="admin_comclass_add_n_text" type="text" name="year_ljnum" value="{yun:}$diydata.year_ljnum{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th width="220"  >最近一年招聘企业数趋势：</th>
+							<td>
+								<ul class="admin_comclass_add_n" style="width: auto;">
+									<li>
+										<span class="admin_comclass_add_n_s">企业总数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="yearcom_regnum" value="{yun:}$diydata.yearcom_regnum{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">每月基数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="yearcom_monthreg" value="{yun:}$diydata.yearcom_monthreg{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">浮动范围</span>
+										<input class="admin_comclass_add_n_text" type="text" name="yearcom_monthreg_rand" value="{yun:}$diydata.yearcom_monthreg_rand{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th width="220" >最热门的行业：</th>
+							<td>
+								<ul class="admin_comclass_add_n" style="width: auto;">
+									<li>
+										<span class="admin_comclass_add_n_s">投递数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hothy_sqnum" value="{yun:}$diydata.hothy_sqnum{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" /> 
+									</li>
+								<li>
+										<span class="admin_comclass_add_n_s">浮动范围</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hothy_sqnum_rand" value="{yun:}$diydata.hothy_sqnum_rand{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								 
+								<li>
+										<span class="admin_comclass_add_n_s">当前岗位数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hothy_jobs" value="{yun:}$diydata.hothy_jobs{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">浮动范围</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hothy_jobs_rand" value="{yun:}$diydata.hothy_jobs_rand{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th width="220" >最热门的岗位：</th>
+							<td>
+								<ul class="admin_comclass_add_n" style="width: auto;">
+									<li>
+										<span class="admin_comclass_add_n_s">投递数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hotjob_sqnum" value="{yun:}$diydata.hotjob_sqnum{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">浮动范围</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hotjob_sqnum_rand" value="{yun:}$diydata.hotjob_sqnum_rand{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"  />
+									</li>
+								 
+									<li>
+										<span class="admin_comclass_add_n_s">投递数</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hotjob_jobs" value="{yun:}$diydata.hotjob_jobs{/yun}"  onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/> 
+									</li>
+									<li>
+										<span class="admin_comclass_add_n_s">浮动范围</span>
+										<input class="admin_comclass_add_n_text" type="text" name="hotjob_jobs_rand" value="{yun:}$diydata.hotjob_jobs_rand{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"  />
+									</li>
+								</ul>
+							</td>
+						</tr>
+							<tr><th width="220"></th><td><input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+						<input class="layui-btn tty_sub" name="config" type="submit" value="提交" />&nbsp;&nbsp;
+						<input class="layui-btn tty_cz" type="reset" value="重置" />	</td>
+						</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+
+			
+		</script>
+
+	</body>
+</html>

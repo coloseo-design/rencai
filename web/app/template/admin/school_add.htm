@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script language="javascript">var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+		<style>
+			* {
+	margin: 0;
+	padding: 0;
+}
+body, div {
+	margin: 0;
+	padding: 0;
+}
+.layui-form-item{ margin-bottom:0px;}
+</style>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+
+
+			<div class="tty-tishi_top">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form id="schoolform" class="layui-form" action="index.php?m=admin_school_academy&c=saveacademy" target="supportiframe"
+				 method="post" enctype="multipart/form-data">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<tr>
+							<th colspan="4" class="admin_bold_box">
+								<div class="admin_bold">{yun:}if $show.id{/yun}
+									院校修改
+									{yun:}else{/yun}
+									院校添加
+									{yun:}/if{/yun}</div>
+							</th>
+						</tr>
+						{yun:}if $show.id{/yun}
+						<tr>
+							<th>招聘编号：</th>
+							<td>
+								<div class="yun_admin_divh">{yun:}$show.id{/yun}</div>
+							</td>
+						</tr>
+						{yun:}/if{/yun}
+						<tr class="admin_table_trbg">
+							<th>院校名称：</th>
+							<td><input type="text" name="schoolname" id="schoolname" class="layui-input t_w480" size="30" value="{yun:}$show.schoolname{/yun}"></td>
+						</tr>
+						<tr>
+							<th>所在城市：</th>
+							<td>
+								<div class="layui-input-inline t_w157">
+									<select name="provinceid" id="provinceid" lay-filter="citys">
+										<option value="">请选择</option>
+										{yun:}foreach from=$city_index key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $show.provinceid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+								<div class="layui-input-inline t_w157">
+									<select name="cityid" lay-filter="citys" id="cityid">
+										<option value="">请选择</option>
+										{yun:}foreach from=$city_type[$show.provinceid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $show.cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+								<div class="layui-input-inline t_w157">
+									<select name="three_cityid" lay-filter="three_cityid" id="three_cityid">
+										<option value="">请选择</option>
+										{yun:}foreach from=$city_type[$show.cityid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $show.three_cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">学科类别：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="school_categty" lay-verify="school_categty" id="school_categty">
+											<option value="">请选择</option>
+											{yun:}foreach from=$schoolata.school_categty item=v{/yun}
+											<option value="{yun:}$v{/yun}" {yun:}if $show.school_categty==$v{/yun} selected {yun:}/if{/yun}>{yun:}$schoolclass_name[$v]{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="120">主管部门：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="school_department" lay-verify="school_department" id="school_department">
+											<option value="">请选择</option>
+											{yun:}foreach from=$schoolata.school_department item=v{/yun}
+											<option value="{yun:}$v{/yun}" {yun:}if $show.school_department==$v{/yun} selected {yun:}/if{/yun}>{yun:}$schoolclass_name[$v]{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">办学层次：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="school_level" lay-verify="school_level" id="school_level">
+											<option value="">请选择</option>
+											{yun:}foreach from=$schoolata.school_level item=v{/yun}
+											<option value="{yun:}$v{/yun}" {yun:}if $show.school_level==$v{/yun} selected {yun:}/if{/yun}>{yun:}$schoolclass_name[$v]{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">标签：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="schooltag" lay-verify="schooltag" id="schooltag">
+											<option value="">请选择</option>
+											{yun:}foreach from=$schoolata.school_tag item=v{/yun}
+											<option value="{yun:}$v{/yun}" {yun:}if $show.schooltag==$v{/yun} selected {yun:}/if{/yun}>{yun:}$schoolclass_name[$v]{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>联系电话：</th>
+							<td><input type="text" name="school_phone" id="school_phone" class="layui-input t_w480" size="30" value="{yun:}$show.school_phone{/yun}"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>地址：</th>
+							<td><input type="text" name="address" id="address" class="layui-input t_w480" size="30" value="{yun:}$show.address{/yun}"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>邮箱：</th>
+							<td><input type="text" name="schoolemail" id="schoolemail" class="layui-input t_w480" size="30" value="{yun:}$show.schoolemail{/yun}"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>官网：</th>
+							<td><input type="text" name="schoolinternet" id="schoolinternet" class="layui-input t_w480" size="30" value="{yun:}$show.schoolinternet{/yun}"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th class="t_fl">LOGO：</th>
+							<td align="left" colspan="4">
+								
+								<div class="admin_uppicbox">
+									<input type="hidden" id="laynoupload" value="1">
+								
+									<div class="admin_uppicimg">
+										<img id="imgicon" src="{yun:}$show.photo{/yun}" width="140" height="140" {yun:}if !$show.photo{/yun}class="none"{yun:}/if{/yun}>
+									</div>
+								
+									<span>
+										<button type="button" class="noupload adminupbtn" lay-data="{imgid: 'imgicon'}">重新上传</button>		
+									</span>
+								</div>
+
+								<span class="admin_web_tip">LOGO标准尺寸：120*120</span>
+							</td> 
+						</tr> 
+						<tr class="admin_table_trbg">
+							<th width="120"></th>
+							<td>
+								<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}" />
+								<input type="hidden" id="cionly" name="cionly" value="{yun:}if empty($city_type){/yun}1{yun:}/if{/yun}">
+								{yun:}if $show.id{/yun}
+								<input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+								<input type="hidden" name="id" value="{yun:}$show.id{/yun}">
+
+								<input class="tty_sub" type="button" onclick="check_school()" value="&nbsp;修 改&nbsp;" />
+								{yun:}else{/yun}
+								<input class="tty_cz" type="button" onclick="check_school()" value="&nbsp;保 存&nbsp;" />
+								{yun:}/if{/yun} 
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var form;
+
+			layui.use(['layer', 'form', 'laydate'], function() {
+				var form = layui.form,
+					laydate = layui.laydate,
+					$ = layui.$;
+			}); //end layui.use()
+
+			function check_school() {
+				var schoolname = $("#schoolname").val();
+				if (schoolname == "") {
+					layer.msg('请填写院校名称', 2, 8);
+					return false;
+				}
+				var cionly = $.trim($("#cionly").val());
+				if (cionly == '1') {
+					if ($("#provinceid").val() == "") {
+						layer.msg('请选择所在地区！', 2, 8);
+						return false;
+					}
+				} else {
+					var cityid = $("#cityid").val();
+					if (cityid == "") {
+						layer.msg('请选择所在城市', 2, 8);
+						return false;
+					}
+				}
+
+				var school_categty = $("#school_categty").val();
+				if (school_categty == "") {
+					layer.msg('请选择学科类别', 2, 8);
+					return false;
+				}
+				var school_department = $("#school_department").val();
+				if (school_department == "") {
+					layer.msg('请选择主管部门', 2, 8);
+					return false;
+				}
+				var school_level = $("#school_level").val();
+				if (school_level == "") {
+					layer.msg('选择办学层次', 2, 8);
+					return false;
+				}
+				var schooltag = $("#schooltag").val();
+				if (schooltag == "") {
+					layer.msg('请选择标签！', 2, 8);
+					return false;
+				}
+				var school_phone = $("#school_phone").val();
+				if (school_phone == "") {
+					layer.msg('请填写联系电话！', 2, 8);
+					return false;
+				}
+				var address = $("#address").val();
+				if (address == "") {
+					layer.msg('请填写地址！', 2, 8);
+					return false;
+				}
+				var schoolemail = $("#schoolemail").val();
+				if (schoolemail == "") {
+					layer.msg('请填写邮箱！', 2, 8);
+					return false;
+				} else {
+					var regs = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+					if (!regs.test(schoolemail)) {
+						layer.msg("邮箱格式错误", 2, 8);
+						return false;
+					}
+				}
+				var schoolinternet = $("#schoolinternet").val();
+				if (schoolinternet == "") {
+					layer.msg('请填写官网！', 2, 8);
+					return false;
+				} 
+				{yun:}if $show.photo == "" {/yun}
+					var photo = $("#photo").val();
+					if (photo == "") {
+						layer.msg('选择上转LOGO', 2, 8);
+						return false;
+					}
+				{yun:}/if {/yun}
+				$("#schoolform").submit();
+
+			}
+		</script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name=keywords content="{yun:}$keywords{/yun}"/> 
+<meta name=description content="{yun:}$description{/yun}"/>
+<link rel="stylesheet" href="{yun:}$train_style{/yun}/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script>
+var weburl="{yun:}$config.sy_weburl{/yun}",integral_pricename='{yun:}$config.integral_pricename{/yun}',pricename='{yun:}$config.integral_pricename{/yun}',code_web='{yun:}$config.code_web{/yun}',code_kind='{yun:}$config.code_kind{/yun}';</script>
+</head>
+<body>
+<div class="training_top">
+<div class="training_w980">
+<div class="training_top_left ftl">
+<span class="training_top_slogan ftl">欢迎来到{yun:}$config.sy_webname{/yun}！</span>
+</div>
+<div class="top_right_re ftr">
+
+
+    <div class="top_right_re ftr">
+<div class="top_right" id = "login_head_div">
+  <div class="yun_topNav fr"> <a class="yun_navMore" href="javascript:;">网站导航</a>
+             <div class="yun_webMoredown none">
+              <div class="yun_top_nav_box"> 
+			  <ul class="yun_top_nav_box_l">
+              {yun:}navmap key=key item=maplist{/yun}
+                  <li><a href="{yun:}$maplist.url{/yun}" {yun:}if $maplist.eject{/yun} target="_blank"{yun:}/if{/yun}>{yun:}$maplist.name{/yun}</a></li>
+                {yun:}/navmap{/yun} 
+                 </ul>
+                <ul class="yun_top_nav_box_wx">
+               {yun:}nav item=navlist_app hovclass=nav_list_hover nid=11{/yun}          
+            <li> <a class="move_0{yun:}$navlist_app.sort{/yun}"{yun:}if $navlist_app.eject{/yun} target="_blank"{yun:}/if{/yun} href="{yun:}$config.sy_weburl{/yun}/{yun:}$navlist_app.url{/yun}">{yun:}$navlist_app.name{/yun}</a> </li>
+          {yun:}/nav{/yun}
+                </ul>
+                
+                </div>
+            </div>
+          </div> 
+		<SCRIPT LANGUAGE='JavaScript' src='{yun:}url m=ajax c=RedLoginHead{/yun}'></SCRIPT> 
+</div>
+</div>
+</div></div></div>
+<div class="training_headerbanner">
+{yun:}ad cid=41 id=149{/yun} </div>
+</div>
+<div class="clear"></div>
+
+<div class="training_header">
+<div class="training_w980">
+<div class="training_header_c">
+<div class="training_logo  ftl"><a  href="{yun:}$config.sy_weburl{/yun}"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_logo{/yun}" class="png"></a></div>
+
+
+<div class="training_nav ftl">
+<div class="" style="position:relative">
+
+<ul>
+<li {yun:}if $def==""{/yun}class="training_nav_cur"{yun:}/if{/yun}><a href="{yun:}url m=train{/yun}" class="training_nav_frist">首页</a><i class="training_nav_icon png"></i></li>
+<li {yun:}if $def=="1"{/yun}class="training_nav_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=subject{/yun}">培训课程</a></li>
+
+<li {yun:}if $def=="3"{/yun}class="training_nav_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=agency{/yun}">培训机构</a></li> 
+<li {yun:}if $def=="2"{/yun}class="training_nav_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=teacher{/yun}">培训讲师</a></li> 
+ <li><a href="{yun:}$config.sy_weburl{/yun}">人才网首页</a></li>
+</ul>
+</div></div>
+</div>
+</div></div>
+<!--header end-->

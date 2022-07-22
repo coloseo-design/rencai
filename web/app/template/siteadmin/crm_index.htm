@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+	
+	<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	
+	<title>后台管理</title>
+	
+</head>
+
+<body>
+
+	<div class="infoboxp">
+	
+		<form class='layui-form'>	
+			<!--快速新建-->
+			<div class="crm_newly_build">
+				<div class="crm_newly_build_tit"><span class="crm_newly_build_tit_n">快速新建</span></div>
+			
+				<table class="crm_newly_build_table">
+					<tr>
+						<td><div class="crm_newly_build_list crm_newly_build_listkh" onclick="addCustomers()">录客户<i class="crm_newly_build_icon"></i></div></td>
+						<td><div class="crm_newly_build_list crm_newly_build_listgj" onclick="addFollow()">写跟进<i class="crm_newly_build_icon"></i></div></td>
+						<td><div class="crm_newly_build_list crm_newly_build_listdd" onclick="addDeal()">录订单<i class="crm_newly_build_icon"></i></div></td>
+						<td><div class="crm_newly_build_list crm_newly_build_listrw" onclick="addWaitTask()">建任务<i class="crm_newly_build_icon"></i></div></td>
+						<td><div class="crm_newly_build_list crm_newly_build_listrz" onclick="addWorkLog()">写日志<i class="crm_newly_build_icon"></i></div></td>
+					</tr>
+				</table>
+			</div>
+	
+			<!--我的简报-->
+			<div class="crm_mypre">
+				<div class="crm_newly_build_tit">
+					<span class="crm_newly_build_tit_n">我的简报</span>
+					
+							 	
+				 	<div class="layui-input-inline">
+				   		<select name="jbtime" lay-filter='jbtime'>
+			            	<option value="1" {yun:}if $smarty.get.jbtime ==1{/yun}selected{yun:}/if{/yun}>今天</option>
+			            	<option value="2" {yun:}if $smarty.get.jbtime ==2{/yun}selected{yun:}/if{/yun}>昨天</option>
+			            	<option value="3" {yun:}if $smarty.get.jbtime ==3{/yun}selected{yun:}/if{/yun}>本周</option>
+ 			            	<option value="4" {yun:}if $smarty.get.jbtime ==4{/yun}selected{yun:}/if{/yun}>本月</option>
+ 				        </select>
+				 	</div>
+	        	</div>
+	
+				<div class="crm_mypre_datalist">
+					<div class="fz20"><a href="index.php?m=crm_customer&self=1" class='newKh'>0</a></div>
+					<div class="fz14 panel-banner-box-title"><i class="crm_mypre_dataicon"></i>新增客户数</div>
+				</div>
+				<div class="crm_mypre_datalist">
+					<div class="fz20"><a href="index.php?m=crm_concern" class='newFollow'>0</a></div>
+					<div class="fz14 panel-banner-box-title"><i class="crm_mypre_dataicon"></i>联系跟进次数</div>
+				</div>
+				<div class="crm_mypre_datalist">
+					<div class="fz20"><a href="index.php?m=crm_my_performance&c=amount" class='totalDealPrice'>0</a></div>
+					<div class="fz14 panel-banner-box-title"><i class="crm_mypre_dataicon"></i>成交总额</div>
+				</div>
+				<div class="crm_mypre_datalist">
+					<div class="fz20"><a href="index.php?m=crm_my_performance&c=amount" class='orderNum'>0</a></div>
+					<div class="fz14 panel-banner-box-title"><i class="crm_mypre_dataicon"></i>成交单数</div>
+				</div>
+				
+			</div>
+			
+			<table class="crm_space_boxtable">
+				<tr>
+					<td width="50%">
+						<div class="crm_space_box crm_space_box_mr">
+							<div class="crm_newly_build_tit">
+								<span class="crm_newly_build_tit_n"><a href='index.php?m=crm_waitingtask'>待办任务</a></span>
+								<em class="crm_newly_build_data">{yun:}$tasknum{/yun}</em>
+								<a href="javascript:void(0);" onclick="addWaitTask()" class="crm_newly_build_cz">建任务</a>
+							</div>
+						
+							<div class="crm_space_boxtableall">
+								<table class="crm_space_boxtablelist">
+									<tr>
+										<th align="left">客户名称  </th>  
+										<th align="left">标题</th>
+										<th>执行人</th>
+										<th align="left">时间</th>
+										
+									</tr>
+									{yun:}foreach from = $tasks item = v{/yun}
+									<tr>
+										<td align="left"><a href="index.php?m=crm_waitingtask">{yun:}$v.name{/yun}</a></td>  
+										<td align="left">
+											<a href="index.php?m=crm_waitingtask" class="crm_space_boxtablewc">{yun:}$v.title{/yun}</a>
+										</td>
+										<td align="center">{yun:}$v.aname{/yun}</td>
+										<td align="left">{yun:}$v.stime|date_format:'%m-%d'{/yun}</td>
+									</tr>
+									{yun:}/foreach{/yun}
+									 
+								</table>
+							</div>
+						</div>
+					</td>
+					<td width="50%">
+						<div class="crm_space_box crm_space_box_ml">
+							<div class="crm_newly_build_tit">
+								<span class="crm_newly_build_tit_n">审批订单</span>
+								<a href="javascript:void(0);" onclick='addDeal()' class="crm_newly_build_cz">录订单</a>
+							</div>
+							<div class="crm_space_boxtableall">
+								<table class="crm_space_boxtablelist">
+									<tr>
+										<th align="left">会员类型  </th>  
+										<th align="left">订单ID</th>
+										<th align="left">提交时间</th>
+										<th align="left">状态</th>
+										<th align="left">操作</th>
+									</tr>
+									{yun:}foreach from = $orders item = ov{/yun}
+									<tr>
+										<td>{yun:}$ov.rating_name{/yun}</td>  
+										<td>{yun:}$ov.order_id{/yun}</td>
+										<td align="left">{yun:}$ov.order_time|date_format:'%m-%d'{/yun}</td>
+										<td align="left">{yun:}$paystate[$ov.order_state]{/yun}</td>
+										<td align="left"><a href="javascript:;" onClick="upDeal('{yun:}$ov.id{/yun}','{yun:}$ov.uid{/yun}','{yun:}$ov.rating{/yun}','{yun:}$ov.comname{/yun}','{yun:}$ov.order_id{/yun}','{yun:}$ov.order_price{/yun}','{yun:}$ov.order_type{/yun}','{yun:}$ov.order_remark{/yun}');" class="crm_space_boxtablewc">修改</a> </td>
+									</tr>
+									{yun:}/foreach{/yun}
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>	
+			</table>
+	
+		</form>
+		
+	</div>
+	
+	<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}"/>
+	<input type="hidden" id="handel_status" value=""/>
+	
+	<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+	<script type="text/javascript">
+		
+		var weburl="{yun:}$config.sy_weburl{/yun}";
+		var pytoken	= $('#pytoken').val();
+		
+		layui.use(['form', 'laydate'], function(){
+			var form = layui.form
+				,laydate = layui.laydate
+				,$ = layui.$;
+				form.on('select(jbtime)', function(data){
+					$.post('index.php?m=crm_index&c=getWorkReport',{pytoken:pytoken,time:data.value},function(data){
+						if(data){
+							var data=eval('('+data+')');
+							
+							$('.newFollow').html(data.followNum);
+							$('.newKh').html(data.khNum);
+							$('.totalDealPrice').html(data.orderDealPrice);
+							$('.orderNum').html(data.orderNum);
+						}
+					});
+				});
+				$.post('index.php?m=crm_index&c=getWorkReport',{pytoken:pytoken,time:1},function(data){
+					if(data){
+						var data=eval('('+data+')');
+						
+						$('.newFollow').html(data.followNum);
+						$('.newKh').html(data.khNum);
+						$('.totalDealPrice').html(data.orderDealPrice);
+						$('.orderNum').html(data.orderNum);
+					}
+				});
+			
+		});
+	</script>
+	
+	{yun:}include file="siteadmin/crm_public.htm"{/yun}
+	
+</body>
+</html>

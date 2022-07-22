@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<title>后台管理</title>
+	</head>
+	
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">微信红包设置功能是控制网站发放红包参数设置，如（红包名称、服务器IP、关注微信公众号和企业、个人红包用户）等相关功能设置！</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			
+				<div class="tag_box">
+					<div>
+						<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						
+						<form  class="layui-form list_border" name="myform" target="supportiframe" action="index.php?m=wx&c=wxredpack" method="post" enctype="multipart/form-data">
+							
+							<div class="layui-form-item">
+								<div class="list_border_tit">公众号基本信息</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">微信红包发送人昵称：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input" type="text" name="sy_wxredpack_nick" id="sy_wxredpack_nick" size="20" value="{yun:}$config.sy_wxredpack_nick{/yun}" maxlength="255">
+								</div>
+								<span class="admin_web_tip">默认11211</span>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">服务器IP：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input" type="text" name="sy_wxredpack_ip" id="sy_wxredpack_ip" size="15" value="{yun:}$config.sy_wxredpack_ip{/yun}" maxlength="255">
+								</div>
+								<span class="admin_web_tip">如：127.0.0.1</span>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">红包备注：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input" type="text" name="sy_wxredpack_remark" id="sy_wxredpack_remark" size="30" value="{yun:}$config.sy_wxredpack_remark{/yun}" maxlength="255">
+								</div>
+								<span class="admin_web_tip">微信高版本暂无法展示备注信息</span>
+							</div>
+							<div class="layui-form-item pdleft180">
+								<input class="tty_sub" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+								<input type="hidden" name="pytoken"  value="{yun:}$pytoken{/yun}">
+								<input class="tty_cz" type="reset" value="重置" />
+							</div>
+							
+						</form>
+
+						<form target="supportiframe" action="index.php?m=wx&c=wxredpack" onsubmit="return checkgz()" method="post" class="layui-form list_border">
+							
+							<div class="layui-form-item">
+								<div class="list_border_tit">关注微信发红包</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">活动名称：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input" type="text" name="sy_wxredpack_actname1" id="sy_wxredpack_actname1" size="20" value="{yun:}$config.sy_wxredpack_actname1{/yun}" maxlength="255">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">是否开启：</label>
+								<div class="layui-input-block">
+									<input type="radio" name="sy_wxredpack_isopen1" checked value='0' id="sy_wxredpack_isopen1_1" title="关闭">
+									<input type="radio" {yun:}if $config.sy_wxredpack_isopen1=='1' {/yun}checked{yun:}/if{/yun} name="sy_wxredpack_isopen1" value='1' id="sy_wxredpack_isopen1_2" title="开启">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">场景：</label>
+								<div class="layui-input-inline t_w480">
+									<select name="sy_wxredpack_pro1" id="sy_wxredpack_pro1">
+										{yun:}foreach from=$redArr item=v key=j{/yun}
+										<option value="{yun:}$j{/yun}" {yun:}if $config.sy_wxredpack_pro1==$j{/yun} selected {yun:}/if{/yun}> {yun:}$v{/yun} </option>
+										 {yun:}/foreach{/yun} 
+									</select>
+								</div>
+								<span style="margin-left: 180px;" class="admin_web_tip">发放红包使用场景，默认场景为‘其他’，如红包金额大于200或者小于1元时，请到<a href="https://pay.weixin.qq.com" target="_blank">微信支付平台</a>中申请修改场景红包限额(申请有效期为1年)</span>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">单次红包金额：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input" type="text" name="sy_wxredpack_money1" id="sy_wxredpack_money1" size="10" value="{yun:}$config.sy_wxredpack_money1{/yun}" maxlength="255"><span style="position: absolute;right: 10px;top: 10px;">元</span>
+									<span class="admin_web_tip">‘其他’场景可设置红包金额1-200元；非‘其他’场景，金额最低0.3元，否则将发放失败</span>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">红包祝福语：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input" type="text" name="sy_wxredpack_wishing1" id="sy_wxredpack_wishing1" size="30" value="{yun:}$config.sy_wxredpack_wishing1{/yun}" maxlength="255">
+								</div>
+								<span class="admin_web_tip">如：感谢您关注XX人才网</span>
+							</div>
+							<div class="layui-form-item pdleft180">
+								<input class="tty_sub" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+								<input class="tty_cz" type="reset" value="重置" /></td>
+							</div>
+							<input type="hidden" name="pytoken"  value="{yun:}$pytoken{/yun}">
+							
+						</form>
+
+						<form target="supportiframe" action="index.php?m=wx&c=wxredpack" onsubmit="return checkbd()" method="post" class="layui-form list_border">
+							<div class="layui-form-item">
+								<div class="list_border_tit">公众号绑定账户发红包</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">活动名称：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_actname2" id="sy_wxredpack_actname2" size="20" value="{yun:}$config.sy_wxredpack_actname2{/yun}" maxlength="255">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">是否开启：</label>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<input type="radio" name="sy_wxredpack_isopen2" checked value='0' id="sy_wxredpack_isopen2_1" title="关闭">
+										<input type="radio" {yun:}if $config.sy_wxredpack_isopen2=='1' {/yun}checked{yun:}/if{/yun} name="sy_wxredpack_isopen2"
+										 value='1' id="sy_wxredpack_isopen2_2" title="开启">
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">场景：</label>
+								<div class="layui-input-inline t_w480">
+									<select name="sy_wxredpack_pro2" id="sy_wxredpack_pro2">
+										{yun:}foreach from=$redArr item=v key=j{/yun}
+										<option value="{yun:}$j{/yun}" {yun:}if $config.sy_wxredpack_pro2==$j{/yun} selected {yun:}/if{/yun}> {yun:}$v{/yun} </option>
+										 {yun:}/foreach{/yun} 
+									</select>
+								</div>
+								<span style="margin-left: 180px;"  class="admin_web_tip">发放红包使用场景，默认场景为‘其他’，如红包金额大于200或者小于1元时，请到<a href="https://pay.weixin.qq.com" target="_blank">微信支付平台</a>中申请修改场景红包限额(申请有效期为1年)</span>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">单次红包金额：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_money2" id="sy_wxredpack_money2" size="10" value="{yun:}$config.sy_wxredpack_money2{/yun}" maxlength="255"><span style="position: absolute;right: 10px;top: 10px;">元</span>
+									<span class="admin_web_tip">‘其他’场景可设置红包金额1-200元；非‘其他’场景，金额最低0.3元，否则将发放失败</span>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">红包祝福语：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_wishing2" id="sy_wxredpack_wishing2" size="30" value="{yun:}$config.sy_wxredpack_wishing2{/yun}" maxlength="255">
+									<span class="admin_web_tip">如：帐号已绑定，创建简历还能获取更多红包</span>
+								</div>
+							</div>
+							<div class="layui-form-item pdleft180">
+								<input class="layui-btn tty_sub" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+								<input class="layui-btn tty_cz" type="reset" value="重置" />
+							</div>
+							<input type="hidden" name="pytoken"  value="{yun:}$pytoken{/yun}">
+							
+						</form>
+
+						<form  target="supportiframe" action="index.php?m=wx&c=wxredpack" onsubmit="return checkjl()" method="post" class="layui-form list_border">
+							
+							<div class="layui-form-item">
+								<div class="list_border_tit">创建首份简历发红包</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">活动名称：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_actname3" id="sy_wxredpack_actname3" size="20" value="{yun:}$config.sy_wxredpack_actname3{/yun}" maxlength="255">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">是否开启：</label>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<input type="radio" name="sy_wxredpack_isopen3" checked value='0' id="sy_wxredpack_isopen3_1" title="关闭">
+										<input type="radio" {yun:}if $config.sy_wxredpack_isopen3=='1' {/yun}checked{yun:}/if{/yun} name="sy_wxredpack_isopen3"
+										 value='1' id="sy_wxredpack_isopen3_2" title="开启">
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">场景：</label>
+								<div class="layui-input-inline t_w480">
+									<select name="sy_wxredpack_pro3" id="sy_wxredpack_pro3">
+										{yun:}foreach from=$redArr item=v key=j{/yun}
+										<option value="{yun:}$j{/yun}" {yun:}if $config.sy_wxredpack_pro3==$j{/yun} selected {yun:}/if{/yun}> {yun:}$v{/yun} </option>
+										 {yun:}/foreach{/yun} 
+									</select>
+								</div>
+								<span style="margin-left: 180px;"  class="admin_web_tip">发放红包使用场景，默认场景为‘其他’，如红包金额大于200或者小于1元时，请到<a href="https://pay.weixin.qq.com" target="_blank">微信支付平台</a>中申请修改场景红包限额(申请有效期为1年)</span>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">单次红包金额：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_money3" id="sy_wxredpack_money3" size="10" value="{yun:}$config.sy_wxredpack_money3{/yun}" maxlength="255"><span style="position: absolute;right: 10px;top: 10px;">元</span>
+									<span class="admin_web_tip">‘其他’场景可设置红包金额1-200元；非‘其他’场景，金额最低0.3元，否则将发放失败</span>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">红包祝福语：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_wishing3" id="sy_wxredpack_wishing3" size="30" value="{yun:}$config.sy_wxredpack_wishing3{/yun}" maxlength="255">
+									<span class="admin_web_tip">如：简历创建成功，开始您的求职之旅吧</span>
+								</div>
+							</div>
+							<div class="layui-form-item pdleft180">
+								<input class="layui-btn tty_sub" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+								<input class="layui-btn tty_cz" type="reset" value="重置" />
+							</div>
+							<input type="hidden" name="pytoken"  value="{yun:}$pytoken{/yun}">
+						</form>
+
+						<form target="supportiframe" action="index.php?m=wx&c=wxredpack" onsubmit="return checkqy()" method="post" class="layui-form list_border">
+							
+							
+							<div class="layui-form-item">
+								<div class="list_border_tit">企业首次完善基本资料发红包</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">活动名称：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_actname4" id="sy_wxredpack_actname4" size="20" value="{yun:}$config.sy_wxredpack_actname4{/yun}" maxlength="255">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">是否开启：</label>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<input type="radio" name="sy_wxredpack_isopen4" checked value='0' id="sy_wxredpack_isopen4_1" title="关闭">
+										<input type="radio" {yun:}if $config.sy_wxredpack_isopen4=='1' {/yun}checked{yun:}/if{/yun} name="sy_wxredpack_isopen4"
+										 value='1' id="sy_wxredpack_isopen4_2" title="开启">
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">场景：</label>
+								<div class="layui-input-inline t_w480">
+									<select name="sy_wxredpack_pro4" id="sy_wxredpack_pro4">
+										{yun:}foreach from=$redArr item=v key=j{/yun}
+										<option value="{yun:}$j{/yun}" {yun:}if $config.sy_wxredpack_pro4==$j{/yun} selected {yun:}/if{/yun}> {yun:}$v{/yun} </option>
+										 {yun:}/foreach{/yun} 
+									</select>
+								</div>
+								<span style="margin-left: 180px;"  class="admin_web_tip">发放红包使用场景，默认场景为‘其他’，如红包金额大于200或者小于1元时，请到<a href="https://pay.weixin.qq.com" target="_blank">微信支付平台</a>中申请修改场景红包限额(申请有效期为1年)</span>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">单次红包金额：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_money4" id="sy_wxredpack_money4" size="10" value="{yun:}$config.sy_wxredpack_money4{/yun}" maxlength="255"><span style="position: absolute;right: 10px;top: 10px;">元</span>
+									<span class="admin_web_tip">‘其他’场景可设置红包金额1-200元；非‘其他’场景，金额最低0.3元，否则将发放失败</span>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">红包祝福语：</label>
+								<div class="layui-input-inline t_w480">
+									<input class="layui-input t_w480" type="text" name="sy_wxredpack_wishing4" id="sy_wxredpack_wishing4" size="30" value="{yun:}$config.sy_wxredpack_wishing4{/yun}" maxlength="255">
+									<span class="admin_web_tip">如：信息完善成功，发布职位快速寻找合适的人才</span>
+								</div>
+							</div>
+							<div class="layui-form-item pdleft180">
+								<input class="layui-btn tty_sub" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+								<input class="layui-btn tty_cz" type="reset" value="重置" />
+							</div>
+							<input type="hidden" name="pytoken"  value="{yun:}$pytoken{/yun}">
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+
+			$(".tips_class").hover(function() {
+				var msg_id = $(this).attr('id');
+				var msg = $('#' + msg_id + ' + font').html();
+				if ($.trim(msg) != '') {
+					layer.tips(msg, this, {
+						guide: 1,
+						style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+					});
+					$(".xubox_layer").addClass("xubox_tips_border");
+				}
+			}, function() {
+				var msg_id = $(this).attr('id');
+				var msg = $('#' + msg_id + ' + font').html();
+				if ($.trim(msg) != '') {
+					layer.closeAll('tips');
+				}
+			});
+			function checkgz(){
+				var pro = $('#sy_wxredpack_pro1').val(),
+					money = $('#sy_wxredpack_money1').val();
+					console.log(pro);
+				if(pro == 0 && (money<1 || money>200)){
+					parent.layer.msg('金额大于200或小于1元,请选非‘其他’场景',2,8);
+					return false;
+				}else if(pro !=0 && money < 0.3){
+					parent.layer.msg('红包金额最低0.3元',2,8);
+					return false;
+				}
+			}
+			function checkbd(){
+				var pro = $('#sy_wxredpack_pro2').val(),
+					money = $('#sy_wxredpack_money2').val();
+					console.log(pro);
+				if(pro == 0 && (money<1 || money>200)){
+					parent.layer.msg('金额大于200或小于1元,请选非‘其他’场景',2,8);
+					return false;
+				}else if(pro !=0 && money < 0.3){
+					parent.layer.msg('红包金额最低0.3元',2,8);
+					return false;
+				}
+			}
+			function checkjl(){
+				var pro = $('#sy_wxredpack_pro3').val(),
+					money = $('#sy_wxredpack_money3').val();
+					console.log(pro);
+				if(pro == 0 && (money<1 || money>200)){
+					parent.layer.msg('金额大于200或小于1元,请选非‘其他’场景',2,8);
+					return false;
+				}else if(pro !=0 && money < 0.3){
+					parent.layer.msg('红包金额最低0.3元',2,8);
+					return false;
+				}
+			}
+			function checkqy(){
+				var pro = $('#sy_wxredpack_pro4').val(),
+					money = $('#sy_wxredpack_money4').val();
+					console.log(pro);
+				if(pro == 0 && (money<1 || money>200)){
+					parent.layer.msg('金额大于200或小于1元,请选非‘其他’场景',2,8);
+					return false;
+				}else if(pro !=0 && money < 0.3){
+					parent.layer.msg('红包金额最低0.3元',2,8);
+					return false;
+				}
+			}
+		</script>
+	</body>
+</html>

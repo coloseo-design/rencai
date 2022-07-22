@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+    <title>后台管理</title>
+
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp">
+    <div class="tty-tishi_top">
+        <div class="tabs_info" style="height:36px;">
+            <ul>
+                <li><a href="index.php?m=crm_concern">我的跟进</a></li>
+                <li class="curr"><a href="index.php?m=crm_concern&c=depart">下属的跟进</a></li>
+            </ul>
+        </div>
+
+        <form class="layui-form" action="index.php" name="myform" method="get">
+
+            <input type="hidden" name="m" value="crm_concern" />
+            <input type="hidden" name="c" value="depart"/>
+            {yun:}if $smarty.get.day{/yun}<input type="hidden" name="day" value="{yun:}$smarty.get.day{/yun}"/>{yun:}/if{/yun}
+
+            <div class="crm_searctime">
+                <ul>
+                    <li>跟进时间：</li>
+                    <li {yun:}if $smarty.get.day=='' && !$smarty.get.stime && !$smarty.get.etime{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c untype='day'{/yun}">全部</a></li>
+                    <li {yun:}if $smarty.get.day==1{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv=1 adt='day' untype='day'{/yun}">今天</a></li>
+                    <li {yun:}if $smarty.get.day==2{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv=2 adt='day' untype='day'{/yun}">昨天</a></li>
+                    <li {yun:}if $smarty.get.day==3{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv=3 adt='day' untype='day'{/yun}">本周</a></li>
+                    <li {yun:}if $smarty.get.day==4{/yun}class='curr'{yun:}/if{/yun}><a href="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv=4 adt='day' untype='day'{/yun}">本月</a></li>
+                    <li>
+                        自定义：
+                        <div class="layui-input-inline">
+                            <input type="text" id="stime" class="comy_time_text" name="stime" style="width:110px;" value="{yun:}if !$smarty.get.day{/yun}{yun:}$smarty.get.stime{/yun}{yun:}/if{/yun}" autocomplete="off">
+                            <i class="t_tc_icon_time"></i>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" id="etime" class="comy_time_text" name="etime" style="width:110px;" value="{yun:}if !$smarty.get.day{/yun}{yun:}$smarty.get.etime{/yun}{yun:}/if{/yun}" autocomplete="off">
+                            <i class="t_tc_icon_time"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="crm_searctime">
+                {yun:}if $adminUserList{/yun}
+                <div class="layui-inline ">
+                    <div style="display: inline-block;margin-right: 10px;padding: 3px 10px;">客户经理：</div>
+                    <div class="layui-input-inline">
+                        <select name="crmmanager" id="crmmanager" lay-filter=''>
+                            <option value="" {yun:}if !$smarty.get.uid{/yun}selected{yun:}/if{/yun}>全部</option>
+                            {yun:}foreach from = $adminUserList key=key item = v{/yun}
+                            <option value="{yun:}$v.uid{/yun}" {yun:}if $smarty.get.crmmanager==$v.uid{/yun}selected{yun:}/if{/yun}>{yun:}$v.name{/yun}</option>
+                            {yun:}/foreach{/yun}
+                        </select>
+                    </div>
+                </div>
+                {yun:}/if{/yun}
+                <div class="layui-inline">
+                    <div style="display: inline-block;margin-right: 10px;padding: 3px 10px;">联系方式：</div>
+                    <div class="layui-input-inline">
+                        <select name="linktype" id="linktype" lay-filter=''>
+                            <option value="">请选择</option>
+                            {yun:}foreach from = $cache.crmdata.follow_way key=key item = v{/yun}
+                            <option value="{yun:}$v{/yun}" {yun:}if $smarty.get.linktype==$v{/yun}selected{yun:}/if{/yun}>{yun:}$cache.crmclass_name[$v]{/yun}</option>
+                            {yun:}/foreach{/yun}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="crm_searctime">
+                <div class="layui-inline">
+                    <div style="display: inline-block;margin-right: 10px;padding: 3px 10px;">搜索类型：</div>
+                    <div class="layui-input-inline">
+                        <select name="type" id="type" lay-filter='type'>
+                            <option value="1" {yun:}if !$smarty.get.type || $smarty.get.type==1{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m adv='1' adt='type' untype='type'{/yun}">客户名称</option>
+                            <option value="2" {yun:}if $smarty.get.type==2{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m adv='2' adt='type' untype='type'{/yun}">跟进结果</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{yun:}$smarty.get.keyword{/yun}" class="layui-input w180" placeholder="请输入检索关键字" />
+                    </div>
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即搜索</button>
+                        <button type="reset" class="layui-btn layui-btn-primary" onclick="location.href='index.php?m=crm_concern&c=depart'">重置</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="tty_table-bom">
+        <div class="table-list" style=" margin-top:10px;">
+            <div class="admin_table_border">
+                <table width="100%">
+                    <thead>
+                    <tr class="admin_table_top">
+                        <th align="left">客户名称</th>
+                        <th align="left">联系方式</th>
+                        <th align="left">跟进结果</th>
+                        <th>跟进时间</th>
+                        <th>业务员</th>
+                        <th>录入时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {yun:}foreach from = $rows item = v{/yun}
+                    <tr>
+                        <td>
+                            <div style="padding-left:10px;">
+                                <a href='{yun:}url m=company c=show id=$v.uid{/yun}' target="_blank">{yun:}$v.name{/yun}</a>
+                                <div class="mt5">联系人：<a href="javascript:OpenContact('{yun:}$v.uid{/yun}','index.php?m=crm_waitingtask&c=ComDetail')" class="admin_com_name">{yun:}$v.linkman{/yun}</a></div>
+                            </div>
+                        </td>
+                        <td align="align">{yun:}$v.type_n{/yun}</td>
+                        <td width="300"><div>{yun:}$v.content{/yun}</div>
+                        </td>
+                        <td align="center">{yun:}$v.ftime_n{/yun}</td>
+                        <td align="center">{yun:}$v.aname{/yun}</td>
+                        <td align="center">{yun:}$v.atime|date_format:'Y-m-d H:i:s'{/yun}</td>
+                        <td align="center"><a href="javascript:;" onclick="khgl('index.php?m=crm_customer&c=com&id={yun:}$v.uid{/yun}');" class="crm_submit">管理</a></td>
+                    </tr>
+                    {yun:}foreachelse{/yun}
+                    <tr align="center">
+                        <td class="ud" colspan="7">
+                            <div class="admin_notip">暂无跟进记录~</div>
+                        </td>
+                    </tr>
+                    {yun:}/foreach{/yun}
+
+                    {yun:}if $total > $config.sy_listnum {/yun}
+                    <tr>
+                        {yun:}if $pagenum==1{/yun}
+                        <td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+                        {yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+                        <td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+                        {yun:}else if $pagenum == $pages{/yun}
+                        <td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+                        {yun:}/if{/yun}
+                        <td colspan="4" class="digg">{yun:}$pagenav{/yun}</td>
+                    </tr>
+                    {yun:}/if{/yun}
+                    </tbody>
+                    <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}"/>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('layer', function () {
+        var $ = layui.jquery,
+            layer = layui.layer;
+    });
+
+    function khgl(url) {
+
+        $.layer({
+            type: 2,
+            shadeClose: true,
+            title: '下属客户管理',
+            area: ['80%', '100%'],
+            offset: 'r',
+            iframe: {src: url},
+            close: function () {
+                if (needLoad) {
+                    window.location.reload();
+                } else {
+                    $('body').css('overflow-y', '');
+                }
+            }
+        });
+    }
+</script>
+{yun:}include file="$adminstyle/crm_public.htm"{/yun}
+</body>
+</html>

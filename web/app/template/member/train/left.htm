@@ -1,0 +1,69 @@
+<div class="Left_column flt mt20">
+    <div class="Left_column_border">
+
+        <div class="Left_column_tit Left_column_tit_top"><span class="Left_column_tit_span"><i class="Left_column_tit_span_icon Left_column_tit_span_icon_kc"></i>课程管理</span>
+          
+        </div>
+        <ul class="Left_column_nav">
+            <li {yun:}if $smarty.get.c=="subject" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=subject">我的课程</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="message" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=message">咨询留言</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="sign_up" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=sign_up">预约名单</a>
+            </li>
+			<li {yun:}if $smarty.get.c=="subpay" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=subpay">在线收费金额</a>
+            </li>
+        </ul>
+        <div class="Left_column_tit"><span class="Left_column_tit_span"><i class="Left_column_tit_span_icon Left_column_tit_span_icon_jg"></i>机构管理</span>
+          
+        </div>
+        <ul class="Left_column_nav">
+            <li {yun:}if $smarty.get.c=="info" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=info">基本信息</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="uppic" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=uppic">机构LOGO</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="show" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=show">机构环境</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="team" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=team">师资团队</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="news" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=news">机构新闻</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="banner" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=banner">机构横幅</a>
+            </li>
+        </ul>
+        <div class="Left_column_tit"><span class="Left_column_tit_span"><i class="Left_column_tit_span_icon Left_column_tit_span_icon_xx"></i>信息管理</span></div>
+        <ul class="Left_column_nav">
+            <li {yun:}if $smarty.get.c=='rebates' {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=rebates">我推荐的悬赏</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="sysnews" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=sysnews">系统消息</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="integral" ||$smarty.get.c=="integral_reduce" ||$smarty.get.c=="reward_list" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}管理</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="paylog" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=paylog">财务明细</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="binding" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=binding">帐号绑定</a>
+            </li>
+            <li {yun:}if $smarty.get.c=="password" {/yun}class="Left_column_nav_cur" {yun:}/if{/yun}>
+                <a href="index.php?c=password">修改密码</a>
+            </li>
+             {yun:}if $config.sy_user_change==1{/yun}
+              <li><a href="javascript:void(0)" onclick="changeutype();">切换身份</a></li>
+             {yun:}/if{/yun}
+        </ul>
+    </div>
+</div>

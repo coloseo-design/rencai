@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script language="javascript">var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+
+		<style>
+			* {	margin: 0;	padding: 0; }
+		body, div {	margin: 0;	padding: 0; }
+		.layui-form-item{ margin-bottom:0px;}
+	</style>
+
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+
+		<div class="infoboxp">
+
+			<div class="tty-tishi_top">
+
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display: none"></iframe>
+
+				<form class="layui-form" action="index.php?m=admin_gqtask&c=savetask" target="supportiframe" method="post" onSubmit="return check_form_task()">
+					<table width="100%" class="table_form" style="background: #fff;">
+						<tr>
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">项目详情</div>
+							</th>
+						</tr>
+						{yun:}if $show.id{/yun}
+						<tr>
+							<th>项目编号：</th>
+							<td>
+								<div class="yun_admin_divh">{yun:}$show.id{/yun}</div>
+							</td>
+						</tr>
+						{yun:}/if{/yun}
+
+						<tr class="admin_table_trbg">
+							<th>项目名称：</th>
+							<td><input type="text" name="name" id="name" class="tty_input t_w480" size="30" value="{yun:}$show.name{/yun}"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>价格预算：</th>
+							<td><input type="text" name="salary" id="salary" class="tty_input t_w480" size="30" value="{yun:}$show.salary{/yun}">元</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>预计工期：</th>
+							<td><input type="text" name="edate" id="edate" class="tty_input t_w480" size="30" value="{yun:}$show.edate{/yun}">天</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>接单截止时间：</th>
+							<td>
+								<input id="etime" class="part_text_time item_date" type="text" readonly size="30" value="{yun:}$show.etime|date_format:'%Y-%m-%d'{/yun}"
+								 name="etime">
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120" class="t_fl">项目需求</th>
+							<td>
+								<script id="myEditor" name="content" type="text/plain" style="width:500px;height:200px;">{yun:}$show.content{/yun}</script>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>联系人：</th>
+							<td><input type="text" name="link_man" id="link_man" class="tty_input t_w480" size="30" value="{yun:}$show.link_man{/yun}"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>联系电话：</th>
+							<td><input type="text" name="link_moblie" id="link_moblie" class="tty_input t_w480" size="30" value="{yun:}$show.link_moblie{/yun}"></td>
+						</tr>
+						<tr>
+							<th width="120">浏览次数：</th>
+							<td>
+								<input type="text" class="tty_input t_w480" id="hits" name="hits" size="10" value="{yun:}$show.hits{/yun}">
+							</td>
+						</tr>
+
+						{yun:}if $show.id{/yun}
+						<tr class="admin_table_trbg">
+							<th width="120">状 态：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}if $show.etime>$time{/yun}
+									{yun:}if $show.r_status==1{/yun}
+
+									{yun:}if $show.status==1{/yun}
+									<font color="blue">已审核</font>
+									{yun:}elseif $show.status==2{/yun}
+									<font color="red">通过</font>
+									{yun:}else{/yun}
+									<font color="red">待审核</font>
+									{yun:}/if{/yun}
+									{yun:}else{/yun}
+									<font color="orange">已锁定</font>
+									{yun:}/if{/yun}
+									{yun:}else{/yun}
+									<font color="orange">已过期</font>
+									{yun:}/if{/yun}
+								</div>
+							</td>
+						</tr>
+						{yun:}/if{/yun}
+
+						<tr>
+							<th width="120"></th>
+							<td>
+								<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}" />
+
+								{yun:}if $show.id{/yun}
+								<input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+								<input type="hidden" name="id" value="{yun:}$show.id{/yun}">
+								<input class="tty_sub" type="submit" name="update" value="&nbsp;修 改&nbsp;" />
+								{yun:}else{/yun}
+								<input type="hidden" name="uid" value="{yun:}$uid{/yun}">
+								<input class="tty_cz" type="submit" name="update" value="&nbsp;保 存&nbsp;" />
+								{yun:}/if{/yun}
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var weburl = "{yun:}$config.sy_weburl{/yun}";
+			layui.use(['layer', 'form', 'laydate'], function() {
+				var form = layui.form,
+					laydate = layui.laydate,
+					$ = layui.$;
+				lay('.item_date').each(function() {
+					laydate.render({
+						elem: this,
+						trigger: 'click'
+					});
+				});
+			}); //end layui.use()
+
+			var editor = UE.getEditor('myEditor', {
+				toolbars: [
+					['Source', '|', 'Bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter',
+						'justifyright', 'insertorderedlist', 'insertunorderedlist', 'emotion', 'simpleupload'
+					]
+				],
+				wordCount: false,
+				elementPathEnabled: false,
+				initialFrameHeight: 200
+			});
+
+			function check_form_task() {
+
+				var name = $.trim($("#name").val());
+				var salary = $.trim($("#salary").val());
+				var edate = $.trim($("#edate").val());
+				var etime = $.trim($("#etime").val());
+				var link_man = $.trim($("#link_man").val());
+				var link_moblie = $.trim($("#link_moblie").val());
+
+				if (name == '') {
+					parent.layer.msg('项目名称不能为空！', 2, 8);
+					return false;
+				}
+				if (salary == '') {
+					parent.layer.msg('价格预算不能为空！', 2, 8);
+					return false;
+				}
+				if (edate == '') {
+					parent.layer.msg('预计工期不能为空！', 2, 8);
+					return false;
+				}
+
+				if (etime == '') {
+					parent.layer.msg('接单日期不能为空！', 2, 8);
+					return false;
+				}
+
+				var content = editor.getContent();
+
+				if (content == "") {
+
+					parent.layer.msg('项目需求不能为空！', 2, 8);
+					return false;
+
+				}
+				if (link_man == '') {
+					parent.layer.msg('联系人不能为空！', 2, 8);
+					return false;
+				}
+				if (link_moblie == '') {
+					parent.layer.msg('联系电话不能为空！', 2, 8);
+					return false;
+				} else {
+
+					if (isjsMobile(link_moblie) == false) {
+						parent.layer.msg('联系电话格式错误！', 2, 8);
+						return false;
+					}
+
+				}
+			}
+		</script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+	</body>
+</html>

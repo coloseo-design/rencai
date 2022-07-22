@@ -1,0 +1,110 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/member_style.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+
+<style>
+    .header_bg {
+        display: none;
+    }
+</style>
+
+<div class="lt_header_box">
+    <div class="lt_header_nav">
+		<div class="" style="position:absolute;left:15px;top:15px;">
+		{yun:}if $signstate==1 {/yun}
+		<span class="yun_usermember_qdbth" onClick="signok();">已签到</span> 
+		{yun:}else{/yun}
+		<a href="javascript:void(0);" onClick="sign();"><span class="yun_usermember_qdbth">签到</span></a>
+		{yun:}/if{/yun}
+		</div>
+		<span class="yun_com_member_index_set"><a class="yun_com_member_index_set_icon" href="javascript:void(0)" onclick="navigateTo('index.php?c=set')"></a></span>
+        <span class="yun_com_member_index_msg"><a class="yun_com_membersysnews" href="javascript:void(0)" onclick="navigateTo('index.php?c=sysnews')"><i class="yun_com_membersysnews_n" id="sysmsgnum"></i></a></span> </div>
+    <div class="lt_header_photo">
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=uppic')"><img src="{yun:}$user.photo_big{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_lt_icon{/yun}',2);"></a>
+    </div>
+    <div class="lt_user_name">你好！{yun:}$username{/yun}</div>
+    <div class="lt_header_cz">
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=uppic')">修改头像</a>
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=info')">编辑</a>
+        <a href="javascript:void(0)" onclick="navigateTo('{yun:}url m=wap c=post a=headhunter uid=$uid{/yun}')">访问主页</a>
+    </div>
+    <!--<div class="lt_user_name">{yun:}$statis.rating_name{/yun}  <a href="index.php?c=pay">充值</a></div>-->
+
+</div>
+<div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+    <div class='wave -four'></div>
+    <div class='wave -five'></div>
+</div>
+
+<section>
+    <div class="m_index_msg" style=" font-size:12px; padding-top:10px; padding-bottom:5px; background:#fff">
+        <dl class="m_index_msg_list">
+            <a href="javascript:void(0)" onclick="navigateTo('index.php?c=yp_resume')">
+                <dt id="ypnum"style="color:#333"></dt>
+                <dd style="color:#333">应聘来的简历</dd>
+            </a>
+        </dl>
+        <dl class="m_index_msg_list">
+            <a href="javascript:void(0)" onclick="navigateTo('index.php?c=job&s=1')">
+                <dt id="jobnum" style="color:#333"></dt>
+                <dd style="color:#333">招聘中的职位</dd>
+            </a>
+        </dl>
+        <dl class="m_index_msg_list">
+            <a href="javascript:void(0)" onclick="navigateTo('index.php?c=down_resume')">
+                <dt id="downnum" style="color:#333"></dt>
+                <dd style="color:#333">下载简历记录</dd>
+            </a>
+        </dl>
+        <dl class="m_index_msg_list">
+            <span>
+                <dt style="color:#333">{yun:}$user.hits{/yun}</dt>
+                <dd style="color:#333">被访问次数</dd>
+            </span>
+        </dl>
+    </div>
+</section>
+{yun:}if $user.yyzz_status==0{/yun}
+<div class="admin_new_tip ">
+    <div class="admin_new_tit">温馨提示</div>
+    <div class="admin_new_tip_list_cont">
+        <div class="admin_new_tip_list"> 您的帐号尚未通过职业资格认证，前台将无法搜索到您，您可联系客服快速审核（{yun:}$config.sy_freewebtel{/yun}） </div>
+    </div>
+</div>
+{yun:}/if{/yun}
+
+<ul class="yun_usermember_nav">
+
+    <li>
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=job')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjob"></i>职位管理<span class="yun_mnav_tip">发布职位</span></a>
+    </li>
+</ul>
+<ul class="yun_usermember_nav" style="margin-top:0px;">
+    <li>
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=resumecolumn')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjl"></i>简历管理</a>
+    </li>
+</ul>
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="javascript:void(0)" onclick="navigateTo('{yun:}url m=wap c=ask{/yun}')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconask"></i>职场问答</a>
+    </li>
+
+</ul>
+<ul class="yun_usermember_nav">
+    <li>
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=rating')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconhy"></i>会员服务</a>
+    </li>
+    <li>
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=finance')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconcw"></i>财务管理</a>
+    </li>
+</ul>
+<ul class="yun_usermember_nav" style="margin-bottom:20px;">
+   <li><a href="javascript:void(0)" onclick="navigateTo('{yun:}url m=wap c=free{/yun}')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconjd"></i>供求任务大厅  </a></li> 
+    <li>
+        <a href="javascript:void(0)" onclick="navigateTo('index.php?c=set')"><i class="yun_usermember_nav_icon yun_usermember_nav_iconzh"></i>账户设置</a>
+    </li>
+
+ </ul>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

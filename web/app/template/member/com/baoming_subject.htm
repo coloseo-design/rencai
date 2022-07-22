@@ -1,0 +1,64 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class="com_tit"> <span class="com_tit_span">培训管理</span> </div> <div class="new_com_tit">
+      <div class="job_list_tit">
+         <ul class="">
+     <li {yun:}if $smarty.get.c=="baoming_subject"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=baoming_subject">报名课程</a></li>
+         <li {yun:}if $smarty.get.c=="fav_subject"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_subject">收藏课程</a></li>
+       <li {yun:}if $smarty.get.c=="atn_teacher"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=atn_teacher">关注讲师</a></li> 
+         <li {yun:}if $smarty.get.c=="fav_agency"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=fav_agency">关注机构</a></li> 
+         <li {yun:}if $smarty.get.c=="subject_zixun"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=subject_zixun">培训留言</a></li> 
+         </ul>
+         </div></div>
+    <div class=right_box>
+      <div class=admincont_box>     
+         
+      <div class="train_class train_class_d">
+	  {yun:}if $rows{/yun}
+	    <ul>
+	  {yun:}foreach from=$rows item=job{/yun}
+          {yun:}assign var="state" value=$job.order_state{/yun}
+		   
+               <li>
+                   <div class="train_class_img"><a href="{yun:}url m=train c=subshow id='`$job.sid`'{/yun}"  target="_blank"><img width="200" height="130" src="{yun:}$job.pic_n{/yun}"/></a></div>
+                  <div class="train_class_tit"><a href="{yun:}url m=train c=subshow id=$job.sid{/yun}" target="_blank">{yun:}$job.subname{/yun}</a></div>
+    <div class="bm_list">机构名称：<a href="{yun:}url m=train c=agencyshow id=$job.s_uid{/yun}" target="_blank">{yun:}$job.trainname|strip_tags|mb_substr:0:7:'utf-8'{/yun}</a></div>
+                   <div class="bm_list">课程价格：<i class="train_class_jg">{yun:}$job.price{/yun}</i></div>
+                     <div class="bm_list">收费方式：{yun:}$job.isprice_n{/yun}</div>
+                      <div class="bm_list">报名时间：{yun:}$job.ctime|date_format:"%Y-%m-%d"{/yun}</div>
+                   {yun:}if $job.isprice==1{/yun}
+                   <div class="bm_list">支付状态：{yun:}$arr_data.paystate.$state{/yun}</div>
+                  <div class="bm_list_cz">
+                   <span class="List_Title_span">
+						{yun:}if $job.order_state=='1'{/yun} <a href="index.php?c=payment&id={yun:}$job.oid{/yun}" class="train_submit">去付款</a> 
+                        <a href="javascript:void(0)" onclick="layer_del('确定要取消？', 'index.php?c=baoming_subject&act=del&id={yun:}$job.id{/yun}');" class="train_submit">取消报名</a>
+                        {yun:}/if{/yun}
+                  </span>
+                  </div>
+				   {yun:}else{/yun}
+                     <div class="bm_list">支付状态：<font color="red">到场支付</font></div>
+                  <div class="bm_list_cz">  <span class="List_Title_span">
+                        <a href="javascript:void(0)" onclick="layer_del('确定要取消？', 'index.php?c=baoming_subject&act=del&id={yun:}$job.id{/yun}');" class="train_submit">取消报名</a>
+                  </span>
+                  </div>
+                  {yun:}/if{/yun}
+   
+               </li>
+			    {yun:}/foreach{/yun}
+           </ul>
+		  </div>
+		   {yun:}else{/yun}
+            <div class="com_msg_no fl">
+				<p>亲爱的用户，目前您未报名任何培训课程！</p>
+			    <a href="{yun:}url m=train c=subject{/yun}" target="_blank" class="com_msg_no_bth com_submit">立即搜索我感兴趣的培训课程>></a>
+			</div>
+		   {yun:}/if{/yun}
+      </div>    
+        
+      
+    </div>
+  </div> 
+</div>
+
+{yun:}include file="$comstyle/footer.htm"{/yun}

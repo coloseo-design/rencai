@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	
+	<title>后台管理</title>
+</head>
+<body class="body_ifm">
+	<div id="subboxdiv" style="width:100%;height:100%;display:none;position: absolute;"></div>
+
+	<div class="infoboxp"> 
+	<div class="tty-tishi_top">
+		<div class="admin_new_tip">
+			<a href="javascript:;" class="admin_new_tip_close"></a>
+			<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+			<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+			<div class="admin_new_tip_list_cont">
+                <div class="admin_new_tip_list">设置后，联系授权客服提交代码！</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+
+			<div id="right" style="display:block">
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form method="post" target="supportiframe" action="" name="config" class="layui-form">
+					
+					<div>
+						<table width="100%" class="table_form">
+							<tr class="admin_table_trbg">
+								<th colspan="2" class="admin_bold_box">
+									<div class="admin_bold">百度小程序登录设置</div>
+								</th>
+							</tr>
+							<tr>
+							  <th class="t_fr">appKey:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_bdlogin_appKey" value="{yun:}$baiduData.sy_bdlogin_appKey{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">必须配置，到智能小程序平台，小程序管理-设置-开发设置中查看</span>
+							  </td>
+							</tr>
+							<tr>
+							  <th class="t_fr">appSecret:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_bdlogin_appSecret" value="{yun:}$baiduData.sy_bdlogin_appSecret{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">必须配置，到智能小程序平台，小程序管理-设置-开发设置中查看</span>
+							  </td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th colspan="2" class="admin_bold_box">
+									<div class="admin_bold">百度小程序支付设置</div>
+								</th>
+							</tr>
+							<tr>
+							  <th class="t_fr">dealId:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_dealId" value="{yun:}$baiduData.sy_dealId{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">支付开通后到智能小程序平台，运营中心-支付管理中查看</span>
+							  </td>
+							</tr>
+							<tr>
+							  <th class="t_fr">appKey:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_appKey" value="{yun:}$baiduData.sy_appKey{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">支付开通后到智能小程序平台，运营中心-支付管理中查看</span>
+							  </td>
+							</tr>
+							<tr>
+							  <th class="t_fr">开发者私钥:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<textarea name="sy_privateKey" cols="100" rows="5" class="layui-textarea" style="height:100px">{yun:}$baiduData.sy_privateKey{/yun}</textarea>
+									</div>
+									<span class="admin_web_tip">必须配置，通过openssl工具生成</span>
+							  </td>
+							</tr>
+							<tr>
+							  <th class="t_fr">小程序平台公钥:</th>
+							  <td>
+								  	<div class="layui-input-block t_w480">
+										<textarea name="sy_publicKey" cols="100" rows="5" class="layui-textarea" style="height:100px">{yun:}$baiduData.sy_publicKey{/yun}</textarea>
+									</div>
+									<span class="admin_web_tip">必须配置，支付开通后到智能小程序平台，支付管理中查看（注意是平台公钥，不是开发者公钥）</span>
+							  </td>
+							</tr>
+							<tr class="admin_table_trbg"> 
+								<th class="t_fr" >百度小程序二维码：</th>
+								<td>
+									<div class="admin_uppicbox">
+										<input type="hidden" id="layupload_type" value="2" />
+									
+										<div class="admin_uppicimg">
+											<img width="140" height="140" id="imgbaidu" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_baiduxcxu_qcode{/yun}" {yun:}if !$config.sy_baiduxcxu_qcode{/yun}class="none"{yun:}/if{/yun} />
+										</div>
+									
+										<span>
+											<button type="button" class="adminupbtn adminupload" lay-data="{name: 'sy_baiduxcxu_qcode',imgid: 'imgbaidu',path: 'logo',source:'back'}">重新上传</button>		
+										</span>
+									</div>
+
+								</td>
+							</tr>
+							<tr>
+								<th width="160">IOS支付功能：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline" style="width: 80px;">
+											<input type="checkbox" name="sy_baidu_iospay" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_baidu_iospay=="1"
+											 {/yun} checked {yun:}/if{/yun} />
+										</div>
+										<span class="admin_web_tip">IOS平台不支持虚拟产品购买，提交审核请关闭，否则将被驳回。<a href="https://smartprogram.baidu.com/docs/operations/specification/#5-3-iOS-%E8%99%9A%E6%8B%9F%E6%94%AF%E4%BB%98%E8%A1%8C%E4%B8%BA" target="_blank">百度小程序IOS虚拟支付行为规范</a></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td align="left">
+									<input class="tty_sub" id="pay_config" type="submit" name="pay_config" value="&nbsp; 修 改 &nbsp;"  />&nbsp;&nbsp;
+									<input class="tty_cz" type="reset" name="reset" value="&nbsp; 重 置 &nbsp;" />
+									{yun:}if !$baiduData.sy_dealId && $config.sy_dealId{/yun}
+									&nbsp;&nbsp;<input class="tty_cz" type="button" onclick="makeCache()" value="生成缓存" />
+									{yun:}/if{/yun}
+								</td>
+							</tr>
+						</table>
+					</div>
+					<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		var weburl = "{yun:}$config.sy_weburl{/yun}";
+		layui.use('form', function() {
+			var form = layui.form;
+		});
+		function makeCache(){
+			var pytoken = $('#pytoken').val();
+			loadlayer();
+			$.post('index.php?m=admin_xcx_baidu&c=makeCache',{pytoken: pytoken}, function(data){
+				parent.layer.closeAll();
+				parent.layer.msg('生成成功', 2, 9);
+			})
+		}
+	</script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

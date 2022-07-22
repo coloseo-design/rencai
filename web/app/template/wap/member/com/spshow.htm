@@ -1,0 +1,258 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<div id="yunvue" class="wap_member_box none">
+    <form id="spviewForm" onsubmit="return false">
+        <ul class="yunset_list">
+            <li class="yunset_list_select">
+                <span class="yunset_list_name">面试时间<em class="yunset_xttip"></em></span>
+                <span class="yunset_list_commentary" @click="sdateShow = true">
+					<button type="button">{{info.sdate_n || '请选择面试时间'}}</button>
+					<input type="hidden" name="starttime" :value="info.sdate_n">
+				</span>
+            </li>
+            <li class="yunset_list_select" @click="jobShow = true">
+                <span class="yunset_list_name">面试职位<em class="yunset_xttip"></em></span>
+                <span class="yunset_list_commentary yunset_list_js">{{info.job_n || '请选择面试职位'}}</span>
+                <input type="hidden" name="jobid" :value="info.jobid">
+            </li>
+            <li class="yunset_list_select">
+                <span class="yunset_list_name">学历要求</span>
+                <span class="yunset_list_commentary" @click="eduPicker">
+					<div>{{info.edu_req_n || '请选择'}}</div>
+					<input type="hidden" name="edu" :value="info.edu">
+				</span>
+            </li>
+            <li class="yunset_list_select">
+                <span class="yunset_list_name">经验要求</span>
+                <span class="yunset_list_commentary" @click="expPicker">
+					<div>{{info.exp_req_n || '请选择'}}</div>
+					<input type="hidden" id="exp" name="exp" :value="info.exp">
+				</span>
+            </li>
+            <li class="yunset_list_select" @click="otherShow = true">
+                <span class="yunset_list_name">简历要求<em class="yunset_xttip"></em></span>
+                <span class="yunset_list_commentary yunset_list_js">{{info.other_w || '请选择简历要求'}}</span>
+                <input type="hidden" name="other" :value="info.other">
+            </li>
+
+            <div class="remark">
+                <span class="">备注信息<em class="yunset_xttip"></em></span>
+                <div class="remark_word">
+                    <form action="" class="remark_word_box">
+                        <textarea name="remark" style="resize:none;" v-model="remark" class="remark_word_text">{{remark !='' ? remark : '如公司环境、面试感受、面试官的态度等等'}}</textarea>
+                        <div class="expressions_bom">
+                            <i class="expressions_bom_new">{{remarkcount}}</i>
+                            <i class="expressions_bom_sum">/ 200</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </ul>
+        <div class="yunset_bth_box" @click="add">
+            <button class="">提 交</button>
+        </div>
+    </form>
+
+    <van-popup v-model="sdateShow" round position="bottom">
+        <van-datetime-picker v-model="currentDate" type="datetime" @cancel="sdateShow = false" @confirm="sdateConfirm"/>
+    </van-popup>
+    <van-popup v-model="eduShow" round position="bottom">
+        <van-picker show-toolbar :columns="edu" :default-index="eduIndex" @cancel="eduShow = false" @confirm="eduConfirm"/>
+    </van-popup>
+    <van-popup v-model="expShow" round position="bottom">
+        <van-picker show-toolbar :columns="exp" :default-index="expIndex" @cancel="expShow = false" @confirm="expConfirm"/>
+    </van-popup>
+
+    <van-popup v-model="jobShow" position="bottom" round>
+
+        <div class="spms_show">
+            <div class="spms_tit ">选择可面试的职位</div>
+            <div class="spms_box">
+				<van-checkbox-group v-model="result" @change="changeResult" ref="jobcheckboxGroup">
+					<van-cell-group>
+						<van-cell v-for="(item, jk) in jobarr" :key="jk" clickable :key="item.id" :title="`${item.name}`" @click="toggle(jk)">
+							<template #right-icon>
+								<van-checkbox :name="item" ref="jobChecks" shape="square" />
+							</template>
+						</van-cell>
+					</van-cell-group>
+				</van-checkbox-group>
+            </div>
+            <div class="yunset_bth_box" @click="jobConfirm" style="padding-top: 0rem;"><span class="yun_wap_info_brief_tit_bc">确定</span></div>
+        </div>
+    </van-popup>
+
+    <van-popup v-model="otherShow" position="bottom" round>
+        <div class="spms_show">
+            <div class="spms_tit ">简历完整度要求</div>
+			<van-checkbox-group v-model="resumeResult" @change="changeresumeResult" ref="resumecheckboxGroup">
+				<van-cell-group>
+					<van-cell v-for="(item, tk) in otherarr" :key="tk" clickable :key="item.id" :title="`${item.name}`" @click="resumeToggle(tk)">
+						<template #right-icon>
+							<van-checkbox :name="item" ref="resumeChecks" shape="square" />
+						</template>
+					</van-cell>
+				</van-cell-group>
+			</van-checkbox-group>
+            <div class="yunset_bth_box" @click="otherConfirm"><span class="yun_wap_info_brief_tit_bc">确定</span></div>
+        </div>
+    </van-popup>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data: {
+            id: '{yun:}$smarty.get.id{/yun}',
+            info: {},
+            sdateShow: false,
+            currentDate: new Date(),
+            eduShow: false,
+            eduIndex: 0,
+            edu: [],
+            expShow: false,
+            expIndex: 0,
+            exp: [],
+            otherarr: [],
+            otherShow: false,
+            jobarr: [],
+            jobShow: false,
+            remark: '',
+			result: [],
+			resumeResult: []
+        },
+        created() {
+            this.getInfo();
+        },
+        computed: {
+            remarkcount() {
+                return this.remark.length;
+            }
+        },
+        methods: {
+            getInfo() {
+                var that = this;
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=spview c=info{/yun}', {id: this.id}, function (data) {
+                    hideLoading();
+                    let res = data.data;
+                    that.info = res.info || {};
+                    that.otherarr = res.otherarr;
+                    that.jobarr = res.jobarr;
+					 
+                    $.each(that.jobarr,function(index, el) {
+                        if($.inArray(el.id,that.info.jobid_n)>=0){
+                            that.result.push(el);
+                        }
+                    });  
+                    if (that.info) {
+                        that.remark = that.info.remark ? that.info.remark : '';
+                    }
+                    $("#yunvue").css('display', 'block');
+
+                    let a = document.createElement('script');
+                    a.src = "{yun:}$plusstyle{/yun}/user.cache.js?v={yun:}$config.cachecode{/yun}";
+                    document.body.appendChild(a);
+
+                    let b = document.createElement('script');
+                    b.src = "{yun:}$wap_style{/yun}/js/userPicker.js?v={yun:}$config.cachecode{/yun}";
+                    document.body.appendChild(b);
+                })
+            },
+            sdateConfirm: function (e) {
+                this.sdateShow = false;
+                this.info.sdate_n = timeFormat(e, 'datetime');
+            },
+            eduPicker: function () {
+                eduPicker(this.info.edu);
+            },
+            eduConfirm(e) {
+                this.eduShow = false;
+                this.info.edu = e.value;
+                this.info.edu_req_n = e.text;
+            },
+            expPicker: function () {
+                expPicker(this.info.exp);
+            },
+            expConfirm(e) {
+                this.expShow = false;
+                this.info.exp = e.value;
+                this.info.exp_req_n = e.text;
+            },
+            otherConfirm: function () {
+                this.otherShow = false;
+            },
+            jobConfirm() {
+                if (this.info.jobid == '') {
+                    return showToast('请选择面试职位');
+                }
+                this.jobShow = false;
+            },
+            add() {
+                var e = getFormValue('spviewForm');
+                if (!e.starttime) {
+                    showToast('请选择面试开始时间');
+                    return false;
+                }
+                if (!e.jobid) {
+                    showToast('请选择面试职位');
+                    return false;
+                }
+                e.id = this.id;
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=spview c=saveSpview{/yun}', e, function (data) {
+                    hideLoading();
+                    if (data.error == 9) {
+                        window.localStorage.setItem("needRefresh", 1);
+                        showModal(data.msg, function () {
+                            goBack();
+                        });
+                    } else {
+                        showModal(data.msg);
+                    }
+                }, 'json');
+                return false;
+            },
+			toggle(index) {
+				var that = this;
+				that.$refs.jobChecks[index].toggle();
+			},
+			changeResult: function() {
+				var that = this;
+				var jobIds = [];
+				var jobNames = [];
+				that.result.forEach((v, i) => {
+					if(v && v.id){
+						jobIds.push(v.id);
+					}
+					if(v && v.name){
+						jobNames.push(v.name);
+					}
+				}, this);
+				this.info.jobid = jobIds.join(',');
+				this.info.job_n = jobNames.join(',');
+			},
+			resumeToggle(index) {
+				var that = this;
+				that.$refs.resumeChecks[index - 1].toggle();
+			},
+			changeresumeResult: function() {
+				var that = this;
+				var resumeIds = [];
+				var resumeNames = [];
+				that.resumeResult.forEach((v, i) => {
+					if(v && v.id){
+						resumeIds.push(v.id);
+					}
+					if(v && v.name){
+						resumeNames.push(v.name);
+					}
+				}, this);
+				this.info.other = resumeIds.join(',');
+				this.info.other_w = resumeNames.join(',');
+			}
+        }
+    })
+</script>
+</body>
+</html>

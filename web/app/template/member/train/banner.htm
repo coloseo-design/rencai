@@ -1,0 +1,52 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+function check(myform){
+	if ($("input[name=file]").val()==""){
+		layer.msg('图片不能为空！！', 2, 8);return false; 
+	}	
+}
+</script> 
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+  {yun:}include file="$trainstyle/left.htm"{/yun}
+  <div class="right_column frt mt20">
+    <div class="right_column_border_banner">
+      <div class="right_column_h1_banner"><span class="right_column_h1_span flt">机构横幅</span></div>
+      <div class="admin_note mt10">
+		<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+        <div class="organization_banner_inside">图片缩略图</div> 
+        <p>最佳尺寸：980*160</p> 
+        <div  id="imgparent" class="organization_banner_inside_pic">
+         <img id="imgicon" {yun:}if $banner.pic{/yun}src="{yun:}$banner.pic{/yun}"{yun:}/if{/yun} width="678" height="107" />
+        </div>
+      </div>
+      <div class="organization_banner_mains">
+        <form action="{yun:}$now_url{/yun}" method="post" name="myform" target="supportiframe" id='myform' onsubmit="return check();" enctype="multipart/form-data">
+        <ul>
+          <li style="line-height:34px;">
+            <button type="button" class="layui-btn layui-btn-normal noupload" lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">+ 选择图片</button>
+			       <input type="hidden" id="laynoupload" value="1"/>
+            {yun:}if is_array($banner){/yun}
+            <input name="update" class="btn_01" type="submit" style="float:right;margin-left:10px;" value="保存设置" name="submit">
+            {yun:}else{/yun}
+            <input name="submit" class="btn_01" type="submit" style="float:right;margin-left:10px;" value="上传" name="submit">
+            {yun:}/if{/yun}
+          </li>
+        </ul>
+        </form>
+      </div>
+      <!--<div class="admin_textbox_04">
+        <div class="banner_h1"> <span>图片展示</span> </div>
+          {yun:}if is_array($banner){/yun} 
+            <img src="{yun:}$banner.pic{/yun}" width="708" height="200" /> 
+          {yun:}else{/yun}
+            <div class="con_banner_no"><span></span> <em>您还没有上传横幅图片</em></div>
+          {yun:}/if{/yun} 
+      </div>-->
+    </div>
+  </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

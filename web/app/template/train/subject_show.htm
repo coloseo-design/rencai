@@ -1,0 +1,242 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+<div class="training_cur ftl">
+<div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > <a href="{yun:}url m=train c=subject{/yun}">培训课程</a>> {yun:}$row.name{/yun}</div>
+</div>
+
+<div class="training_subject_show">
+<div class="training_subject_show_pic"><img src="{yun:}$row.pic{/yun}" width="480" height="270" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);" ></div>
+<div class="training_subject_show_info">
+<h1 class="training_subject_show_info_name">{yun:}$row.name{/yun}</h1>
+<div class="training_subject_show_info_p">{yun:}if $row.teach{/yun}主讲教师： {yun:}$row.teach{/yun}{yun:}/if{/yun}</div>
+<div class="training_subject_show_info_jd"><span class="">￥{yun:}$row.price{/yun}</span></div>
+<div class="training_subject_show_info_other">
+<span class="training_subject_show_info_other_n">收费方式：{yun:}if $row.isprice==1{/yun}在线收费{yun:}else{/yun}到场收费{yun:}/if{/yun}</span>
+<span class="training_subject_show_info_other_n">状态：{yun:}if $row.pause_status=="1"{/yun}招生中{yun:}else{/yun}已下架{yun:}/if{/yun}</span>
+
+</div>
+<div class="cor_content_d">
+ 
+{yun:}if $row.pause_status=="1"{/yun}
+{yun:}if !$baoming{/yun}
+{yun:}if $uid{/yun}
+	{yun:}if $usertype==4{/yun}
+	<div class="Courses_content_center_bm"><a  href="javascript:void(0)" onclick="layer.msg('只有个人用户和hr才可以报名！',2,8);return false;" class="Courses_content_center_bm_a_dg">我要报名</a></div>
+	{yun:}else{/yun}
+	<div class="Courses_content_center_bm"><a href="javascript:baoming('{yun:}$usertype{/yun}');" class="Courses_content_center_bm_a_dg">我要报名</a></div>
+	{yun:}/if{/yun}
+{yun:}else{/yun}
+	<div class="Courses_content_center_bm"><a href="javascript:showlogin(1)" class="Courses_content_center_bm_a_dg">我要报名</a></div>
+{yun:}/if{/yun}
+{yun:}else{/yun}
+<div class="Courses_content_center_bm"><a class="Courses_content_center_bm_a_dg" style="background:grey">已报名</a></div>
+{yun:}/if{/yun}
+{yun:}/if{/yun}
+<a class="cor_cont_zx_c" {yun:}if $uid{/yun}{yun:}if $usertype==4{/yun}href="javascript:void(0)" onclick="layer.msg('只有个人用户和hr才可以咨询课程！',2,8)"{yun:}else{/yun}href="javascript:zixun('{yun:}$row.uid{/yun}','{yun:}$row.id{/yun}');"{yun:}/if{/yun}{yun:}else{/yun}href="javascript:showlogin('1');"{yun:}/if{/yun}>立即咨询</a>
+
+
+{yun:}if $uid{/yun}
+ {yun:}if $usertype==4{/yun}
+ <span class="Courses_content_Favorites ftl" id="collect"><a href="javascript:void(0);" onclick="layer.msg('只有个人用户和hr才可以收藏课程！',2,8)">收藏课程</a>(<span id="collect_num">{yun:}$collect_num{/yun}</span>)</span>
+ {yun:}else{/yun}
+ {yun:}if $collect.id{/yun}
+<span class="Courses_content_ysc Courses_content_sc  ftl" id="collected"><a href="javascript:void(0)" onclick="layer.msg('您已收藏该课程！',2,8);return false;">已收藏</a>(<span id="collect_num">{yun:}$collect_num{/yun}</span>)</span>
+ {yun:}else{/yun}
+<span class="Courses_content_Favorites ftl" id="collect"><a href="javascript:void(0);" onclick="collect_subject('{yun:}$row.id{/yun}','{yun:}url m=train c=collect{/yun}')">收藏课程</a>(<span id="collect_num">{yun:}$collect_num{/yun}</span>)</span>
+{yun:}/if{/yun}
+{yun:}/if{/yun}
+{yun:}else{/yun}
+<span class="Courses_content_Favorites ftl" id="collect"><a href="javascript:void(0);" onclick="showlogin('1');">收藏课程</a>(<span id="collect_num">{yun:}$collect_num{/yun}</span>)</span>
+{yun:}/if{/yun}
+
+</div>
+<div class="training_subject_show_hottel">咨询热线：<span class="training_subject_show_hottel_n">{yun:}$row.moblie{/yun}</span>{yun:}if $train.linkqq{/yun}
+<a href="tencent://message/?uin={yun:}$train.linkqq{/yun}&Site=-&Menu=yes" style=" margin-left:5px;"><img src="{yun:}$train_style{/yun}/images/yun_qq.jpg"></a>
+{yun:}/if{/yun}</div>
+</div>
+</div>
+
+<div class="training_subject_show_left">
+<div class="training_subject_show_left_tit">适用人群</div>
+<div class="training_subject_show_left_cont">{yun:}$row.crowd{/yun}</div>
+<div class="training_subject_show_left_tit">基本信息</div>
+<div class="training_subject_show_left_p1">课程类型：{yun:}$row.type{/yun}</div>
+<div class="training_subject_show_left_p1">培训地点：{yun:}$row.address{/yun}</div>
+<div class="training_subject_show_left_p1">课程分类：{yun:}$subject_name[$row.tnid]{/yun}</div>
+{yun:}if $row.superiority{/yun} <div class="training_subject_show_left_p1">课程优势：{yun:}$row.superiority{/yun}</div>{yun:}/if{/yun}
+
+<div class="training_subject_show_left_tit">课程介绍</div>
+<div class="training_subject_show_left_cont">{yun:}$row.content{/yun}
+<div class="clear"></div>
+   <div class="job_hare"> 
+	<span class="job_hare_fl">分享到：</span> 
+    <span >
+	    
+		  <!-------分享代码----------->
+		
+			<div class="pyshare bdsharebuttonbox bdshare-button-style0-16" data-tag="share_1">
+				<a class="li s1 bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+				<a class="li s3 bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+				<a class="li s5 bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				<a class="li s6 bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+				<div class="clear"></div>
+			</div>
+		
+		  <!-------分享代码END----------->
+      </span>
+       </div></div>
+       <div class="clear"></div>
+       <div class="training_subject_show_left_tit">该机构的其他课程</div>
+
+      <div class="train_class">
+           <ul>
+		   {yun:}foreach item=v from=$otherlist{/yun}
+               <li>
+                   <div class="train_class_img"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}"><img style="width:150px;height:90px;border:1px solid #e9e9e9;" src="{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);"/></a></div>
+                   <div class="train_class_tit"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">{yun:}$v.name|mb_substr:0:15:'utf-8'{/yun}</a></div>
+                   <div class="train_class_lb">课程类别：{yun:}$subject_name[$v.nid]{/yun}-{yun:}$subject_name[$v.tnid]{/yun}</div>
+                   <div class="train_class_m">{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun} 发布</div>
+                   <div class="train_class_city">{yun:}$city_name[$v.cityid]{/yun} {yun:}$city_name[$v.threecityid]{/yun}</div>
+                   <div class="train_class_dw">
+                   <div class="train_class_tm">{yun:}$v.hours{/yun}课时</div>
+                   <div class="train_class_money"><i class="train_class_my">￥{yun:}$v.price{/yun}</i></div>
+                   
+				   {yun:}if $v.baomingnum==""{/yun}
+				   0人报名
+				   {yun:}else{/yun}
+				   {yun:}$v.baomingnum{/yun}人报名
+				   {yun:}/if{/yun}
+				   
+                   </div>
+               </li>  
+              {yun:}foreachelse{/yun}
+            <div class="t_msg_no">该机构还没有发布其它课程</div>
+            {yun:}/foreach{/yun}
+           </ul>
+		 
+      </div>
+
+       
+       
+       
+</div>
+
+
+<div class="training_subject_show_right">
+<div class="Courses_content_right ftr">
+<dl class="Courses_content_age  ftl">
+<dt>
+ <img src="{yun:}$train.logo_n{/yun}" width="54" height="54" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" >
+</dt>
+<dd>
+<a href="{yun:}url m=train c=agencyshow id='`$train.uid`'{/yun}" class="Courses_content_age_name">{yun:}$train.name{/yun}</a>
+
+{yun:}if $uid{/yun}
+{yun:}if $usertype!='4'{/yun}
+{yun:}if $isatn.id{/yun} 
+<div class="subject_bth"><a href="javascript:void(0)" onclick="teacheratn('{yun:}$train.uid{/yun}','{yun:}url m=ajax c=atn_train{/yun}')" id='atn_{yun:}$train.uid{/yun}' class="subject_bth_qx">取消关注</a></div> 
+{yun:}else{/yun}
+<div class="subject_bth"><a href="javascript:void(0)" onclick="teacheratn('{yun:}$train.uid{/yun}','{yun:}url m=ajax c=atn_train{/yun}')" id='atn_{yun:}$train.uid{/yun}' class="subject_bth_gz">关注</a></div> 
+{yun:}/if{/yun}
+{yun:}else{/yun} 
+<div class="subject_bth"><a href="javascript:void(0)" onclick="layer.msg('只有个人用户，企业用户，猎头用户才能关注', 2, 8)" class="subject_bth_gz">关注</a></div> 
+{yun:}/if{/yun} 
+{yun:}else{/yun}
+<div class="subject_bth"><a href="javascript:void(0)" onclick="showlogin('1');" class="subject_bth_gz">关注</a></div> 
+{yun:}/if{/yun} 
+
+</dd>
+</dl>
+<div class="Courses_content_age_p">
+<p>所属地区：{yun:}$city_name[$train.cityid]{/yun} {yun:}$city_name[$train.threecityid]{/yun}</p>
+<p>成立时间：{yun:}$train.sdate{/yun}　</p>
+<p>培训方向：{yun:}$subject_name[$train.sid]{/yun}　</p>
+{yun:}if $train.linkphone{/yun}<p>电话：{yun:}$train.linkphone{/yun}</p>{yun:}/if{/yun}
+{yun:}if $train.linktel{/yun}<p>手机：{yun:}$train.linktel{/yun}</p>{yun:}/if{/yun}
+{yun:}if $train.website{/yun}<p>网址：{yun:}$train.website{/yun}</p>{yun:}/if{/yun}
+{yun:}if $train.address{/yun}<p>地址：{yun:}$train.address|mb_substr:0:30:'utf-8'{/yun}</p>{yun:}/if{/yun}
+</div>
+</div>
+{yun:}include file="$trainstyle/reclist.htm"{/yun}
+</div>
+</div>
+
+
+
+
+
+
+<!--报名弹出框-->
+<div id="baoming" style="width:400px;background:#fff;"  class="none">
+  <form name="myform" method="post" target="supportiframe" action="{yun:}url m=train c=baoming{/yun}" onsubmit="return check_baoming();">
+    <ul class="Sign_up_box" style="padding:10px;">
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">课程：</span>
+        <span class="Sign_up_box_span_n">{yun:}$row.name{/yun}</span></li>
+       {yun:}if $row.isprice==1{/yun} <li style="margin-top:10px;"><span class="Sign_up_box_span">应付金额：</span>
+        <span class="Courses_content_center_s">{yun:}$row.price{/yun}</span> 元</li>{yun:}/if{/yun}
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">姓名：</span>
+        <input type="text" id="name" name="name" class="txt_input" value="{yun:}$user.name{/yun}"></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">电话：</span>
+        <input type="text" id="bmphone" name="phone" class="txt_input" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" value="{yun:}$user.phone{/yun}"></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">留言：</span>
+        <textarea class="txt_textarea" id="bmcontent" name="content" onclick="check_con();" onblur="over_con();">我想参加这个培训班，请尽快跟我联系。</textarea></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">&nbsp;</span>
+        <input type="submit" name="submit" value="报名" class="txt_input_submit"></li>
+        <input type="hidden" name="sid" value="{yun:}$row.id{/yun}" />
+        <input type="hidden" name="s_uid" value="{yun:}$row.uid{/yun}" />
+        <input type="hidden" name="isprice" value="{yun:}$row.isprice{/yun}" />
+       {yun:}if $row.isprice==1{/yun} <input type="hidden" name="price" value="{yun:}$row.price{/yun}" />{yun:}/if{/yun}
+    </ul>
+</form>
+</div>
+<!--报名弹出框-->
+<!--咨询弹出框-->
+<div id="zixun" style="width:400px;background:#fff; " class="none">
+  <form name="myform" method="post" target="supportiframe" action="{yun:}url m=train c=zixun{/yun}" onsubmit="return check_zixun();">
+    <ul class="Sign_up_box" style="padding:10px;">
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">电话：</span>
+        <input type="text" id="phone" name="phone" class="txt_input" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" value="{yun:}$user.phone{/yun}"></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">留言：</span>
+        <textarea class="txt_textarea" id="content" name="content"></textarea></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">&nbsp;</span>
+        <input type="submit" name="submit" value="提交" class="txt_input_submit"></li>
+        <input type="hidden" name="sid" value="" />
+        <input type="hidden" name="s_uid" value="" />
+    </ul>
+</form>
+</div></div>
+<!--咨询弹出框-->
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$train_style{/yun}/js/train_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+ <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+ <!--------shareJS--------->
+<script>
+	window._bd_share_config = {
+		common : {
+			bdText : '{yun:}$title{/yun}',
+			bdDesc : '{yun:}$description{/yun}',	
+			bdUrl : '{yun:}url m=train c=subshow id=$row.id{/yun}',
+			bdPic : '{yun:}$config.sy_weburl{/yun}/{yun:}$row.pic{/yun}'
+		},
+		share : [{
+			"tag" : "share_1",
+			"bdSize" : 24,
+			"bdCustomStyle":'{yun:}$style{/yun}/style/share.css'
+		}]
+	}
+	$(function(){
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src=weburl+'/js/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+	});
+</script>
+<!--------shareJS END--------->
+{yun:}include file="$trainstyle/footer.htm"{/yun} 

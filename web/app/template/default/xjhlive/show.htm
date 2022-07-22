@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name="keywords" content="{yun:}$keywords{/yun}" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/douxu.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/tips.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<title>{yun:}$title{/yun}</title>
+	</head>
+
+	<body>
+		{yun:}include file="$tplstyle/header.htm"{/yun}
+		<div class="clear"></div>
+
+		<div class="job_details_current none">您当前的位置： <a href="{yun:}$config.sy_weburl{/yun}">首页</a> > <a href="{yun:}url m=xjhlive{/yun}">宣讲会</a>
+			> 直播宣讲会详情 </div>
+
+		<div class="xjh_show_box">
+			<div class="xjh_show_cont">
+				<div class="xjh_show_all">
+					<div class="xjh_show_left">
+                    <div class="xjh_show_combox">
+							<div class="xjh_show_comname">{yun:}$info.name{/yun}</div>
+							<div class="xjh_show_comtime">{yun:}$info.stime_n{/yun} 
+								<span class="xjh_show_eye {yun:}if !$hit{/yun}none{yun:}/if{/yun}">观看人数：<script src="{yun:}url m=xjhlive c=GetHits id=$info.id hits=$info.hits{/yun}"></script></span>
+							</div>
+                    
+                         <div class="xjh_show_sj">
+                         	<div class="xjh_show_sjbox" onclick="wapdiypreview()">手机观看</div>
+
+							<div class="comapply_sq_r_cy" style="display:none;" id="getwapurl">
+		    				
+			    				<div class="comapply_sq_r_cont">
+			    					<i class="comapply_sq_r_cont_icon"></i>
+			    					<img src="{yun:}url m=xjhlive c=getXjhShowQrcode id=$info.id{/yun}" width="210" height="210" style="display:block;margin:auto;"/> 
+			    				</div>
+			             		
+			             		<div class="sj_ts_box">
+									<p style="color: black;text-align: center;">手机扫描二维码，即可在手机进行观看</p>
+			          			</div>  
+		          			</div>
+                         </div>
+						</div>
+                        <div id="livebody" class="xjh_show_content">
+                        	
+							{yun:}if $info.livestatus==1{/yun}
+							<div id="waitshow">
+								<div class="xjh_show_sp">
+									<div class="layui-carousel" id="test1" lay-filter="test1">
+										<div carousel-item=""> 
+											{yun:}foreach item=pic from=$info.picarr{/yun}
+											<img src="{yun:}$pic.url{/yun}" width="880" height="495" />
+											{yun:}/foreach{/yun}
+										</div>
+									</div>
+									
+								</div>
+								<div class="xjhwks_tip" style="display:none">
+							
+									<div class="xjhwks_tip_t">距直播倒计时</div>
+									<div id="countdown"></div>
+									{yun:}if $substatus==1{/yun}
+							
+										<a href="javascript:;" onclick="subxjh('{yun:}$info.id{/yun}','{yun:}$uid{/yun}')" class="xjhwks_tipbth">预约观看</a>
+							
+									{yun:}elseif $substatus==2{/yun}
+										<a href="javascript:void(0);" class="xjhwks_tipbth">您已预约</a>
+									{yun:}/if{/yun}
+								</div>
+							</div>
+							<div class="xjh_show_spbg"></div>
+							{yun:}/if{/yun}
+							<div id="codvideo" class="{yun:}if $info.livestatus != 2{/yun}none{yun:}/if{/yun}">
+								<!--  点播 -->
+								{yun:}if $info.recordurl{/yun}
+								<div id="playered" style="height: 495px;"></div>
+								<input type="hidden" id="playurl" value="{yun:}$info.recordurl{/yun}" />
+								{yun:}else{/yun}
+								<div id="stopLive" class="zb_end_imgbox">
+									<div class="layui-carousel" id="test2" lay-filter="test2">
+										<div carousel-item=""> 
+											{yun:}foreach item=pic from=$info.picarr{/yun}
+											<img src="{yun:}$pic.url{/yun}" width="880" height="495" />
+											{yun:}/foreach{/yun}
+										</div>
+									</div>
+								
+									<div class="zb_end_box">
+										<div class="zb_end_tit">直播已结束</div>
+										<div class="zb_end_tip">谢谢您的观看</div>
+									</div>
+									<div class="zb_end_bg"></div>
+								</div>
+								{yun:}/if{/yun}
+							</div>
+							{yun:}if $info.livestatus == 3{/yun}
+							<!--  直播 -->
+							<div class="xjh_show_sp" id="live_video">
+							</div>
+							{yun:}/if{/yun}
+							<input type="hidden" id="live_hls" value="{yun:}$info.hls{/yun}" />
+							<input type="hidden" id="live_stime" value="{yun:}$info.stime{/yun}" />
+							<input type="hidden" id="live_poster" value="{yun:}$style{/yun}/images/livewating.jpg" />
+						</div>
+					</div>
+
+					<div class="xjh_show_right">
+						<div class="xjh_show_right_tit">
+							<ul>
+								<li class="xjh_show_hd_tit msgbox" data-type="chathd">聊天互动</li>
+							</ul>
+						</div>
+							
+						<div class="xjh_show_right_tips">{yun:}$config.sy_xjh_notice{/yun}</div>
+						
+						{yun:}if !$uid{/yun}
+							<div class="xjh_loginbox">
+								<div class="xjh_login"> 登录参与实时互动</div>
+								
+								<div class="xjh_loginbth">
+									<a href="{yun:}url m=login{/yun}" class="xjh_loginbth_a">登录</a>
+								</div>
+							</div>
+						{yun:}/if{/yun}
+						<div id ="chat_content" class="xjh_show_lt_box chathd">
+							<!--登录提醒-->
+						
+							<!--留言列表-->
+							<ul class="xjh_show_lylsit">
+								
+							</ul>
+							
+						</div>
+						<div class="xjh_show_lt_box blacklist" style="display:none">
+							{yun:}if $uid{/yun}
+							<!--留言列表-->
+							<ul class="jingyanlist" id="blacklist">
+							</ul>
+							{yun:}/if{/yun}
+						</div>
+						{yun:}if $uid{/yun}
+						<div class="xjh_show_ly chathd">
+							{yun:}if $black{/yun}
+							<input type="text" class="xjh_show_ly_text" disabled value="" maxlength="50" placeholder="您已被禁言"><input type="submit" value="发送" class="xjh_show_ly_bth">
+							{yun:}else{/yun}
+							<i id="face" class="sendbq sendbq_i"></i>
+							<input type="text" id="send_content" class="xjh_show_ly_text" maxlength="50" value="" placeholder="输入文字"><input type="submit" value="发送" onclick="send()" class="xjh_show_ly_bth">
+							<div id="commonly" class="showbq"></div>
+							{yun:}/if{/yun}
+						</div>
+						{yun:}/if{/yun}
+				</div>
+			   </div>
+			</div>
+		</div></div>
+		<div class="w1200">
+			<div class="xjh_show_botleft">
+				<div class="xjh_show_bottit">
+
+					<ul class="">
+						<li id="jianjie" class="xjh_show_botcur" onclick="detailtab(this)">直播介绍</li>
+                        <li id="jiabing" class="" onclick="detailtab(this)">企业介绍</li>
+                        <li id="xjjob" class="" onclick="detailtab(this)">招聘岗位</li>
+					</ul>
+				</div>
+				
+                <div class="clear"></div>
+                <div id="jianjie_show" class="xjh_show_jieshao">
+					{yun:}$info.body{/yun}
+				</div>
+                <div id="jiabing_show" class="none">
+                	{yun:}foreach from=$comlist key=comk item=company{/yun}
+                    <div id="nc_{yun:}$company.uid{/yun}" class="jiabing_list">
+						<div class="jiabing_name">{yun:}$company.name{/yun}</div>
+							
+	                    <div class="jiabing_js">{yun:}$company.content{/yun}</div>
+	                    
+	                    <div class="jiabing_jobzj"> <a href="{yun:}url m=company c=show id=$company.uid{/yun}" target="_blank" class="jiabing_jobzj_more">查看更多介绍></a></div>
+					</div>
+					{yun:}foreachelse{/yun}
+					<div class="xjh_notip">暂无企业信息</div>
+					{yun:}/foreach{/yun}
+                </div>
+				<!--       招聘岗位-->
+				<ul id="xjjob_show" class="xjh_job_list none">
+				</ul>
+
+			</div>
+
+			<div class="xjh_show_botright">
+				{yun:}if $uid && $usertype==1 && !$eid{/yun}
+				<div class="xjh_show_bot_c">
+					<div class="xjh_show_cj">
+						<div class="xjh_show_cj_tip"> Hi同学，创建简历为梦想加油</div>
+						<div class="xjh_show_cj_bth" onclick="getUserZd()">创建简历</div>
+					</div>
+				</div>
+				{yun:}/if{/yun}
+				<div class="xjh_show_bot_c">
+					<div class="xjh_sm_img"><img src="{yun:}if $config.sy_wx_qcode{/yun}{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_qcode{/yun}{yun:}/if{/yun}"
+						 width="105" height="105"></div>
+					<div class="xjh_sm_p">扫码关注更多宣讲会</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="wxcontent" style=" display:none;">
+		<div class="xjh_ermtc">
+			<div id="wx_login_qrcode_spview" class="wx_bdtck_pic">
+				<img src="" width="180" height="180">
+			</div>
+			<div id="tcwx_sx" class="none">
+				<div class="wx_login_show_sxbox"><a href="javascript:void(0);" onclick="tcwxlogincode()" class="wx_login_show_sxicon"></a>二维码已失效点击刷新</div>
+			</div>
+			<div class="wx_bdtck_p">微信扫描二维码<br>关注公众号，及时接收面试消息</div>
+		</div>
+		</div>
+		<style>
+			.hp_head_box {
+				box-shadow: none
+			}
+		</style>
+		<script>
+			var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+				weburl = "{yun:}$config.sy_weburl{/yun}",
+				mine = {usertype: '{yun:}$usertype{/yun}'},
+				xjhsyncid = '{yun:}$info.syncid{/yun}',
+				xjhid = '{yun:}$info.id{/yun}',
+				chat_name = '{yun:}$config.sy_chat_name{/yun}',
+				uid = '{yun:}$uid{/yun}',
+				usertype = '{yun:}$usertype{/yun}',
+				eid = '{yun:}$eid{/yun}',
+				livestatus = '{yun:}$info.livestatus{/yun}',
+				mbstyle = '{yun:}$style{/yun}',
+				getwxurl = '{yun:}url m=login c=wxlogin{/yun}',
+				getwxstatusurl = '{yun:}url m=login c=getwxloginstatus{/yun}';
+		</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		{yun:}if $config.sy_chat_open == 1{/yun}
+		<script src="{yun:}$config.sy_weburl{/yun}/app/template/chat/yunliao/xjhsocket.js?v={yun:}$config.cachecode{/yun}"></script>
+		{yun:}/if{/yun}
+		{yun:}if $info.livestatus == 2{/yun}
+		<script src="{yun:}$config.sy_weburl{/yun}/js/live/qiniu-web-player-1.2.3.js"></script>
+		{yun:}else{/yun}
+		<script src="https://imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.3.js" charset="utf-8"></script>
+		{yun:}/if{/yun}
+		<script src="{yun:}$style{/yun}/js/xjhlive.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun}
+{yun:}include file="$tplstyle/footer.htm"{/yun}

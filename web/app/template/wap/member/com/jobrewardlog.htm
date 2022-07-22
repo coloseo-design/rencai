@@ -1,0 +1,151 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<div id="yunvue">
+    <div class="wap_member_box" v-show="islook">
+        <div class="pages" style="margin-top:10px;"> {yun:}$pagenav{/yun}</div>
+        <div v-if="total > 0">
+            <div class="com_cardlist " v-for="(item,rkey) in info" :key="rkey">
+                <div class="wap_member_date">
+                <span class="yun_m_job_date_n">
+					<span v-if="item.status=='0'" @click="navigateTo('index.php?c=rewardpay&id=' + item.id)"
+                          class="job_list_jobname com_member_hr_cblue">{{item.uname}}</span>
+					<span v-else @click="navigateTo('index.php?c=lookresume&id=' + item.id)"
+                          class="job_list_jobname com_member_hr_cblue">{{item.uname}}</span>
+                    {{item.usertype=='3' ? '(猎头中介推荐)' : '(用户自荐)'}}
+                </span>
+
+                    <div class="wap_member_date_r">{{item.log.nowmsg}}</div>
+                </div>
+
+                <div class="yun_m_job_list_zt">
+                   <div class="jobrewardlog_list_p"> <span class="jobrewardlog_list_m"> 应聘职位</span>
+                    <span @click="navigateTo('{yun:}url m=job c=comapply{/yun}&id=' + item.jobid)"
+                          class=" ">{{item.name}}</span>  </div>
+                    <div class="jobrewardlog_list_p"><span class="jobrewardlog_list_m">申请日期</span> {{item.datetime_n}}</div>
+                    <div class="jobrewardlog_list_p"><span class="jobrewardlog_list_m">意向职位</span> {{item.jobclass}}</div>
+                    <div class="jobrewardlog_list_p"><span class="jobrewardlog_list_m">基本情况</span> {{item.exp}}经验 · {{item.edu}}
+                    </div>
+                    <div class="yun_m_job_list_zt"></div>
+                </div>
+
+                <div class="yun_m_job_list_zt">
+                    <!--操作日志--->
+                    <ul class="jobrewardlog_list" v-if="item.log.loglist">
+                        <li class="m_xs_pr_f_cur" v-for="(linfo,lkey) in item.log.loglist" :key="lkey">
+                            <i class="m_xs_pr_f_icon"></i>
+                            <div class="jobrewardlog_time">{{linfo.time_n}}</div>
+                            <div class="jobrewardlog_box" v-html="linfo.info"></div>
+                        </li>
+                    </ul>
+
+                    <ul class="jobrewardlog_list" v-if="item.log.endmsg">
+                        <li><i class="m_xs_pr_f_icon"></i>
+                            <div class="jobrewardlog_box jobrewardlog_box_ddai">{{item.log.endmsg}}</div>
+                        </li>
+                    </ul>
+                    <!--end-->
+                </div>
+                {yun:}if empty($spid){/yun}
+                <div class="yun_member_bth">
+                    <span v-if="item.status=='0'" @click="navigateTo('index.php?c=rewardpay&id=' + item.id)"
+                          class="yun_member_sub yun_member_bth2">查看简历</span>
+                    <span v-else @click="navigateTo('index.php?c=lookresume&id=' + item.id)"
+                          class="yun_member_sub yun_member_bth2 sq_jobpack_right_a_look ">查看简历</span>
+                    <span v-if="item.log.input">
+                        <span v-for="(inputv,pkey) in item.log.input" :key="pkey"
+                              @click="getStatus(item.id, inputv.status, rkey,item.wapinvite_url)" class="yun_member_sub yun_member_bth2">{{inputv.name}}</span>
+                    </span>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+            <div v-if="total > limit">
+                <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses
+                                @change="pageChange"/>
+            </div>
+        </div>
+
+        <div v-else>
+            <div class="wap_member_no">暂无求职者应聘该职位。</div>
+            <em class="wap_memberjob_fabu "></em>
+        </div>
+    </div>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                info: [],
+                jobid: 0,
+                islook: false,
+
+                total: 0,
+                pageTotal: 0,
+                page: 1,
+                limit: 10,
+            };
+        },
+        created() {
+            this.jobid = getUrlKey('jobid');
+            this.rloglist('refresh');
+        },
+        methods: {
+            rloglist: function (type) {
+                var that = this;
+                if (type && type == 'refresh') {
+                    that.page = 1;
+                    that.info = [];
+                    that.islook = false;
+                }
+                var paramer = {
+                    page: that.page,
+                    jobid: that.jobid,
+                    limit: that.limit
+                };
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=job c=rewardlog{/yun}', paramer, function (data) {
+                    hideLoading();
+                    if (data) {
+                        that.total = data.total;
+                        that.pageTotal = Math.ceil(data.total / that.limit);
+                        that.info = data.data.length > 0 ? data.data : [];
+                        that.islook = true;
+                    }
+                }, 'json')
+            },
+            getStatus: function (id, status, key,url) {
+                var that = this;
+                if (status == '2') {
+                    navigateTo(url);//邀请面试
+                } else {
+                    var param = {
+                        rewardid: rewardid,
+                        status: status
+                    };
+
+                    showLoading('操作中');
+                    $.post('{yun:}url d=wxapp h=com m=job c=logstatus{/yun}', param, function (data) {
+                        hideLoading();
+                        if (data.error == 1) {
+                            showToast(data.msg, 2, function () {
+                                that.info[key].log = data.data;
+                            });
+                            return;
+                        } else {
+                            showModal(data.msg);
+                            return;
+                        }
+                    }, 'json')
+                }
+            },
+            pageChange: function (page) {
+                this.page = page;
+                this.rloglist('');
+            },
+            navigateTo: function (url) {
+                window.location.href = url;
+            },
+        }
+    });
+</script>
+

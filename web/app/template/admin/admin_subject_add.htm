@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script language="javascript">
+			function checkpost(){
+			  var cionly  = $.trim($("#cionly").val());
+				if($("#name").val()==""){
+					parent.layer.msg('课程名称不能为空！', 2, 8);return (false);
+				}
+				if($("#tnid").val()==""){
+					parent.layer.msg('请选择课程类别！',2,8);return (false);
+				}
+			  if(cionly=='1'){
+				if($("#provinceid").val()==""){
+				  layer.msg('请选择培训地点！',2,8);return false;
+				}
+			  }else{
+				if($("#cityid").val()==""){
+				  parent.layer.msg('请选择培训地点！',2,8);return (false);
+				}
+			  }
+				
+				if($("#address").val()==""){
+					parent.layer.msg('培训地址不能为空！',2,8);return (false);
+				}
+				if($("#hours").val()==""){
+					parent.layer.msg('课程学时不能为空！',2,8);return (false);
+				}
+				if($("#price").val()==""){
+					parent.layer.msg('培训费用不能为空！',2,8);return (false);
+				}
+				if($("#isprice_val").val()==""){
+					parent.layer.msg('请选择收费方式！',2,8);return (false);
+				}
+				if($("#moblie").val()==""){
+					parent.layer.msg('报名电话不能为空！',2,8);return (false);
+				}
+
+				if(isjsTell($("#moblie").val())==false&&isjsMobile($("#moblie").val())==false){
+					layer.msg('报名电话格式错误！',2,8);return false;
+				}
+
+				if($("#crowd").val()==""){
+					parent.layer.msg('适合人群不能为空！',2,8);return (false);
+				}
+				 
+				var html = UE.getEditor('myEditor').getContent();
+				if(html==""){
+					parent.layer.msg('课程介绍不能为空！',2,8);return (false);
+				}
+				var str =[];
+				$('input[name="type[]"]:checked').each(function(){
+					str.push($(this).val());
+				});
+				if(str==''){
+					layer.msg('请选择开课类型！',2,8);return false;
+				}
+				var teachid =[];
+				$('input[name="teachid[]"]:checked').each(function(){
+					teachid.push($(this).val());
+				});   
+				$("#subjectform").submit();
+			}
+			var weburl="{yun:}$config.sy_weburl{/yun}";
+		</script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body, div {
+				margin: 0;
+				padding: 0;
+			}
+			.layui-form-item{ margin-bottom:0px;}
+			</style>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form id="subjectform" class="layui-form" name="myform" method="post" target="supportiframe" action="index.php?m=admin_subject&c=save"
+				 enctype="multipart/form-data">
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<tr>
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">培训课程信息</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div style="width:135px;">课程名称：</div>
+							</th>
+							<td><input type="text" name="name" id="name" value="{yun:}$row.name{/yun}" class="layui-input t_w480"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>课程类别：</th>
+							<td>
+								<div class="layui-input-inline" style="width: 157px;">
+									<select name="nid" id="nid" lay-filter="nid">
+										<option value="">请选择</option>
+										{yun:}foreach from=$subject_index key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.nid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$subject_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 157px;">
+									<select name="tnid" lay-filter="tnid" id="tnid">
+										<option value="">请选择</option>
+										{yun:}foreach from=$subject_type[$row.nid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.tnid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$subject_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>培训地点：</th>
+							<td>
+								<input type="hidden" id="cionly" name="cionly" value="{yun:}if empty($city_type){/yun}1{yun:}/if{/yun}">
+								<div class="layui-input-inline" style="width: 157px;">
+									<select name="provinceid" id="provinceid" lay-filter="citys">
+										<option value="">请选择</option>
+										{yun:}foreach from=$city_index key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.provinceid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 157px;">
+									<select name="cityid" lay-filter="citys" id="cityid">
+										<option value="">请选择</option>
+										{yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 157px;">
+									<select name="threecityid" lay-filter="threecityid" id="three_cityid">
+										<option value="">请选择</option>
+										{yun:}foreach from=$city_type[$row.cityid] key=j item=v{/yun}
+										<option value="{yun:}$v{/yun}" {yun:}if $row.threecityid==$v{/yun} selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}
+										</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">培训地址：</th>
+							<td><input type="text" value="{yun:}$row.address{/yun}" name="address" id="address" class="layui-input t_w480"></td>
+						</tr>
+						<tr>
+							<th width="120">课程学时：</th>
+							<td><input type="text" value="{yun:}$row.hours{/yun}" name="hours" id="hours" class="layui-input t_w480"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">培训费用：</th>
+							<td><input type="text" value="{yun:}$row.price{/yun}" name="price" id="price" class="layui-input t_w480"></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>收费方式：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<select name="isprice" id="isprice" lay-verify="">
+												<option>请选择</option>
+												<option value="1" {yun:}if $row.isprice=='1' {/yun}selected{yun:}/if{/yun}>在线支付 </option>
+												<option value="2" {yun:}if $row.isprice=='2' {/yun}selected{yun:}/if{/yun}>到场支付 </option> 
+											</select> 
+										</div> 
+									</div> 
+								</div> 
+							</td>
+						</tr> 
+						<tr>
+							<th width="120">报名电话：</th>
+							<td>
+								<input type="text" value="{yun:}$row.moblie{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" name="moblie" id="moblie" class="layui-input t_w480">
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120" class="t_fl">适合人群：</th>
+							<td><textarea name="crowd" id="crowd" class="layui-textarea t_w480">{yun:}$row.crowd{/yun}</textarea></td>
+						</tr>
+						<tr>
+							<th width="120" class="t_fl">课程优势：</th>
+							<td><textarea name="superiority" id="superiority" class="layui-textarea t_w480">{yun:}$row.superiority{/yun}</textarea></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120" class="t_fl">课程介绍：</th>
+							<td>
+								<script id="myEditor" name="content" type="text/plain" style="width:480px;height:220px;">{yun:}$row.content{/yun}</script>
+							</td>
+						</tr>
+						<tr>
+							<th width="120">开课类型：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										{yun:}foreach item=v from=$subject_type_index{/yun}
+										<input name="type[]" title="{yun:}$subject_type_name[$v]{/yun}" value="{yun:}$v{/yun}" {yun:}if
+										 in_array($v,$row.type){/yun} checked="checked" {yun:}/if{/yun} type="checkbox">
+										{yun:}/foreach{/yun}
+									</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="120">主讲老师：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										{yun:}foreach item=v from=$teachinfo{/yun}
+										<input name="teachid[]" title="{yun:}$v.name{/yun}" value="{yun:}$v.id{/yun}" {yun:}if
+										 in_array($v.id,$row.teachid){/yun} checked="checked" {yun:}/if{/yun} type="checkbox">
+										{yun:}/foreach{/yun}
+
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120" class="t_fl">课程缩略图：</th>
+							<td>
+								<button type="button" class="yun_bth_pic noupload" lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+								<input type="hidden" id="laynoupload" value="1" />
+								<span class="admin_web_tip">最佳尺寸120*80</span>
+							</td>
+						</tr>
+						<tr id="imgparent" {yun:}if !$row.pic{/yun}class="none"{yun:}/if{/yun}> 
+							<th width="120">预览图片：</th>
+							<td><img id="imgicon" src="{yun:}$row.pic{/yun}" width="120" height="80" /></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120"></th>
+							<td>
+								<input type="hidden" id='r_status' name="r_status" size="40" value="{yun:}$row.r_status{/yun}" />
+								<input type="hidden" name="uid" size="40" value="{yun:}$row.uid{/yun}" />
+								<input type="hidden" name="id" size="40" value="{yun:}$row.id{/yun}" />
+								<input class="tty_sub" type="button" onclick="checkpost()" value="&nbsp;更 新&nbsp;" />
+								<input class="tty_cz" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var weburl = "{yun:}$config.sy_weburl{/yun}";
+			var form,
+				url1 = weburl + "/index.php?m=ajax&c=get_subject_option";
+
+			layui.use(['layer', 'form'], function() {
+				form = layui.form;
+				var $ = layui.$;
+
+				form.on('select(fz_type)', function(data) {
+					if (data.value == 1) {
+						$("#fz_type_1").show();
+						$("#fz_type_2").hide();
+					} else {
+						$("#fz_type_2").show();
+						$("#fz_type_1").hide();
+					}
+				});
+				form.on('select(nid)', function(data) {
+					$.post(url1, {
+						tnid: data.value
+					}, function(html) {
+						$("#tnid").html(html);
+						form.render();
+					});
+				});
+			}); //end layui.use()
+
+			UE.getEditor('myEditor', {
+				toolbars: [
+					['Source', 'Bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright',
+						'insertorderedlist', 'insertunorderedlist', 'emotion', 'simpleupload'
+					]
+				],
+				wordCount: false,
+				elementPathEnabled: false,
+				initialFrameHeight: 180
+			});
+		</script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

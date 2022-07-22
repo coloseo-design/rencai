@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/crm.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	
+	<title>后台管理</title>
+	
+	<style>
+		.admin_new_c_bth{
+			width:50px !important;
+		}
+	</style>
+</head>
+
+<body class="body_ifm">
+	<div class="infoboxp">
+	
+		<div class='tabs_info'>
+           	<ul>
+           		{yun:}if $smarty.get.self == ''{/yun}
+	               	<li class='curr'>
+	                   	<a href='index.php?m=crm_customer'>客户公海</a>
+	               	</li>
+               	{yun:}/if{/yun}
+               	
+               	{yun:}if $smarty.get.self == '1'{/yun}
+	               	<li class='curr'>
+	                   	<a href='index.php?m=crm_customer&self=1'>我的客户</a>
+	               	</li>
+               	{yun:}/if{/yun}
+           	</ul>
+           	
+       	</div>
+        
+        <form action='index.php' method='get' class='layui-form' style='display:none;' id="search_form">
+			
+			<input type="hidden" name="m" value="crm_customer" />
+			
+			{yun:}if $smarty.get.self == '1'{/yun}
+				<input type="hidden" name="self" value="1" />
+			{yun:}/if{/yun}
+			
+			
+			<div class="crm_record_list">
+				<div class="crm_record_name"><span class="admin_required_icon"></span>客户名称：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" id='name' name='name'  style='width:280px;'>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="crm_record_list">
+				<div class="crm_record_name"><span class="admin_required_icon"></span>会员套餐：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<select name="rating"  lay-filter="rating">
+									<option value=''>不限</option>
+									{yun:}foreach from=$ratinglist item=v{/yun}
+										<option value="{yun:}$v.id{/yun}" {yun:}if $smarty.get.rating == $v.id{/yun}selected{yun:}/if{/yun}>{yun:}$v.name{/yun}</option>
+									{yun:}/foreach{/yun}
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="crm_record_list">
+				<div class="crm_record_name"><span class="admin_required_icon"></span>到期时间：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<select name="vtime"  lay-filter="vtime">
+									<option value="">不限</option>
+									<option value="1" {yun:}if $smarty.get.vtime == '1'{/yun}selected{yun:}/if{/yun}>三天之内</option>
+									<option value="2" {yun:}if $smarty.get.vtime == '2'{/yun}selected{yun:}/if{/yun}>一周之内</option>
+									<option value="3" {yun:}if $smarty.get.vtime == '3'{/yun}selected{yun:}/if{/yun}>一月之内</option>
+									<option value="4" {yun:}if $smarty.get.vtime == '4'{/yun}selected{yun:}/if{/yun}>半年之内</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="crm_record_list">
+				<div class="crm_record_name"><span class="admin_required_icon"></span>跟进时间：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<select name="atime"  lay-filter="atime">
+		 							<option value="">不限</option>
+		 							<option value="1" {yun:}if $smarty.get.atime == '1'{/yun}selected{yun:}/if{/yun}>三天内跟进过</option>
+									<option value="2" {yun:}if $smarty.get.atime == '2'{/yun}selected{yun:}/if{/yun}>一周内跟进过</option>
+									<option value="3" {yun:}if $smarty.get.atime == '3'{/yun}selected{yun:}/if{/yun}>一月内跟进过</option>
+									<option value="4" {yun:}if $smarty.get.atime == '4'{/yun}selected{yun:}/if{/yun}>从未跟进</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="crm_record_list" >
+				<span class="crm_record_name">&nbsp;</span>
+            	<div class="crm_record_textbox">
+					<input type="submit"  value='确认' class="admin_examine_bth">
+					<input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;">
+				</div> 	
+			</div>
+			
+		</form>
+		
+        <div>
+				
+			<div class="crm_follow_up"><a href="javascript:void(0);" onclick='searchForm();' class="crm_follow_up_a crm_follow_up_sicon">搜索</a></div>	
+			 
+			{yun:}if $smarty.get.self == '1'{/yun}        	
+				<div class="crm_follow_up"><a href="javascript:void(0);" onClick='addFollow()' class="crm_follow_up_a crm_follow_up_gj">写跟进</a></div>
+        		<div class="crm_follow_up"><a href="javascript:void(0);" onclick='addWaitTask()' class="crm_follow_up_a crm_follow_up_xj">新建任务</a></div>
+        	{yun:}/if{/yun}
+        	
+        	{yun:}if $smarty.get.self == ''{/yun}
+        		<div class="crm_follow_up"><a href="javascript:void(0)" onclick='receiveKh(0);' class="crm_follow_up_a crm_follow_up_xj">认领</a></div>
+        	{yun:}/if{/yun}
+        	
+         </div>
+       	
+		<div class="table-list" style="color:#898989; margin-top:10px;">
+			
+			<div class="admin_table_border">
+			
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+					
+					<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+					<input name="m" value="crm_customer" type="hidden"/>
+					<input name="c" value="del" type="hidden"/>
+					
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th style="width:20px;">
+									<label for="chkall">
+										<input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/>
+									</label>
+								</th>
+								<th> 
+									{yun:}if $smarty.get.t=="uid" && $smarty.get.order=="asc"{/yun} 
+										<a href="{yun:}searchurl order=desc t=uid m=crm_customer untype='order,t'{/yun}">客户ID<img src="images/sanj.jpg"/></a>
+									{yun:}else{/yun} 
+										<a href="{yun:}searchurl order=asc t=uid m=crm_customer untype='order,t'{/yun}">客户ID<img src="images/sanj2.jpg"/></a> 
+									{yun:}/if{/yun} 
+								</th>
+	
+								<th align="left">客户名称</th>
+								<th align="center">会员等级</th>
+								<th align="left">到期时间</th>
+								<th align="left">所在城市</th>
+								<th align="left">联系人</th>
+								<th align="left">联系电话</th>
+								
+								{yun:}if $self == 1{/yun}
+								<th align="left">客户状态</th>
+								<th align="left">最后跟进时间</th>
+								<th align="left">下次跟进时间</th>
+								{yun:}/if{/yun}
+ 							</tr>
+						</thead>
+						
+						<tbody>
+						
+							{yun:}foreach item=v key=key from=$rows{/yun}
+							
+								<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.uid{/yun}">
+									
+									<td>
+										<input type="checkbox" value="{yun:}$v.uid{/yun}" class="check_all"  name='del[]' onclick='unselectall()' rel="del_chk"  style="margin-left:5px;"/>
+									</td>
+									
+									<td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.uid{/yun}</span></td>
+									
+									<td align="left">
+									
+										<div class="mt5">
+											<a href="{yun:}url m=company c=show id=$v.uid{/yun}" target="_blank" class="admin_com_name">{yun:}$v.name{/yun}</a>
+											{yun:}if !$v.crm_uid{/yun}
+												 <a style="float: right;" class="admin_com_name" href='javascript:void(0);' onclick='receiveKh({yun:}$v.uid{/yun})'>认领</a>
+											{yun:}/if{/yun}
+										</div>
+										 
+									</td>
+	
+									<td align="center">{yun:}$v.rating_name{/yun}</td>
+	
+									<td align="left">
+										{yun:}if $v.vip_etime >= strtotime('today'){/yun}
+											{yun:}$v.vip_etime|date_format:"%Y-%m-%d"{/yun}
+										{yun:}else if $v.vip_etime < time() && $v.vip_etime != '0'{/yun}
+											<font color='red'> {yun:}$v.vip_etime|date_format:"%Y-%m-%d"{/yun} </font>
+										{yun:}else{/yun}
+											永久会员
+										{yun:}/if{/yun}
+									</td>
+	
+									<td align="left">{yun:}$v.job_city_one{/yun}{yun:}$v.job_city_two{/yun}{yun:}$v.job_city_three{/yun}</td>
+	
+									<td align="left">{yun:}$v.linkman{/yun}</td>
+									
+									<td align="left">{yun:}$v.linktel{/yun}</td>
+									
+									{yun:}if $self == 1{/yun}
+									
+										<td align="left">{yun:}$v.crm_status{/yun}</td>
+									
+										<td align="left">
+											{yun:}if $v.lastTime{/yun}
+												{yun:}$v.lastTime{/yun}
+											{yun:}else{/yun}
+											 	<a herf='javascript;' onclick="addFollow({yun:}$v.uid{/yun})">写跟进</a>	
+											{yun:}/if{/yun}
+										</td>
+										
+										<td align="left">{yun:}$v.nextTime{/yun}</td>
+										
+									{yun:}/if{/yun}
+									 
+								</tr>
+	
+							{yun:}/foreach{/yun}
+	          
+							<tr>
+								<td align="center">
+									<label for="chkall2"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' class="checkbox_stars"/></label>
+								</td>
+								<td colspan="12" >
+									<label for="chkAll2">全选</label>
+								</td>
+							</tr>
+							
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+	layui.use(['layer', 'form'], function(){
+		var form 	= layui.form,
+			$ 		= layui.$;
+	});
+	
+	function searchForm(){
+		layer.open({
+			type: 1, 
+			anim: 5,
+			title: '搜索客户',
+			content: $('#search_form'),  
+			area:["450px", "350px"]
+		});
+	}
+</script>
+
+{yun:}include file="siteadmin/crm_public.htm"{/yun}
+
+</html>

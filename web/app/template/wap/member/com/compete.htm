@@ -1,0 +1,174 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/compete.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<style>
+    body {
+        background: #060606;
+    }
+    .comheader_tit {
+        background: #060606;
+    }
+    .comheader_tit {
+        font-size: 0px;
+    }
+</style>
+<!--求职竞争力分析_-->
+<div class="none" id="yunvue">
+
+    <div class="compete_body">
+        <div class="compete_body_jzl">{{jobinfo.name}}竞争力分析</div>
+        <div class="compete_body_dx">洞悉你的职位竞争力，让招聘更轻松</div>
+        <div class="compete_body_row">
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+            <div class="compete_body_zh">综合分析</div>
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+        </div>
+        <div class="compete_body_card">
+            <div class="compete_body_card_y" v-if="List.scoreName=='高'">
+                <img class="compete_body_card_djg" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/jzlg.png">
+            </div>
+            <div class="compete_body_card_y" v-else-if="List.scoreName=='中'">
+                <img class="compete_body_card_djg" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/jzlz.png">
+            </div>
+            <div class="compete_body_card_y" v-else>
+                <img class="compete_body_card_djg" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/jzld.png">
+            </div>
+            <div class="compete_body_card_zw">我的职位竞争力：<span class="compete_body_card_zw_dj">{{List.scoreName}}</span></div>
+            <div class="compete_body_card_zh">综合分析：{{List.scoreMsg}}</div>
+        </div>
+        <div class="compete_body_rowtwo">
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+            <div class="compete_body_zh">职位薪资</div>
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+        </div>
+        <div class="compete_body_cardtwo" v-if="jobinfo.job_salary && jobinfo.job_salary != null">
+            <div class="compete_body_card_tao">
+                <div class="compete_body_shu">
+                    <div class="compete_body_card_tao_q" v-for="(cptsalary, cptkey) in List.salary" :key="cptkey">
+                        <span class="compete_body_card_tao_xz">{{cptsalary.name}}</span>
+                        <div class="compete_body_card_tao_b" :class="cptsalary.name == jobinfo.job_salary_n.competeName ? 'jzl_cur' : ''" :style="{width:cptsalary.perce+'%'}"></div>
+                        <span class="compete_body_card_tao_bfb">{{cptsalary.perce}}%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="compete_body_card_qw">我的职位薪资：<span class="compete_body_card_xz">{{jobinfo.job_salary}}</span></div>
+            <div class="compete_body_card_qw">职位薪资PK：
+                <div class="compete_body_card_column">
+                    <div class="compete_body_card_gy" v-if="List.salaryStatis.min">高于<span class="compete_body_card_bfb">{{List.salaryStatis.min}}%</span><span class="compete_body_card_th">同行</span></div>
+                    <div class="compete_body_card_gy" v-if="List.salaryStatis.max">低于<span class="compete_body_card_bfb">{{List.salaryStatis.max}}%</span><span class="compete_body_card_th">同行</span></div>
+                    <div class="compete_body_card_gy" v-if="List.salaryStatis.same">持平<span class="compete_body_card_bfb">{{List.salaryStatis.same}}%</span><span class="compete_body_card_th">同行</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="compete_body_rowtwo">
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+            <div class="compete_body_zh">学历要求</div>
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+        </div>
+        <div class="compete_body_cardtwo" v-if="jobinfo.job_edu && jobinfo.job_edu != null">
+            <div class="compete_body_card_tao">
+                <div class="compete_body_shu">
+                    <div class="compete_body_card_tao_q" v-for="(cptedu, cptkey) in List.edu" :key="cptkey">
+                        <span class="compete_body_card_tao_xz">{{cptedu.name}}</span>
+                        <div class=" compete_body_card_tao_b " :class="cptedu.name == List.jobinfo.job_edu ? 'jzl_cur' : ''" :style="{width:cptedu.perce+'%'}"></div>
+                        <span class="compete_body_card_tao_bfb">{{cptedu.perce}}%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="compete_body_card_qw">我的学历要求：<span class="compete_body_card_xz">{{jobinfo.job_edu}}</span></div>
+            <div class="compete_body_card_qw">学历要求PK：
+                <div class="compete_body_card_column">
+                    <div class="compete_body_card_gy" v-if="List.eduStatis.min">高于<span class="compete_body_card_bfb">{{List.eduStatis.min}}%</span><span class="compete_body_card_th">同行</span></div>
+                    <div class="compete_body_card_gy" v-if="List.eduStatis.max">低于<span class="compete_body_card_bfb">{{List.eduStatis.max}}%</span><span class="compete_body_card_th">同行</span></div>
+                    <div class="compete_body_card_gy" v-if="List.eduStatis.same">持平<span class="compete_body_card_bfb">{{List.eduStatis.same}}%</span><span class="compete_body_card_th">同行</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="compete_body_rowtwo">
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+            <div class="compete_body_zh">经验要求</div>
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+        </div>
+        <div class="compete_body_cardtwo" v-if="jobinfo.job_exp && jobinfo.job_exp !=null">
+            <div class="compete_body_card_tao">
+                <div class="compete_body_shu">
+                    <div class="compete_body_card_tao_q" v-for="(cptexp, cptkey) in List.exp" :key="cptkey">
+                        <span class="compete_body_card_tao_xz">{{cptexp.name}}</span>
+                        <div class="compete_body_card_tao_b " :class="cptexp.name == List.jobinfo.job_exp ? 'jzl_cur' : ''" :style="{width:cptexp.perce+'%'}"></div>
+                        <span class="compete_body_card_tao_bfb">{{cptexp.perce}}%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="compete_body_card_qw">我的经验要求：<span class="compete_body_card_xz">{{jobinfo.job_exp}}</span></div>
+            <div class="compete_body_card_qw">经验要求PK：
+                <div class="compete_body_card_column">
+                    <div class="compete_body_card_gy" v-if="List.expStatis.min">高于<span class="compete_body_card_bfb">{{List.expStatis.min}}%</span><span class="compete_body_card_th">同行</span></div>
+                    <div class="compete_body_card_gy" v-if="List.expStatis.max">低于<span class="compete_body_card_bfb">{{List.expStatis.max}}%</span><span class="compete_body_card_th">同行</span></div>
+                    <div class="compete_body_card_gy" v-if="List.expStatis.same">持平<span class="compete_body_card_bfb">{{List.expStatis.same}}%</span><span class="compete_body_card_th">同行</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="compete_body_rowtwo">
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+            <div class="compete_body_zh">福利待遇</div>
+            <img class="compete_body_zh_l" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/lxy.png">
+        </div>
+        <div class="compete_body_cardtwo" v-if="welfare.my || welfare.else">
+            <div class="compete_body_fuli" v-if="welfare.my">
+                <div class="compete_body_fuliname">我的优势</div>
+                <span class="compete_body_fuli_n" v-for="(welStatis, cptkey) in welfare.my" :key="cptkey">{{welStatis}}</span>
+            </div>
+            <div class="compete_body_fuli" v-if="welfare.else">
+                <div class="compete_body_fuliname">同行优势</div>
+                <span class="compete_body_fuli_n" v-for="(welStatis, cptkey) in welfare.else" :key="cptkey">{{welStatis}}</span>
+            </div>
+        </div>
+        <div class="compete_body_zhu">注：以上来自{yun:}$config.sy_webname{/yun} 最新的2000份样本,数据仅供参考</div>
+    </div>
+
+</div>
+
+<script>
+    var jobid = '{yun:}$smarty.get.id{/yun}';
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data: {
+            List: {},
+            jobid: jobid,
+            jobinfo: {},
+            welfare: {},
+        },
+        created() {
+            this.getcompete();
+        },
+        methods: {
+            getcompete: function () {
+                var that = this;
+                var param = {
+                    id: that.jobid
+                };
+                showLoading('数据分析中...');
+
+                $.post('{yun:}url d=wxapp h=com m=job c=compete{/yun}', param, function (data) {
+                    hideLoading();
+                    $("#yunvue").css('display', 'block');
+                    if (data.error == '1') {
+                        let list = data.data;
+                        if (list) {
+
+                            that.List = list;
+                            that.jobinfo = list.jobinfo;
+                            that.welfare = list.welfare;
+                        }
+                    } else {
+                        showModal(data.msg, function () {
+                            goBack();
+                        })
+                    }
+
+                }, 'json');
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+body{ margin:0; padding:0; font-size:14px; font-family:Microsoft YaHei; background:#f2f2f2 }
+button, input, textarea, th, td { font-family:Microsoft YaHei;}
+ul{ list-style:none}
+a{color:#333; text-decoration:none}
+a:hover{color:#f60; text-decoration:underline}
+img{border:none;}
+.none{display:none;}
+.ftl{ float:left;}
+.ftr{ float:right}
+.mt15{ margin-top:15px;}
+.mt10{ margin-top:10px;}
+i,em{ font-style:normal}
+.clear{ clear:both}
+.fl{ float:left}
+.fr{ float:right}
+.dn{ display:none}
+.school_header{  border: 1px solid #ededed;height: 60px;background: #fff;}
+.school_w1200{width:1200px; margin:0 auto}
+.school_logo{ padding-top:15px; float:left}
+.school_nav{ float:left; padding-left:50px}
+.school_nav li {padding: 0 30px;height: 60px;line-height: 58px;float:left;position: relative;} 
+.school_nav li a{display: block;font-size: 16px;color: #666666;}
+.school_nav li a:hover{color:#07b56d;}
+.school_nav  .acurrent a{border-bottom: 2px solid #07b56d;color: #07b56d;}
+.school_header_r{ float:right; margin-top:20px;}
+.school_header_r a{ display:inline-block;color:#666; margin-right:10px; font-size:12px;}
+.school_header_user{ padding-left:20px; background:url(../images/yun_school_user.png) no-repeat left center}
+.school_header_com{ padding-left:20px; background:url(../images/yun_school_com.png) no-repeat left center}
+.school_header_wap{ padding-left:15px; background:url(../images/yun_school_sj.png) no-repeat left center}
+.school_hd{width:100%;height:420px; position:relative; z-index:10; overflow:hidden}
+.school_jobsearch{width:700px; margin:0 auto; padding:30px 0 20px 0;}
+.school_jobssearch_box{width:696px;height:44px;border:2px solid #07b56d; background:#fff;}
+.school_hotjob{ padding-top:20px;}
+.school_hotjob a{ display:inline-block; margin-right:10px;color:#07b56d}
+.school_jobssearch_left{width:100px;height:44px;border-right: solid 2px #07b56d; position:relative; float:left}
+.school_jobssearch_name{width:100%;height:44px; line-height:44px; display:inline-block; text-indent:25px; background:url(../images/yun_school_search.png) no-repeat 80px center}
+.school_jobssearch_left_box{width:100px;border: solid 2px #07b56d; background:#fff; position:absolute;left:-2px;top:44px;}
+.school_jobssearch_left_box a{ display:block;height:44px; line-height:44px; padding-left:25px;}
+.school_jobssearch_left_box a:hover{ background:#07b56d;color:#fff}
+.school_jobssearch_text{width:530px;height:42px; float:left;border:none;color:#666; text-indent:15px;}
+.school_jobssearch_bth{width:110px;height:44px; background:#07b56d;color:#fff;border:none; float:right; font-size:16px;}
+.school_major_box{width:100%; position:relative; z-index:100}
+.school_major{width:240px;height:420px; background:rgba(0,0,0,0.5); position:absolute;left:0px;top:0px;}
+.school_major_tit{width:220px;height:40px;background:#07b56d;font-size:16px; padding-left:20px; line-height:40px;color:#fff;position:absolute;left:0px;top:-40px;}
+.school_index_tit{width:100%; padding:20px 0; float:left;   }
+.school_index_tit_s{ font-size:16px; font-weight:bold; float:left; padding-left:20px; position:relative}
+.school_index_tit_line{width:6px;height:18px; background:#07b56d; position:absolute;left:0px;top:2px; display:inline-block}
+.school_index_tit a{ float:right}
+.school_major_left li{position: relative;vertical-align: bottom;z-index: 100;  }
+.school_major_left li .school_major_lbname{ display:block; font-size:16px;    padding: 13px 10px 13px 26px;color:#fff}
+.school_major_left li .school_major_lbname:hover {background: #373b3d;}
+.school_major_icon{width:6px;height:11px; display:inline-block; background:url(../images/yun_school_majoricon.png) no-repeat; position:absolute;right:10px;top:15px;}
+.school_major_left li .posBox {background: none repeat scroll 0 0 #FFFFFF;display: none;left: 240px;padding: 0;position: absolute;top: 0;width: 650px;z-index: 1;}
+
+.school_major_left li.hov .lstCon {display: block;}
+.school_major_left .show .posBox {box-shadow: 2px 5px 5px #666666;line-height: 22px; display:block}
+.school_major_left .posBox dl {padding: 10px 5px;border-bottom: 1px dotted #CCCCCC;float: left}
+.school_major_left .posBox dl.hov {background:#F9F9F9;}
+.school_major_left .posBox dl dt {display: inline;float: left;text-align: right;width: 160px;}
+.school_major_left .posBox dl dd {display: inline;float: left;margin: 0 0 0 7px;width: 468px;}
+.school_major_left .posBox dl dt a:link, .menuLst .lstConClass dl dt a:visited {color: #444444;font-weight: bold; width:100%;}
+.school_major_left .posBox dl dt a:hover {color: #333333;}
+.school_major_left .posBox dl dd a {display: inline-block;height: 23px;line-height:23px;padding: 0 10px 0 11px;white-space: nowrap;}
+.school_major_left .posBox dl dd a:link, .menuLst .lstConClass dl dd a:visited {color: #7A7A7A;}
+.school_major_left .posBox dl.hov dd a:link, .menuLst .lstConClass dl.hov dd a:visited {color: #444444;}
+.school_major_left .posBox dl.hov dd a:hover {color: #000000;}
+.school_major_left .posBox dl dd a.hot:link, .menuLst .lstConClass dl dd a.hot:visited {color: #C92F00;}
+.school_major_left .posBox dl dd a.hot:hover {color: #FA3B00;}
+.school_hot{pointer-events: auto;width: 276px;height: 337px;background-color: rgba(255, 255, 255, .6);filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#7ffff, endColorstr=#7ffff);position:absolute;right:0px;top:30px;}
+.school_hot_tit {line-height: 40px;height: 40px;padding-left: 20px;background-color: rgba(255, 255, 255, .5);filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#7ffff, endColorstr=#7ffff);}
+.school_hot_box_list{width:78px; float:left; margin-left:10px; margin-top:10px; text-align:center}
+.school_hot_box_pic img{border-radius:50%;border:1px solid #eee}
+.school_hot_box_p{width:100%;height:30px; line-height:30px; overflow:hidden}
+.school_index_new_xz_pic{width:50px}
+.school_index_new_xz_pic img{border-radius:50%;border:1px solid #eee}
+.school_index_w1200{width:1200px; float:left; overflow:hidden}
+.school_index_w1200_c{width:1250px;}
+.school_index_new{width:588px; background:#fff; float:left;border:1px solid #eee; margin-right:20px; margin-top:20px;}
+.school_index_new_tit{width:100%;height:44px; line-height:44px; background: #07b56d; font-size:16px;}
+.school_index_new_tit_s{color:#fff; float:left; font-weight:bold; padding-left:50px; background:url(../images/yun_school_wsicon.png) no-repeat 10px center}
+.school_index_new_tit a{ float:right;color:#fff; margin-right:20px;}
+.school_index_new_sq{ display:inline-block; padding:2px 10px;border:1px solid #eee;border-radius:20px;color:#07b56d; position:absolute;right:10px;top:30px;}
+.school_index_new_list{ padding:0 10px 10px 10px;}
+.school_index_new_list li{border-bottom:1px solid #eee; padding:10px 0; position:relative}
+.school_index_new_list li:last-child{border:none;}
+.school_index_new_name{ font-size:15px;}
+.school_index_new_date{ padding:10px 0;color:#999}
+.school_index_new_xj .school_index_new_tit{ background:#6268c1}
+.school_index_new_xj  .school_index_new_sq{color:#6268c1}
+.school_index_new_xj  .school_index_new_tit_s{ background:url(../images/yun_school_xjhicon.png) no-repeat 10px center}
+.school_index_new_yx .school_index_new_tit{ background:#e94378}
+.school_index_new_yx  .school_index_new_sq{color:#e94378}
+.school_mq{width:100%; float:left;  overflow:hidden;}
+.school_company_famous{width:100%; float:left; overflow:hidden;}
+.school_company_famous .school_company_famous_info{display: inline-block;background: #fff;position: relative;height: 114px;border-right: 1px solid #eee;border-bottom: 1px solid #eee; float:left;
+}
+.school_company_famous_larger {width: 299px; overflow:hidden;}
+.school_mq_p_a{ padding:40px 10px 20px 10px}
+.school_mq_p_c{ padding:20px 10px}
+.school_company_famous .school_company_info_s{ float:left;width:149px;height:80px; position:relative;  overflow:hidden;    border-right: 1px solid #eee;border-bottom: 1px solid #eee}
+.school_mq_p{width:100%;height:100%; text-align:center; position:absolute;left:0px;top:0px; background:rgba(0,0,0,0.5);color:#fff;}
+.school_index_xz{width:1198px; float:left;border:1px solid #eee; background:#fff; padding:10px 0}
+.school_index_xz li{width:375px; float:left;height:38px; line-height:38px; padding-left:20px;}
+.school_index_xz li em{color:#999; margin-left:5px;}
+.school_index_xz_city{color:#f00; display:inline-block; margin-right:5px;}
+
+.school_index_xjh{width:1198px; float:left;border:1px solid #eee; background:#fff; padding:10px 0}
+.school_index_xjh li{width:375px; float:left;line-height:30px; border-bottom:1px solid #eee; margin-left:20px; padding:10px 0;}
+.school_index_xjh_time{ background:url(../images/yun_school_icon.png) no-repeat left center; padding-left:20px;color:#666}
+.school_index_xjh_add{ background:url(../images/yun_school_add.png) no-repeat left center; padding-left:20px;color:#999}
+.school_index_yx{width:1200px; float:left; overflow:hidden;  background:#fff}
+.school_index_yx_box{width:1250px;}
+.school_index_yx_left{width:110px; float:left; background:#ebecec;border-right:1px solid #eee}
+.school_index_yx_city{width:100%;height:456px;}
+.school_index_yx_city li{width:100%;height:38px; line-height:38px; text-align:center}
+.school_index_yx_city li a{ display:block}
+.school_index_yx_city .school_index_yx_city_cur a{border-left:3px solid #f60; background:#fff; position:relative}
+.school_index_yx_city .school_index_yx_city_cur a:after{content:"";width:2px;height:38px; display:inline-block; position:absolute;right:-1px;top:0px; background:#fff}
+.school_index_yx_more{width:100%;height:38px; line-height:38px; text-align:center; background:#dadbdb;color:#07b56d }
+.school_index_yx_more a{color:#f60}
+.school_index_yx_more_up{width:100%;height:38px; display:block; background:url(../images/citymore_up.png) no-repeat center center; }
+.school_index_yx_more_up:hover{ background:#dadbdb url(../images/citymore_up.png) no-repeat center center;}
+.school_index_yx_more_down{width:100%;height:38px; display:block; background:url(../images/citymore_down.png) no-repeat center center; }
+.school_index_yx_more_down:hover{ background:#dadbdb url(../images/citymore_down.png) no-repeat center center;}
+.school_index_yx_right{width:1090px; background:#fff; float:left;}
+.school_index_yx_list{width:240px; float:left; margin-top:20px; margin-left:20px;}
+.school_index_yx_list dt{width:50px; float:left; margin-top:10px;}
+.school_index_yx_list dt img{width:50px;height:50px;border:1px solid #eee;border-radius:50%;}
+.school_index_yx_list dd{width:170px; padding-left:20px; float:left; line-height:25px;color:#666}
+.school_index_yx_list dd .school_index_yx_name{ font-size:16px;color: #004c91;width:180px;height:30px; line-height:30px; overflow:hidden;white-space: nowrap;text-overflow: ellipsis ; display:block}
+.school_index_yx_list dd  .school_index_yx_p{ font-size:12px;}
+
+
+
+
+.school_index_xjh_add_pd{ padding-top:10px; padding-bottom:10px;}
+
+.school_cur{width:100%; float:left; padding:15px 0;}
+
+
+
+/*footer*/
+.w1000{width:1200px; margin:0 auto}
+.hp_foot{width:100%;text-align:center;background:#31383e;margin-top:20px;}
+.hp_foot_wt{padding:45px 0px;}
+.hp_foot_wh{width:630px;padding-left:50px; position:relative}
+.hp_foot_wh_lline{width:1px;height:120px;border-left:1px  dashed #555555; display:inline-block; position:absolute;left:30px;top:40px;}
+.hp_foot_wh_rline{width:1px;height:120px;border-left:1px  dashed #555555; display:inline-block; position:absolute;right:20px;top:40px;}
+.hp_foot_wh dl{float:left;width:110px;text-align:center;}
+.hp_foot_wh dl dt{color:#ccc; font-size:16px; padding-bottom:10px;}
+.hp_foot_wh dl dd{color:#999; line-height:36px; font-size:12px;}
+.hp_foot_wh dd ul li a{color:#999;}
+.hp_foot_pho{width:255px;text-align:center; margin-top:20px;}
+.hp_foot_pho dl{line-height:30px;}
+.hp_foot_pho dl dt{width:54px;height:45px;display:block;margin:0 auto 10px;background:url(../images/kf_tel.png) no-repeat;}
+.hp_foot_pho dl dd{color:#b3b1b1;}
+.hp_foot_pho dl dd.hp_foot_pho_nmb{color:#ffa405;font-size:30px; padding:10px 0;}
+.hp_foot_wx{margin-top:75px;width:105px;text-align:center; margin-left:20px;}
+.hp_foot_wx dl dt{width:105px;height:115px;display:block;}
+.hp_foot_wx dl dd{color:#ccc; font-size:12px;}
+.hp_foot_bt{background:#31383e;line-height:30px;}
+.hp_foot_bt_c{width:1200px; margin:0 auto;border-top:1px solid #50565b;padding-top:25px;padding-bottom:15px;}
+.hp_foot_bt P{color:#999; font-size:12px;}
+.hp_foot_bt P a{color:#999}
+.hp_foot_bt_cr{color:#505050;}
+.hp_foot_bt_bot{margin-top:20px;}
+
+
+/*search*/
+.Search_jobs_tit{width:100%; float:left;    border-bottom: 1px solid #eee;}
+.Search_jobs_tit_s{width:80px;height:60px; line-height:60px; font-size:16px;color:#333; float:left}
+
+.searchBox {display: inline-block;float: right;width: 190px;height: 32px;position: relative;top: 20px;
+background: #fff;border: 1px solid #e0e0e0;border-radius: 3px;}
+.searchBox_text {width: 137px;height: 30px;float: left;padding: 0 10px 0 10px;background: #fff;line-height: 30px;border: 0;outline: 0;color:#999}
+ .searchBox_bth{width: 32px;height: 28px;display: inline-block;background: url(../images/asearch.png) no-repeat;position: absolute;top: 1px;right: 0;border:none;
+}
+.jobsearch_newbox{ float:right}
+.Search_jobs_form{width:100%; float:left}
+.Search_jobs_name{width:56px;height:33px; line-height:33px; display:inline-block; float:left; text-align:right;  padding-right:20px;color:#555}
+.Search_jobs_hy_box{width:210px; background:#fff;height:190px; overflow:auto; position:absolute;left:0px;top:29px;border:1px solid #ccc;display:none}
+.Search_jobs_hy_box_list{ padding:5px 5px;}
+.Search_jobs_hy_box_list li a{ display:block;height:25px; line-height:25px; padding-left:5px;color:#94918c}
+.Search_jobs_hy_box_list li a:hover{ background:#f1f5f8;color:#e25f07; font-weight:bold; text-decoration:none;}
+.Search_jobs_form_list{width:100%; float:left; margin-top:15px; font-size:14px;}
+.Search_jobs_sub{width:910px; float:left; }
+.Search_jobs_sub_nore{ height:auto; overflow:auto;}
+.Search_jobs_sub_a{ float:left; padding:0px 8px;margin-top:5px; white-space:nowrap;color:#726e6e; margin-right:8px;    border: 1px #FFFFFF solid;background-color: #FFFFFF;    border-radius: 3px;}
+.Search_jobs_sub_a:hover{border:1px #B4B4B4  solid;background-color:#F7F7F7; text-decoration:none;}
+.Search_jobs_cxz{height:25px; line-height:25px; float:left; padding:0px 8px;margin-top:3px; white-space:nowrap;color:#726e6e; margin-right:3px;}
+.Search_jobs_cxz:hover{ color:#fff;background:#1c99ef; text-decoration:none}
+.Search_jobs_sub_cur{ border: 1px #07b56d solid;background-color: #07b56d;color:#fff }
+.Search_jobs_text{width:650px;height:40px; line-height:40px;color:#847d7d; font-size:14px;  text-indent:10px;border:2px solid #1c99ef;border-right:none; float:left;}
+.Search_jobs_submit{width:110px;height:44px;  line-height:44px;border:none; cursor:pointer;color:#fff; font-size:16px;float:left; background:#1c99ef}
+.Search_jobs_sub_text_bc{ width:200px; margin-left:10px; float:left}
+.Search_jobs_search_box{ display:inline-block; float:left; padding-left:10px; line-height:28px; text-decoration:underline}
+.Search_jobs_xz{width:780px; float:left}
+.Search_jobs_form_list_bg{ background:#f8f8f8;margin-top:5px; }
+.Search_jobs_det {color: #999999;float: right;font-style: normal;line-height: 25px;text-align: right;width: 88px; margin-top:5px; margin-right:5px;}
+.Search_jobs_det a {width:60px;background: url(../images/empty2.png) no-repeat left 5px;color: #999999;padding-left: 15px; display:block}
+.Search_jobs_det a:hover {background: url(../images/empty1.png) no-repeat left 5px;color: #FF6600;padding-left: 15px;}
+.Search_jobs_sub_citybox{width:1100px; position:relative; float:left; z-index:100}
+.Search_jobs_sub_citytwobox{width:1100px; position:relative; float:left; z-index:90}
+.Search_jobs_citysub{width:100%; float:left}
+.Search_jobs_select{width:1100px; position:absolute;left:0px;top:30px;}
+.Search_jobs_select_list{height:22px; line-height:22px; float:left; padding:0px 8px; white-space:nowrap;color:#726e6e; margin-right:3px;}
+.Search_jobs_select_cur{ color:#fff;background:#1c99ef;}
+.Search_jobs_select_list:hover{color:#fff;background:#1c99ef; text-decoration:none}
+.Search_jobs_select_box{width:1008px;border:1px solid #e2e2e2; background:#f8f8f8; float:left; padding:5px 0; position:relative}
+.Search_jobs_sub_cur .Search_jobs_icon{ display:inline-block;    position: absolute;top: 23px;left: 50%;	margin-left:-3px;border-style: solid;border-width: 6px;border-color: transparent transparent #ccc transparent;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    _border-color: tomato tomato #ccc tomato;
+    _filter: chroma(color=tomato);
+    transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;}
+ .Search_jobs_icon{ display:none;    position: absolute;top: -12px;left: 50%;	margin-left:-3px;border-style: solid;border-width: 6px;border-color: transparent transparent #ccc transparent;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    _border-color: tomato tomato #ccc tomato;
+    _filter: chroma(color=tomato);
+    transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;}
+	.Search_jobs_cont_box{    width: 1010px;
+    float: left;}
+.search_h1_box{width:100%; float:left}
+.search_h1_box_title{width:1198px;height:52px;line-height:52px; float:left; margin-top:20px; position:relative; background:#fff;border:1px solid #eee}
+.search_h1_box_line{ width:100%;height:3px; line-height:3px; overflow:hidden;position:absolute;left:0px;bottom:0px; display:block}
+.search_h1_box_list{ position:absolute;left:-1px;top:0px;}
+.search_h1_box_list li{width:60px;height:52px;float:left; padding-left:60px; padding-right:10px;  position:relative;}
+
+.search_h1_box_list .search_job_all{width:80px; background:#fff;border-left:3px solid #1c99ef;border-right:1px solid #eee; position:relative; padding-left:30px; font-weight:bold; font-size:16px;}
+.search_h1_box_list .search_job_all a{color:#1c99ef;}
+.job_jp_chk{ display:inline-block;width:14px;height:14px;border:1px solid #d4d4d4; position:absolute;left:10px;top:18px;}
+.job_jp_icon{width:14px;height:18px; display:inline-block; background:url(../images/jp.png) no-repeat; position:absolute;left:35px;top:16px;}
+.job_tj_chk{ display:inline-block;width:14px;height:14px;border:1px solid #d4d4d4; position:absolute;left:10px;top:18px;}
+.job_tj_icon{width:18px;height:18px; display:inline-block; background:url(../images/tjjob.png) no-repeat; position:absolute;left:35px;top:16px;}
+.search_h1_box_cur .job_jp_chk{border:1px solid #f60; background:url(../images/jobdh.png) no-repeat center center }
+.search_h1_box_cur .job_tj_chk{border:1px solid #f60; background:url(../images/jobdh.png) no-repeat center center }
+.job_zp_icon{width:18px;height:18px; display:inline-block; background:url(../images/zprc.png) no-repeat; position:absolute;left:35px;top:16px;}
+.search_h1_box_list  .list_age{padding-left:10px; width:130px; position:relative}
+.search_h1_box_list  .list_rem{ padding-left:10px; width:130px; position:relative}
+.search_h1_box_list_icon{width:23px;height:33px; display:block; position:absolute;left:10px;top:10px;}
+.search_h1_box_list_icon_jj{ background:url(../images/yun_job_list_icon.png) no-repeat 7px -22px; }
+.search_h1_box_list_icon_tj{  background:url(../images/yun_job_list_icon.png) no-repeat 7px 11px; }
+.search_h1_box_list_icon_zp{ background:url(../images/disc_icon12.png) no-repeat 7px 12px; }
+.search_h1_box_list  .list_age .search_h1_box_list_icon_jj{background:url(../images/yun_job_list_icon2.png) no-repeat 7px -22px;}
+.search_h1_box_list  .list_rem .search_h1_box_list_icon_tj{ background:url(../images/yun_job_list_icon2.png) no-repeat 7px 11px; }
+.search_h1_box_list  .list_rem .search_h1_box_list_icon_zp{ background:url(../images/disc_icon13.png) no-repeat 7px 11px;left:5px;width:25px;}
+.search_h1_box_t{color:#f00; margin-right:10px;}
+.job_aq_tip{width:1178px; margin-top:10px; float:left;color:#C00;border:1px solid #F96; background:#FFC; padding:10px; font-weight:bold; position:relative}
+.job_aq_tip_icon{ position:absolute;right:10px;top:10px;}
+.jobs_tag{ width:100%;float:left;color:#999; padding-top:20px;font-size:14px;}
+.jos_tag_a{color:#6f6f6f; margin-right:15px;}
+.search_Filter{width:100%;  font-size:14px;}
+.search_Filter .yun_search_tit {width:76px;color: #999;display: inline-block;float: left;height: 48px; line-height:48px; padding-left:20px;}
+.search_Filter_list{ float:left; height:48px; line-height:48px;}
+.search_Filter_list li{ margin-right:5px; _margin-right:2px; float:left;}
+.search_Filter_list li a {border-radius: 3px;display: inline-block; padding: 0 5px;}
+.search_Filter_list li span{ float:left; cursor:pointer;}
+.search_Filter_list .search_Filter_icon{width:13px;height:12px; display:inline-block; background:url(../images/disc_icon8.png) no-repeat 0 2px; vertical-align:middle; margin-left:5px; margin-top:18px; float:left;}
+.search_Filter_list .search_Filter_current .search_Filter_icon{background:url(../images/yun_job_f_icon2.gif) no-repeat; }
+.search_Filter_Authenticate{float:left;color:#656363; margin-right:10px; line-height:48px;}
+.search_Filter_Authenticate em{ float:left;}
+.checkbox_job {float: left;margin-top:3px;width: 15px;height:15px; margin-right:5px; margin-left:10px;_margin-left:5px;}
+.checkbox_job i {background: url(../images/com_s_icon_w.png) no-repeat;cursor: pointer;display: inline;float: left;height: 15px;overflow: hidden;width: 15px; vertical-align:middle}
+.checkbox_job b {cursor: pointer;display: inline;float: left;height: 15px;width: 15px; vertical-align:middle; background:url(../images/com_s_icon_w.png) no-repeat}
+.checkbox_all i {background: url(../images/com_s_icon_w.png) no-repeat; cursor: pointer;display: inline;float: left;height: 15px;margin-left: 10px;margin-right: 10px;margin-top: 15px;overflow: hidden;width: 15px;
+} 
+.iselect i {background: url(../images/com_s_icon.png) no-repeat;}
+.iselect_cert b {background: url(../images/com_s_icon.png) no-repeat center;}
+.search_Filter_Authenticate_mt8{ margin-top:18px;}
+.Search_jobs_box{width:1160px; background:#fff; float:left; position:relative; z-index:1;  padding:0px 20px 20px 20px; margin-top:20px;}
+
+/*Search_city*/
+.Search_citybox{width:100%; float:left;  font-size:14px; margin-top:15px;}
+.Search_cityboxname{width:70px;height:33px; line-height:33px; display:inline-block; float:left; text-align:left;  padding-right:10px;color:#555}
+.Search_cityboxright{width:1080px; float:left}
+.city_name{height:20px; line-height:20px; float:left; padding:0px 5px;margin-top:5px; white-space:nowrap;color:#726e6e; margin-right:8px;    border: 1px #FFFFFF solid;background-color: #FFFFFF;    border-radius: 3px;}
+.city_name:hove{border:1px #B4B4B4  solid;background-color:#F7F7F7;text-decoration:none;}
+.search_city_list_cur{ width:40px;float:left;color: #555;font-size: 14px;border: 1px solid #ddd; display:block;padding: 5px 8px;height: 14px;line-height: 14px; margin-right:5px; position:relative}
+.search_city_list_curicon{ float:left; display:block; padding:0px 0px 0px  5px;}
+.search_city_p{width:40px;height:14px; line-height:14px; display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+.search_city_p_jt{width:13px;height:12px; background:url(../images/index_icon1.png) no-repeat; display:block; position:absolute;right:0px;top:8px;}
+.search_city_active .search_city_p_jt{ display:none;}
+.search_city_list_all{height:20px; line-height:20px; float:left; padding:0px 8px;margin-top:5px; white-space:nowrap;color:#726e6e; margin-right:8px;    border: 1px #FFFFFF solid;background-color: #FFFFFF;    border-radius: 3px;}
+.search_city_list{width:900px;min-height:30px;_height:30px; overflow:hidden; float:left}
+.search_city_listw1100{width:1100px;}
+.search_city_list_more{ position:absolute;right:9px;top:5px; z-index:13;display:block; width: 45px;height: 30px;line-height: 30px;
+padding-left: 10px;color:#07b56d;background: url(../images/disc_icon3.png) no-repeat 40px center ;   display: block;}
+.search_city_list_more:hover{background:url(../images/disc_iconchexk.png) no-repeat right center ;border:1px solid #f8f8f8 }
+.search_city_list_othercity{width:100%; float:left;  font-size:14px;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd; padding-bottom:3px; }
+.city_othername{float: left;margin-right: 5px;padding: 5px 8px;height: 14px;line-height: 14px;}
+.search_city_list_line{ display:none;}
+.Search_cityboxname_mt5{ margin-top:5px;}
+.search_city_active{color:#07b56d; position:relative}
+.search_city_active .search_city_list_line{width:56px;height:8px; background:#fff;border-left: 1px solid #ddd; border-right: 1px solid #ddd; display:inline-block; position:absolute;left:-1px;top:22px; z-index:11 }
+.Search_cityboxclose{width:1050px; background:#fff;border:1px solid #ddd; padding:5px 0px 5px 5px; float:left}
+.city_name_active{ border: 1px #07b56d solid;background-color: #07b56d;color:#fff }
+.Search_citybox_right{width:1070px; float:left; position:relative}
+.Search_cityall{width:1027px; background:#f8f8f8;border:1px solid #ddd; padding:5px 0px 11px 5px; position:absolute;left:0px;top:0px; z-index:12; padding-right:50px;}
+.none{ display:none;}
+.Search_close_box{width:960px; padding:6px 100px 10px 86px; position:relative; float:left;border-top:1px solid #ddd; z-index:20; margin-top:20px;}
+.Search_close_box_s{position:absolute;left:0px;top:0px; line-height:45px; text-align:center;width:90px;color:#F30;}
+.resume_job_tag{background:#e5f1f9; margin-right:5px; margin-top:3px; display:inline-block; padding:0px 5px 0px 5px;height:20px; line-height:20px; position:relative; white-space:nowrap; font-size:12px;color:#666}
+.Search_clear{line-height:30px;color:#093; background:url(../images/empty1.png) no-repeat left center; padding-left:18px; position:absolute;right:10px;top:5px;}
+.Search_clear a{color:#f60}
+.disc_sx .disc_zwsx{  font-size:15px; padding-right:10px; float:left}
+.disc_fac{ float:none;background: url(../images/job_det.jpg) no-repeat right center #fff7ee; border:1px solid #e4393c;  color:#666;margin-left:5px; display:inline-block;height:25px; line-height:25px; padding:0px 28px 0px 5px;margin-top:4px; float:left;white-space:nowrap;}
+.disc_fac:hover{border:1px solid #e4393c; text-decoration:none;background: url(../images/job_det_h.jpg) no-repeat right center #ffffff;}
+.yun_user_operation_l{width:100px; float:left; margin-top:30px; }
+.Search_jobs_more_chlose{width:130px;height:30px;border:1px solid #ddd; float:left; margin-right:10px; cursor:pointer; position:relative; z-index:100}
+.Search_jobs_more_chlose .Search_jobs_more_chlose_s{width:125px;height:32px; line-height:32px; display:inline-block; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;padding-left:5px;color:#726e6e}
+.Search_jobs_more_chlose i{width:30px;height:30px; position:absolute;right:0px;top:0px;border-left:1px solid #ddd; display:block;background: url("../images/disc_icon3.png") no-repeat center center #ffffff;}
+.Search_jobs_more_chlose_list{width:130px;border:1px solid #ddd; position:absolute;z-index:99999;left:-1px;top:30px; background:#fff;}
+.Search_jobs_more_chlose_list ul li{float:left;width:100%;}
+.Search_jobs_more_chlose_list ul li a{ display:block; padding:5px 10px;}
+.Search_jobs_more_chlose_list ul li a:hover{ background:#dfe8ef;}
+.Search_jobs_more_chlose_hylist{width:500px; padding:10px;border:1px solid #ddd; position:absolute;left:-1px;top:30px; background:#fff;z-index:99999;}
+.Search_jobs_more_chlose_hylist ul li{width:250px; float:left}
+.Search_jobs_more_chlose_hylist ul li a{ display:block; padding:5px 10px;}
+.Search_jobs_more_chlose_hylist ul li a:hover{ background:#dfe8ef;}
+.job_xz_text{width:70px;height:25px; line-height:25px; margin-top:3px;border:1px solid #ddd; float:left}
+.job_xz_line{ font-size:12px; padding:0px 5px; float:left; line-height:28px;}
+.job_xz_bth{width:50px;height:25px; margin-top:3px; float:left; background:#f60;color:#fff;border:none; margin-left:5px; cursor:pointer}.zh_more{ float:right;margin-top:4px;}
+.zh_more a{ display:block; width:45px; height:30px;  line-height:30px; padding-left:10px; color:#07b56d; background:url(../images/disc_icon3.png) no-repeat 40px center #ffffff;  }
+.zh_more .showcheck{background:url(../images/disc_iconchexk.png) no-repeat right center #ffffff; }
+.disc_more{ font-size:12px; display:block;position:absolute; z-index:10; bottom:-20; left:50%; margin-left:-136px; background:#fff; }
+.disc_more a{ font-size:14px;width:330px; text-align:center;display:inline-block; height:35px; line-height:35px; overflow:hidden; zoom:1; border-bottom:1px solid #eaeaea; border-left:1px solid #eaeaea; border-right:1px solid #eaeaea; text-align:center; cursor:pointer;color:#1369c0; }
+.disc_more a:hover{border:1px solid #1369c0;border-top:none; text-decoration:none}
+/*宣讲会*/
+.yun_school_xjh_tit{width:1198px; float:left; margin-top:15px; background:#fff;border:1px solid #eee;}
+.yun_school_xjh_tit_list{ float:left}
+.yun_school_xjh_tit_list li{width:120px;height:40px;border-left:2px solid #fff; line-height:40px;border-right:1px solid #eee; text-align:center; float:left}
+.yun_school_xjh_tit_list .yun_school_job_titcur {border-left:2px solid #07b56d;}
+.yun_school_xjh_tit_list .yun_school_job_titcur a{ background:#fff;color:#07b56d;}
+.yun_school_xjh_info{ padding:10px 0;}
+.yun_school_xjh_info_s{color:#999; margin-left:10px;}
+.yun_school_xjh_right_tit{ font-weight:bold;border-bottom:1px solid #eee; padding-bottom:10px;}
+.yun_school_xjh_right_jobname{ font-size:14px;color:#f60;}
+.yun_school_xjh_right_jobinfo{ padding:10px 0;}
+.yun_school_xjh_right_jobtime{color:#999}
+/*院校*/
+.yun_school_yx_tit{width:100%; float:left; margin-top:20px; background:#fff; padding:10px 0;}
+.yun_school_yx_tit_s{ display:inline-block; padding-left:10px;}
+.yun_school_yx_listbox{width:1200px; float:left; overflow:hidden}
+.yun_school_yx_list{width:1250px;}
+.yun_school_yx_list li{width:180px; float:left; padding-left:103px; line-height:30px; position:relative; background:#fff;border:1px solid #eee; margin-top:20px; margin-right:20px; padding-top:20px; padding-bottom:20px;}
+.yun_school_yx_list li:hover{box-shadow: 0 6px 13.8px 2.2px rgba(255, 71, 10, 0.31);border: solid 1px #ff470a;}
+.yun_school_yx_pic{width:80px; position:absolute;left:10px;top:20px;}
+.yun_school_yx_pic img{border-radius:50%;border:1px solid #eee}
+.yun_school_yx_name{width:180px;height:30px; line-height:30px; overflow:hidden;white-space: nowrap;text-overflow: ellipsis ;font-size:16px;}
+.yun_school_yx_name a{color:#f60;}
+.yun_school_yx_p{width:100%;height:30px; line-height:30px; overflow:hidden;white-space: nowrap;text-overflow: ellipsis}
+
+/*网申*/
+
+.yun_school_job_titn{ float:right; margin-right:20px; line-height:40px; font-weight:normal}
+.yun_school_job{width:1160px; padding:0px 20px; float:left; background:#fff; margin-top:20px;}
+.yun_school_job ul li{width:100%; float:left; padding:15px 0;border-bottom:1px solid #eee}
+.yun_school_job .yun_school_joblogo{width:80px; float:left; padding-left:20px;}
+.yun_school_job_left{width:950px; float:left; background:#fff; margin-top:20px;}
+.yun_school_job_left ul li{width:100%; float:left; padding:15px 0;border-bottom:1px solid #eee}
+.yun_school_job_pic{width:80px; float:left; padding-left:20px;}
+.yun_school_job_cont{width:700px; float:left; padding-left:30px;}
+.yun_school_job_right{width:280px; float:right; padding-right:20px; text-align:right}
+.yun_school_job_name{ font-size:16px; font-weight:bold}
+.yun_school_job_name span{color:#666; font-weight:bold}
+.yun_school_job_sq { display:inline-block; width:120px;height:40px; line-height:40px; text-align:center; background:#07b56d;color:#fff; margin-top:15px;border-radius:2px;}
+.yun_school_job_sq:hover{color:#fff}
+.yun_school_job_list{ padding:10px 0; font-size:12px;color:#999}
+.yun_school_job_list a{color:#666; font-size:14px;}
+.yun_school_xjh_zt{ float:right; padding-right:20px; margin-top:30px;}
+.yun_school_xjh_a{ font-size:14px;color:#f60;}
+.yun_school_xjh_right{ float:right; background:#fff; margin-top:20px;width:210px; padding:10px;}
+.yun_school_xjh_tit{ font-weight:bold}
+.yun_school_xjh_rlist li{padding:10px 0;border-bottom:1px solid #eee}
+.yun_school_job_city{color:#999; padding-left:20px;    background: url(../images/yun_school_add.png) no-repeat left center; font-size:12px;}
+.yun_school_job_right_time{width:100%; text-align:right; font-size:12px;}
+.yun_school_job_right_time_sy{color:#099c50;}
+.job_right_sidebar{ float:right;width:230px;}
+.job_right_sidebar_box{width:100%; background:#fff;height:300px; margin-top:20px;}
+.school_show_header{width:100%;height:200px;color:#fff; padding-top:40px; background:url(../images/209_11595.jpg) no-repeat fixed}
+.school_show_logo{width:120px; float:left}
+.school_show_atn{ display:inline-block; background:#f60;color:#fff;width:100%;height:30px; line-height:30px; text-align:center; margin-top:10px;}
+.school_show_atn:hover{color:#fff; }
+.school_show_info{width:880px; float:left; padding-left:70px;}
+.school_show_name{ font-size:20px; padding-bottom:20px;}
+.school_show_p{ width:400px; display:inline-block;line-height:35px;}
+.school_show_tit{width:100%; background:#fff;height:50px; line-height:50px; font-weight:bold;}
+.school_show_tit_s{ padding-left:20px; display:inline-block}
+.school_show_list{width:830px; padding:0px 20px; float:left}
+.school_show_list li{width:100%; padding:15px 0;border-bottom:1px solid #eee; float:left; background:#fff}
+.school_show_left{width:870px; float:left; background:#fff; min-height:500px; margin-top:20px;}
+.school_show_name_n{ background:#15b790; padding:2px 10px; font-size:16px; margin-left:10px;border-radius:4px;}
+.school_show_list_time{width:150px; float:left}
+.school_show_listcomname{width:200px; float:left}
+.school_show_list_add{width:330px; float:left}
+.school_show_list_zt{ float:right;color:#f60}
+.school_show_listcomname_a{font-size: 16px;color: #004c91;}
+.school_show_listmap{ display:inline-block;width:12px;height:15px; background:url(../images/yun_school_add.png) no-repeat; vertical-align:middle; margin-right:10px;}
+.school_show_listgz{ display:inline-block; background:url(../images/yun_school_gz.png) no-repeat left center; padding-left:20px;}
+.school_show_listgzygz{ display:inline-block;padding-left:20px;}
+.school_show_right{width:300px; float:right;}
+.school_show_right_tip_t{ font-weight:bold;color:#f00}
+.school_show_right_tip{ margin-top:20px;border:1px solid #eee; background:#fff; padding:10px; line-height:28px;color:#666}
+.school_show_right_may_box{ margin-top:20px;border:1px solid #eee; background:#fff; padding:10px;}
+.school_show_right_may{ font-weight:bold;}
+.school_show_right_may_list li { padding:10px 0;border-bottom:1px solid #eee;}
+.school_show_right_may_list li:last-child{border:none}
+.school_show_right_may_list li img{border:1px solid #eee; margin-right:10px;}
+.school_index_ws_comname{ font-size:12px;color:#999}
+.school_show_nomsg{width:100%; text-align:center; background:url(../images/yun_no.png) no-repeat center 80px; padding:200px  0 0 0;color:#999}
+
+.yunFamousenterprises{width:100%;}
+.index_left15560 {float: left;text-align: right;width: 1220px;}
+.Famous_recruitment_cont {width: 1198px;float: left;border-right: 1px solid #eee;border-bottom: 1px solid #eee;   _overflow:hidden }
+.Famous_recruitment_cont_box{width:1198px;border:1px solid #eee;border-top:none; float:left; _overflow:hidden}
+.Famous_recruitment_cont .tlogo li {border: 1px solid #eee;;width:198.6px; height:130px;background: #fff;float: left; text-align:center;border-right:none;border-top:none; padding:20px 0;  }
+.yunFamousenterprises_comname{ width:180px;height:25px; line-height:25px; text-align:center;color:#666; padding-left:10px; padding-right:10px; overflow:hidden}
+.Famous_recruitment_act {position: relative}
+#mainids .tlogo ul li.current1 {list-style-type: none;position: relative;width:198.6px;z-index:1000}
+#mainids .tlogo ul li.current1 .on {position: relative;z-index: 1003;}
+#mainids .tlogo ul li .show {display: none;left:0px;position: absolute;
+text-align: left;top:-2px;width:198.6px;;box-shadow: 4px 2px 6px #eee;;    border: 2px solid #3b8ee3;overflow:hidden}
+#mainids .tlogo .show .area {width:100%;background:#fff;overflow: hidden;padding:85px 0 0;float: left}
+#mainids .tlogo ul li.current1 .show {display: block;}
+
+
+#mainids .area_left {width:185px;float: left; }
+#mainids .area_left a {color:#333;;overflow: hidden; display:inline-block;border:1px solid #eee;border-radius:15px; padding:0px 10px;height:24px; line-height:24px; margin-top:5px; margin-left:5px;}
+#mainids .area_left a:hover {border:1px solid #3B8EE3;color: #3B8EE3;text-decoration:none}
+#mainids .area_right {float: left;width:175px;overflow: hidden;padding-left: 5px;line-height: 22px;color: #333;white-space: normal; word-break: break-all; }
+#mainids .area_right a {width: 100%;height: 22px;line-height: 22px;overflow: hidden;text-align: center;display: block;color:#3B8EE3;font-weight: bold}
+#mainids .area_right a:hover {color: #333;text-decoration: underline}
+#mainids .area_left_bot {width:93px;background-color: #EEEEEE;float: left;height: 22px;line-height: 22px;margin-top: 5px;text-align: center;}
+#mainids .area_left_bot a {color: #333;}
+#mainids .area_right_bot{width:91px;background-color: #EEEEEE;float: left;height: 22px;line-height: 22px;margin-top: 5px;text-align: center;border-left:1px solid #fff;}
+#mainids .area_right_bot a {color: #333}
+#mainids .w160 {width: 160px;}
+#mainids .w170 {width: 173px;}
+#mainids .tlogo ul li .show_ban {background: #EAE8E8;border: 1px solid #65A9E6;display: none;left: -1px;padding: 1px;position: absolute;text-align: left;top: -1px;width: 313px;}
+#mainids .tlogo ul li.current1 .show_ban {display: block;}
+#mainids .tlogo .show_ban .area {background: #FFFFFF;overflow: hidden;padding: 55px 0 0;float: left}
+#mainids .tlogo ul li.current2 {list-style-type: none;position: relative;width: 313px;}
+#mainids .tlogo ul li.current2 .on {position: relative;z-index: 1003;}
+.school_index_banner {width:1200px; overflow:hidden}
+.school_index_banner_cont{width:1250px;}
+.school_index_banner img{ margin-top:10px; margin-right:10px;}
+
+.pages {width: 100%;text-align: center;margin:0 auto;float:left;margin-top: 10px;font-size: 14px;line-height: 25px;}
+.pages a {display: inline-block;padding: 5px 14px 5px 14px;margin-left:5px;color: #666;border: 1px solid #dedede; font-size:14px;}
+.pages em {margin-left: 10px;height:35px;line-height:30px;color:#666;display:inline-block;}
+.pages .selected {font-weight: bold;color: #fff;;border:1px solid ##00b2fc; background:#07b56d}
+.pages a:hover{color: #fff;background:#1c99ef;border:1px solid #1c99ef}
+.seachno {background:#FFFFFF;float: left;padding: 60px;width: 1130px;}
+.seachno_left {float: left;}
+.listno-content {display: inline;float: left;line-height: 30px;margin-left: 50px;width: 520px;}
+.listno-content strong {font-size: 20px;font-weight: bold;}

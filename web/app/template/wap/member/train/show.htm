@@ -1,0 +1,25 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<section>
+<div class="wap_member_comp_h1"><span>机构环境</span></div>
+<div class="wap_member_job_show">
+{yun:}foreach item=v from=$rows{/yun}
+<div class="train_wap_hj_img_box ">
+<div class="train_wap_hj_img"><img width="80" height="80" src="{yun:}$v.picurl{/yun}"></div>
+
+<div class="train_wap_hj_tit">{yun:}$v.title{/yun}</div>
+<div class="train_wap_hj_time">{yun:}$v.ctime|date_format:'%Y-%m-%d %H:%M'{/yun}</div>
+<div class="train_wap_hj_bth"><a href="javascript:void(0)" onclick="vant_del('确定要删除？','index.php?c=show&del={yun:}$v.id{/yun}')" class="">删除</a></div>
+</div>
+{yun:}foreachelse{/yun}
+<div class="wap_member_no">暂无相关信息</div>
+{yun:}/foreach{/yun}
+
+<div class="pages">{yun:}$pagenav{/yun}</div>
+<div class="wap_memberjob_fabu"><a href="index.php?c=addshow">上传机构环境</a></div>
+</div>
+</section>
+</div>
+</body>
+</html>

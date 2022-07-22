@@ -1,0 +1,111 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+  {yun:}include file="$trainstyle/left.htm"{/yun}
+  <div class="right_column frt mt20">  
+  
+  
+  <div class="right_mycurriculum_h1">我的课程</div>  
+  <div class="right_nav_box">
+  <ul class="right_nav_box_list">
+  <li  {yun:}if $smarty.get.status=="" && $smarty.get.pstatus!='2'{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=subject">显示中</a></li>
+  <li {yun:}if $smarty.get.status=="1"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=subject&status=1">审核中</a></li>
+  <li {yun:}if $smarty.get.status=="2"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=subject&status=2">未通过</a></li>
+   <li {yun:}if $smarty.get.pstatus=="2"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=subject&pstatus=2">已下架</a></li>
+  </ul>
+   <a href="index.php?c=subject_add" class="right_nav_box_fb" >发布新课程</a>
+  </div>
+  
+    <div class="right_column_border_lesson">
+		{yun:}if $rows{/yun}
+	  <div class="new_Leave_list new_Leave_list_h flt">
+        <div class="my_curriculum_name">课程名称</div>
+        <div class="new_Leave_li_list  new_Leave_tel_change">收费方式</div>
+        <div class="new_Leave_li_list new_Leave_date_change">发布时间</div>
+        <div class="new_Leave_li_list new_Leave_zt_change">操作 </div>
+      </div>
+	  {yun:}/if{/yun}
+      {yun:}foreach item=v from=$rows{/yun}
+      <dl class="Courses_Team flt">
+        <dt class="Courses_Teamw120"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">
+        <!--<img width="120" height="80" src="../{yun:}$v.pic{/yun}">-->               
+	    <img src="{yun:}$v.pic{/yun}" width="95" height="53" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);">                   
+        </a></dt>
+        <dd class=" Courses_Teamw610 ">
+          <div class="Courses_Team_mem_list"><em class="flt">
+          <a class="Courses_Team_mem_list_a" href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">{yun:}$v.name{/yun}</a> 
+          <p class="training_Courses_p_change flt"> <span class="training_Courses_span">地址：</span>{yun:}$v.address{/yun} </p>
+          {yun:}if $v.status==1{/yun}
+          <span class="">&nbsp;</span>
+          {yun:}elseif $v.status==2{/yun}
+          <span class="right_column_news_wsh">未通过</span> <em class="px_line">|</em> 
+          <a href="javascript:;" onclick="show_msg('{yun:}$v.id{/yun}','index.php?c=subject&act=statusbody')">查看原因</a>
+          {yun:}else{/yun}
+          <span class="right_column_news_wst">未审核</span>
+          {yun:}/if{/yun}
+          {yun:}if $v.pause_status==1{/yun}
+          <span class="">&nbsp;</span>
+          {yun:}elseif $v.pause_status==2{/yun}
+          <span class="right_column_news_yzt">已下架</span>
+          {yun:}/if{/yun}
+          </em>
+          
+          
+          </div>
+         
+          <p class="training_Courses_p flt">{yun:}if $v.isprice==1{/yun}在线收费{yun:}else{/yun}到场收费{yun:}/if{/yun}</p>
+          
+          <div class=" Courses_Team_mem_list_p">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+          <div class="curriculum_operate"> 
+          <a  href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" target="_blank">预览</a>
+          <em class="px_line">|</em> 
+          <a href="index.php?c=subject_add&id={yun:}$v.id{/yun}" >修改</a><br>
+          {yun:}if $smarty.get.status==''&&$v.pause_status==1{/yun}
+          <a href="javascript:void(0)" onclick="layer_del('确定将该课程设为下架？','index.php?c=subject&id={yun:}$v.id{/yun}&pause_status=2');">下架</a>
+          <em class="px_line">|</em>{yun:}/if{/yun} 
+		  {yun:}if $v.pause_status==2{/yun}
+          <a href="javascript:void(0)" onclick="layer_del('确定将该课程设为显示？','index.php?c=subject&id={yun:}$v.id{/yun}&pause_status=1');">上架</a> 
+          <em class="px_line">|</em> 
+           {yun:}/if{/yun}
+          <a href="javascript:void(0)" onclick="layer_del('确定删除该课程？','index.php?c=subject&del={yun:}$v.id{/yun}');">删除</a>
+         
+          </div>
+        </dd>
+      </dl>
+       {yun:}foreachelse{/yun}
+            <div class="clear"></div>
+          <div class="msg_no">暂无相关信息</div>
+      {yun:}/foreach{/yun}
+      <div class="pages"> {yun:}$pagenav{/yun}</div>
+    </div>
+  </div>
+</div>
+<script>
+function show_msg(id,url){
+	$.post(url,{id:id},function(data){
+		$("#msgs").html(data);
+		$.layer({
+			type : 1,
+			title :'查看原因',
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['400px','200px'],
+			page : {dom :"#showmsg"}
+		});
+	})
+}
+</script>
+<div id="showmsg"  style="display:none; width: 400px;">
+	<div>
+    <div id="infobox">
+		 <div class="admin_Operating_sh" style="padding:10px; ">
+		<div class="admin_Operating_sh_h1" style="padding:5px;"><div style="height:80px;overflow:auto;" id="msgs"></div></div>
+		<div class="admin_Operating_sub" style="margin-top:10px;"> 
+          &nbsp;&nbsp;<input type="button" id="zxxCancelBtn" onClick="layer.closeAll();" class="cancel_btn" value='确认'></div>
+		</div>
+    </div>
+  </div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

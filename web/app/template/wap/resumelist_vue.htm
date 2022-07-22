@@ -1,0 +1,64 @@
+
+<script src="{yun:}$wap_style{/yun}/js/list_bottom.js?v={yun:}$config.cachecode{/yun}"></script>
+<div id="resumelist_wx_vue" class="none">
+    
+    <div class="yun_newedition_resumelist"  v-for="item in userlist" :key="item.id">
+        <a v-bind:href="item.wapurl">
+            <i v-if="item.newtime == 1" class="yunjoblist_newicon" title="新简历"> </i>
+            <div class="yun_newedition_resumepic">
+                <img v-bind:src="item.photo">
+                <span v-bind:class="item.sex==1?'user_xb':'user_xbn'"></span>
+            </div>
+            <div class="yun_newedition_resume_wantjob">
+                <span class="yun_newedition_resume_wantjob_n">{{item.name_n}}</span>
+                <span v-if="item.rec_resume==1" class="usertj"> </span>
+            </div>
+
+            <div class="new_userlist_info">{{item.exp_n?item.exp_n+'经验':''}} · {{item.edu_n}} · {{item.age_n>0?item.age_n + '岁':'保密'}}</div>
+            <div class="new_userlist_p">求职期望 {{item.name}}，{{item.salary}} <span class="yun_newedition_resume_zd">{{item.lastupdate_n}}</span></div>
+
+            <div class="user_undergo_box" v-if="item.work_content || item.edu_content">
+                <div v-if="item.edu_content" class="user_undergo user_undergo_a">{{item.edu_content}}</div>
+                <div v-if="item.work_content" class="user_undergo user_undergo_b">{{item.work_content}}</div>
+            </div>
+
+            <div v-if="item.tag_arr" class="yun_tjresumebox">
+                <span v-for="tag in item.tag_arr" :key="tag" class="yun_tjresume">{{tag}}</span>
+            </div>
+
+            <div v-if="lookResumeIds && lookResumeIds.indexOf(item.id)!=-1" class="resumeeye">
+                <img src="{yun:}$wap_style{/yun}/images/llg.png">
+            </div>
+        </a>
+    </div>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+      el: '#resumelist_wx_vue',
+      data: {
+        userlist:[],
+        lookResumeIds:[]
+      }
+    });
+
+    var resumepage = 1;
+
+    function fetchData_list() {
+        resumepage++;
+        var searchurl = document.getElementById('searchurl').value;
+        $.post(wapurl + 'index.php?c=resume&a=ajaxLoad', {searchurl: searchurl,page: resumepage}, function(res){
+			document.getElementById('pageLoading').classList.add('none');
+            if(res){
+                var html = '';
+                var data = eval('(' + res + ')');
+                if(data.list.length > 0){
+                    app.$data.userlist = data.list;
+                    app.$data.lookResumeIds = data.lookResumeIds?data.lookResumeIds:[];
+					document.getElementById('listdiv').insertAdjacentHTML('beforeend',$("#resumelist_wx_vue").html());
+				}else{
+					document.getElementById('pageNoMore').classList.remove('none');
+				}
+            }
+        });
+    }
+</script>

@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+		<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+		<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+	
+	<body class="body_ifm">
+	<div class="infoboxp">
+		<div class="clear"></div>
+
+		<div class="tabs_info">
+           	<ul>
+               	<li {yun:}if !$smarty.get.time{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtask">今天</a></li>
+               	<li {yun:}if $smarty.get.time==1{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtask&time=1">明天</a></li>
+               	<li {yun:}if $smarty.get.time==2{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtask&time=2">后天</a></li>
+               	<li {yun:}if $smarty.get.time==3{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtask&time=3">一周内</a></li>
+               	<li {yun:}if $smarty.get.time==4{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=crm_waitingtask&time=4">所有任务</a></li>
+           	</ul>
+		   </div>
+		<form class="layui-form" action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+					<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+					<input name="m" value="crm_waitingtask" type="hidden"/>
+						<div class="crm_newly_build_tit" style="padding:0">
+														
+					 <div class="layui-input-inline">
+						   <select name="status" id="status" lay-filter='status'>
+							<option value="1" {yun:}if $smarty.get.status ==1 || !$smarty.get.status{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='1' adt='status' untype='status'{/yun}">进行中</option>
+							<option value="2" {yun:}if $smarty.get.status ==2{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='2' adt='status' untype='status'{/yun}">已完成</option>
+							<option value="3" {yun:}if $smarty.get.status ==3{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='3' adt='status' untype='status'{/yun}">未完成</option>
+							 <option value="4" {yun:}if $smarty.get.status ==4{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='4' adt='status' untype='status'{/yun}">已取消</option>
+							 <option value="5" {yun:}if $smarty.get.status==5{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='5' adt='status' untype='status'{/yun}">全部</option>
+						 </select>
+					 </div>
+					 <div class="layui-input-inline">
+						<div class="crm_follow_up"><a href="javascript:void(0);" onClick='addWaitTask()' class="crm_follow_up_a crm_follow_up_xj">新建任务</a></div>
+					  </div>
+				</div>
+				<div class="table-list" style="color:#898989; margin-top:10px;">
+			<div class="admin_table_border">	
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				
+					<table width="100%">
+						<thead>
+							
+							<tr class="admin_table_top">
+                           <th align="left"><div class="crm_listpd">客户名称</div></th>
+                            <th align="left">任务事项</th>
+								
+								<th>任务时间</th>
+								<th >任务状态</th>
+								<th >创建时间</th>
+	 							<th >操作	</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+						
+							{yun:}foreach item=v key=key from=$tasks{/yun}
+							
+								<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+                                
+                                <td align="left"><div class="crm_listpd">{yun:}$v.name{/yun}<a href="javascript:OpenContact('{yun:}$v.comid{/yun}','index.php?m=crm_waitingtask&c=ComDetail')" title="联系方式" class="crm_comtel">联系方式</a></div></td><td align="left"><div class="crm_rwsx">{yun:}$v.content{/yun}</div></td>
+                                <td>
+                                <div class="crm_rwtime">
+                                {yun:}$v.stime_n{/yun}{yun:}if $v.stime lt time(){/yun} <span class="crm_rwtime_gq">过期</span>{yun:}/if{/yun}
+                                </div>
+                                </td>
+                                
+                                <td>{yun:}if $v.status == '1'{/yun} 进行中
+										{yun:}else if $v.status == '2'{/yun} 已完成
+										{yun:}else if $v.status == '3'{/yun} 未完成
+										{yun:}else if $v.status == '4'{/yun} 已取消
+										{yun:}/if{/yun}</td>
+									<td>
+											
+											{yun:}$v.ctime_n{/yun}
+											
+									
+									</td>
+									<td align="right">
+                                    <a href="javascript:addWaitTask('{yun:}$v.id{/yun}','index.php?m=crm_waitingtask&c=detail')" title="任务详情"   class="crm_submit">任务详情</a>
+										{yun:}if $v.status == '1'{/yun}
+										<a href="javascript:void(0)" onclick="settaskstatus('2','{yun:}$v.id{/yun}','index.php?m=crm_waitingtask&c=setStatus')"  class="crm_submit">已完成</a>
+										<a href="javascript:void(0)" onclick="settaskstatus('3','{yun:}$v.id{/yun}','index.php?m=crm_waitingtask&c=setStatus')"  class="crm_submit">未完成</a>
+										<a href="javascript:void(0)" onclick="settaskstatus('4','{yun:}$v.id{/yun}','index.php?m=crm_waitingtask&c=setStatus')"  class="crm_submit">取消任务</a>
+										{yun:}/if{/yun}
+										{yun:}if $v.status == '3'{/yun}
+										
+										<a href="javascript:void(0)" onclick="javascript:CompleteDetail('{yun:}$v.id{/yun}','index.php?m=crm_waitingtask&c=reason')"  class="crm_submit">原因</a>
+										
+										{yun:}/if{/yun}
+									</td>
+								</tr>
+	
+							{yun:}/foreach{/yun}
+							
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="2"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="2"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="2"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="2" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+				
+				</div>
+		</div></form>
+	</div>
+	<div id="taskstatus" style="display:none; width: 430px;text-align:center; ">
+       	<div class="">
+				<table cellspacing='1' cellpadding='1' class="admin_examine_table">
+					<tr>
+						<th>说明原因：</th>
+						<td align="left">
+							<textarea id="reason" name="reason" class="admin_explain_textarea" style="width: 350px;height:150px"></textarea>
+						</td>
+					</tr>
+					<tr id="taskreasonsubmit">
+						<td colspan='2' align="center">
+							<input type="button" onclick="setStatusu();" value='保存' class="admin_examine_bth">
+							<input type="button" class="admin_examine_bth_qx" onClick="layer.closeAll();" value='关闭'>
+						</td>
+					</tr>
+				</table>
+		</div>
+   	</div>
+	<div id="taskstatusqx" style="display:none; width: 430px;text-align:center; ">
+       	<div class="">
+			<form class='layui-form'>
+				<table cellspacing='1' cellpadding='1' class="admin_examine_table">
+					<tr>
+						<td align="left">
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<div class="admin_examine_right" style="width: 330px;">
+										<input name="type" value="1" title="取消任务 (将任务设为已取消状态)" checked type="radio" /> 
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="left">
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<div class="admin_examine_right" style="width: 330px;">
+										<input name="type" value="2" title="删除任务 (彻底删除且不可恢复)" type="radio" /> 
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2' align="center">
+							<input type="button" onclick="setStatusqx();" value='保存' class="admin_examine_bth">
+							<input type="button" class="admin_examine_bth_qx" onClick="layer.closeAll();" value='关闭'>
+						</td>
+					</tr>
+				</table>
+			</form>	
+		</div>
+	   </div>
+	   
+	<input type="hidden" name="taskid" id="taskid" value="">
+ <script>
+var weburl="{yun:}$config.sy_weburl{/yun}";
+layui.use(['form', 'laydate'], function(){
+	var form = layui.form
+		,laydate = layui.laydate
+		,$ = layui.$;
+		form.on('select(status)', function(data){
+			var url=$('#status option:selected').attr('data-url');
+			location.href=url;
+		});
+	laydate.render({
+		elem: '#stime'
+		,type: 'datetime'
+	});
+});
+ function settaskstatus(status,id,url){
+	var pytoken = $('#pytoken').val();
+	if(status==2){
+		loadlayer();
+		$.post(url,{pytoken:pytoken,status:status,id:id},function(data){
+			parent.layer.closeAll('loading');
+			if(data==1){
+				location.reload();
+			}
+		});
+	}else if(status==3){
+		$('#taskid').val(id);
+		$('#taskreasonsubmit').show();
+		$.layer({
+			type : 1,
+			title :'请说明未完成原因', 
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['450px','300px'],
+			offset: ['20px', ''],
+			page : {dom :"#taskstatus"}
+		});
+	}else if(status==4){
+		$('#taskid').val(id);
+		$.layer({
+			type : 1,
+			title :'取消任务', 
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['300px','200px'],
+			offset: ['20px', ''],
+			page : {dom :"#taskstatusqx"}
+		});
+	}
+ }
+function setStatusu(){
+	var pytoken = $('#pytoken').val();
+	var id = $('#taskid').val();
+	var reason = $('#reason').val();
+	if(!reason){
+		layer.msg('请说明未完成原因！',2,8);return false;
+	}
+	loadlayer();
+	$.post('index.php?m=crm_waitingtask&c=setStatus',{pytoken:pytoken,status:3,id:id,reason:reason},function(data){
+		parent.layer.closeAll('loading');
+		if(data==1){
+			location.reload();
+		}
+	});
+}
+function setStatusqx(){
+	var pytoken = 	$('#pytoken').val();
+	var id 		= 	$('#taskid').val();
+	var type	=	$('input[name="type"]:checked').val();
+	loadlayer();
+	$.post('index.php?m=crm_waitingtask&c=setStatus',{pytoken:pytoken,status:4,id:id,type:type},function(data){
+		parent.layer.closeAll('loading');
+		if(data==1){
+			location.reload();
+		}
+	});
+}
+ </script>
+ {yun:}include file="siteadmin/crm_public.htm"{/yun}
+</body>
+</html>

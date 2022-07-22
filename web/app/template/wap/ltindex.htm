@@ -1,0 +1,190 @@
+{yun:}include file="$wapstyle/header_lt.htm"{/yun}
+
+<div class="headhunting_banner">
+    <img src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/bg.jpg">
+    <div class="headhunting_banner_bg"></div>
+
+    <div class="headhunting_index">
+        <div class="headhunting_index_p">高端资源，快速拓宽候选人群</div>
+        <div class="headhunting_index_tc">领先的中高级人才招聘求职平台</div>
+        <form method="get" action="{yun:}$config_wapdomain{/yun}/index.php">
+            <input type="hidden" name="c" value="post" />
+            <div class="headhunting_index_search_box">
+                <div class="headhunting_index_search_box_c">
+                    <input type="text" value=""  name="keyword" class="headhunting_index_search_text" placeholder="请输入职位名称">
+					<input type="submit" value=" " class="headhunting_index_search_box_bth">
+			  </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<ul class="headhunting_nav">
+    <li>
+        <a href="{yun:}url m=wap c='post'{/yun}">
+            <i class="headhunting_nav_icon headhunting_nav_icon_job"></i>高端职位</a>
+    </li>
+    <li>
+        <a href="{yun:}url m=wap c='post' a='service'{/yun}">
+            <i class="headhunting_nav_icon headhunting_nav_icon_wt"></i>委托求职</a>
+    </li>
+    <li class="headhunting_nav_end">
+        <a href="{yun:}url m=wap c=post a=famous{/yun}">
+            <i class="headhunting_nav_icon headhunting_nav_icon_qy"></i>知名企业</a>
+    </li>
+</ul>
+
+{yun:}if $config.lt_rec_rebates=='1'{/yun}
+<div class="headhunting_tit">
+    <span class="headhunting_tit_s">悬赏招聘</span>
+</div>
+
+<div class="headhunting_tit_p">新鲜职位火速推荐，获得相应赏金</div>
+
+<div class="clear"></div>
+
+<ul class="headhunting_jobsj">
+    {yun:}ltjoblist rebates=1 order=lastupdate ispage=1 limit=6 item=jlist{/yun}
+    <li>
+        <div class="headhunting_jobsj_box">
+        <a href="{yun:}if $jlist.usertype==3{/yun}{yun:}url m=wap c=post a=jobshow id=$jlist.id{/yun}{yun:}else{/yun}{yun:}url m=wap c=post a=jobcomshow id=$jlist.id{/yun}{yun:}/if{/yun}">
+            <div class="headhunting_jobsj_c">
+                <span class="headhunting_jobsj_n">
+                    {yun:}if $jlist.rebates>'9999'{/yun} {yun:}$jlist.rebates{/yun} {yun:}else{/yun} {yun:}$jlist.rebates{/yun}{yun:}/if{/yun}{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}
+                </span>赏金
+            </div>
+            <div class="headhunting_jobsj_jobname">{yun:}$jlist.job_name{/yun}</div>
+            <div class="headhunting_jobsj_comname">{yun:}$jlist.com_name{/yun}</div>
+            <div class="headhunting_jobsj_tj">
+                {yun:}if $config.lt_rec_rebates=="1"{/yun}
+                <span class="headhunting_jobsj_tj_a">推荐</span>
+                {yun:}/if{/yun}
+            </div>
+            </a>
+        </div>
+    </li>
+    {yun:}/ltjoblist{/yun}
+</ul>
+<div class="clear"></div>
+<div class="headhunting_index_more">
+    <a href="{yun:}url m=wap c=post {/yun}">+ 查看更多</a>
+</div>
+
+{yun:}/if{/yun}
+
+<div class="clear"></div>
+
+<div class="headhunting_index_bg">
+    <div class="headhunting_tit">
+        <span class="headhunting_tit_s">推荐职位</span>
+    </div>
+    <div class="headhunting_tit_p">精选职位任您挑选，快速解决就业难题</div>
+
+    <div class="clear"></div>
+    <ul class="headhunting_tj_job">
+        {yun:}ltjoblist rec=1 order=lastupdate ispage=1 limit=6 item=tlist{/yun}
+        <li>
+            <div class="headhunting_tj_jobbox">
+                <a href="{yun:}if $tlist.usertype==3{/yun}{yun:}url m=wap c=post a=jobshow id=$tlist.id{/yun}{yun:}else{/yun}{yun:}url m=wap c=post a=jobcomshow id=$tlist.id{/yun}{yun:}/if{/yun}"> 
+                	<div class="headhunting_tj_jobname">
+                 		<span class="job_n">  {yun:}$tlist.job_name{/yun}</span>
+                	</div>
+                 	<div class="headhunting_tj_jobxz">{yun:}$tlist.salary_info{/yun}</div>
+                	<div class="headhunting_tj_jobinfo">{yun:}$tlist.cityid_info{/yun} / {yun:}$tlist.exp_info{/yun}经验 / {yun:}$tlist.edu_info{/yun}学历</div>
+                </a>
+            </div>
+        </li>
+        {yun:}/ltjoblist{/yun}
+    </ul>
+    <div class="clear"></div>
+    <div class="headhunting_index_more">
+        <a href="{yun:}url m=wap c=post{/yun}">+ 查看更多</a>
+    </div>
+</div>
+
+<div class="headhunting_tit">
+    <span class="headhunting_tit_s">最新职位</span>
+</div>
+<div class="headhunting_tit_p">每日精选优质职位，满足你的个性要求</div>
+
+<div class="clear"></div>
+
+<ul class="headhunting_newjob_list">
+    {yun:}ltjoblist comlen=10 item=ltjoblist ispage=1 limit=3{/yun}
+    <li> 
+     <a href="{yun:}if $ltjoblist.usertype==3{/yun}{yun:}url m=wap c=post a=jobshow id=$ltjoblist.id{/yun}{yun:}else{/yun}{yun:}url m=wap c=post a=jobcomshow id=$ltjoblist.id{/yun}{yun:}/if{/yun}">
+        <div class="headhunting_newjob_name">
+          {yun:}$ltjoblist.job_name{/yun}
+            <span class="headhunting_newjob_time">{yun:}$ltjoblist.lastupdate{/yun}</span>
+        </div>
+        <div class="headhunting_newjob_info">
+            <span class="headhunting_newjob_info_xz">{yun:}$ltjoblist.salary_info{/yun}</span>
+            <span class="headhunting_newjob_line">|</span>{yun:}$ltjoblist.exp_info{/yun}经验
+            <span class="headhunting_newjob_line">|</span>{yun:}$ltjoblist.edu_info{/yun}学历
+        </div>
+        <div class="headhunting_newjob_com">
+            <div class="headhunting_newjob_com_img">
+                <img src="{yun:}$ltjoblist.logo_n{/yun}">
+            </div>
+            <div class="headhunting_newjob_com_name">
+             
+                    {yun:}$ltjoblist.com_name{/yun}
+                
+				 {yun:}if $ltjoblist.com_pic !="" {/yun}<img src=".{yun:}$ltjoblist.com_pic{/yun}" width="15">{yun:}/if{/yun}
+          
+            </div>
+            <div class="headhunting_newjob_com_hy">
+                {yun:}$ltjoblist.cityid_info{/yun}
+                <span class="headhunting_newjob_line">|</span>{yun:}$ltjoblist.hy_n{/yun}
+            </div>
+        </div>
+        </a>
+    </li>
+    {yun:}/ltjoblist{/yun}
+</ul>
+
+<div class="clear"></div>
+<div class="headhunting_index_more">
+    <a href="{yun:}url m=wap c='post'{/yun}">+ 查看更多</a>
+</div>
+
+<div class="headhunting_index_bg">
+    <div class="headhunting_tit"> <span class="headhunting_tit_s">委托求职</span></div>
+    <div class="headhunting_tit_p">找工作不随便，这里是野心与实力的汇聚</div>
+
+    <div class="clear"></div>
+    <ul class="headhunting_userlist">
+        {yun:}lietoulist ispage=1 limit=4 item=ltlist{/yun}
+        <li>  <a href="{yun:}url m=wap c=post a=headhunter uid=$ltlist.uid{/yun}">
+            <div class="headhunting_userlist_box">
+                <div class="headhunting_userlist_pic">
+                  
+                        <img src="{yun:}$ltlist.photo_big{/yun}">
+                  
+                </div>
+                <div class="headhunting_userlist_name">{yun:}$ltlist.realname{/yun}{yun:}if $ltlist.com_pic !="" {/yun} <img src="{yun:}$ltlist.com_pic{/yun}" width="14">{yun:}/if{/yun}</div>
+                <div class="headhunting_userlist_boxhy">{yun:}$ltlist.hy|mb_substr:0:12:'utf-8'{/yun}</div>
+                <div class="headhunting_userlist_sj">
+                    <span class="headhunting_userlist_box_n">
+                        <i class="">{yun:}$ltlist.ltjoblist|@count{/yun}</i>职位</span>
+                    <span class="headhunting_userlist_box_n">
+                        <i class="">{yun:}$ltlist.ant_num{/yun}</i>粉丝</span>
+                    <span class="headhunting_userlist_box_n">
+                        <i class="">{yun:}$ltlist.exp_info{/yun}</i>年限</span>
+                </div>
+                <div class="headhunting_userlist_wt">
+                   <span class="wt_name">委托简历</span>
+                </div>
+            </div> </a>
+        </li>
+        {yun:}/lietoulist{/yun}
+    </ul>
+
+    <div class="clear"></div>
+    <div class="headhunting_index_more">
+        <a href="{yun:}url m=wap c=post a=service{/yun}">+ 查看更多</a>
+    </div>
+</div>
+</body>
+</html>

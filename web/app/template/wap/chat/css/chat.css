@@ -1,0 +1,1786 @@
+body {
+    position: relative;
+    margin: 0 auto !important;
+    font-family: Arial, Helvetica;
+    background-color: #f3f3f3;
+
+}
+
+@media screen and (min-width:750px) {
+    html {
+        font-size: 75px !important;
+    }
+}
+.none {display: none;}
+/* 聊天页面增加发送位置 */
+.chat_send_header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 3.333333rem;
+    min-width: 320px;
+    max-width: 750px;
+    padding: .213333rem .32rem .373333rem .32rem;
+    background-color: #fff;
+    z-index: 999;
+}
+
+.chat_send_header_nav {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: .766667rem;
+}
+
+.chat_send_header_nav_return {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: .28rem;
+    height: .48rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat_send_header_nav_fall {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: .586667rem;
+    height: .586667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recruiter_name {
+    height: .346667rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: .106667rem;
+}
+
+.recruiter_job {
+    height: .293333rem;
+    font-size: .293333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.chat_send_header_function {
+    width: 100%;
+    height: 1.466667rem;
+}
+
+.chat_send_header_function>ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.chat_send_header_function>ul>li {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.function_icon {
+    width: .8rem;
+    height: .8rem;
+}
+
+.function_word {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.chat_send_min_body {
+    margin-top: 4rem;
+    width: 100%;
+    padding-left: .32rem;
+    padding-right: .32rem;
+	margin-bottom: 2rem;
+}
+
+.chat_send_card {
+    margin-top: .4rem;
+    padding: .36rem;
+    width: 100%;
+    background-color: #fff;
+    border-radius: .213333rem;
+	margin-bottom: .533333rem;
+}
+
+.chat_send_card_datum {
+    padding-left: 1.333333rem;
+    position: relative;
+    width: 100%;
+    height: 1.066667rem;
+}
+
+.datum_logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.066667rem;
+    height: 1.066667rem;
+}
+.datum_logo img{border-radius:50%;}
+.card_datum_details {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card_datum_details_top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card_datum_details_top_name {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+}
+
+.card_datum_details_top_pay {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #2778F8;
+}
+
+.card_datum_details_bom {
+    display: flex;
+}
+
+.card_datum_details_bom_direction {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+    margin-right: .266667rem;
+}
+
+.card_datum_details_bom_job {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+	width: 5rem;
+	height: 0.5rem;
+	overflow: hidden;
+	display: -webkit-box;
+	text-overflow: ellipsis;
+	word-break: break-all;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+}
+
+.chat_send_card_state {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .4rem;
+    font-size: .346667rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.chat_send_card_state_1 {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.chat_send_card_advantage {
+    margin-top: .4rem;
+    font-size: .346667rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.chat_send_card_experience {
+    margin-top: .533333rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat_send_card_experience_top {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .4rem; position:relative ; padding-left: .633333rem;
+}
+.chat_send_card_experience_top:after{ width: .013333rem;height: 1.5rem; background:#e0eafd;content:''; position:absolute;left:.133333rem;top:15px;}
+.chat_send_card_experience li:last-child:after{ display:none;}
+.chat_send_card_experience_top_company {
+    position: relative;
+    display: flex;
+  
+    margin-bottom: .2rem;
+}
+
+.chat_send_card_experience_top_company_dot {
+    position: absolute;
+    top: .133333rem;
+    left:  -.633333rem;
+    width: .266667rem;
+    height: .266667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat_send_card_experience_top_company_dot_line {
+    position: absolute;
+    top: -1.15rem;
+    left: .133333rem;
+    width: .013333rem;
+    height: 1.5rem;
+    background-color: #D7E6FF;
+}
+
+.chat_send_card_experience_top_company_name {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.chat_send_card_experience_top_limit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat_send_card_experience_top_limit_job {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.chat_send_card_experience_top_limit_time {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #CCCCCC;
+}
+
+.company_top_name {
+    width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+    margin-bottom: .266667rem;
+}
+
+.company_top_jobandname {
+    display: flex;
+    justify-content: space-between;
+}
+
+.company_top_job {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.company_top_time {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #CCCCCC;
+}
+
+.chat_send_card_one {
+    padding-top: .373333rem;
+    position: relative;
+    margin-top: .4rem;
+    width: 100%;
+    height: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat_send_card_one_line {
+    position: absolute;
+    top: 0;
+    left: -0.346667rem;
+    width: 9.36rem;
+    height: .013333rem;
+    background-color: #eee;
+}
+
+.chat_send_card_one_exchange {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.chat_send_card_one_name_pay {
+    display: flex;
+}
+
+.chat_send_card_one_name {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+    margin-right: .48rem;
+}
+
+.chat_send_card_one_pay {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #2778F8;
+}
+
+.Chat_dialog_box {
+    margin-top: .533333rem;
+    width: 100%;
+}
+
+.dialog_job_seeker {
+    display: flex;
+    padding-left: 1.466667rem;
+    position: relative;
+    width: 100%;
+    margin-bottom: .533333rem;
+}
+
+.dialog_job_seeker_logo {
+    position: absolute;
+    top: .266667rem;
+    left: 0;
+    width: 1.066667rem;
+    height: 1.066667rem;
+}
+.dialog_job_seeker_logo img{border-radius:50%;}
+.dialog_job_seeker_word {
+    padding: .4rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+    max-width: 6.373333rem;
+    background-color: #fff;
+    border-radius: .213333rem .213333rem .213333rem 0px;word-break: break-all;
+}
+
+.dialog_job_seeker_word_icon_text {
+    position: relative;
+    padding: .4rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+    max-width: 6.373333rem;
+    background-color: #fff;
+    border-radius: .213333rem .213333rem .213333rem 0px;
+    padding-left: 1.066667rem;
+}
+
+.dialog_job_seeker_word_icon {
+    position: absolute;
+    top: .44rem;
+    left: .4rem;
+    width: .48rem;
+    height: .48rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog_job_seeker_word_text {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+}
+
+.dialog_recruiters {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1.466667rem;
+    position: relative;
+    width: 100%;
+    margin-bottom: .533333rem;
+}
+
+.dialog_recruiters_logo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.066667rem;
+    height: 1.066667rem;
+}
+.dialog_recruiters_logo img{border-radius:50%}
+.dialog_recruiters_word {
+    position: relative;
+    padding: .4rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    max-width: 6.373333rem;
+    background-color: #4B8FF9;
+    border-radius: .213333rem .213333rem 0px .213333rem;word-break: break-all;
+}
+
+.dialog_recruiters_word_and_icon {
+    position: relative;
+    padding: .4rem 1.066667rem .4rem .4rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    max-width: 6.373333rem;
+    background-color: #4B8FF9;
+    border-radius: .213333rem .213333rem 0px .213333rem;
+}
+
+.dialog_recruiters_imgbox {
+    width: 6.133333rem;
+    background-color: #fff;
+}
+
+.dialog_recruiters_imgbox_img {
+    width: 100%;
+}
+.dialog_recruiters_imgbox_img img{ max-width:100px;border-radius:5px; min-height:50px;}
+.dialog_recruiters_imgbox_img_r{ text-align:right}
+.dialog_recruiters_location {
+    width: 6.133333rem;
+    background-color: #fff;
+	border-radius: .213333rem
+}
+
+.dialog_recruiters_location_img {
+    width: 100%;
+	height: 2.5034rem;
+	border-radius: .213333rem
+}
+
+.dialog_recruiters_location_place {
+    padding: .2rem;
+}
+
+
+.location_place_top {
+    width: 90%;
+    /* 超过文本长度。。。显示 */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+    /*margin-bottom: .4rem;*/
+}
+
+.location_place_bom {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.dialog_recruiters_location_opinion {
+    border-top: .013333rem solid #eee;
+    display: flex;
+}
+
+.dialog_recruiters_location_opinion_left {
+    flex: 1;
+    padding-top: .386667rem;
+    padding-bottom: .32rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: .013333rem solid #eee;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.dialog_recruiters_location_opinion_right {
+    flex: 1;
+    padding-top: .386667rem;
+    padding-bottom: .32rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #4B8FF9;
+}
+
+.Fixed_bottom {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%;
+  
+    background-color: #fff;
+    min-width: 320px;
+    max-width: 750px;
+}
+
+.chat_Fixed_bottom {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 1.173333rem;
+    background-color: #fff;
+    min-width: 320px;
+    max-width: 750px;
+    padding-left: .32rem;
+    padding-right: .32rem;
+}
+
+.Fixed_bottom_input_field {
+    position: relative;
+    width: 100%;
+    min-height: 1.306667rem;
+    display: flex;
+    align-items: center;
+}
+
+.input_field_left {
+    padding: .16rem .2rem .16rem .186667rem;
+    height: .64rem;
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    background-color: #2778F8;
+    border-radius: .106667rem;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .32rem;
+}
+
+.input_field_center {
+    width: 5.813333rem;
+    margin-left: .266667rem;
+    display: flex;
+    align-items: center;padding-top:10px; padding-bottom:10px;
+}
+#textarea {
+    overflow: hidden;
+
+    font-size: 14px;
+
+    height: 18px;
+
+    line-height: 24px;
+
+    padding:2px;
+
+}
+
+.input_field_center>input {
+    width: 100%;
+    height: .8rem;
+    border-radius: .4rem;
+    background-color: #F8F8F8;
+    padding-left: .266667rem;
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.input_field_right {
+    width: 1.533333rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: .32rem;
+	  margin-left: .32rem;
+}
+
+.input_field_right>div {
+    width: .64rem;
+    height: .64rem;
+}
+
+.Fixed_bottom_function {
+    width: 100%;
+    height: 2.32rem;
+    background-color: #fff;
+}
+
+.Fixed_bottom_function>ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.Fixed_bottom_function>ul>li {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.Fixed_bottom_function_icon {
+    width: 1.066667rem;
+    height: 1.066667rem;
+}
+
+.Fixed_bottom_function_word {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.dialog_recruiters_word_status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.dialog_recruiters_status {
+    margin-top: .203333rem;
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #CCCCCC;
+}
+.Chat_dialog_box_time_line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: .346667rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+    margin-bottom: .733333rem;
+}
+.dialog_recruiters_word_icon {
+    position: absolute;
+    top: .4rem;
+    right: .4rem;
+    width: .48rem;
+    height: .48rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.on_line_resume {
+    display: flex;
+    flex-direction: column;
+    width: 6.586667rem;
+    height: 2.853333rem;
+    background-color: #fff;
+    border-radius: .213333rem;
+}
+.on_line_resume_top {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 1.693333rem;
+    position: relative;
+    padding-left: 1.6rem;
+}
+
+.on_line_resume_top_icon {
+    position: absolute;
+    left: .4rem;
+    width: .906667rem;
+    height: .906667rem;
+}
+.chat_hhyq_icon{ width:100%; height:100%; background:url(../images/iphone@2x.png) no-repeat; background-size:100%; display:inline-block }
+.chat_hhwx_icon{ width:100%; height:100%; background:url(../images/weixin@2x.png) no-repeat; background-size:100%;display:inline-block  }
+.on_line_resume_top_word {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.on_line_resume_bom {
+    border-top: .013333rem solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 1.16rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+}
+
+.on_line_resume_top_word_iphone {
+    margin-bottom: .133333rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.on_line_resume_top_word_number {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.on_line_resume_bom>ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.on_line_resume_bom>ul>li {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;width:100%; text-align:center; line-height: 1.16rem;
+}
+#mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(46, 47, 50, 0.5);
+    display: none;
+    z-index: 9999;
+}
+
+#mask_layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(46, 47, 50, 0.5);
+    display: none;
+    z-index: 99999;
+}
+
+.mask_layer_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6.933333rem;
+    background-color: #fff;
+    border-radius: .213333rem;
+}
+
+.mask_layer_box_all {
+    width: 100%;
+    height: 2.933333rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.mask_layer_box_win {
+    width: .853333rem;
+    height: .853333rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mask_layer_box_btn {
+    width: 100%;
+    height: 1.066667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+    border-top: .013333rem solid #eee;
+}
+
+.mask_layer_box_center {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.mask_layer_box_word {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.mask_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6.933333rem;
+    background-color: #fff;
+    border-radius: .213333rem;
+}
+
+.lose_interest_ing_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6.933333rem;
+    background-color: #fff;
+    border-radius: .213333rem;
+}
+
+.mask_box_word {
+    width: 100%;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+    border-bottom: .013333rem solid #eee;
+    padding-left: .666667rem;
+    padding-right: .666667rem;
+}
+
+.mask_box_decision {
+    display: flex;
+}
+
+.mask_box_decision_cancel {
+    width: 100%;
+    height: 1.066667rem;
+    flex: 1;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mask_box_decision_confirm {
+    width: 100%;
+    height: 1.066667rem;
+    flex: 1;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mask_box_decision_confirm_del{
+    width: 100%;
+    height: 1.066667rem;
+    flex: 1;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color:  #666666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#iphone_weixin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(46, 47, 50, 0.5);
+    display: none;
+    z-index: 9999;
+}	
+
+.swop_iphone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6.933333rem;
+    background-color: #fff;
+    border-radius: .213333rem;
+    display: none;
+
+}
+
+.swop_weixin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6.933333rem;
+    background-color: #fff;
+    border-radius: .213333rem;
+    display: none;
+}
+
+.iphone_weixin_box {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 3.84rem;
+    background-color: #fff;
+    display: none;
+    min-width: 320px;
+    max-width: 750px;
+}
+
+.swap_box {
+    width: 100%;
+    height: 2.64rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-bottom: .013333rem solid #eee;
+}
+
+.iphone_icon {
+    width: .533333rem;
+    height: .533333rem;
+    margin-right: .266667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iphone_word {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+}
+
+.iphone,
+.weixin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.call_off {
+    width: 100%;
+    height: 1.2rem;
+    font-size: .426667rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #666666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#lose_interest_ing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(46, 47, 50, 0.5);
+    display: none;
+    z-index: 9999;
+}
+
+#Common_language {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(46, 47, 50, 0.5);
+    display: none;
+    z-index: 9999;
+}
+
+#Common_language_box {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: #fff;
+    display: block;
+    min-width: 320px;
+    max-width: 750px;
+    padding: .48rem .32rem;
+}
+
+.Common_language_box_header {
+    display: flex;
+    width: 100%;
+    height: .586667rem;
+    justify-content: space-between;
+
+}
+
+.Common_language_box_header_left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: .586667rem;
+    height: .586667rem;
+}
+
+.Common_language_box_header_center {
+    font-size: .453333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+}
+
+.Common_language_box_header_right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: .586667rem;
+    height: .586667rem;
+}
+
+.Common_language_box_header_text {
+    /* 超过文本长度。。。显示 */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 90%;
+    margin-top: .8rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.Common_language_box_header_textandfall {
+    position: relative;
+    width: 100%;
+}
+
+.Common_language_box_header_text_fall {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #4B8FF9;
+}
+
+
+/* 设置常用语 */
+.useful_expressions_header {
+    position: relative;
+    width: 100%;
+    height: 1.173333rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.useful_expressions_header_icon {
+    position: absolute;
+    top: 50%;
+    left: .32rem;
+    transform: translateY(-50%);
+    width: .28rem;
+    height: .453333rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.useful_expressions_header_word {
+    font-size: .453333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+}
+
+.useful_expressions_body {
+    padding: .32rem;
+    width: 100%;    background-color: #f3f3f3;
+}
+
+.useful_expressions_body_word {
+    width: 100%;
+    background-color: #fff;
+    border-radius: .213333rem;
+}
+.useful_expressions_body_ps{  }
+.useful_expressions_body_word ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.useful_expressions_body_word ul li {
+    width: 100%;
+    padding: .4rem .4rem .266667rem .453333rem;
+    display: flex;
+    flex-direction: column;
+    border-bottom: .013333rem solid #eee;
+}
+.useful_expressions_body_word ul li:last-child{border:none;}
+.body_word_text {
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+    margin-bottom: .266667rem;word-break: break-all;
+}
+
+.body_word_icon {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.body_word_icon>div {
+    width: .586667rem;
+    height: .586667rem;
+    margin-left: .4rem;
+}
+
+.useful_expressions_add {
+   
+    height: 1.28rem;
+  
+    padding-left: .32rem;
+    padding-right: .32rem; margin-bottom: 0.533333rem;
+}
+
+.expressions_add_btn {
+    width: 100%;
+    height: 100%;
+    background-color: #2778F8;
+    border-radius: .213333rem;
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#useful_expressions_mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(46, 47, 50, 0.5);
+    display: none;
+    z-index: 9999;
+}
+.cyy_box{ max-height: 8rem; overflow: auto;}
+  /* 编辑常用语 */
+  .header {
+    width: 100%;
+    height: 1.173333rem;
+    background-color: #fff;
+    padding-left: .32rem;
+    padding-right: .32rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_left_nav {
+    width: .28rem;
+    height: .453333rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header_center {
+    font-size: .453333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+}
+
+.header_right {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+}
+
+.min_body {
+    width: 100%;
+    height: 100vh;
+    padding: .32rem;
+}
+
+.expressions {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.expressions_text {
+    width: 100%;
+    height: 100vh;
+    /* 去掉没选中时的边框 */
+    border: 0;
+    /* 去掉选中时的边框 */
+    outline: none;
+    padding: .4rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+
+.expressions_bom {
+    position: absolute;
+    bottom: .8rem;
+    right: .706667rem;
+}
+
+.expressions_bom_new {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+}
+
+.expressions_bom_sum {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666;
+}
+/* 添加常用语 */
+.add_header {
+    width: 100%;
+    height: 1.173333rem;
+    background-color: #fff;
+    padding-left: .32rem;
+    padding-right: .32rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add_header_left_nav {
+    width: .28rem;
+    height: .453333rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add_header_center {
+    font-size: .453333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+}
+
+.add_header_right {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+}
+
+.add_min_body {
+    width: 100%;
+    height: 90vh;
+    padding: .32rem;
+}
+
+.add_expressions {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.add_expressions_text {
+    width: 100%;
+    height: 90vh;
+    /* 去掉没选中时的边框 */
+    border: 0;
+    /* 去掉选中时的边框 */
+    outline: none;
+    padding: .4rem;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+	resize:none;
+}
+
+.add_expressions_bom {
+    position: absolute;
+    bottom: .8rem;
+    right: .706667rem;
+}
+
+.add_expressions_bom_new {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+}
+
+.add_expressions_bom_sum {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666;
+}
+.remark {
+    width: 100%;
+}
+
+.remark_name {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+
+.remark_word {
+    margin-top: .4rem;
+    position: relative;
+    width: 100%;
+    height: 3.2rem;
+    overflow: hidden;
+    border-radius: .213333rem;
+}
+
+.remark_word_text {
+    width: 100%;
+    height: 100%;
+    /* 去掉没选中时的边框 */
+    border: 0;
+    /* 去掉选中时的边框 */
+    outline: none;
+    font-size: .373333rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+    background-color: #F6F6F6;
+    padding: .4rem;
+}
+
+.expressions_bom {
+    position: absolute;
+    bottom: .8rem;
+    right: .706667rem;
+}
+
+.expressions_bom_new {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #2778F8;
+}
+
+.expressions_bom_sum {
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666;
+}
+
+.remark_word_box {
+    width: 100%;
+    height: 100%;
+
+}
+.job_resume {
+    position: relative;
+    width: 100%;
+    display: flex;
+    margin-bottom: .733333rem;
+}
+
+.job_resume_left {
+    width: 25%;
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666666;
+}
+.job_resume_right_two {
+    /* 多行文本溢出。。。显示 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    width: 71%;
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+}
+
+.job_resume_nav {
+    position: absolute;
+    top: .133333rem;
+    right: 0;
+    width: .24rem;
+    height: .426667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.job_resume_right>input {
+    /* 超过文本长度。。。显示 */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333333;
+}
+.Save_button {
+    margin-top: .533333rem;
+    width: 100%;
+    height: 1.28rem;
+    background-color: #2778F8;
+    border-radius: .213333rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .453333rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+.sc_bth{
+    width: 100%;
+    height: 100%;
+    opacity: 0; position:absolute;left:0px;top:0px;
+}
+
+.showbq{ position:absolute;left:0px;bottom:50px;background:#fff; padding-bottom:2px;}
+.chat_face{position: relative;max-height: 180px;overflow: auto;padding: 10px;font-size: 0;}
+.chat_face li {cursor: pointer;display: inline-block;vertical-align: bottom;padding: 5px 2px;text-align: center;width: 10%;-webkit-box-sizing: border-box!important;-moz-box-sizing: border-box!important;box-sizing: border-box!important;}
+.chat_face li img {width:0.64rem;height:0.64rem;}
+.chat_iframe{border: 0;visibility: hidden;position: absolute;width: 0;height: 0;}
+.chat_footer_text{background:#f8f8f8;border-radius:3px; }
+
+#send_content { 
+	display: block;
+	overflow: hidden; 
+	width: 100%; 
+	font-size: 14px;
+	height:0.8rem; 
+	line-height:0.8rem;
+	padding:0px 0.266666rem; border:none; background:#f8f8f8;border-radius:0.16rem; font-size:12px;font-family: PingFang SC;outline:none;
+}
+.bq_img img{ display:inline-block;width:0.64rem;height:0.64rem}
+.chatno_tip{width:100%; text-align:center; padding-top:150px;color:#999; font-size:12px; position:relative}
+.chatno_tip:after{width:80px;height:80px; background:url(../../images/yun_wap_no.png) no-repeat; background-size:100%; position:absolute;left:50%;top:50px; margin-left:-40px;content:'';}
+
+.company_jobandcompensation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .3rem;
+}
+
+.company_job {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+}
+
+.company_scompensation {
+    font-size: .4rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #2778F8;
+}
+
+.company_nameandstate {
+    display: flex;
+    margin-bottom: .3rem;
+}
+
+.company_name {
+    font-size: .346667rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333;
+    margin-right: .133333rem;
+}
+
+.company_state {
+    font-size: .346667rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #333;
+}
+
+.company_siteandyear>ul {
+    display: flex;
+}
+
+.company_siteandyear>ul>li {
+    padding: .146667rem .173333rem;
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: #666666;
+    background-color: #eee;
+    border-radius: .106667rem;
+    margin-right: .2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.company_logoandposition {
+    position: relative;
+    margin-top: .4rem;
+    padding-left: 1.2rem;
+    display: flex;
+    align-items: center;
+    height: .8rem;
+    width: 100%;
+}
+
+.company_logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: .8rem;
+    height: .8rem;
+}
+
+.company_position {
+    font-size: .346667rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #666;
+}
+
+.company_first_communicate {
+    border-top: .013333rem solid #eee;
+    margin-top: .4rem;
+    width: 100%;
+    padding-top: .3rem;
+    display: flex;
+    align-items: center;
+    font-size: .32rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #999999;
+}
+.yuyiconl{width: .2rem;height: .2rem; display:block; background:red; position:absolute;right:-.4rem;top:.6rem;border-radius:50%;}
+
+/* 职位列表弹出框 */
+.chatjob_list{border-bottom:1px solid #eee; padding:10px 0; position:relative}
+.chatjob_box{width:320px; background:#fff;max-height:330px;  position:fixed; left:50%;top:50%; margin-left:-160px; margin-top:-115px; z-index:1000000;border-radius:5px;}
+.chatjob_box_c{ padding:0px 15px;}
+.chatjob_box_job{width:100%;max-height:270px; overflow:auto}
+.chatjob_name{ font-size:16px; padding-right:120px; font-weight:bold}
+.chatjob_info{ color:#999; font-size:12px;}
+.chatjob_info_line{ display:inline-block; padding:0px 10px; font-size:12px;color:#e9e9e9}
+.chatjob_xz{color:#f00;padding:8px 0;}
+.chatjob_box_tit{width:100%; position:relative}
+.chatjob_box_tit_name{ display:inline-block; padding-top:15px; font-size:15px; padding-left:10px; padding-bottom:10px;color:#666}
+.chatjob_box_tit_close{width:20px;height:20px; position:absolute;top:15px;right:15px;background:url(../images/close.png) no-repeat; background-size:70%; display:inline-block}
+.chatjob_bth{width:55px;height:28px; line-height:28px; text-align:center; background:#4B8FF9;color:#fff;border-radius:20px; display:inline-block; position:absolute;right:0px;bottom:30px; font-size:12px;}
+.chat_bg{ position:fixed; left:0px;top:0px;right:0px;bottom:0px; background:#000; opacity:0.5; z-index:100000}
+/* 换微信、电话输入弹出框 */
+.wx_tck_box{width:280px; background:#fff; position:fixed;left:50%; margin-left:-140px;top:100px; z-index:1000001;border-radius:10px; font-size: 0.373333rem;}
+.wx_tck_boxall{ padding:20px;}
+.wx_tck_boxall_text{width:210px;height:40px;border:1px solid #ddd;border-radius:5px; padding:0px 15px;box-sizing: content-box; overflow:hidden}
+.wx_tck_boxtit{font-size:16px; font-weight:bold; padding-bottom:20px;}
+.wx_tck_boxall_input{width:100%;height:40px;border:none;;outline:none;padding:0px;margin:0px; font-size: 0.373333rem;}
+.wx_tck_boxall_bth{ padding-top:20px;}
+.wx_tck_boxall_bth_a{width:240px; display:block;border-radius:5px;height:40px; line-height:40px; text-align:center; background:#2d8cf0;color:#fff; font-size:16px;}
+.wx_tck_boxall_no{ display:block;margin-top:20px; text-align:right;color:#2d8cf0}
+/* 换微信、电话聊天记录 */
+.chat_hhyq{background: #fff;border-radius:5px;width:230px; margin: 20px auto;color:#666}
+.chat_hhyq_p{padding:10px 15px 15px 60px;line-height:25px; position: relative;}
+.chat_hhyq_bth{border-top:1px solid #eee;text-align: center;color:#139905}
+/*聊天页面-邀请视频面试*/
+.wapspms_show{width:100%;height:100%; position:fixed;left:0px;top:0px;bottom:0px;right:0px; z-index:19891013}
+.wapspms_bg{width:100%;height:100%; position:fixed;left:0px;top:0px;bottom:0px;right:0px;background:#000; opacity:0.8; z-index:19891012;color:#fff}
+.wapspms_com{ padding:50px 90px 30px 20px;font-size: 14px; text-align:right; position:relative;color:#fff}
+.wapspms_comlogo{width:55px;height:55px; background:#fff; position:absolute;right:20px;top:50px;border-radius:5px;}
+.wapspms_comlogo img{width:55px;height:55px;border-radius:5px;}
+.wapspms_comname{ font-size:18px; padding-bottom:5px;}
+.wapspms_cz{width:100%; position:absolute;left:0px;bottom:30px; text-align:center; z-index:19891014}
+.wapspms_cz_a{ display:inline-block;color:#fff;}
+.wapspms_cz_icon{width:60px;height:60px; background:url(../images/tel.png) no-repeat; background-size:100%; display:block}
+.wapspms_cz_p{ padding-top:5px;}
+.wapspms_cz_icon_js{background:url(../images/teljs.png) no-repeat; background-size:100%; }
+.wapspms_cz_aml{ margin-left:100px;} 
+/*视频面试房间*/
+.chat_msg_header{ background:#3b7cff; padding:0px 10px 0px 10px;height:48px; line-height:48px; position:relative;}
+.chat_msg_header_p{ font-size:18px;color:#fff; position:relative;height:48px; line-height:48px; text-align:center; display:block}
+.chat_msg_header_p_back{content: ' ';width: 12px;height: 12px;border: #fff solid;-webkit-transform: rotate(-135deg);border-width: 2px 2px 0 0;color: #fff; display:inline-block; position:absolute;left:15px;top:16px;}
+.chat_msg_header_other{ position:absolute;right:20px;top:12px;color:#fff}
+.chat_msg_box{ padding:10px 15px;}
+.chat_msg_box ul li{ padding:15px 0px 15px 65px; position:relative; background:#fff;border-bottom:1px solid #eee; margin-bottom:0px;}
+.chat_msg_tx{width:50px; position:absolute;left:0px;top:17px;}
+.chat_name_box{ padding-right:60px;}
+.chat_name{width:100%;height:25px; line-height:25px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+.chat_hrname{ font-size:16px;}
+.chat_comname{ font-size:12px;color:#999}
+.chat_new_p{width:100%;height:30px; line-height:30px;color:#999;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+.chat_new_time{ font-size:12px;color:#999; position:absolute;right:0px;top:18px;}
+.chat_msg_new{ background:#f00; display:inline-block; position:absolute;left:38px;top:15px; padding:0px 5px;color:#fff;border-radius:50%;}
+/*面试间*/
+.msj_header{ background:#3b7cff;padding:0px 0 0px 0;color:#fff;}
+.msj_header_rs{width:100%; text-align:center;color:#fff; font-size:35px;padding:5px 0 10px 0 ; }
+.msj_header_time{width:100%; text-align:center;font-size:12px;}
+.msj_header_rsn{width:100%;height:40px; line-height:40px; text-align:center;font-size:12px;}
+.msj_header_rs_p{width:100%; text-align:center;font-size:16px;}
+.msj_header_rsn_r{ display:inline-block; margin-left:20px;}
+.msj_msgw{width:288px;height:26px; line-height:26px; display:inline-block; background:#1467b7; padding-right:5px;padding-left:5px; margin-right:5px;border-radius:3px; position:relative; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;color:#fff}
+.msj_msgw:after{ width:0;height:0;border-right:4px solid transparent;border-left:4px solid transparent;border-top:4px solid #fff;position:absolute;right:3px;bottom:4px; display:inline-block; transform:rotate(-45deg);content:'';}
+.msj_list_c{padding:0px 10px;}
+.msj_userall_box{width:100%;max-height:400px; overflow:auto}
+.msj_list{  position:relative; margin-top:10px;}
+.msj_list_user_box{ padding:10px 10px 10px 70px; position:relative}
+.msj_list_user_pic{width:45px;height:45px; position:absolute;left:10px;top:10px;}
+.msj_list_user_pic img{width:45px;height:45px; border-radius:50%;}
+.spzl{ background:#2ea8cc;color:#fff;position:absolute;left:12px;top:45px;border-radius:5px 0 5px 0px;font-size:12px;padding:0px 8px; line-height:13px;}
+.msj_list_user{font-size:16px;color:#b6bbc2}
+.msj_list_userinnfo{color:#666;padding:10px 0 0  0;font-size:13px;}
+.msj_list_userline{padding:0px 5px;color:#999;font-size:12px;}
+.msj_list_userjob{color:#7e8da1; padding-top:5px;font-size:12px;}
+.msj_list_userjob_yq{padding:3px 15px; background:#3b7cff;color:#fff;border-radius:20px;position:absolute;right:6px;top:15px;}
+.msj_list_userjob_msz{padding:3px 15px; background:#504f49;color:#ffac35;border-radius:20px;position:absolute;right:6px;top:15px;}
+.msj_list_userjob_n{}
+.msj_list_userlook{color:#74abe4;font-size:12px; margin-left:10px;}
+.msj_list_zt{ background:#eaf2ff;color:#5784e1;border-radius:2px;display:inline-block;padding:2px 6px;}
+.msj_list_msz{ background:#ffefe5;color:#ff6600;border-radius:2px; display:inline-block;padding:2px 6px 2px 28px;}
+.msj_list_msz:after{width:14px;height:14px; background:url(../images/ms_icon2.png) no-repeat; background-size:100%; display:inline-block;content:''; position:absolute;left:8px;top:4px;}
+.msj_header_job{width:100%; height:26px;position:relative; text-align:center; padding-top:20px;}
+.msj_msgwbth{ display:inline-block;}
+.msj_list_jobtit{ padding-top:10px; font-size:16px; padding-bottom:5px; font-weight:bold}
+.msj_list_joblist{padding:3px 10px;border:1px solid #eee; background:#fff;border-radius:20px; margin-top:10px; display:inline-block; margin-right:5px;}
+.msj_list_joblist_cur{border:1px solid #3b7cff;color:#3b7cff}
+
+.video_room_frame{width:100%;height:90%; position:fixed;left:0px;top:50px;right:0px;bottom:0px; z-index:1}
+.video_room{width:100%;height:100%; background:#242c33}
+.video_room_tit{width:100%;height:50px; line-height:50px; font-size:18px;color:#fff;position:fixed;left:0px;top:0px; z-index:12}
+.video_room_user{width:120px;height:140px; background:#383f48;position:fixed;right:20px;top:70px; z-index:10}
+.video_room_tit_s{ padding-left:20px;}
+.video_room_qh{width:20px;height:20px; background:url(../images/qhsxt.png) no-repeat; background-size:100%;display:inline-block; position:absolute;right:25px;top:15px;}
+.sp_cshm{width:100%; text-align:center;color:#9db0cc;padding-top:30px;}
+.sp_cshmicon{width:130px;height:70px; background:url(../images/spcs.png) no-repeat; background-size:100%;display:block; margin:0 auto}
+.sp_cshm_bthbox{width:100%;padding:20px 0}
+.sp_cshm_bth{ display:inline-block; background:#3b7cff;color:#fff;height:30px; line-height:30px;border-radius:3px; text-align:center;font-size:14px;width:130px; }
+
+.video_hang_up{ width:100%; text-align:center;color:#8b99af;position:fixed;left:0px;bottom:30px; z-index:15}
+.video_hang_upicon{width:55px;height:55px; display:block; margin:0 auto; background:url(../images/tel.png) no-repeat; background-size:100%;}
+.video_hang_up_p{ padding-top:8px;}
+
+.sprequest_waitbox{width:100%;  color:#fff; text-align:center;position:fixed;left:0px;top:50%; margin-top:-60px; z-index:15}
+.sprequest_waitiocn {width: 120px;height: 70px;background:url(../images/spdd.png) no-repeat; background-size:100%; margin:0 auto}
+.sprequest_wait{font-size:17px;padding:15px 0}
+.sprequest_wait_time{COLOR:#9db1cd;}
+.sprequest_wait_time span{color:#2cb6f4;padding:0px 5px}
+
+.msj_tjbox{width:100%; text-align:center;color:#9db0cc;position:fixed;left:0px;top:50%; margin-top:-100px;z-index:12}
+.msj_tj_c{}
+.msj_tj{padding:10px;}
+.msj_tj_dmszs{font-size:40px; display:block; padding-bottom:10px;}
+.msj_tj_dms{font-size:16px;color:#fff; padding-bottom:10px;}
+.msj_userall{width:100%; position:fixed;left:0px;right:0px;bottom:0px; z-index:60; background:#383f48;border-radius:15px 15px 0 0}
+.msj_userall_h1{padding:10px;color:#fff;border-bottom:1px solid #eee}
+.msj_userztbox_c{padding:0px 15px;}
+.msj_userztbox{ background:#202830; text-align:center;padding:10px;}
+.msj_userzt{width:32%; display:inline-block;color:#9db0cc;font-size:12px; position:relative}
+.msj_header_rsn_c{ display:block;font-size:18px;color:#dde4e4; padding-bottom:5px;}
+.msj_userztline:after{width:1px;height:30px; background:#9db0cc; display:inline-block; position:absolute;right:-5px;top:10px;content:''; opacity:0.5}
+
+.spview_jobshow{width:100%; position:fixed;left:0px;bottom:0px; z-index:90; background:#fff;border-radiuS:5px 5px 0 0}
+.spview_jobshow_c{padding:10px 15px;}
+.spview_jobshowbg{ position:fixed; left:0px;top:0px;right:0px;bottom:0px; background:#000; opacity:0.5; z-index:10}
+.spview_jobshowtit{width:; padding:10px;border-bottom:1px solid #eee;position:relative}
+.spview_jobshowtitname{ font-size:16px; font-weight:bold}
+.spview_jobshowgb{width:14px;height:14px; background:url(../images/close.png) no-repeat; background-size:100%; position:absolute;right:20px;top:15px;display:inline-block;}
+.spview_jobname{ font-size:18px; font-weight:bold}
+.spview_jobinfo{color:#666;padding:10px 0}
+.spview_jobxz{ font-size:18px; font-weight:bold;color:#f60;}
+.spview_jobn{ font-size:16px; font-weight:bold; padding:10px 0}
+.spview_jobshow_h{width:100%;height:350px; overflow:auto}
+.spview_jobp{ line-height:28px;color:#666}
+.spview_jobw{width:45%; display:inline-block}
+.spview_yms{width:100%;height:55px;}
+.spview_yms_c{width:100%;height:50px; padding-top:5px;border-top:1px solid #eee; background:#fff; position:fixed;left:0px;bottom:0px; text-align:center}
+.spview_yms_bth{width:80%;height:40px; line-height:40px; background:#276bf2;color:#fff;font-size:16px; display:inline-block; text-align:center;border-radiuS:5px}
+.sp_mspd{ padding-top:50px;}
+.sp_mspdicon {width: 120px;height: 70px;background:url(../images/spdd.png) no-repeat; background-size:100%; margin:0 auto}
+.sp_mspd_p{width:100%; text-align:center;color:#FFF; font-size:16px; padding-top:20px;}
+.video-box{width: 100%;height: 100%;}
+.col-div{flex-direction: column;}

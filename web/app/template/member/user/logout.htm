@@ -1,0 +1,62 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+
+    {yun:}include file="$userstyle/left.htm"{/yun}
+
+    <div class="yun_m_rightbox fltR mt20 re">
+
+        <div class="member_right_index_h1 fltL"><span class="member_right_h1_span fltL">注销账号</span> <i class="member_right_h1_icon user_bg"></i></div>
+        <div class="resume_box_list">
+            {yun:}if $step == 1{/yun}
+            <div class="wxts_box" style="padding: 30px">
+                <div class="wxts">温馨提示：注销账号后将放弃以下资产和权益</div>
+                1. 身份信息，账户信息，会员权益将清空且无法恢复<br>
+                2. 交易记录将被清空<br>
+                3. 账号绑定的手机邮箱QQ等相关信息将被释放，账号将无法登陆
+            </div>
+
+            <div style="padding: 30px;">
+                <div class="Binding_pop_box_list">
+                    <span class=""><i class="Binding_pop_box_list_left_i">*</i>密码：</span>
+                    <input type="password" name="password" id="password" value="" class="Binding_pop_box_list_text Binding_pop_box_list_textw200" />
+                </div>
+                <a href="javascript:;" onclick="logoutApply();" class="msg_no_sq uesr_submit" style="margin-left: 60px;">申请注销</a>
+            </div>
+
+            {yun:}else{/yun}
+            <div class="msg_no">
+                <p>亲爱的用户，您已提交账户注销申请，</p>
+                <p>工作人员正在进行处理中，注销结果将以短信或邮件的形式通知，请耐心等待~</p>
+                <p>如果您需要再次使用，请重新注册！</p>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+    </div>
+</div>
+
+<script>
+    function logoutApply() {
+        var password = $('#password').val();
+        if (password == ''){
+            layer.msg('请填写账户密码');
+            return false;
+        }
+        layer.load('执行中，请稍候...',0);
+        $.post('index.php?c=logout&act=logoutApply', {password: password}, function (data) {
+            if (data) {
+                layer.closeAll();
+                var data = eval('('+data+')');
+
+                if (data.errcode == 9){
+                    layer.msg(data.msg, 2, function () {
+                        location.reload();
+                    });
+                }else{
+                    layer.msg(data.msg, 2, 9);
+                }
+
+            }
+        })
+    }
+</script>
+{yun:}include file="$userstyle/footer.htm"{/yun}

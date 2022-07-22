@@ -1,0 +1,211 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<script>
+	$(function() {
+		$(".statusbody").click(function() {
+			var id = $(this).attr("pid");
+			var bodys = $("#statusbody" + id).val();
+			if(bodys){
+				$("#showbody").html(bodys);
+			}else{
+				$("#showbody").html("暂无说明、请联系管理员");
+			}
+			$.layer({
+				type : 1,
+				title : '审核说明',
+				closeBtn : [ 0, true ],
+				border : [ 10, 0.3, '#000', true ],
+				area : [ '380px', 'auto' ],
+				page : {
+					dom : "#infobox2"
+				}
+			});
+		});
+
+	});
+</script>
+
+<div class="w1000">
+	<div class="admin_mainbody">
+		
+		{yun:}include file="$comstyle/left.htm"{/yun}
+		
+	
+	<div class="com_tit">
+		<span class="com_tit_span">招聘会</span>
+	</div>
+	
+	<div class=vip_boxshow>
+		<div class=vip_boxshow_c>
+			<div class="report_uaer_list ">
+										<div class="report_uaer_list_h1">招聘会</div>
+										<div class="report_uaer_list_p">为企业提供多样化的招聘会服务</div>
+										<ul>
+										<li><a href="index.php?c=zhaopinhui">现场招聘会</a></li>
+										<li class="report_uaer_list_cur"><a href="index.php?c=zphnet">网络招聘会</a></li>
+											 						
+										</ul>
+									</div>
+									
+									
+		<div class="vip_box_dq">温馨小提示</span>我们将在24小时内审核你参会的职位，请耐心等待，如需快速审核，请拨打客服热线：{yun:}$config.sy_freewebtel{/yun}
+															</div>
+						<div class="vip_box">
+							<div class="vip_box_db">参会记录</div>
+							<div style="padding:10px;">
+					<div style=" background-color: #fff;border-radius:8px;padding:8px;;">
+					<table class="com_table  ">
+						{yun:}if $rows{/yun}
+						<tr>
+							<th>招聘会名称</th>
+							{yun:}if $config.sy_spview_web == 1 && empty($spid){/yun}
+							<th>视频面试</th>
+							{yun:}/if{/yun}
+							<th>时间</th>
+							<th>状态</th>
+							<th width="200">操作</th>
+						</tr>
+						{yun:}/if{/yun}
+						{yun:}foreach item=v from=$rows{/yun}
+						<tr>
+							<td><a href="{yun:}url m=zphnet c=show id='`$v.zid`'{/yun}" class="cblue" target=_blank>{yun:}$v.title{/yun}</a></td>
+							{yun:}if $config.sy_spview_web == 1 && empty($spid){/yun}
+							<td>
+							<div class="sp_lookbox"><div class="">
+								视频次数：{yun:}if $v.spnum{/yun}
+								{yun:}$v.spnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun} 次
+								<div class="">
+					视频时长：{yun:}if $v.sptime_total{/yun}
+					{yun:}$v.sptime_total{/yun}
+					{yun:}else{/yun}0{yun:}/if{/yun}
+					分钟
+					</div>
+							</div>
+							<a href="index.php?c=zphnet&act=spviewLog&zid={yun:}$v.zid{/yun}" class="sp_look">查看详情</a></div>
+							</td>
+							{yun:}/if{/yun}
+							<td align="center">{yun:}$v.ctime|date_format:'%Y-%m-%d'{/yun}</td>
+							
+							<td align="center">
+								{yun:}if $v.status==1{/yun}
+									<font color="green">已审核</font>
+								{yun:}elseif $v.status==2{/yun}
+									<span class="tip_no"><i class="tip_no_icon"></i>未通过</span>
+								{yun:}else{/yun}
+									<span class="tip_no"><i class="tip_no_icon"></i>未审核</span>
+								{yun:}/if{/yun}
+								
+								{yun:}if $v.status==2{/yun}
+									<a href="javascript:;" class="wtg_ly cblue statusbody" pid="{yun:}$v.id{/yun}">说明</a>
+								{yun:}/if{/yun}
+							</td>
+							
+							<td align="center">
+								<input type="hidden" id="statusbody{yun:}$v.id{/yun}" value="{yun:}$v.statusbody{/yun}" />
+								<a href="{yun:}url m=zphnet c=show id='`$v.zid`'{/yun}" class="com_bth cblue">查看详情</a> 
+								{yun:}if $v.notstart ==1 {/yun}
+								<a href="javascript:void(0)" onclick="layer_del('确定要取消参会？', 'index.php?c=zphnet&act=del&id={yun:}$v.id{/yun}');" class="com_bth cblue">取消</a>
+								{yun:}/if{/yun}
+								
+								<a href="javascript:void(0)" {yun:}if $v.notend == 1{/yun} data-notend=1 {yun:}else{/yun} data-notend=0 {yun:}/if{/yun} data-id="{yun:}$v.id{/yun}" data-jobid="{yun:}$v.jobid{/yun}" class="com_bth cblue xzjob">参会职位</a>
+								
+							</td>
+						</tr>
+						{yun:}foreachelse{/yun}
+							<tr>
+								<td colspan="8" class="table_end">
+									<div class="com_msg_no">
+										<p>亲爱的用户，目前您还没有参加的网络招聘会信息</p>
+										<a class="com_msg_no_bth com_submit" href="{yun:}url m=zphnet{/yun}" target="_blank">查看网络招聘会信息</a>
+									</div>
+								</td>
+							</tr>
+						{yun:}/foreach{/yun}
+                        {yun:}if !empty($rows){/yun}
+						<tr>
+							<td colspan="8" class="table_end"><div class="diggg">{yun:}$pagenav{/yun}</div></td>
+						</tr>
+                               {yun:}/if{/yun}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="admin_Operating_sh" id="infobox2" style="padding: 10px; width: 350px; display: none;">
+	<div class="admin_Operating_text" style="padding: 5px; height: auto; color: #C30; width: 330px; font-size: 14px; line-height: 23px; white-space: normal; word-break: break-all;" id="showbody"></div>
+</div>
+<div id="jobdiv" class="spshow_tc_xzjob" style="display: none;">
+
+	<div class="spshow_tc_xzjob_box">
+		{yun:}foreach from=$job item=v key=k{/yun}
+		<div class="layui-input-block spshow_tc_job">
+			<span class="spshow_tc_job_xz">
+				<input type="checkbox" id="jobid{yun:}$k{/yun}" name="jobid[]" data-jid="{yun:}$k{/yun}" value="{yun:}$v{/yun}" lay-skin="primary" title="" />
+			</span>
+			<div class="layui-input-inline">{yun:}$v{/yun}</div>
+		</div>
+		{yun:}/foreach{/yun}
+	</div>
+	<div class="spshow_tc_xzjob_btn">
+		<input type="hidden" name="zpid" id="zpid" value="">
+		<a href="javascript:void(0)" class="layui-btn layui-btn-normal zphnet_xzjob">修改</a>
+		<a href="javascript:void(0)" onclick="layer.closeAll()" class="layui-btn layui-btn-primary">取消</a>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('.xzjob').click(function() {
+			var notend = $(this).attr('data-notend');
+			if(notend == 0 ){
+				layer.msg("招聘会已过期,不支持修改!", 2, 8);
+				return false;
+			}
+			var jobidarr = $(this).attr('data-jobid').split(',');
+			var id = $(this).attr('data-id');
+			$("#zpid").val(id);
+			$(".spshow_tc_job_xz").find('input').each( function(e, index) {				
+				if($.inArray($(this).attr('data-jid'), jobidarr) >=0){
+					$(this).attr('checked','checked');
+				}
+			});
+			$.layer({
+				type : 1,
+				title : '参会职位',
+				border : [10 , 0.3 , '#000', true],
+				area : ['510px','auto'],
+				page : {dom :"#jobdiv"}
+			});
+		});
+		$(".zphnet_xzjob").click(function() {	
+			var jobid = [];
+			$('input[name="jobid[]"]:checked').each(function() {
+				jobid.push($(this).attr("data-jid"));
+			});
+			var zpid = $("#zpid").val();
+			jobid = jobid.join(',');
+			if(jobid == ''){
+				layer.msg("请选择参会职位", 2, 8);
+				return false;
+			}
+			
+			$.post("index.php?c=zphnet&act=editcomjob", {
+                id:zpid,
+                jobid:jobid
+            }, function (data) {
+            	layer.closeAll();
+            	var data = eval('(' + data + ')');
+            	if(data.errcode==9){
+            		layer.msg(data.msg, 2, 9,function(){
+            			window.location.reload()
+            		});
+            	}else{
+					layer.msg(data.msg, 2, 8);
+            	}
+            });
+
+
+		})
+	});
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

@@ -1,0 +1,672 @@
+<script>
+	$(document).ready(function() {
+		$(".searchOptions_list li a").removeClass("search_h1_box_cur_list");
+		$("#resume").submit(function(e) {
+			var min = $("#minresume").val();
+			var max = $("#maxresume").val();
+			if(min && max && parseInt(max) < parseInt(min)) {
+				$("#minresume").val(max);
+				$("#maxresume").val(min);
+			}
+		});
+		$("#job").submit(function(e) {
+			var min = $("#minjob").val();
+			var max = $("#maxjob").val();
+			if(min && max && parseInt(max) < parseInt(min)) {
+				$("#minjob").val(max);
+				$("#maxjob").val(min);
+			}
+		});
+		$("#lietou").submit(function(e) {
+			var min = $("#minlt").val();
+			var max = $("#maxlt").val();
+			if(min && max && parseInt(max) < parseInt(min)) {
+				$("#minlt").val(max);
+				$("#maxlt").val(min);
+			}
+		});
+	});
+	function check_city_li(id,type){
+		var url=$("#searchurl").val();
+		$.post(wapurl+"/?c=ajax&a=ajax_url",{url:url,type:type,id:id},function(data){
+			location.href=wapurl+data;
+		})
+	}
+	function check_exp_li(id,type){
+      var comexp = $("#comexp").val(); 
+      $('#exp'+comexp).attr('class','');
+      $('#exp'+id).attr('class','conditional_screening_cur');
+      $('#comexp').removeAttr('disabled');
+      $('#comexp').val(id);
+       
+	}
+  function check_edu_li(id,type){
+      var comedu=$("#comedu").val();
+      $('#edu'+comedu).attr('class','');
+      $('#edu'+id).attr('class','conditional_screening_cur');
+      $('#comedu').removeAttr('disabled');
+      $('#comedu').val(id);
+    
+  }
+  function check_uptime_li(id,type){
+      var comuptime=$("#comuptime").val();
+      $('#uptime'+comuptime).attr('class','');
+      $('#uptime'+id).attr('class','conditional_screening_cur');
+      if(id){
+        $('#comuptime').removeAttr('disabled');
+      }else{
+        $('#comuptime').attr("disabled","disabled");
+      }
+      
+      $('#comuptime').val(id);
+  }
+  function check_pr_li(id,type){
+      var compr=$("#compr").val();
+      $('#pr'+compr).attr('class','');
+      $('#pr'+id).attr('class','conditional_screening_cur');
+      if(id){
+        $('#compr').removeAttr('disabled');
+      }else{
+        $('#compr').attr("disabled","disabled");
+      }
+      $('#compr').val(id);
+    
+  }
+    
+  function check_mun_li(id,type){
+     var commun=$("#commun").val();
+      $('#mun'+commun).attr('class','');
+      $('#mun'+id).attr('class','conditional_screening_cur');
+       if(id){
+        $('#commun').removeAttr('disabled');
+      }else{
+        $('#commun').attr("disabled","disabled");
+      }
+      $('#commun').val(id);  
+      
+  }
+  function check_sex_li(id,type){
+     var comsex=$("#comsex").val();
+      $('#sex'+comsex).attr('class','');
+      $('#sex'+id).attr('class','conditional_screening_cur');
+      $('#comsex').removeAttr('disabled');
+      $('#comsex').val(id);  
+  }
+	function check_uedu_li(id,type){
+		var useredu=$("#useredu").val();
+		$('#uedu'+useredu).attr('class','');
+		$('#uedu'+id).attr('class','conditional_screening_cur');
+		$('#useredu').removeAttr('disabled');
+		$('#useredu').val(id);
+	}
+	function check_useruptime_li(id,type){
+		var useruptime=$("#useruptime").val();
+		$('#uuptime'+useruptime).attr('class','');
+		$('#uuptime'+id).attr('class','conditional_screening_cur');
+		$('#useruptime').removeAttr('disabled');
+		$('#useruptime').val(id);
+	}
+	function check_hy_li(id,type){
+		var userhy=$("#userhy").val();
+		$('#hy'+userhy).attr('class','');
+		$('#hy'+id).attr('class','conditional_screening_cur');
+		$('#userhy').removeAttr('disabled');
+		$('#userhy').val(id);
+	}
+	function check_report_li(id,type){
+		var userreport=$("#userreport").val();
+		$('#report'+userreport).attr('class','');
+		$('#report'+id).attr('class','conditional_screening_cur');
+		$('#userreport').removeAttr('disabled');
+		$('#userreport').val(id);
+	}
+	function check_userexp_li(id,type){
+		var userexp=$("#userexp").val();
+		$('#uexp'+userexp).attr('class','');
+		$('#uexp'+id).attr('class','conditional_screening_cur');
+		$('#userexp').removeAttr('disabled');
+		$('#userexp').val(id);
+	}
+	function check_integrity_li(id,type){
+		var userintegrity=$("#userintegrity").val();
+		$('#integrity'+userintegrity).attr('class','');
+		$('#integrity'+id).attr('class','conditional_screening_cur');
+		$('#userintegrity').removeAttr('disabled');
+		$('#userintegrity').val(id);
+	}
+	function check_tag_li(id,type){
+		var usertag=$("#usertag").val();
+		$('#tag'+usertag).attr('class','');
+		$('#tag'+id).attr('class','conditional_screening_cur');
+		if(id){
+			$('#usertag').removeAttr('disabled');
+		}else{
+			$('#usertag').attr("disabled","disabled");
+		}
+		$('#usertag').val(id);
+	}
+
+	function check_rtype_li(id,type){
+
+		var userrtype=$("#userrtype").val();
+		$('#rtype'+userrtype).attr('class','');
+		$('#rtype'+id).attr('class','conditional_screening_cur');
+		if(id){
+			$('#userrtype').removeAttr('disabled');
+		}else{
+			$('#userrtype').attr("disabled","disabled");
+		}
+		$('#userrtype').val(id);
+	}
+
+	function check_job_li(id,type){
+		var url=$("#searchurl").val();
+		$.post(wapurl+"/?c=ajax&a=ajax_url",{url:url,type:type,id:id},function(data){
+			location.href=wapurl+data;
+		})
+	}
+	function check_ltjob_li(id,type){
+		var url=$("#searchurl").val();
+		$.post(wapurl+"/?c=ajax&a=ajax_url",{url:url,type:type,id:id},function(data){
+			location.href=wapurl+data;
+		})
+	}
+	function check_redeem_li(id,type){
+		var url=$("#searchurl").val();
+		$.post(wapurl+"/?c=ajax&a=ajax_url",{url:url,type:type,id:id},function(data){
+			location.href=wapurl+data;
+		})
+	}
+</script>
+<!-- Category职位类别 -->
+<div class="Category-eject pubtwo none">
+	<ul class="Category-w" id="jobone">
+		{yun:}foreach item=v from=$job_index{/yun}
+		<li class="qCategorytw{yun:}$v{/yun}" onclick="Categorytw('{yun:}$v{/yun}','{yun:}$job_name[$v]{/yun}','jobone')">{yun:}$job_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="Category-t" id="jobone_son">
+	</ul>
+	<ul class="Category-s" id="job_post">
+	</ul>
+</div>
+<!-- End Category -->
+
+<!-- grade 城市类别-->
+<div class="grade-eject pubtwo none">
+	<input type="hidden" id="kzq" value="{yun:}$smarty.get.c{/yun}"/>
+	<ul class="grade-w" id="provinceid">
+		{yun:}if !isset($nocityall){/yun}
+		<li onclick="check_city_li('0','provinceid');">全部</li>
+		{yun:}/if{/yun}
+		{yun:}foreach item=v from=$city_index{/yun}
+		<li class="qgrade{yun:}$v{/yun}" onclick="grade1('{yun:}$v{/yun}','{yun:}$city_name[$v]{/yun}','provinceid','{yun:}$smarty.get.a{/yun}')">{yun:}$city_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="grade-t" id="cityid"></ul>
+	<ul class="grade-s" id="three_cityid" {yun:}if $smarty.get.a=='schoolacademy' {/yun}style="display: none;" {yun:}/if{/yun}></ul>
+
+</div>
+<!-- End grade -->
+
+<!-- Substation 分站地区-->
+<div class="Substation-eject Substation-height pubtwo none">
+	<ul class="Substation-Substation" id="Substation-Substation">
+		<li>
+			{yun:}if $smarty.get.c=="job"{/yun}
+			<a href="{yun:}searchurl m=wap c=job three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="resume"{/yun}
+			<a href="{yun:}searchurl m=wap c=resume three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="part"{/yun}
+			<a href="{yun:}searchurl m=wap c=part three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="company"{/yun}
+			<a href="{yun:}searchurl m=wap c=company three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="spview"{/yun}
+			<a href="{yun:}searchurl m=wap c=spview three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="post"{/yun}
+			<a href="{yun:}searchurl m=wap c=post three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="post" && $smarty.get.a=="service"{/yun}
+			<a href="{yun:}searchurl m=wap c=post three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="post" && $smarty.get.a=="famous"{/yun}
+			<a href="{yun:}searchurl m=wap c=post three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="train" && $smarty.get.a=="agency"{/yun}
+			<a href="{yun:}searchurl m=wap c=train three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="train" && $smarty.get.a=="teacher"{/yun}
+			<a href="{yun:}searchurl m=wap c=train three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="school" && $smarty.get.a=="xjh"{/yun}
+			<a href="{yun:}searchurl m=wap c=school three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}else if $smarty.get.c=="school" && $smarty.get.a=="schoolacademy"{/yun}
+			<a href="{yun:}searchurl m=wap c=school three_cityid='' untype='three_cityid'{/yun}">全部</a>
+			{yun:}/if{/yun}
+
+		</li>
+
+		{yun:}foreach from=$city_type[$config.cityid] item=v{/yun}
+		<li>
+			{yun:}if $smarty.get.c=="job"{/yun}
+			<a href="{yun:}searchurl m=wap c=job three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="resume"{/yun}
+			<a href="{yun:}searchurl m=wap c=resume three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="part"{/yun}
+			<a href="{yun:}searchurl m=wap c=part three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="company"{/yun}
+			<a href="{yun:}searchurl m=wap c=company three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="spview"{/yun}
+			<a href="{yun:}searchurl m=wap c=spview three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="post"{/yun}
+			<a href="{yun:}searchurl m=wap c=post three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="post" && $smarty.get.a=="service"{/yun}
+			<a href="{yun:}searchurl m=wap c=post three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="post" && $smarty.get.a=="famous"{/yun}
+			<a href="{yun:}searchurl m=wap c=post three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="train" && $smarty.get.a=="agency"{/yun}
+			<a href="{yun:}searchurl m=wap c=train three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="train" && $smarty.get.a=="teacher"{/yun}
+			<a href="{yun:}searchurl m=wap c=train three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="school" && $smarty.get.a=="xjh"{/yun}
+			<a href="{yun:}searchurl m=wap c=school three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="school" && $smarty.get.a=="schoolacademy"{/yun}
+			<a href="{yun:}searchurl m=wap c=school three_cityid=$v untype='three_cityid'{/yun}">{yun:}$city_name[$v]{/yun}</a>
+			{yun:}/if{/yun}
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Substation -->
+
+
+<!-- End Sortexp -->
+
+<!-- Sort 找工作经验-->
+<div class="Sort-eject Sort-height pubtwo none">
+<div  id="Sort-Sort">
+<div class="conditional_screening_box">
+
+</div>
+
+</div>
+</div>
+<!-- End Sort -->
+
+<!-- Sorthy 行业弹出框-->
+<div class="Sorthy-eject Sorthy-height pubtwo none">
+	<ul class="Sorthy-Sorthy" id="Sorthy-Sorthy">
+		{yun:}foreach from=$industry_index item=v{/yun}
+		<li>
+			{yun:}if $smarty.get.c=="company"{/yun}
+			<a href="{yun:}searchurl m=wap c=company hy=$v untype='hy'{/yun}">{yun:}$industry_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="post"{/yun}
+			<a href="{yun:}searchurl m=wap c=post hy=$v untype='hy'{/yun}">{yun:}$industry_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="spview"{/yun}
+			<a href="{yun:}searchurl m=wap c=spview hy=$v untype='hy'{/yun}">{yun:}$industry_name[$v]{/yun}</a>
+			{yun:}/if{/yun}
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sorthy -->
+
+<!-- Sortpr 企业性质弹出框-->
+<div class="Sortpr-eject Sortpr-height pubtwo none">
+	<ul class="Sortpr-Sortpr" id="Sortpr-Sortpr">
+		{yun:}foreach from=$comdata.job_pr item=v{/yun}
+		<li>
+			{yun:}if $smarty.get.c=="company"{/yun}
+			<a href="{yun:}searchurl m=wap c=company pr=$v untype='pr'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="post"{/yun}
+			<a href="{yun:}searchurl m=wap c=post pr=$v untype='pr'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="spview"{/yun}
+			<a href="{yun:}searchurl m=wap c=spview pr=$v untype='pr'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			{yun:}/if{/yun}
+
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortpr -->
+
+<!-- Sortmun 企业规模弹出框-->
+<div class="Sortmun-eject Sortmun-height pubtwo none">
+	<ul class="Sortmun-Sortmun" id="Sortmun-Sortmun">
+		{yun:}foreach from=$comdata.job_mun item=v{/yun}
+		<li>
+			{yun:}if $smarty.get.c=="company"{/yun}
+			<a href="{yun:}searchurl m=wap c=company mun=$v untype='mun'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="post"{/yun}
+			<a href="{yun:}searchurl m=wap c=post mun=$v untype='mun'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			{yun:}else if $smarty.get.c=="spview"{/yun}
+			<a href="{yun:}searchurl m=wap c=spview mun=$v untype='mun'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			{yun:}/if{/yun}
+
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortmun -->
+
+<!-- Sorttype 兼职类型弹出框-->
+<div class="Sorttype-eject Sorttype-height pubtwo none">
+	<ul class="Sorttype-Sorttype" id="Sorttype-Sorttype">
+		{yun:}foreach from=$partdata.part_type item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=part type=$v untype='type'{/yun}">{yun:}$partclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sorttype -->
+<!-- Sortcycle 结算周期弹出框-->
+<div class="Sortcycle-eject Sortcycle-height pubtwo none">
+	<ul class="Sortcycle-Sortcycle" id="Sortcycle-Sortcycle">
+		{yun:}foreach from=$partdata.part_billing_cycle item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=part cycle=$v untype='cycle'{/yun}">{yun:}$partclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortcycle -->
+
+<!-- Sortfl 课程分类弹出框-->
+<div class="Sortfl-eject Sortfl-height pubtwo none">
+	<ul class="Sortfl-Sortfl" id="Sortfl-Sortfl">
+		{yun:}foreach from=$subject_index item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train nid=$v untype='nid'{/yun}">{yun:}$subject_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortfl -->
+
+<!-- Sortsj 上课时间弹出框-->
+<div class="Sortsj-eject Sortsj-height pubtwo none">
+	<ul class="Sortsj-Sortsj" id="Sortsj-Sortsj">
+		{yun:}foreach from=$subject_type_index item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train type=$v untype='type'{/yun}">{yun:}$subject_type_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortsj -->
+
+<!-- Sortly 领域弹出框-->
+<div class="Sortly-eject Sortly-height pubtwo none">
+	<ul class="Sortly-Sortly" id="Sortly-Sortly">
+		{yun:}foreach from=$subject_index item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train  a=teacher sid=$v untype='sid,a'{/yun}">{yun:}$subject_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortly -->
+
+<!-- Sorthys 行业弹出框-->
+<div class="Sorthys-eject Sorthys-height pubtwo none">
+	<ul class="Sorthys-Sorthys" id="Sorthys-Sorthys">
+		{yun:}foreach from=$industry_index item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train a=teacher hy=$v untype='hy,a'{/yun}">{yun:}$industry_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sorthys -->
+
+<!-- Sortprs 性质弹出框-->
+<div class="Sortprs-eject Sortprs-height pubtwo none">
+	<ul class="Sortprs-Sortprs" id="Sortprs-Sortprs">
+		{yun:}foreach from=$comdata.job_pr item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train a=agency pr=$v untype='pr'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortprs -->
+<!-- Sortfx 方向弹出框-->
+<div class="Sortfx-eject Sortfx-height pubtwo none">
+	<ul class="Sortfx-Sortfx" id="Sortfx-Sortfx">
+		{yun:}foreach from=$subject_index item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train a=agency sid=$v untype='sid'{/yun}">{yun:}$subject_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortfx -->
+<!-- Sortmuns 规模弹出框-->
+<div class="Sortmuns-eject Sortmuns-height pubtwo none">
+	<ul class="Sortmuns-Sortmuns" id="Sortmuns-Sortmuns">
+		{yun:}foreach from=$comdata.job_mun item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=train a=agency mun=$v untype='mun'{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortmuns -->
+
+<!-- Sortsalary 猎头年薪-->
+<div class="Sortsalary-eject Sortsalary-height pubtwo none">
+	<ul class="Sortsalary-Sortsalary" id="Sortsalary-Sortsalary">
+		{yun:}foreach from=$ltdata.lt_exp item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=post exp=$v untype='exp'{/yun}">{yun:}$ltclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End Sortsalary -->
+<!-- wap猎头前台行业-->
+<div class="lthy-eject pubtwo none">
+	<ul class="lthy-w" id="lthyone">
+		{yun:}foreach from=$lthy_index item=v{/yun}
+		<li class="qlthyw{yun:}$v{/yun}" onclick="lthyw('{yun:}$v{/yun}','{yun:}$lthy_name[$v]{/yun}','lthyone')">{yun:}$lthy_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="lthy-t" id="lthytwo">
+	</ul>
+</div>
+<!-- End  -->
+
+<!-- wap猎头前台职位类别 -->
+<div class="lietou-eject pubtwo none">
+	<ul class="lietou-w" id="jobone">
+		{yun:}foreach from=$ltjob_index item=v{/yun}
+		<li class="qlietouw{yun:}$v{/yun}" onclick="lietouw('{yun:}$v{/yun}','{yun:}$ltjob_name[$v]{/yun}','jobone')">{yun:}$ltjob_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="lietou-t" id="jobtwo">
+	</ul>
+
+</div>
+<!-- End lietou -->
+<!-- gengduot 猎头更多-->
+<div class="Gengduot-eject pubtwo none">
+	<form action="{yun:}$config_wapdomain{/yun}/index.php" method="get" id="lietou">
+		<input type="hidden" name="c" value="ltjob" />
+		<ul class="Gengduot-w" id="Gengduot">
+			<li tab_name="Gengduoprs">
+				<a href="javascript:void(0);">公司性质<em id="gdtpr">&nbsp;&nbsp;{yun:}$comclass_name[$smarty.get.pr]{/yun}</em></a>
+			</li>
+			<li tab_name="Gengduohys">
+				<a href="javascript:void(0);">所属行业<em id="gdthy">&nbsp;&nbsp;{yun:}$industry_name[$smarty.get.hy]{/yun}</em></a>
+			</li>
+			<li tab_name="Gengduonums">
+				<a href="javascript:void(0);">公司规模<em id="gdtnum">&nbsp;&nbsp;{yun:}$comclass_name[$smarty.get.num]{/yun}</em></a>
+			</li>
+			<li tab_name="Gengduoedus">
+				<a href="javascript:void(0);">学历要求<em id="gdtedu">&nbsp;&nbsp;{yun:}$ltclass_name[$smarty.get.edu]{/yun}</em></a>
+			</li>
+			<li tab_name="Gengduouptimes">
+				<a href="javascript:void(0);">更新日期<em id="gdtuptime">&nbsp;&nbsp;{yun:}$uptime[$smarty.get.uptime]{/yun}</em></a>
+			</li>
+			
+			<li>年薪待遇：
+				<span class="salary_text_box"><input type="text" size="5" name="minsalary" id="minlt" value="{yun:}$smarty.get.minsalary{/yun}" placeholder="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="salary_text">
+				</span>
+				<span> - </span>
+				<span class="salary_text_box"><input type="text" size="5" name="maxsalary" id="maxlt" value="{yun:}$smarty.get.maxsalary{/yun}" placeholder="30" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="salary_text">
+				<span> 万 </span></span>
+			</li>
+			<li class="search_bth_box">
+				{yun:}if $smarty.get.provinceid{/yun}<input type="hidden" name="provinceid" value="{yun:}$smarty.get.provinceid{/yun}"/>{yun:}/if{/yun}
+				{yun:}if $smarty.get.cityid{/yun}<input type="hidden" name="cityid" value="{yun:}$smarty.get.cityid{/yun}"/>{yun:}/if{/yun}
+				{yun:}if $smarty.get.three_cityid{/yun}<input type="hidden" name="cityid" value="{yun:}$smarty.get.three_cityid{/yun}"/>{yun:}/if{/yun}
+				{yun:}if $smarty.get.jobone{/yun}<input type="hidden" name="jobone" value="{yun:}$smarty.get.jobone{/yun}"/>{yun:}/if{/yun}
+				{yun:}if $smarty.get.jobtwo{/yun}<input type="hidden" name="jobtwo" value="{yun:}$smarty.get.jobtwo{/yun}"/>{yun:}/if{/yun}
+				{yun:}if $smarty.get.exp{/yun}<input type="hidden" name="exp" value="{yun:}$smarty.get.exp{/yun}"/>{yun:}/if{/yun}
+				<input type="hidden" name="pr" id="gdtpri" value="{yun:}$smarty.get.pr{/yun}" />
+				<input type="hidden" name="hy" id="gdthyi" value="{yun:}$smarty.get.hy{/yun}" />
+				<input type="hidden" name="num" id="gdtnumi" value="{yun:}$smarty.get.num{/yun}" />
+				<input type="hidden" name="edu" id="gdtedui" value="{yun:}$smarty.get.edu{/yun}" />
+				<input type="hidden" name="uptime" id="gdtuptimei" value="{yun:}$smarty.get.uptime{/yun}" />
+				<div class="search_chlosebth_box"><input type="submit" value="确定" class="search_bth">
+				<a href="{yun:}url m=wap c=post{/yun}"class="search_chlosebth_box_qk">清空所有</a></div>
+				
+			</li>
+		</ul>
+	</form>
+	<ul class="Gengduot-t" id="Gengduoprs" style="display:block;">
+		{yun:}foreach from=$comdata.job_pr item=v{/yun}
+		<li tab_name="gdtpr" data="{yun:}$v{/yun}">
+			<a>{yun:}$comclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="Gengduot-t" id="Gengduohys" style="display:none;">
+		{yun:}foreach from=$industry_index item=v{/yun}
+		<li tab_name="gdthy" data="{yun:}$v{/yun}">
+			<a>{yun:}$industry_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="Gengduot-t" id="Gengduonums" style="display:none;">
+		{yun:}foreach from=$comdata.job_mun item=v{/yun}
+		<li tab_name="gdtnum" data="{yun:}$v{/yun}">
+			<a>{yun:}$comclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="Gengduot-t" id="Gengduoedus" style="display:none;">
+		{yun:}foreach from=$ltdata.lt_edu item=v{/yun}
+		<li tab_name="gdtedu" data="{yun:}$v{/yun}">
+			<a>{yun:}$ltclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="Gengduot-t" id="Gengduouptimes" style="display:none;">
+		{yun:}foreach from=$uptime key=key item=v{/yun}
+		<li tab_name="gdtuptime" data="{yun:}$key{/yun}">
+			<a>{yun:}$v{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+
+</div>
+<!-- End gengduot -->
+
+<!-- wap猎头会员中心行业类别 -->
+<div class="lietouhy-eject pubtwo none" id="lthylist">
+	<div class="lt_publictit"><span class="lt_publictit_name">选择擅长行业</span>
+		<div class="lt_publictit_cz">
+			
+			<button onclick="Closes('lthy')" class="lt_publictit_cz_bth lt_publictit_cz_bth_gb">关闭</button>
+			<button onclick="ltremoves('lthy');" class="lt_publictit_cz_bth lt_publictit_cz_bth_qc">清除</button>
+            <button onclick="ltrealy('lthy');" class="lt_publictit_cz_bth">确定</button>
+			<input type="hidden" id="checknum" value="">
+		</div>
+	</div>
+	<ul class="lietouhy-w">
+		{yun:}foreach item=v from=$lthy_index{/yun}
+		<li class="qlietouhy{yun:}$v{/yun}" onclick="lietouhy('{yun:}$v{/yun}')">{yun:}$lthy_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+
+	</ul>
+	<ul class="lietouhy-t">
+		{yun:}foreach item=v from=$lthy_index{/yun}
+		<li class="none hytwo two{yun:}$v{/yun}"><input id="r{yun:}$v{/yun}" data="{yun:}$lthy_name[$v]{/yun}" type="checkbox" value="{yun:}$v{/yun}" name="lthyclass" onclick="ltchecked_input('{yun:}$v{/yun}','lthy');"><label for="r{yun:}$v{/yun}">全部</label></li>
+		{yun:}foreach item=val from=$lthy_type[$v]{/yun}
+		<li class="none hytwo two{yun:}$v{/yun}"><input id="r{yun:}$val{/yun}" class="one{yun:}$v{/yun}" data="{yun:}$lthy_name[$val]{/yun}" type="checkbox" value="{yun:}$val{/yun}" class="one{yun:}$val{/yun}" name="lthyclassone" onclick="ltchecked_input('{yun:}$val{/yun}','lthy');"><label for="r{yun:}$val{/yun}">{yun:}$lthy_name[$val]{/yun}</label></li>
+		{yun:}/foreach{/yun} {yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End lietou -->
+
+<!-- wap猎头会员中心职位类别 -->
+<div class="lietoujobs-eject pubtwo none" id="ltjoblist">
+	<div class="lt_publictit"><span class="lt_publictit_name">选择擅长职位</span>
+		<div class="lt_publictit_cz">
+			
+			<button onclick="Closes('ltjob');" class="lt_publictit_cz_bth lt_publictit_cz_bth_gb">关闭</button>
+			<button onclick="ltremoves('ltjob');" class="lt_publictit_cz_bth lt_publictit_cz_bth_qc">清除</button>
+            <button onclick="ltrealy('ltjob');" class="lt_publictit_cz_bth">确定</button>
+		</div>
+	</div>
+	<ul class="lietoujobs-w">
+		{yun:}foreach from=$ltjob_index item=v{/yun}
+		<li class="qlietoujobs{yun:}$v{/yun}" onclick="lietoujobs('{yun:}$v{/yun}')">{yun:}$ltjob_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+
+	</ul>
+	<ul class="lietoujobs-t">
+		{yun:}foreach item=v from=$ltjob_index{/yun}
+		<li class="none jobtwo jtwo{yun:}$v{/yun}"><input id="j{yun:}$v{/yun}" data="{yun:}$ltjob_name[$v]{/yun}" type="checkbox" value="{yun:}$v{/yun}" name="ltjobclass" onclick="ltchecked_input('{yun:}$v{/yun}','ltjob');"><label for="j{yun:}$v{/yun}">全部</label></li>
+		{yun:}foreach item=val from=$ltjob_type[$v]{/yun}
+		<li class="none jobtwo jtwo{yun:}$v{/yun}"><input id="j{yun:}$val{/yun}" class="jobone{yun:}$v{/yun}" data="{yun:}$ltjob_name[$val]{/yun}" type="checkbox" value="{yun:}$val{/yun}" class="jobone{yun:}$val{/yun}" name="ltjobclassone" onclick="ltchecked_input('{yun:}$val{/yun}','ltjob');"><label for="j{yun:}$val{/yun}">{yun:}$ltjob_name[$val]{/yun}</label></li>
+		{yun:}/foreach{/yun} {yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- End lietou -->
+
+<!-------!宣讲会办学时间/普工/店铺发布时间--------->
+<div class="Sortadtime-eject Sortadtime-height pubtwo none">
+	<ul class="Sortadtime-Sortadtime" id="Sortadtime-Sortadtime">
+		{yun:}foreach from=$adtime item=v key=key{/yun}
+		<li>
+			{yun:}if $smarty.get.c=='school'{/yun}
+			<a href="{yun:}searchurl m=wap c=school a=xjh adtime=$key untype='adtime'{/yun}">{yun:}$v{/yun}</a>
+			{yun:}else if $smarty.get.c=='once'{/yun}
+			<a href="{yun:}searchurl m=wap c=once add_time=$key untype='add_time'{/yun}">{yun:}$v{/yun}</a>
+			{yun:}else if $smarty.get.c=='tiny'{/yun}
+			<a href="{yun:}searchurl m=wap c=tiny add_time=$key untype='add_time'{/yun}">{yun:}$v{/yun}</a>
+			{yun:}/if{/yun}
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-------!院校类别--------->
+<div class="Sortcategty-eject Sortcategty-height pubtwo none">
+	<ul class="Sortcategty-Sortcategty" id="Sortcategty-Sortcategty">
+		{yun:}foreach from=$schoolata.school_categty item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=school categty=$v untype='categty'{/yun}">{yun:}$schoolclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!--school办学层次-->
+<div class="Schoollevel-eject Schoollevel-height pubtwo none">
+	<ul class="Schoollevel-Schoollevel" id="Schoollevel-Schoollevel">
+		{yun:}foreach from=$schoolata.school_level item=v{/yun}
+		<li>
+			<a href="{yun:}searchurl m=wap c=school level=$v untype='level'{/yun}">{yun:}$schoolclass_name[$v]{/yun}</a>
+		</li>
+		{yun:}/foreach{/yun}
+	</ul>
+</div>
+<!-- wap商城商品类别 -->
+<div class="redeem-eject pubtwo none">
+	<ul class="redeem-w" id="nid">
+		{yun:}foreach from=$redeem_index item=v{/yun}
+		<li class="qredeemw{yun:}$v{/yun}" onclick="redeemw('{yun:}$v{/yun}','{yun:}$redeem_name[$v]{/yun}','nid')">{yun:}$redeem_name[$v]{/yun}</li>
+		{yun:}/foreach{/yun}
+	</ul>
+	<ul class="redeem-t" id="tnid">
+	</ul>
+
+</div>
+<!-- End redeem -->

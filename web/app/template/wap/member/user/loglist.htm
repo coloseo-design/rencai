@@ -1,0 +1,126 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<div id="yunvue" class="none">
+    <div class="money_header">
+        <div class="money_header_title">
+         
+        </div>
+    </div>
+    <div class="money_body">
+        <div class="money_body_card">
+            <div class="money_card_box">
+                <div class="card_box_name">我的钱包</div>
+                <div class="card_box_number">
+                    <i class="card_number_icon">￥</i> 
+                    <i  class="card_box_text"> {{packfk}}</i>
+                </div>
+            </div>
+            <div class="money_card_hint"></div>
+            <div class="money_card_box">
+                <div class="card_box_name">冻结金额</div>
+                <div class="card_box_number">
+                    <i class="card_number_icon">￥</i>
+                    <i class="card_box_text">{{freeze}}</i> 
+                </div>
+            </div>
+           
+        </div>
+        <div class="money_body_btns">
+           <div class="money_btns_transform" @click="cashchange">转换积分</div>
+           <div class="money_btns_withdraw" @click="cashout">立即提现</div>
+        </div>
+        <div>
+            <div v-if="count !=0">
+                <div v-for="(item,rkey) in list" :key="rkey">
+                    <div>转发职位:{{item.jobname}}</div>
+                    <div>浏览时间:{{item.time_n}}</div>
+                    <div>获得金额:+{{item.packmoney}}元</div>
+                </div>
+            </div>
+            <div v-if="count==2">
+            <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+            </div>
+            <div class="wap_member_no" v-show="count==0">
+                暂无收益!
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}');   
+    var yunvue =  new Vue({
+        el:"#yunvue",
+        data:{
+            list:[],
+            statis:[],
+            pricename:'',
+            withdraw:0,           
+            page: currentPage ? currentPage : 1,
+            packfk:0,
+            freeze:0,
+            islook:false,
+            limit:20,
+            total:0
+        },
+        computed: {
+          count(){
+            if(this.total > this.limit){
+              return 2;
+            }else if(this.list.length==0){
+              return 0;
+            }else{
+                return 1;
+            }
+          }
+        },
+        created() {
+            this.getLogList();
+        },
+        methods: {
+            getLogList: function(){                
+                var that = this;
+                var paramer = {};
+                paramer['page']  = that.page;
+                paramer['limit'] = that.limit;
+                showLoading();
+                $.post('{yun:}url d=wxapp h=user m=finance c=logList{/yun}', paramer, function(data){
+                    hideLoading();
+                    that.statis = data.data.statis;
+                    that.pricename = data.data.pricename;
+                    that.withdraw  = data.data.withdraw;
+                    that.packfk = that.statis.packfk>0? that.statis.packfk:0;
+                    that.freeze  = that.statis.freeze>0? that.statis.freeze:0;
+                    if (data.data.list.length > 0) {
+                        that.list =  data.data.list
+                        
+                    } 
+                    $("#yunvue").css('display', 'block');
+                },'json');
+            },
+            pageTo:function(url){
+                window.location.href = url;
+            },
+            cashout:function(){
+                var that = this;               
+                if(that.withdraw>0){
+                   window.location.href="index.php?c=withdraw";
+                }else{
+                    return showToast('暂无可提现金额');
+                }
+            },
+            cashchange:function(){
+                var that = this;
+                if(that.withdraw>0){
+                    window.location.href="index.php?c=change";
+                }else{
+                    return showToast('暂无可转换金额');
+                }
+            },
+            pageChange:function(e){
+                
+              location.href = 'index.php?c=loglist&page='+e;
+            }
+        }
+    });
+</script>
+</body>
+</html>

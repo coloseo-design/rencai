@@ -1,0 +1,40 @@
+{yun:}include file="$wapstyle/fheader.htm"{/yun}
+<div class="clear"></div>
+<div class="free_job_join">
+<div class="free_job_join_box_c">
+<div class="free_job_join_box">
+<a {yun:}if $uid{/yun}href="{yun:}url m=wap c=free a=info{/yun}"{yun:}else{/yun}href="{yun:}url m=wap c=login{/yun}"{yun:}/if{/yun} class="free_job_join_box_all">
+<div class="free_job_join_box_name">我要入驻赚钱</div>
+<div class="free_job_join_box_p">自由职业，自由赚钱</div>
+</a>
+</div>
+<div class="free_job_join_box">
+<a {yun:}if $uid{/yun}href="{yun:}url m=wap c=free a=addtask{/yun}"{yun:}else{/yun}href="{yun:}url m=wap c=login{/yun}"{yun:}/if{/yun} class="free_job_join_box_all free_job_join_box_allcom">
+<div class="free_job_join_box_name">我要花钱雇佣</div>
+<div class="free_job_join_box_p">有需求找人做事</div>
+
+</a>
+</div></div>
+</div>
+<div class="clear"></div>
+<div class="free_job_indexhot">
+<div class="free_job_indexhottit">热门搜索</div>
+{yun:}key limit=12 recom=1 type=14 item=keylist{/yun}
+<a href="{yun:}url m=wap c=gqlist a=task keyword=$keylist.key_title{/yun}">{yun:}$keylist.key_name{/yun}</a>
+{yun:}/key{/yun}
+</div>
+<div class="clear"></div>
+{yun:}task ispage=1 limit=6 item=list{/yun}
+<div class="free_job_indexlist">
+<a href="{yun:}url m=wap c=gqlist a=taskshow id=$list.id{/yun}">
+<div class="free_job_user_pic"><img src="{yun:}if $list.photo_n{/yun}{yun:}$list.photo_n{/yun}{yun:}else{/yun}{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}{yun:}/if{/yun}" width="60" height="60"></div>
+<div class="free_job_indexlist_tit">{yun:}$list.name{/yun}</div>
+<div class="free_job_indexlist_p">需求：{yun:}$list.content{/yun}</div>
+<span class="free_job_index_time">{yun:}$list.ctime{/yun}发布</span>
+<span class="free_job_jg">{yun:}$list.salary{/yun}元</span>
+</a>
+</div>
+{yun:}/task{/yun}
+<a href="{yun:}url m=wap c=gqlist a=task{/yun}"><div class="free_job_index_more">查看更多></div></a>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<?php 
+$baiduData=array()
+; 
+?>

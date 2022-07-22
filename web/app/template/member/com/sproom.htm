@@ -1,0 +1,174 @@
+<!DOCTYPE html><head>
+<title>企业用户后台管理系统 - {yun:}$config.sy_webname{/yun}</title>
+<meta http-equiv=Content-Type content="text/span; charset=utf-8"/>
+<meta http-equiv=X-UA-Compatible content="IE=edge"/>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<link href="{yun:}$com_style{/yun}/images/m_style.css?v={yun:}$config.cachecode{/yun}" type="text/css" rel="stylesheet"/>
+<link href="{yun:}$style{/yun}/style/tips.css?v={yun:}$config.cachecode{/yun}" type="text/css" rel="stylesheet"/>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="{yun:}$com_style{/yun}/images/sproom.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/jquery-3.2.1.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<meta content="MSHTML 6.00.6000.16939" name=GENERATOR/> 
+</head>
+{yun:}include file="$comstyle/headnav.htm"{/yun} 
+<div class="sproom">
+	<div class="sproom_box">
+		<div class="sproom_left">
+			<div class="sproom_l_hd">
+				<div class="sproom_l_hd_box">
+					<!--当前面试人简历预览-->
+					<div id="nowuser">
+					</div>
+					<div id="resume_detail" data-uid="" class="hd_look_resume">查看简历<i></i></div>
+				</div>
+				<!--当前面试人简历详情-->
+				<div id="nowresume" class="resume_details" style="display: none;">
+				</div>
+			</div>
+			
+			<div class="sproom_l_md">
+				
+				<!--没有视频-->
+				
+				<div id="bdiv" class="msj_notip">
+					<div class="msj_notipicon"></div>
+					{yun:}if $spview.starttime > time(){/yun}
+					<div class="msj_notip_p">面试尚未开始 </div>
+					{yun:}else{/yun}
+					<div class="msj_notip_p2">请从右侧列表中选择面试对象 </div>
+					{yun:}/if{/yun}
+				</div>
+				
+				<!--对方视频-->
+				<a id="reinvite" href="javascript:void(0);" onclick="" class="cxyq_a" style="display: none;">重新邀请</a>
+				<div id="video-grid" style="height: 100%; flex: 1">
+				</div>
+			</div>
+
+			<div class="sproom_l_bm">
+				<div class="sproom_l_bm_box">
+					<a href="javascript:void(0);" onclick="spviewEndNow();">
+						<div class="bm_i2"></div><span>结束当前面试</span>
+					</a>
+					<a href="javascript:void(0);" onclick="spviewPause();">
+						<div class="bm_i1"></div><span>暂停面试</span>
+					</a>
+					<a href="javascript:void(0);" onclick="spviewFinish();">
+						<div class="bm_i4"></div><span>关闭面试房间</span>
+					</a>
+					<a href="javascript:void(0);" onclick="spviewNextAsk();">
+						<div class="bm_i3"></div><span>呼叫下一位</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="sproom_right">
+			<div class="sproom_r_hd">
+				<div class="info">
+					<img src="{yun:}$company.logo{/yun}" alt="" class="head_portrait">
+					<span>{yun:}$company.linkman{/yun}</span>
+				</div>
+				<div class="video">
+					<div id="csvideo" class="sp_cshm">
+						测试视频画面是否正常显示
+						<a href="javascript:void(0)" onclick="csvideo()" class="sp_cshm_bth">开始测试</a>
+					</div>
+					<!-- 我的视频 -->
+					<div style="height: 100%; flex: 1">
+					    <div id="mine-video" class="video-box col-div" style="justify-content: flex-end">
+					    </div>
+					</div>
+				</div>
+			</div>
+			<div class="sproom_r_md">
+				<div class="sproom_r_md_box">
+					<div class="list">
+						<div id="subnum" class="num">0</div><span>预约总人数</span>
+					</div>
+					<div class="list">
+						<div id="linenum" class="num">0</div><span>待面试人数</span>
+					</div>
+					<div class="list">
+						<div id="msnum" class="num">0</div><span>已面试</span>
+					</div>
+				</div>
+			</div>
+			<div class="sproom_r_bm" style=" position:relative">
+
+				<!--没有等待-->
+				
+				<div id="nouser" class="sproom_no_pd" style="display: none;">
+					<div class="sproom_no_pdicon"></div>
+					暂无待面试用户
+				</div>
+				<!--等待面试列表-->
+				<ul id="waitingUser" class="sproom_r_bm_box">
+				</ul>
+
+				<div class="sproom_r_bm_bz">
+					<textarea id="remark" rows="" cols="" placeholder="请输入对该面试者的备注" class="text_bz"></textarea>
+					<a href="javascript:void(0);" onclick="saveReamrk()" class="btn_preservation">保存</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="sprequest" style="display: none;">
+	<div id="bg" style="display: block; "></div>
+	<div  style="display: block; position:fixed;top:50%;left:50%; margin-left:-150px; margin-top:-120px; z-index:1000012">
+		<div class="sprequest_waitbox">
+			<div class="sprequest_waitiocn"></div>
+			<div class="sprequest_wait">正在等待对方接受邀请</div>
+			<div class="sprequest_wait_time">预计等待时间<span id="spWait">60</span>秒</div>
+		</div>
+	</div>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/abilitytest.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+	var TrtcConfig = {
+		mine: '{yun:}$uid{/yun}',
+		commentID: '',
+		userId: '{yun:}$trtcConfig.userId{/yun}',
+		roomId: '{yun:}$trtcConfig.roomId{/yun}',
+		sdkAppId: '{yun:}$trtcConfig.sdkAppId{/yun}',
+		csRoomId: '{yun:}$trtcConfig.csRoomId{/yun}',
+		userSig: '{yun:}$trtcConfig.userSig{/yun}',
+		spWait: '{yun:}$trtcConfig.spWait{/yun}',
+		status: '0'
+	};
+	var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}";
+	var weburl = '{yun:}$config.sy_weburl{/yun}';
+	var usertype = '{yun:}$usertype{/yun}';
+	var sid = '{yun:}$spview.id{/yun}';
+	var spjobid = '';
+	var viewuid = ''; //正在面试中的个人用户uid
+	var viewruid= '';
+	
+	var isSupport = startBrowserTest();
+	if(!isSupport){
+		layui.use('layer', function() {
+			let layer = layui.layer;
+			layer.open({
+				type: 0,
+				content: '您的浏览器不支持视频面试功能！<br>建议使用最新版Chrome浏览器或将浏览器更换为极速模式',
+				end: function(){
+					window.location.href = weburl + '/member/';
+				}
+			});
+		});
+	}else{
+		document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/trtc.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+		document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/pcsocket.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+		document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/rtc-client.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+		document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/index.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+		document.write('<script src="{yun:}$com_style{/yun}/js/sproom.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+	}
+</script>
+</body>
+</html>

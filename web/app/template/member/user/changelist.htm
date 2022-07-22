@@ -1,0 +1,55 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+       <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">赏金转换{yun:}$config.integral_pricename{/yun}</span> <i class="member_right_h1_icon user_bg"></i></div>
+       <div>
+            <div id="gms_showclew"></div>       
+			<div class="job_list_tit"> 
+              <ul class="">
+                <li>
+					<a href="index.php?c=jobpack&act=change">转换{yun:}$config.integral_pricename{/yun}</a>
+				</li>
+				<li class="job_list_tit_cur" >
+					<a href="index.php?c=jobpack&act=changelist">消费记录</a>
+				</li>				
+			  </ul> 
+		    </div>
+            <div class="resume_Prompt_box"><div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>单笔转换金额必须达到{yun:}$config.packprice_min_recharge{/yun}元。</div></div>
+			<div class="resume_box_list">
+				<div class="com_body">  
+					<div class="withdraw_tx_box">
+						<span class="withdraw_tx_box_d">可转换金额：</span> <span class="withdraw_tx_box_n">￥{yun:}$statis.packpay{/yun}</span> 元&nbsp;&nbsp;
+						<span class="withdraw_tx_box_d">已冻结金额：</span> <span class="withdraw_tx_box_n">￥{yun:}$statis.freeze{/yun}</span> 元
+					</div> 
+					<div class="clear"></div>
+					<div class="withdraw_tx_list">
+						<table width="100%" cellpadding="1" cellspacing="0">
+							{yun:}if $rows{/yun}
+							<tr>
+								<th>转换单号</th>								
+								<th>转换{yun:}$config.integral_pricename{/yun}</th>
+								<th>时间</th>							
+							</tr>
+							{yun:}/if{/yun}
+							{yun:}foreach from=$rows item=v{/yun}
+							<tr>
+								<td>{yun:}$v.order_id{/yun}</td>
+								<td>{yun:}$v.order_price|floatval{/yun}个</td>
+								<td>{yun:}$v.pay_time|date_format:'%Y-%m-%d'{/yun}</td>
+							</tr>							
+							{yun:}foreachelse{/yun}
+							<tr colspan="6">							
+                                <div class="msg_no">您还没有转换记录。</div>
+							</tr>
+							{yun:}/foreach{/yun}							
+						</table>   
+						<div class="diggg">{yun:}$pagenav{/yun}</div>
+					</div>
+				</div>        
+            </div>
+        </div>
+    </div>
+</div>
+
+{yun:}include file="$userstyle/footer.htm"{/yun}

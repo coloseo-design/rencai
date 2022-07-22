@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	{yun:}include file="$lietoustyle/public.htm"{/yun}
+	<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/jianli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+	<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/account.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+	<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+</head>
+
+<body>
+	{yun:}include file="$lietoustyle/header.htm"{/yun} 
+	<!--内容部分content-->
+	<style>
+	.my_table_msg th{ text-align:right}
+	</style>
+	
+	<div class="m_content">
+		<div class="wrap">{yun:}include file="$lietoustyle/left.htm"{/yun}
+			<div class="m_inner_youb fr">
+				<div class="lt_m_tit">
+           <ul class="lt_m_tit_list">
+						<li><a href="index.php?c=integral" >{yun:}$config.integral_pricename{/yun}任务</a></li>
+						<li class="lt_m_tit_list_cur"><a href="index.php?c=integral_reduce" >消费规则</a></li> 
+						<li><a href="index.php?c=reward_list" >{yun:}$config.integral_pricename{/yun}兑换</a></li> 
+					</ul>
+				</div>
+
+				<div class="com_body">
+					<div class="integral_cont">
+						<ul class="integral_cont_list">
+							<li>
+								<span class="integral_cont_list_span">发布职位</span> 
+								<span class="integral_cont_list_span_c" style="border:none;"> 消费 <b>{yun:}$config.integral_job{/yun}</b>元 / 份 </span> 
+							</li>
+						
+							<li> 
+								<span class="integral_cont_list_span">刷新职位</span> 
+								<span class="integral_cont_list_span_c" style="border:none;"> 消费 <b>{yun:}$config.integral_jobefresh{/yun}</b> 元 / 份 </span> 
+							</li>
+
+							<li> 
+								<span class="integral_cont_list_span">下载人才简历</span> 
+								<span class="integral_cont_list_span_c" style="border:none;"> 消费 <b>{yun:}$config.integral_down_resume{/yun}</b> 元 / 份 </span> 
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ {yun:}include file="$lietoustyle/footer.htm"{/yun} 

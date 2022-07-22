@@ -1,0 +1,487 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/member_style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<script src="{yun:}$wap_style{/yun}/js/alloy/transform.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/alloy/alloy-finger.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/alloy-crop.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/exif.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/member_caregory.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="yunset_list">
+                    <li>
+                        <a href="#photohtml" class="yunset_list_max"><span class="yunset_list_name">培训logo</span>
+                            <span class="yunset_list_tx "><img id="photoshow"  src="{yun:}$row.logo_n{/yun}"  style="border-radius:0px; width:30px;height:30px;"></span>
+                        </a>
+					</li>
+				</ul>
+				<ul class="yunset_list mt15">
+					<li class="yunset_list_text"><span class="yunset_list_name">机构全称 </span>
+                        <span class="yunset_list_commentary"> 
+					       <input type="text" name="name" id='name' value="{yun:}$row.name{/yun}" placeholder="请填写机构全称" >
+					    </span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">培训方向</span>
+                        <span class="yunset_list_commentary">
+					       <button id='sidPicker' class="mui-btn mui-btn-block" type='button' data-sid="{yun:}$row.sid{/yun}">{yun:}if $row.sid{/yun}{yun:}$subject_name[$row.sid]{/yun}{yun:}else{/yun}请选择培训方向{yun:}/if{/yun}</button>
+					       <input type="hidden" id="sid" name="sid" value="{yun:}$row.sid{/yun}">
+					   </span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">培训性质</span>
+                        <span class="yunset_list_commentary">
+					       <button id='prComPicker' class="mui-btn mui-btn-block" type='button' data-pr="{yun:}$row.pr{/yun}">{yun:}if $row.pr{/yun}{yun:}$comclass_name[$row.pr]{/yun}{yun:}else{/yun}请选择培训性质{yun:}/if{/yun}</button>
+					    <input type="hidden" id="pr" name="pr" value="{yun:}$row.pr{/yun}">
+    					</span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">所在地</span>
+                        <span class="yunset_list_commentary">
+					       <button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}" data-cityid="{yun:}$row.cityid{/yun}" data-three_cityid="{yun:}$row.threecityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.threecityid]{/yun}{yun:}else{/yun}请选择所在地{yun:}/if{/yun}</button>
+					       <input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+					       <input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+					       <input type="hidden" id="three_cityid" name="threecityid" value="{yun:}$row.threecityid{/yun}">
+					    </span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">培训规模</span>
+                        <span class="yunset_list_commentary">
+					       <button id='munComPicker' class="mui-btn mui-btn-block" type='button' data-mun="{yun:}$row.mun{/yun}">{yun:}if $row.mun{/yun}{yun:}$comclass_name[$row.mun]{/yun}{yun:}else{/yun}请选择培训规模{yun:}/if{/yun}</button>
+					    <input type="hidden" id="mun" name="mun" value="{yun:}$row.mun{/yun}">
+    					</span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">机构地址</span>
+                        <span class="yunset_list_commentary"> 
+					        <input type="text" name="address" id='address' value="{yun:}$row.address{/yun}" placeholder="请填写机构地址" >
+					    </span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">联系人</span>
+                        <span class="yunset_list_commentary"> 
+					        <input type="text" name="linkman" id='linkman' value="{yun:}$row.linkman{/yun}" placeholder="请填写联系人" >
+					    </span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">固定电话</span>
+                        <span class="yunset_list_commentary"> 
+						    <input type="text" name="linkphone" id='linkphone' value="{yun:}$row.linkphone{/yun}"  onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" placeholder="请填写固定电话" >
+					    </span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">手机号码</span>
+                        <span class="yunset_list_commentary">
+        					{yun:}if $row.moblie_status==1{/yun}（已绑定）{yun:}$row.linktel{/yun} 
+        					<input type="hidden" id="linktel" name="linktel" value="{yun:}$row.linktel{/yun}">
+        					{yun:}else{/yun}
+        					<input type="text" name="linktel" id="linktel" value="{yun:}$row.linktel{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class=""placeholder="请填写手机号码" >
+        					{yun:}/if{/yun} 
+    					</span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">成立时间</span>
+                        <span class="yunset_list_commentary">
+        					<button id='sdatePicker' data-options='{"type":"date","value":"{yun:}if $row.sdate{/yun}{yun:}$row.sdate{/yun}{yun:}else{/yun}1988-08-08{yun:}/if{/yun}","beginYear":{yun:}time()|date_format:"Y"-100{/yun},"endYear":{yun:}time()|date_format:"Y"{/yun}}' class="mui-btn mui-btn-block" type='button'>{yun:}if $row.sdate{/yun}{yun:}$row.sdate{/yun}{yun:}else{/yun}请选择成立时间{yun:}/if{/yun}</button>
+        					<input type="hidden" id="sdate" name="sdate" value="{yun:}$row.sdate{/yun}">
+        				</span>
+                    </li>
+                </ul>
+                <ul class="yunset_list mt15">
+                    <li>
+                        <a href="#contenthtml" id="contenteditor" class="">
+                        	<span class="yunset_list_name">机构简介</span>
+                        	<span class="yunset_list_commentary yunset_list_js" id="contentshow">
+                        		{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请输入机构简介{yun:}/if{/yun}
+                        	</span>
+                        </a>
+                    </li>
+                    <textarea style="display:none" id="content">{yun:}$row.content{/yun}</textarea>
+                </ul>
+                <ul class="yunset_list mt15">
+                    <li class="yunset_list_text">
+                        <span class="yunset_list_name">联系邮箱<em class="yunset_xttip">(选填)</em></span>
+                        <span class="yunset_list_commentary ">
+        					{yun:}if $row.email_status==1{/yun}
+         					<div class="">{yun:}$row.linkmail{/yun}</div>
+        						<input type="hidden" id="linkmail" value="{yun:}$row.linkmail{/yun}">
+        					{yun:}else{/yun}
+        						<div class="">
+                                    <input type="text" name="linkmail" id="linkmail" value="{yun:}$row.linkmail{/yun}" class="" placeholder="请填写联系邮箱" >
+                                </div>
+        					{yun:}/if{/yun} 
+    					</span>
+                    </li>
+                    <li class="yunset_list_text">
+                        <span class="yunset_list_name">联系QQ<em class="yunset_xttip">(选填)</em></span>
+                        <span class="yunset_list_commentary"> 
+    					    <input type="text" name="linkqq" id='linkqq' value="{yun:}$row.linkqq{/yun}" placeholder="请填写联系QQ" >
+    					</span>
+                    </li>
+                    <li class="yunset_list_text">
+                        <span class="yunset_list_name">机构网址<em class="yunset_xttip">(选填)</em></span>
+                        <span class="yunset_list_commentary"> 
+    					    <input type="text" name="website" id='website' value="{yun:}$row.website{/yun}" placeholder="请填写机构网址" >
+    					</span>
+                    </li>
+                </ul>
+
+                <div class="yunset_bth_box">
+                    <button id="infosubmit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+<!--单页面结束-->
+<div id="contenthtml" class="mui-page muii-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit"> 机构简介 </div>
+                        <textarea class="textAreaMsg tip" id="contenttext" placeholder="请输入机构简介">{yun:}$row.content{/yun}</textarea></div>
+                    <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="photohtml" class="mui-page muii-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div id="showResult">
+                    <div id="changeAvatar" class="photo_i_box">
+                        <img src="{yun:}$row.logo_n{/yun}" width="120" height="120">
+                    </div>
+                    <div class="clear"></div>
+                    <div class="photo_xz">
+                        <input id="image" type="file" accept="image/*" />选择培训logo
+                    </div>
+                    <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>选择培训logo点击提交按钮即可上传{yun:}if $row.logo{/yun}({yun:}if $row.logo_status=='1'{/yun}<font color="red">审核中</font>{yun:}else if $row.logo_status=='2'{/yun}<font color="red">未通过</font>{yun:}else{/yun}<font color="red">已审核</font>{yun:}/if{/yun}){yun:}/if{/yun}</div>
+                    <div class="photo_tj">
+                        <input type='hidden' name="txt" id="uimage" value="">
+                        <input name="submit" type="button" onclick="photo()" value="提交" class="yunset_bth" />
+                    </div>
+                </div>
+                <input type="hidden" value=""  id="preview">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    weburl = "{yun:}$config.sy_weburl{/yun}";
+</script>
+
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/train.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+    var cityParam={
+            sy_web_city_one:'{yun:}$config.sy_web_city_one{/yun}',
+            sy_web_city_two:'{yun:}$config.sy_web_city_two{/yun}',
+        };
+    var cityData    =   cityCategory(cityParam);
+    var jobData     =   jobCategory();
+
+    UM.getEditor('contenttext', {
+        toolbar: false,
+        elementPathEnabled: false,
+        wordCount: false,
+        autoHeightEnabled: false
+    });
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    
+    var view = viewApi.view;
+    (function($) {
+    	//初始化单页的区域滚动
+	    mui('.mui-scroll-wrapper').scroll({
+	        scrollY: true, //是否竖向滚动
+	        scrollX: false, //是否横向滚动
+	        startX: 0, //初始化时滚动至x
+	        startY: 0, //初始化时滚动至y
+	        indicators: true, //是否显示滚动条
+	        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+	        // bounce: true //是否启用回弹
+	    });
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+		 view.addEventListener('pageShow', function(e) {
+            var edittarget = '';
+            if(e.detail.page.id == 'contenthtml') {
+                edittarget = 'contenttext';
+                var contenttext = document.getElementById('content').value;
+            }
+            if(contenttext) {
+               UM.getEditor(edittarget).setContent(contenttext, '');
+            }
+            //console.log(e);
+        });
+        view.addEventListener('pageBeforeBack', function(e) {
+            var content = '',
+                showid = '',
+                textid = '';
+            if(e.detail.page.id == 'contenthtml') {
+                showid = 'contentshow';
+                textid = 'content';
+                content = UM.getEditor('contenttext').getContent();
+            }
+            if(content != "") {
+                document.getElementById(showid).innerText = content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+                document.getElementById(textid).innerText = content;
+            }
+        });
+
+    })(mui);
+    $(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+    var sidData = [];
+    ' {yun:}foreach from=$subject_index item=v{/yun}'
+    sidData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$subject_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var prData = [];
+    '{yun:}foreach from=$comdata.job_pr item=v{/yun}'
+    prData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$comclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}';
+    var munData = [];
+    '{yun:}foreach from=$comdata.job_mun item=v{/yun}'
+    munData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$comclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}';
+    $(function() {
+		$('#image').on('change', function() {
+			cutImg();
+		});
+		
+		var $inputImage = $('#image'),
+			URL = window.URL || window.webkitURL;
+		if(URL) {
+			$inputImage.change(function() {
+				var files = this.files,
+					file;
+                previewImage(this,'preview');
+	
+				if(files && files.length) {
+					file = files[0];
+	
+					if(/^image\/\w+$/.test(file.type)) {
+						setTimeout(function(){
+                            toAlloyCrop($('#preview').val());
+                        },1000);
+						$inputImage.val('');
+					} else {
+						showMessage('请上传图片');
+					}
+				}
+			});
+		} else {
+			$inputImage.parent().remove();
+		}
+	});
+    function cutImg() {
+		$('#showResult').fadeOut();
+	}
+    function toAlloyCrop(pic){
+        var mAlloyCrop;
+        
+        mAlloyCrop = new AlloyCrop({
+            image_src: pic,
+            width: 200,
+            height: 200,
+            output: 1,
+            ok: function(base64, canvas) {
+                $("#changeAvatar > img").attr("src", base64);
+                document.getElementById('uimage').value = base64;
+                $('#showResult').fadeIn();
+            },
+            cancel: function() {
+                $('#showResult').fadeIn();
+            },
+            ok_text: '确定',
+            cancel_text: '取消'
+        });
+    }
+    function photo() {
+        var uimage = $("#uimage").val();
+        if(uimage == '') {
+            showToast('头像未改变，无需修改');
+            return false;
+        }else{
+			var regS = new RegExp("\\+", "gi");
+			uimage = uimage.replace(regS, "#");
+			showLoading()
+			$.ajax({
+				type: 'POST',
+				url: "index.php?c=uppic",
+				cache: false,
+				dataType: 'json',
+				data: {
+					uimage: uimage,
+					submit: 1
+				},
+				success: function(res) {
+					hideLoading();
+					if(res){
+                        showToast(res.msg, 2, function() {
+                            window.location.href = wapurl + "member/index.php?c=info";
+                        });
+                        return false;
+                    }
+				}
+			});
+		}
+        
+    }
+    (function() {
+        var submitBtn = document.getElementById('infosubmit')
+        if(submitBtn) {
+            submitBtn.addEventListener('tap', function() {
+                var name = $.trim(document.getElementById('name').value),
+                    sid = $.trim(document.getElementById('sid').value),
+                    pr = $.trim(document.getElementById('pr').value),
+                    provinceid = $.trim(document.getElementById('provinceid').value),
+                    cityid = $.trim(document.getElementById('cityid').value),
+                    threecityid = $.trim(document.getElementById('three_cityid').value),
+                    mun = $.trim(document.getElementById('mun').value),
+                    address = $.trim(document.getElementById('address').value),
+                    linkman = $.trim(document.getElementById('linkman').value),
+                    linkphone = $.trim(document.getElementById('linkphone').value),
+                    linktel = $.trim(document.getElementById('linktel').value),
+                    sdate = $.trim(document.getElementById('sdate').value),
+                    linkqq = $.trim(document.getElementById('linkqq').value),
+                    website = $.trim(document.getElementById('website').value),
+                    linkmail = $.trim(document.getElementById('linkmail').value),
+                    content = $.trim(document.getElementById('content').value),
+                    myreg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+
+                if(name == "") {
+                    return mui.toast('机构全称不能为空！');
+                }
+                if(sid == "") {
+                    return mui.toast('请选择培训方向！');
+                }
+                if(pr == "") {
+                    return mui.toast('请选择机构性质！');
+                }
+                var cionly ='';
+                if(ct.length<=0 || ct=='new Array()'){
+                    cionly = '1';
+                }
+                if(cionly == '1'){
+                    if(provinceid == '') {
+                        return mui.toast('请选择所在地区！');
+                    }
+                }else{
+                    if(cityid == "") {
+                        return mui.toast('请选择所在地区！');
+                    }
+                }
+                
+                if(mun == "") {
+                    return mui.toast('请选择机构规模！');
+                }
+                if(address == "") {
+                    return mui.toast('机构地址不能为空！');
+                }
+                if(linkman == "") {
+                    return mui.toast('联系人不能为空！');
+                }
+                if(linkphone != '' && isjsTell(linkphone) == false) {
+                    return mui.toast('固定电话格式错误！');
+                }
+                if(linktel == "") {
+                    return mui.toast('手机号码不能为空！');
+                }
+                if(isjsMobile(linktel) == false) {
+                    return mui.toast('手机号码格式错误！');
+                }
+                if(sdate == "") {
+                    return mui.toast('成立时间不能为空！');
+                }
+                if(content == '') {
+                    return mui.toast('机构简介不能为空！');
+                }
+                if(linkmail != "" && !myreg.test(linkmail)) {
+                    return mui.toast('联系邮件格式错误！');
+                }
+                mui.post('index.php?c=info', {
+                    name: name,
+                    sid: sid,
+                    pr: pr,
+                    mun: mun,
+                    address: address,
+                    provinceid: provinceid,
+                    cityid: cityid,
+                    threecityid: threecityid,
+                    linkman: linkman,
+                    linkphone: linkphone,
+                    linktel: linktel,
+                    sdate: sdate,
+                    linkqq: linkqq,
+                    website: website,
+                    linkmail: linkmail,
+                    content: content,
+                    submit: 'submit'
+                }, function(data) {
+                    if(data.url){
+                        showToast(data.msg, 2, function() {
+                            location.href = data.url;
+                        });
+                    }else{
+                        showToast(data.msg, 2);
+                    }
+                    
+			}, 'json');
+		}, false)
+        }
+    })();
+
+    function checkpost() {
+
+    }
+</script>
+{yun:}include file="$wapstyle/member/public/remind.htm"{/yun}
+</body>
+</html>

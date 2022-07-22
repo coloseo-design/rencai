@@ -1,0 +1,16 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>PHP output Excel Example</title>
+    </head>
+        <table border="1">
+    
+    {yun:}foreach item=v key=key from=$list{/yun}
+    <tr>
+        {yun:}if $xls_type=='email'{/yun}
+		<td>{yun:}$v.email{/yun}</td>
+        {yun:}else{/yun}
+        <td>{yun:}$v.moblie{/yun}</td>
+        {yun:}/if{/yun}
+	</tr>
+    {yun:}/foreach{/yun}
+    </table>

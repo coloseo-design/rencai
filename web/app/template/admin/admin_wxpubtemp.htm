@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script language="javascript">
+	var weburl = "{yun:}$config.sy_weburl{/yun}";
+</script>
+
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+	<div class="admin_indextip">
+		{yun:}if $temptype=='1'{/yun}
+		社群推文模板，点击模板参数自动复制粘贴至光标处。
+		{yun:}else{/yun}
+		微信公众号文章模板，点击模板参数自动复制粘贴，编辑器在源码模式下，需要手动粘贴。
+		{yun:}/if{/yun}
+	</div>
+	<div class="infoboxp">
+		<div class="fb_zdy_cont">
+			<div class="fb_zdy_cont_h1">{yun:}if $temptype=='1'{/yun}社群推文<a href="index.php?m=wx&c=wxPubTempList&temptype=1" class="fb_zdy_cont_h1_a">< 返回列表</a>{yun:}else{/yun}微信公众号文章<a href="index.php?m=wx&c=wxPubTempList&temptype=0" class="fb_zdy_cont_h1_a">< 返回列表</a>{yun:}/if{/yun}</div>
+			<iframe id="supportiframe" name="supportiframe"
+				onload="returnmessage('supportiframe');" style="display: none"></iframe>
+			<form method="get" target="supportiframe" name="config"
+				class="layui-form" onsubmit="return false;">
+
+				{yun:}if empty($info){/yun}
+
+				<div class="fb_zdy_list">
+					<div class="fb_zdy_listname">模板类型：</div>
+
+					<div class="layui-input-inline">
+						<span><input type="radio" lay-filter="type" checked
+							name="type" value='job' title="职位模板"></span> <span><input
+							type="radio" lay-filter="type" name="type" value='resume'
+							title="简历模板"></span> <span><input type="radio"
+							lay-filter="type" name="type" value='company' title="企业模板"></span>
+
+					</div>
+				</div>
+				{yun:}/if{/yun}
+
+				<!--编辑模板-->
+
+				<div class="fb_zdy_list">
+					<div class="fb_zdy_listname">模板名称：</div>
+					<div class="layui-input-inline t_w120">
+						<input class="layui-input" type="text" id="tem_title"
+							name="tem_title" value="{yun:}$info.title{/yun}"
+							placeholder="输入模板名称" style="width: 500px;">
+					</div>
+				</div>
+				<div class="fb_zdy_list">
+					<div class="fb_zdy_listname">头部模板：</div>
+
+					<div class="fb_zdy_zt">
+						<span class="admin_web_tip">公共参数，全局都可调用</span><a
+							href="javascript:void(0);" onclick="$('#mbheader_block').toggle();" class="fb_zdy_csbth">模板参数</a>
+						<div id="mbheader_block" class="fb_zdy_mbcs">
+							<div class="fb_zdy_mbcstit">
+								<i class="fb_zdy_mbcstit_jt"></i>模板参数 
+								<span class="fb_zdy_mbcstit_n">复制参数插入到编辑区</span>
+								<a href="javascript:void(0);" onclick="$('#mbheader_block').toggle();" class="fb_zdy_mbcstit_gb"></a>
+							</div>
+
+							{yun:}foreach from=$totalcolumn key=thk item = thv{/yun}
+
+							<div class="totle_column">
+								<div class="fb_zdy_mbcslist">
+									<div onclick="copyMsg('{yun:}$thv[1]{/yun}','tem_header');">
+										<div class="fb_zdy_mbcslist_n">{yun:}$thv[0]{/yun}</div>
+										
+									</div>
+
+								</div>
+							</div>
+
+
+							{yun:}/foreach{/yun}
+						</div>
+					</div>
+
+					{yun:}if $temptype=='1'{/yun}
+					<textarea id='tem_header' name="tem_header" class="txtctrl" wrap="hard" style="width:500px;height:150px;">{yun:}$info.header{/yun}</textarea>
+					{yun:}else{/yun}
+					<script id="tem_header" name="tem_header" type="text/plain"
+						style="width:500px;height:150px;">{yun:}$info.header{/yun}</script>
+					{yun:}/if{/yun}
+					
+				</div>
+				<div class="fb_zdy_list" style="z-index:10;width:600px;">
+					<div class="fb_zdy_listname" id="bodyname">{yun:}if $info.type=='resume'{/yun}简历模板{yun:}else if $info.type=='company'{/yun}企业模板{yun:}else{/yun}职位模板{yun:}/if{/yun}：</div>
+					<div class="fb_zdy_zt">
+						<span class="admin_web_tip">只需要添加一条样式即可；具体显示的数量可到发布工具区选择</span><a
+							href="javascript:void(0);" onclick="$('#mb_block').toggle();" class="fb_zdy_csbth">模板参数</a>
+						<div id="mb_block" class="fb_zdy_mbcs">
+							<div class="fb_zdy_mbcstit">
+								<i class="fb_zdy_mbcstit_jt"></i>模板参数 
+								<span class="fb_zdy_mbcstit_n">复制参数插入到编辑区</span>
+								<a href="javascript:void(0);" onclick="$('#mb_block').toggle();" class="fb_zdy_mbcstit_gb"></a>
+							</div>
+
+							{yun:}foreach from=$typecolumn key=jk item = jv{/yun}
+							<div class="columnctrl {yun:}$jv[2]{/yun}{yun:}if empty($info) && $jv[2]!='job_column' && $jv[2]!='public_column' && $jv[2]!='total_column'{/yun} none{yun:}/if{/yun}">
+								<div class="fb_zdy_mbcslist">
+									<div onclick="copyMsg('{yun:}$jv[1]{/yun}','tem_body');">
+										<div class="fb_zdy_mbcslist_n">{yun:}$jv[0]{/yun}</div>
+									</div>
+								</div>
+							</div>
+							{yun:}/foreach{/yun}
+						</div>
+					</div>
+
+					{yun:}if $temptype=='1'{/yun}
+					<textarea id='tem_body' name="tem_body" class="txtctrl" wrap="hard" style="width:500px;height:330px;">{yun:}$info.body{/yun}</textarea>
+					{yun:}else{/yun}
+					<script id="tem_body" name="tem_body" type="text/plain" style="width:500px;height:300px;">{yun:}$info.body{/yun}</script>
+					{yun:}/if{/yun}
+
+
+				</div>
+
+				<div class="fb_zdy_list">
+					<div class="fb_zdy_listname">尾部模板：</div>
+					<div class="fb_zdy_zt">
+						<span class="admin_web_tip">公共参数，全局都可调用</span><a
+							href="javascript:void(0);" onclick="$('#mbfooter_block').toggle();" class="fb_zdy_csbth">模板参数</a>
+						<div id="mbfooter_block" class="fb_zdy_mbcs">
+							<div class="fb_zdy_mbcstit">
+								<i class="fb_zdy_mbcstit_jt"></i>模板参数 
+								<span class="fb_zdy_mbcstit_n">复制参数插入到编辑区</span>
+								<a href="javascript:void(0);" onclick="$('#mbfooter_block').toggle();" class="fb_zdy_mbcstit_gb"></a>
+							</div>
+
+							{yun:}foreach from=$totalcolumn key=tfk item = tfv{/yun}
+
+							<div class="totle_column">
+								<div class="fb_zdy_mbcslist">
+									<div onclick="copyMsg('{yun:}$tfv[1]{/yun}','tem_footer');">
+										<div class="fb_zdy_mbcslist_n">{yun:}$tfv[0]{/yun}</div>
+									</div>
+								</div>
+							</div>
+							{yun:}/foreach{/yun}
+						</div>
+					</div>
+					{yun:}if $temptype=='1'{/yun}
+					<textarea id='tem_footer' name="tem_footer" class="txtctrl" wrap="hard" style="width:500px;height:150px;">{yun:}$info.footer{/yun}</textarea>
+					{yun:}else{/yun}
+					<script id="tem_footer" name="tem_footer" type="text/plain"
+						style="width:500px;height:150px;">{yun:}$info.footer{/yun}</script>
+					{yun:}/if{/yun}
+				</div>
+				<div class="admin_add_list">
+					<input type="hidden" name="tem_id" id='tem_id' value="{yun:}$info.id{/yun}"> 
+					<input type="hidden" name="tem_type" id='tem_type' value="{yun:}if !empty($info){/yun}{yun:}$info.type{/yun}{yun:}else{/yun}job{yun:}/if{/yun}">
+					<input type="hidden" name="temptype" id='temptype' value="{yun:}$temptype{/yun}"> 
+					<input class="tty_sub" type="button" id="tem_save" value="保存模板" />
+				</div>
+
+				<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+
+				<div class="wxpubtool_sj">
+					<div class="wxpubtool_sj_tit"></div>
+					<div class="wxpubtool_sj_show">
+						<div class="wxpubtool_sj_all">
+							<div class="wxpubtool_sj_sx">
+								<div class="wxpubtool_gj_con" id="content"></div>
+							</div>
+						</div>
+					</div>
+					<div class="wxpubtool_CZ">
+						<input type="button" class="wxpubtool_CZbth"
+							onclick="previewTemp();" value="预览" />
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+
+		<script type="text/javascript">
+			(function ($) {
+			    $.fn.extend({
+			        insertAtCaret: function (myValue) {
+			            var $t = $(this)[0];
+			            if (document.selection) {
+			                this.focus();
+			                sel = document.selection.createRange();
+			                sel.text = myValue;
+			                this.focus();
+			            }
+			            else
+			                if ($t.selectionStart || $t.selectionStart == '0') {
+			                    var startPos = $t.selectionStart;
+			                    var endPos = $t.selectionEnd;
+			                    var scrollTop = $t.scrollTop;
+			                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+			                    this.focus();
+			                    $t.selectionStart = startPos + myValue.length;
+			                    $t.selectionEnd = startPos + myValue.length;
+			                    $t.scrollTop = scrollTop;
+			                }
+			                else {
+			                    this.value += myValue;
+			                    this.focus();
+			                }
+			        }
+			    })
+			})(jQuery);
+
+			String.prototype.replaceAll = function(s1,s2) {
+
+		    	return this.replace(new RegExp(s1,"gm"),s2);
+
+			}
+			
+			
+			var job_map = [], jm = {};
+			'{yun:}foreach from=$jobcolumn_map key=jmk item=jm{/yun}'
+			jm = {
+				'search' : '{yun:}$jmk{/yun}',
+				'replace' : '{yun:}$jm.js{/yun}'
+			};
+			job_map.push(jm);
+			'{yun:}/foreach{/yun}'
+			var resume_map = [], rm = {};
+			'{yun:}foreach from=$resumecolumn_map key=rmk item=rm{/yun}'
+			rm = {
+				'search' : '{yun:}$rmk{/yun}',
+				'replace' : '{yun:}$rm.js{/yun}'
+			};
+			resume_map.push(rm);
+			'{yun:}/foreach{/yun}'
+			var company_map = [], cm = {};
+			'{yun:}foreach from=$companycolumn_map key=cmk item=cm{/yun}'
+			cm = {
+				'search' : '{yun:}$cmk{/yun}',
+				'replace' : '{yun:}$cm.js{/yun}'
+			};
+			company_map.push(cm);
+			'{yun:}/foreach{/yun}'
+			var public_map = [], pm = {};
+			'{yun:}foreach from=$publiccolumn_map key=pmk item=pm{/yun}'
+			pm = {
+				'search' : '{yun:}$pmk{/yun}',
+				'replace' : '{yun:}$pm.js{/yun}'
+			};
+			public_map.push(pm);
+			'{yun:}/foreach{/yun}'
+			var total_map = [], pm = {};
+			'{yun:}foreach from=$totalcolumn_map key=tmk item=tm{/yun}'
+			tm = {
+				'search' : '{yun:}$tmk{/yun}',
+				'replace' : '{yun:}$tm.js{/yun}'
+			};
+			total_map.push(tm);
+			'{yun:}/foreach{/yun}'
+
+			var temps = [], temp = {};
+			'{yun:}foreach from=$temps item=tempv{/yun}'
+			temp = {
+				id : '{yun:}$tempv.id{/yun}',
+				type : '{yun:}$tempv.type{/yun}',
+				title : '{yun:}$tempv.title{/yun}',
+			};
+			temps.push(temp);
+			'{yun:}/foreach{/yun}'
+			'{yun:}if $temptype!="1"{/yun}'
+			var tem_header = UE.getEditor('tem_header', {
+				toolbars : [ [ 'Source', '|', 'Undo', 'Redo', 'Bold', 'italic',
+						'underline', 'fontborder', 'strikethrough',
+						'fontfamily', 'fontsize', 'forecolor', 'backcolor',
+						'removeformat', 'autotypeset', 'pasteplain', '|',
+						'insertorderedlist', 'insertunorderedlist',
+						'selectall', 'cleardoc', '|', 'simpleupload', '|',
+						'link', 'unlink', 'indent', '|', 'justifyleft',
+						'justifycenter', 'justifyright', 'justifyjustify' ] ],
+				wordCount : false,
+				elementPathEnabled : false,
+				initialFrameHeight : 150
+			});
+			var tem_body = UE.getEditor('tem_body', {
+				toolbars : [ [ 'Source', '|', 'Undo', 'Redo', 'Bold', 'italic',
+						'underline', 'fontborder', 'strikethrough',
+						'fontfamily', 'fontsize', 'forecolor', 'backcolor',
+						'removeformat', 'autotypeset', 'pasteplain', '|',
+						'insertorderedlist', 'insertunorderedlist',
+						'selectall', 'cleardoc', '|', 'simpleupload', '|',
+						'link', 'unlink', 'indent', '|', 'justifyleft',
+						'justifycenter', 'justifyright', 'justifyjustify' ] ],
+				wordCount : false,
+				elementPathEnabled : false,
+				initialFrameHeight : 330,
+			});
+			var tem_footer = UE.getEditor('tem_footer', {
+				toolbars : [ [ 'Source', '|', 'Undo', 'Redo', 'Bold', 'italic',
+						'underline', 'fontborder', 'strikethrough',
+						'fontfamily', 'fontsize', 'forecolor', 'backcolor',
+						'removeformat', 'autotypeset', 'pasteplain', '|',
+						'insertorderedlist', 'insertunorderedlist',
+						'selectall', 'cleardoc', '|', 'simpleupload', '|',
+						'link', 'unlink', 'indent', '|', 'justifyleft',
+						'justifycenter', 'justifyright', 'justifyjustify' ] ],
+				wordCount : false,
+				elementPathEnabled : false,
+				initialFrameHeight : 150
+			});
+			
+			'{yun:}/if{/yun}'
+
+
+			
+			layui.use([ 'layer', 'form' ], function() {
+				var form = layui.form, $ = layui.$;
+
+				form.on('radio(type)', function(data) {
+
+					var type = data.value;
+
+					var temptype = $('#temptype').val();
+
+					var type_html = '<option value=\'\'>请选择</option>';
+
+					for ( let i in temps) {
+						if (temps[i].type == type) {
+							type_html += '<option value="'+temps[i].id+'">'
+									+ temps[i].title + '</option>';
+						}
+					}
+					if(type=='resume'){
+						$('#bodyname').text('简历模板：');
+					}else if(type=='company'){
+						$('#bodyname').text('企业模板：');
+					}else{
+						$('#bodyname').text('职位模板：');
+					}
+
+					$("#temp_id").html(type_html);
+					$('#tem_type').val(type);
+
+					$('.columnctrl').hide();
+					$('.' + type + '_column,.public_column,.total_column').show();
+
+					$('#tem_title').val('');
+
+					if(temptype!='1'){
+						tem_header.setContent('');
+						tem_body.setContent('');
+						tem_footer.setContent('');
+					}else{
+						$('#tem_header').val('');
+						$('#tem_body').val('');
+						$('#tem_footer').val('');
+					}
+					
+
+					form.render();
+				});
+
+			});
+			function previewTemp() {
+
+				var html = '', 
+					column_map = [], 
+					forData = [], 
+					for_arr = [], 
+					forstart = '', 
+					forend = '', 
+					type = $('#tem_type').val(), 
+					temptype = $('#temptype').val(),
+					header_html = '', 
+					body_html = '', 
+					footer_html = ''
+					enter='';
+				
+				if(temptype!='1'){
+
+					header_html = escape2Html(tem_header.getContent());
+					body_html = escape2Html(tem_body.getContent());
+					footer_html = escape2Html(tem_footer.getContent());
+
+					$('#content').attr('class','wxpubtool_gj_con_1');
+					
+				}else{
+					header_html = $('#tem_header').val();
+					body_html = $('#tem_body').val();
+					footer_html = $('#tem_footer').val();
+					enter = '\n';
+					$('#content').attr('class','wxpubtool_gj_con');
+					
+				}
+				
+
+				
+				var regPos  = /\{.*?\}/g;;
+				var imgres = body_html.match(regPos);
+				var img_arr = [];
+				var img_tag = '';
+				var img_style = '';
+				var img_html = '';
+				if(imgres){
+					
+					for(let i in imgres){
+
+						img_arr = imgres[i].split('|');
+						if(img_arr.length>1){
+							img_tag	=	img_arr[0]+'}';
+							img_style = img_arr[1];
+							img_style = img_style.replace('样式=','');
+							img_style = img_style.replace('}','');
+							img_html = '<img src="'+img_tag+'" style='+img_style+'/>';
+							
+							body_html = body_html.replace(imgres[i],img_html);
+							
+						}
+						
+					}
+				}
+	
+				if (type == 'job') {
+					column_map = job_map;
+				} else if (type == 'resume') {
+					column_map = resume_map;
+				} else if (type == 'company') {
+					column_map = company_map;
+				}
+
+
+				for(let i in public_map){
+					column_map.push(public_map[i]);
+				}
+				for(let i in total_map){
+					column_map.push(total_map[i]);
+					header_html = header_html.replaceAll(total_map[i].search,total_map[i].replace);
+					footer_html = footer_html.replaceAll(total_map[i].search,total_map[i].replace);
+				}
+				
+
+				for ( let i in column_map) {
+					if (column_map[i].replace.indexOf('forstart') != '-1') {
+						forData.push(column_map[i].replace);
+					}
+					body_html = body_html.replaceAll(column_map[i].search,column_map[i].replace);
+				}
+				
+				if (forData.length > 0) {
+
+					for ( let i in forData) {
+						for_arr = forData[i].split('_');
+						forstart = forData[i];
+						forend = '{forend_' + for_arr[1];
+
+						if (body_html.indexOf(forstart) != -1) {
+							search_html = body_html.substring(body_html.indexOf(forstart), body_html.indexOf(forend)+ forend.length);
+
+							replace_html = body_html.substring(body_html.indexOf(forstart)+ forstart.length, body_html.indexOf(forend));
+
+							replace_html += replace_html;
+							replace_html += replace_html;
+
+							body_html = body_html.replaceAll(search_html,replace_html);
+						}
+
+					}
+				}
+
+				html += header_html;
+				html += enter;
+				html += body_html;
+				html += enter;
+				html += footer_html;
+				
+				$('#content').html(html);
+			}
+			function escape2Html(str) { 
+		     	var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'}; 
+		     	str = str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];}); 
+		     	
+
+		     	return str;
+		    }
+			function copyMsg(msg,temcon) {
+
+				var temptype = $('#temptype').val();
+				var oInput = document.createElement('input');
+				oInput.className = 'oInput';
+
+				if (msg.indexOf('img_') != -1) {
+					msg = msg.replace('img_', '');
+
+				} else if (msg.indexOf('H5xcx_') != -1) {
+					msg = msg.replace('H5xcx_', '');
+
+					var msg_arr = msg.split('_');
+
+					msg = '<a data-miniprogram-type="text"  data-miniprogram-appid="'+msg_arr[0]+'" data-miniprogram-path="'+msg_arr[1]+'">查看详情</a>';
+				}
+				
+				oInput.value = msg;
+				document.body.appendChild(oInput);
+				oInput.select();
+				document.execCommand("Copy");
+				oInput.style.display = 'none';
+
+				$("input").remove(".oInput");
+				
+				if(temptype!='1'){
+					if(temcon=='tem_body'){
+						tem_editor = tem_body;
+					}else if(temcon=='tem_footer'){
+						tem_editor = tem_footer;
+					}else if(temcon=='tem_header'){
+						tem_editor = tem_header;
+					}
+					if(tem_editor.queryCommandState('Source')==0){
+						tem_editor.execCommand('inserthtml',msg);
+						
+					}
+				}else{
+					grin(msg,temcon);
+				}
+			}
+			function grin(tag,temcon) { 
+			        
+				var myField;         
+				myField = document.getElementById(temcon);      
+
+				if (document.selection) {                 
+					myField.focus();                 
+					sel = document.selection.createRange();                 
+					sel.text = tag;                 
+					myField.focus();         
+				}else if (myField.selectionStart || myField.selectionStart == '0') {
+
+				    var startPos = myField.selectionStart;                 
+					var endPos = myField.selectionEnd;                 
+					var cursorPos = endPos;                 
+					myField.value = myField.value.substring(0, startPos)+tag+ myField.value.substring(endPos, myField.value.length);
+					
+					cursorPos += tag.length;                 
+					myField.focus();                
+					myField.selectionStart = cursorPos;                 
+					myField.selectionEnd = cursorPos;         
+				}else {                 
+					myField.value += tag;                 
+					myField.focus();         
+				} 
+			} 
+			function wxpubtip(){
+				var temptype = '{yun:}$temptype{/yun}';
+				var msg = '';
+				if(temptype=='1'){
+					msg = '点击模板参数自动复制粘贴至光标处';
+				}else{
+					msg = '点击模板参数自动复制粘贴，编辑器在源码模式下，需要手动粘贴';
+				}
+				
+				parent.layer.open({
+				  title: '提示'
+				  ,content: msg
+				});
+			}
+			function insertAtCaret(){
+				$('#tem_header').insertAtCaret('要插入的值');
+			}
+			$(function() {
+				$("#tem_save").click(function() {
+
+					var tem_title = $('#tem_title').val(), 
+						tem_header_v = '', 
+						tem_body_v = '', 
+						tem_footer_v = '', 
+						tem_id = $('#tem_id').val(), 
+						tem_type = $('#tem_type').val(), 
+						temptype = $('#temptype').val(), 
+						pytoken = $('#pytoken').val();
+
+					if(temptype=='1'){
+						tem_header_v = $('#tem_header').val();
+						tem_body_v 	 = $('#tem_body').val();
+						tem_footer_v = $('#tem_footer').val();
+					}else{
+						tem_header_v = tem_header.getContent();
+						tem_body_v = tem_body.getContent();
+						tem_footer_v = tem_footer.getContent();
+					}
+					if (tem_title == '') {
+						parent.layer.msg("请填写模板名称！", 2, 8);
+						return false
+					}
+					if (tem_body_v == '') {
+						parent.layer.msg("请填写模板正文！", 2, 8);
+						return false
+					}
+					
+					var formdata = {
+						title : tem_title,
+						header : tem_header_v,
+						body : tem_body_v,
+						footer : tem_footer_v,
+						id : tem_id,
+						type : tem_type,
+						temptype:temptype,
+						pytoken : pytoken
+					};
+					loadlayer();
+
+					$.post('index.php?m=wx&c=wxPubTempSave',formdata,function(data) {
+						parent.layer.closeAll();
+						var data = eval('('+ data + ')');
+						parent.layer.msg(data.msg,Number(data.tm),Number(data.st),function() {
+							if(data.st=='9'){
+								location.href = 'index.php?m=wx&c=wxPubTempList&temptype='+temptype;
+							}
+						});
+						return false;
+					})
+				});
+				wxpubtip();
+				
+			})
+			
+
+			
+
+		</script>
+</body>
+
+</html>

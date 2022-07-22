@@ -1,0 +1,52 @@
+{yun:}foreach item=v from=$lists{/yun}
+<section class="_135editor" data-tools="{yun:}$config.sy_webname{/yun}" data-id="{yun:}$lists.uid{/yun}">
+    <section style="margin:10px 0;">
+        <section style="margin: 0px; padding: 5px 15px; color: #a0a0a2; line-height: 25px; font-weight: bold; text-align:center; border-radius: 5px 5px 0px 0px; border: 0px; background-color: #548dd4;">
+            <span class="135brush" data-brushtype="text" style="font-size: 16px; letter-spacing:2px;line-height: 1.5em;color:#ffffff">{yun:}$v.name{/yun}</span>
+        </section>
+        <section style="margin: 0px; padding: 10px; border-radius: 0px 0px 5px 5px; border: 2px solid #548dd4; line-height: 25px;">
+
+
+	 		<section style="margin:5px auto;">
+	 			<p style="text-align:center; margin:20px auto; ">
+	 				<strong style="padding: 0.4rem; background-color:#b6e4fd; border-radius:0.2rem; font-weight: bold;">【招聘职位】</strong>
+	 			</p>
+	 			{yun:}foreach item=v1 key=k1 from=$v.row{/yun}
+					<p style="margin-bottom:10px;">
+						<strong style="display:inline-table; background-color:#feecaf; padding:0.2rem 0.4rem; border-radius:0.2rem;">{yun:}$k1+1{/yun}、{yun:}$v1.name{/yun}</strong>
+						{yun:}if isset($v1.job_salary){/yun}
+						<br>&bull; 薪资：{yun:}$v1.job_salary{/yun}{yun:}if $v1.job_salary!='面议'{/yun}(元/月){yun:}/if{/yun}
+						{yun:}/if{/yun}
+						{yun:}if $v1.job_exp || $v1.job_edu{/yun}
+						<br>&bull; 要求：{yun:}if $v1.job_exp{/yun}{yun:}$v1.job_exp{/yun}经验{yun:}/if{/yun}
+						{yun:}if $v1.job_exp && $v1.job_edu{/yun} | {yun:}/if{/yun}{yun:}if $v1.job_edu{/yun}{yun:}$v1.job_edu{/yun}学历{yun:}/if{/yun}
+						{yun:}/if{/yun}
+						{yun:}if $v1.description{/yun}
+						<br>&bull; 工作职责：{yun:}$v1.description{/yun}
+						{yun:}/if{/yun}
+					</p>
+				{yun:}/foreach{/yun}
+				{yun:}if $v.linkman{/yun}
+				<p style="">&#x25b6;联系人：{yun:}$v.linkman{/yun}</p>
+				{yun:}/if{/yun}
+				{yun:}if $v.linktel{/yun}
+				<p style="">&#x25b6;联系电话：{yun:}$v.linktel{/yun}</p>
+				{yun:}/if{/yun}
+				{yun:}if $v.address{/yun}
+				<p style="">&#x25b6;联系地址：{yun:}$v.address{/yun}</p>
+				{yun:}/if{/yun}
+
+			</section>
+
+{yun:}if $ewmtype != 'xcx'{/yun}
+<p style="text-align:center;" align="center"><img style="width:50%; max-width:180px;" src="{yun:}pubqrcode  toc=company toa=show toid=$v.uid totype=$ewmtype{/yun}"><br />扫码或长按二维码识别联系企业</p>
+{yun:}else{/yun}
+<p style="text-align:center; padding-top:20px;">
+ <a  data-miniprogram-type="text"  data-miniprogram-appid="{yun:}$wxpaydata.sy_xcxappid{/yun}" data-miniprogram-path="/pages/company/show?id={yun:}$v.uid{/yun}" class="weapp_text_link" href="" style="color: rgb(51, 51, 51);padding: 6px 1.4em;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;max-width: 100%;font-size: 14px;display: inline-block;border-radius: 50px;letter-spacing: 1.5px;background: rgba(247, 215, 73, 0.86);box-sizing: border-box !important;overflow-wrap: break-word !important;">查看详情</a></p>
+{yun:}/if{/yun}
+<p style="text-align:center;color:#0070c0;" align="center">求职招聘，就上{yun:}$config.sy_webname{/yun}<br />{yun:}$config.sy_webname{/yun}<br />{yun:}$config.sy_weburl{/yun}</p>
+		
+ </section></section></section>{yun:}/foreach{/yun}
+{yun:}if empty($lists){/yun}
+<span>暂无信息</span>
+{yun:}/if{/yun}

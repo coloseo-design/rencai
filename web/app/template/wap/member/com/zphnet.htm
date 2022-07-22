@@ -1,0 +1,189 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+
+	<div id="yunvue" class="wap_member_box none">
+		<span v-for="(item, zk) in list" :key="zk">
+			<div class="com_cardlist" @click="toPage(item.wapurl)">
+				<div class="com_cardlist_tit">{{item.zphname}}</div>
+				{yun:}if $config.sy_spview_web == 1 && empty($spid){/yun}
+				<div class="com_cardlist_p">
+					<span class="com_cardlist_p_name">视频面试</span>
+					{{item.spnum}}次/{{item.sptime_total}}分钟
+					<a :href="'index.php?c=spviewLog&zid=' + item.zid" style="color:#3366cc">查看记录</a>
+				</div>
+				{yun:}/if{/yun}
+				<div class="com_cardlist_p"><span class="com_cardlist_p_name">开始时间</span>{{item.starttime}}</div>
+				<div class="com_cardlist_p"><span class="com_cardlist_p_name">结束时间</span>{{item.endtime}}</div>
+				<div class="com_cardlist_p"><span class="com_cardlist_p_name">报名时间</span>{{item.bmctime_n ? item.bmctime_n : ''}}</div>
+				<div class="com_cardlist_p"><span class="com_cardlist_p_name">审核状态</span>
+					<span v-if="item.status==1">已审核</span>
+					<span v-else-if="item.status==2" class="wap_member_wtg">未通过</span>
+					<span v-else>未审核</span>
+				</div>
+				<div class="com_cardlist_p" v-if="item.status == 2">
+					<span class="com_cardlist_p_name">审核原因</span>{{item.statusbody}}
+				</div>
+				<div class="com_card_cz" v-if="item.notstart==1">
+					<span class="com_card_delete" @click.stop="delzph(item.id, zk)"></span>
+				</div>
+				<div class="com_card_cz">
+					<span class="job_czmore_a job_czmore_xg" @click.stop="xzjob(item.jobid, item.id,item.notend)"></span>
+				</div>
+			</div>			
+			
+		</span>
+		<div v-if="count ==2 && islook">
+			<van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+		</div>
+		<span v-show="islook&&count==0">
+			<div class="wap_member_no">目前您还没有参加的网络招聘会信息</div>
+			<span class="wap_memberjob_fabu ">
+				<a href="{yun:}url m=wap c=zphnet{/yun}" style="width:100%;height:43px; line-height:43px; font-size:16px; margin-top:10px; background:#F90;color:#fff; display:inline-block; text-align:center">查看招聘会信息</a>
+			</span>
+		</span>
+		<van-popup v-model="jobShow" position="bottom" round>
+	        <div class="spms_show">
+	            <div class="spms_tit ">参会职位</div>
+	            <div class="spms_box">
+					<van-checkbox-group v-model="result" @change="changeResult" ref="jobcheckboxGroup">
+						<van-cell-group>
+							<van-cell v-for="(item, jk) in jobarr" :key="jk" clickable :key="item.id" :title="`${item.name}`">
+								<template #right-icon>
+									<van-checkbox :name="item" ref="jobChecks" shape="square" />
+								</template>
+							</van-cell>
+						</van-cell-group>
+					</van-checkbox-group>
+	            </div>
+	            <div class="yunset_bth_box" @click="jobConfirm" style="padding-top: 0rem;"><span class="yun_wap_info_brief_tit_bc">修改</span></div>
+	        </div>
+	    </van-popup>
+	</div>
+	<script>
+		var currentPage = parseInt('{yun:}$smarty.get.page{/yun}') || 1;
+		var yunvue = new Vue({
+			el: '#yunvue',
+			data: {
+				list: [],
+				limit: 10,
+				total: 0,
+				page: currentPage,
+				islook: false,
+				spviewOpen: 2,
+				jobShow:false,
+				result: [],
+				resumeResult: [],
+				jobarr: [],
+				id:'',
+				jobid:'',
+			},
+			computed: {
+				count() {
+					if (this.total > this.limit) {
+						return 2;
+					} else if (this.list.length == 0) {
+						return 0;
+					} else {
+						return 1;
+					}
+				}
+			},
+			created() {
+				this.getList();
+			},
+			methods: {
+				getList: function() {
+					showLoading();
+					var that = this;
+					var paramer = {};
+					paramer['page'] = this.page;
+					paramer['limit'] = this.limit;
+					var url = '{yun:}url d=wxapp h=com m=zphnet c=zphlist{/yun}';
+					$.post(url, paramer, function(data) {
+						hideLoading();			
+						if(data.error==0){
+							var res = data.data;
+							that.list = res.list;
+							that.total = res.total;
+							that.jobarr = res.jobarr;	
+							that.spviewOpen = res.spviewOpen ? res.spviewOpen : 2;
+						}						
+
+						that.islook = true;
+						
+						$("#yunvue").css('display', 'block');
+					}, 'json');
+				},
+				xzjob: function(jobid,id,idtk){	
+					if(idtk==1){				
+						var that = this;					
+						var jobids = jobid.split(',');
+						$.each(that.jobarr,function(index, el) {
+							if($.inArray(el.id,jobids)>=0){
+								that.result.push(el);
+							}
+						});
+						that.jobid = jobid;
+						that.id = id;
+						that.jobShow = true;
+					}else{
+						showToast('招聘会已过期,不支持修改！');
+						return false;
+					}
+				},				
+				changeResult: function() {
+					var that = this;
+					var jobIds = [];
+					var jobNames = [];
+					that.result.forEach((v, i) => {
+						if(v && v.id){
+							jobIds.push(v.id);
+						}						
+					}, this);
+					that.jobid = jobIds.join(',');
+				},
+				jobConfirm:function(){
+					var that = this;
+					if(that.id==''){
+						return showToast('参数错误！');
+					}else if (that.jobid=='') {
+						return showToast('请选择参会职位！');
+					}
+					var parme = {id:that.id,jobid:that.jobid};
+					var url = '{yun:}url d=wxapp h=com m=zphnet c=editcomjob{/yun}';
+					showConfirm('确定修改参会职位？', function() {
+						showLoading('修改中');
+						$.post(url , parme, function(data){
+							if (data.error == 1) {	
+								that.jobShow = false;							
+								window.location.reload();
+							}else{
+								showToast(data.msg);
+							}
+						},'json')
+					});
+				},
+				delzph(id, key){
+					var that = this;
+					var paramer = {ids: id};
+					var url = '{yun:}url d=wxapp h=com m=zphnet c=delzph{/yun}';
+					showConfirm('确定取消报名？', function() {
+						showLoading('取消中');
+						$.post(url , paramer, function(data){
+							if (data.error == 1) {
+								that.list.splice(key, 1);
+								showToast('取消成功');
+							}
+						},'json')
+					});
+				},
+				pageChange:function(e){
+					location.href = 'index.php?c=zphnet&page='+e;
+				},
+				toPage: function(url){
+					window.location.href = url;
+				}
+			}
+		})
+	</script>
+</body>
+</html>

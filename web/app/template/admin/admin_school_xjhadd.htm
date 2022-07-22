@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+body, div {
+	margin: 0;
+	padding: 0;
+}
+.layui-form-item{ margin-bottom:0px;}
+</style>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+
+   <div class="tty-tishi_top">    
+   <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+      <form class="layui-form" name="myform" target="supportiframe" action="index.php?m=admin_school_xjh&c=save" method="post" enctype="multipart/form-data">
+        <table width="100%" class="table_form" style="background:#fff;">
+			<tr>
+				<th colspan="2" class="admin_bold_box">
+					<div class="admin_bold">校招宣讲会信息</div>
+				</th>
+            </tr>
+          <tr>
+            <th>宣讲城市：</th>
+            <td colspan="3">
+			<div class="layui-form-item">
+			 <div class="layui-input-block">
+				<div class="layui-input-inline">
+					<select name="provinceid" lay-filter="citys" id="provinceid">
+					<option value="">请选择</option>
+					{yun:}foreach from=$city_index item=v{/yun}
+					<option value="{yun:}$v{/yun}"{yun:}if $row.provinceid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+					{yun:}/foreach{/yun}
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select name="cityid" lay-filter="citys" id="cityid">
+					<option value="">请选择</option>
+					{yun:}foreach from=$city_type[$row.provinceid] item=v{/yun}
+					<option value="{yun:}$v{/yun}"{yun:}if $row.cityid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+					{yun:}/foreach{/yun}
+					</select>
+				</div>
+			 </div>
+			</div>
+           </td>
+          </tr>
+          <tr class="admin_table_trbg">
+            <th>宣讲学校：</th>
+            <td>
+			  <div class="layui-form-item">
+				 <div class="layui-input-block">
+					<div class="layui-input-inline">
+						<select name="schoolid" id="schoolid" lay-verify="" >
+						<option value="">请选择</option>
+						{yun:}foreach from=$school item=v{/yun}
+						<option value="{yun:}$v.id{/yun}" {yun:}if $row.schoolid==$v.id{/yun}selected{yun:}/if{/yun}>{yun:}$v.schoolname{/yun}</option>
+						{yun:}/foreach{/yun}
+						</select>
+					</div>
+				 </div>
+			</div>
+			</td>
+          </tr>
+          <tr class="admin_table_trbg">
+            <th >详细地点：</th>
+            <td ><input name="address" type="text" class="layui-input t_w480" maxlength="255" size="40" value="{yun:}$row.address{/yun}"  placeholder="请填写详细地点，如山东大学中心校区大学生活动中心" /></td>
+          </tr>
+          <tr>
+            <th>宣讲时间：</th>
+            <td colspan="3">
+				<div class="layui-input-inline" style="margin-right: 15px;">
+					<i class="t_icon_time"></i>
+					<input name="datetime" id="datetime"  type="text" maxlength="50" value="{yun:}$row.stime|date_format:'%Y-%m-%d'{/yun}" class="layui-input t_w150" placeholder="日期" style="width: 140px;"/>
+				</div>
+				<div class="layui-input-inline">
+					<i class="t_icon_time"></i>
+					<input name="stime" id="stime"  type="text" maxlength="50" value="{yun:}$row.stime|date_format:'%H:%M'{/yun}" class="layui-input t_w150" placeholder="开始时间"  style="width: 140px;"/>
+				</div>
+				<span>-</span>
+				<div class="layui-input-inline">
+					<i class="t_icon_time"></i>
+					<input name="etime" id="etime"  type="text" maxlength="50" value="{yun:}$row.etime|date_format:'%H:%M'{/yun}" class="layui-input t_w150"  placeholder="结束时间" style="width: 140px;"/>
+				</div>
+			</td>
+          </tr>
+          <tr>
+          <th>&nbsp;</th>
+            <td align="left" >
+             <input type="hidden" name="r_status" id="r_status" value="{yun:}$company.r_status{/yun}" />
+              {yun:}if is_array($row){/yun}
+              <input type="hidden" name="id" id="id" value="{yun:}$row.id{/yun}" />
+              <input class="tty_sub" type="submit" name="submit" value="&nbsp;修 改&nbsp;" />
+              {yun:}else{/yun}
+              <input class="tty_sub" type="submit" name="submit" value="&nbsp;添 加&nbsp;" />
+              {yun:}/if{/yun}
+              <input class="tty_cz" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+          </tr>
+        </table>
+        <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+      </form>
+   </div>
+</div>
+<script language="javascript" src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script>var weburl='{yun:}$config.sy_weburl{/yun}';
+layui.use(['layer', 'form','laydate'], function(){
+	var layer = layui.layer
+	,form = layui.form
+	,laydate = layui.laydate
+	,$ = layui.$;
+	if(ct.length>0 && ct!='new Array()'){
+		form.on('select(citys)', function(data){
+			var html = "<option value=''>请选择</option>";
+			$.each(ct[data.value],function(k,v){
+				html+="<option value='"+v+"'>"+cn[v]+"</option>";
+			});
+			if(data.elem.name=='provinceid'){
+				$("#cityid").html(html);
+				$("#three_cityid").html("<option value=''>请选择</option>");
+			}else{
+				$("#cityshowth").show();
+				$("#three_cityid").html(html);
+			}
+			$.post(weburl+"/index.php?m=ajax&c=get_school_option",{cityid : data.value,type:data.elem.name},function(htm){
+				if(htm){
+					$("#schoolid").html(htm);
+				}
+				form.render('select');
+			});
+			form.render('select');
+		});
+	}else{
+	    if($("#cityid")){
+	      $("#cityid").parent().remove();
+	      
+	    }
+	    if($("#three_cityid")){
+	      $("#three_cityid").parent().remove();
+	    }
+	    form.render('select');
+	}
+	laydate.render({
+		elem: '#datetime'
+	})
+	laydate.render({
+		elem: '#stime',
+		type: 'time',
+		format: 'HH:mm'
+	})
+	laydate.render({
+		elem: '#etime',
+		type: 'time',
+		format: 'HH:mm'
+	})
+});
+</script>
+</body>
+</html>

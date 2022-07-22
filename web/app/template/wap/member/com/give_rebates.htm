@@ -1,0 +1,180 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+
+  <div class="m_tab">	<div class="m_tabbox">
+<ul>
+<li ><a href="index.php?c=my_rebates">我推荐的悬赏</a></li><li class="m_tabactive"><a  href="index.php?c=give_rebates">推荐给我的人才</a></li>
+</ul></div></div>
+<div class="m_cardbox" >
+<div class="m_cardbgbox">
+
+{yun:}if !empty($rows){/yun}
+{yun:}foreach item=v from=$rows{/yun}
+<div class="com_cardlist ">
+<div class="com_cardlist_tit">
+ <a class=" "  href="index.php?c=rebateshow&id={yun:}$v.id{/yun}">{yun:}$v.name{/yun}</a> 
+
+</div>
+<div class="com_member_user_box">
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">推荐人</span>{yun:}$v.username{/yun}</div>
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">手机号码</span>{yun:}$v.phone{/yun}</div>
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">目前状态</span>{yun:}if $v.status=="0"{/yun}未查看{yun:}elseif $v.status=="1"{/yun}已查看{yun:}elseif $v.status=="2"{/yun}已试用{yun:}elseif $v.status=="3"{/yun}未通过{yun:}elseif $v.status=="4"{/yun}已返利{yun:}/if{/yun}
+</div>
+{yun:}if $v.email{/yun}
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">人才邮箱</span><span class="">{yun:}$v.email{/yun}</span></div>
+{yun:}/if{/yun}
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">推荐时间</span>{yun:}$v.datetime|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+{yun:}if $v.reply{/yun}
+  <div class="com_cardlist_p"><span class="com_cardlist_p_name">我的回复</span>{yun:}$v.reply{/yun}</div>
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">回复时间</span>{yun:}$v.reply_time|date_format:'%Y-%m-%d %H:%M'{/yun}</div>
+{yun:}else{/yun}
+<div class="com_cardlist_p"><span class="com_cardlist_p_name">回复状态：</span>未回复</div>
+{yun:}/if{/yun}</div>
+<div class="com_member_hr_cz">
+
+{yun:}if $v.status!="4"{/yun} <a class="rebatesstatusPicker" onclick="setStatus('{yun:}$v.id{/yun}')"  >设置状态</a> {yun:}/if{/yun}
+{yun:}if $v.reply==""{/yun}<a href="javascript:void(0)" onclick="showreply('{yun:}$v.id{/yun}');" class="rerate_c_gr">我要回复</a>{yun:}/if{/yun}
+
+<a href="index.php?c=rebateshow&id={yun:}$v.id{/yun}" class="">查看</a>
+<a href="javascript:vant_del('确定要删除推荐给我的人才吗？','index.php?c=delrebate&type=1&id={yun:}$v.id{/yun}');">删除</a>
+     </span>
+     </div>     
+
+
+
+    
+  
+
+
+</div></div>
+{yun:}/foreach{/yun}
+{yun:}else{/yun}<div class="wap_member_nobg">
+<div class="wap_member_no">暂无推荐人才</div></div>
+{yun:}/if{/yun}
+
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+</div>
+<div id="yunvue">
+<van-action-sheet v-model="show" :actions="sheetList" :description="sheetTips.text" cancel-text="取消" close-on-click-action @cancel="show = false" @select="sheetClick"></van-action-sheet>
+<van-popup v-model="replyshow" position="right" @open="opendDec"
+               :style="{ height: '100%',width:'100%',backgroundColor:'#f3f3f3'}">
+        <div class="comheader">
+            <a class="comheader_return" @click="replyshow = false"></a>
+            <div class="comheader_tit">我的回复</div>
+        </div>
+        <div class="issue_post_body">
+            <div class="issue_post_body_card">
+                <textarea class="isTextarea" id="content" placeholder="请对企业进行介绍~" maxlength="-1"
+                          style="width:100%;height: 400px;" name="content" ></textarea>
+            </div>
+            <div class="security_bth">
+                <button type="submit" class="security_bth_but" @click="replycheck">保 存</button>
+            </div>
+        </div>
+    </van-popup>
+</div>
+
+</div>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+	 var umeditor = {};
+	var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                show: false,
+                sheetList: [
+                    {name: '未查看', color: ''},
+                    {name: '已查看', color: ''},
+                    {name: '已试用', color: ''},
+                    {name: '未通过', color: ''},
+                    {name: '已返利', color: ''}
+                ],
+                sheetTips: {
+                    text: '设置人才状态'
+                },
+                id:'',                
+                replyid:'',
+                replyshow:false
+            }
+        },
+        methods: {
+        	sheetClick(e, index) {
+                let status = index ,
+                    that = this;
+                var paramer = {
+                    id: that.id,
+                    status: status
+                };
+                showLoading('设置中');
+                $.post('index.php?c=rebates_set', paramer, function (data) {
+                    hideLoading();
+                    if (data == 1) {
+                        
+                        showToast('设置成功',2,function(){
+                        	location.reload();
+                        });
+                    } else {
+                        showModal('设置失败');
+                    }
+                }, 'json')
+            },
+            opendDec: function () {
+                umeditor = UM.getEditor('content', {
+                    toolbar: false,
+                    elementPathEnabled: false,
+                    wordCount: false,
+                    autoHeightEnabled: false
+                });
+
+                let that = this;
+                umeditor.addListener('ready', function () {
+                    umeditor.setContent('')
+                })
+            },
+            replycheck:function(){
+            	var content = umeditor.getContent();
+            	let reply = '';
+            	let id = this.replyid;
+            	if(id==''){
+            		return showToast("请选择要回复的人才！");
+            	}
+                if (content != "") {                    
+                    reply = content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+                } else {
+                    return showToast("回复内容不能为空！");
+                }     	
+				showLoading('回复中...');
+				$.post("index.php?c=save_give_rebates",{id:id,reply:reply},function(data){
+					hideLoading();
+					showToast("回复成功！",2,function(){location.reload(true);});
+				})
+            }
+        }
+    });
+
+function setStatus(id){
+	yunvue.$data.id = id ;
+	yunvue.$data.show = true;
+}
+
+
+function showreply(id){
+	yunvue.$data.replyid = id;
+	yunvue.$data.replyshow = true;
+}
+function replycheck(id){
+	var reply=$.trim($("#content"+id).val());
+	if(reply==""){
+		showToast("回复内容不能为空！");return false;
+	}
+	showLoading();
+	$.post("index.php?c=save_give_rebates",{id:id,reply:reply},function(data){
+		hideLoading();
+		showToast("回复成功！",2,function(){location.reload(true);});
+	})
+}
+</script>
+</body>
+</html>

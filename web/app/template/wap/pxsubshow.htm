@@ -1,0 +1,227 @@
+{yun:}include file="$wapstyle/header_train.htm"{/yun}
+<div id="app">
+<div class="train_show_pic"><img src="{yun:}$row.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);" /></div>
+<div class="train_show_topbox">
+    <div class="train_show_topname">{yun:}$row.name{/yun}</div>
+    <div class="train_show_money">￥{yun:}$row.price|floatval{/yun}</div>
+</div>
+
+<div class="train_show_box mt10">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">基本信息</span></div>
+       <div class="train_agency_show_box_c">
+    <div class="train_show_box_hs">适合人群 <span class="train_show_box_hs_p">{yun:}$row.crowd{/yun}</span></div>
+    <div class="train_show_box_list_c">
+        <div class="train_show_box_list"><span class="train_show_box_list_name">课程分类：</span>{yun:}$subject_name[$row.nid]{/yun}-{yun:}$subject_name[$row.tnid]{/yun} </div>
+        <div class="train_show_box_list">开课类型：{yun:}$row.type{/yun}</div>
+        <div class="train_show_box_list">联系电话：{yun:}$row.moblie{/yun}</div>
+        <div class="train_show_box_list">培训地点：{yun:}$row.address{/yun}</div>
+        <div class="train_show_box_list">课程状态：{yun:}if $row.pause_status=="1"{/yun}招生中{yun:}else{/yun}已下架{yun:}/if{/yun}</div>
+        <div class="train_show_box_list">收费方式：{yun:}if $row.isprice=="1"{/yun}在线收费{yun:}else{/yun}到场收费{yun:}/if{/yun}</div>
+        <div class="train_show_box_list"> {yun:}if $row.superiority{/yun} 课程优势：{yun:}$row.superiority{/yun} {yun:}/if{/yun}</div>
+    </div>
+    </div>
+</div>
+
+<div class="train_show_box mt10">
+
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">课程简介</span></div>
+   <div class="train_agency_show_box_c">
+    <div class="train_show_box_js"> {yun:}$row.content{/yun}</div>
+
+</div></div>
+{yun:}if $otherlist{/yun}
+<div class="train_show_box mt10" >
+
+        <div class="train_show_box_tit"><span class="train_show_box_tit_s">该机构培训的其他课程</span></div>
+           <div class="train_agency_show_box_c"> <div class="clear"></div>
+        <ul class="train_index_list_box">
+            {yun:}foreach item=v from=$otherlist{/yun}
+            <li>
+                <div class="train_index_list">
+                    <a href="{yun:}url m=wap c=train a=subshow id=$v.id{/yun}" class=""><img src="{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);"></a>
+                    <div class="train_index_kcname">
+                        <a href="{yun:}url m=wap c=train a=subshow id=$v.id{/yun}">{yun:}$v.name{/yun}</a>
+                    </div>
+
+                    <span class="train_index_money">￥{yun:}$v.price|floatval{/yun}</span>
+                </div>
+            </li>{yun:}/foreach{/yun}
+        </ul>
+        <div class="clear"></div>
+
+    </div>
+
+</div>
+{yun:}/if{/yun}
+<div class="itwap_job_dss">
+
+    <div class="message_list_content ">
+
+        <div class="message_list_box">
+
+            <div class="message_list_t_box">
+                <div class="message_list_logo_box">
+                    <a href="{yun:}url m=wap c=train a=agencyshow id='`$train.uid`'{/yun}"><img src="{yun:}$train.logo_n{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" /></a>
+                </div>
+                <div class="message_list_box_c"><a class="" href="{yun:}url m=wap c=train a=agencyshow id='`$train.uid`'{/yun}">
+                    <h3>{yun:}$train.name{/yun}</h3>
+                </div>
+                <div class="message_list_box_js">
+                    <span class="message_list_box_js_s">{yun:}$city_name[$train.provinceid]{/yun}{yun:}if $city_name[$train.cityid]{/yun}-{yun:}$city_name[$train.cityid]{/yun}{yun:}/if{/yun}{yun:}if $city_name[$train.threecityid]{/yun}-{yun:}$city_name[$train.threecityid]{/yun}{yun:}/if{/yun}</span>
+                    <span>|</span>
+                    <span class="message_list_box_js_ss">{yun:}$subject_name[$train.sid]{/yun}</span>
+                </div>
+                <i class="message_list_a"></i>
+</a>
+            </div>
+
+            <div class="message_index_wap" style="padding-bottom:10px; padding-left:10px;">
+                <span class="message_wap_di">地址</span>
+                <span class="message_wap_su">{yun:}$train.address|mb_substr:0:30:'utf-8'{/yun}</span>
+               
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="train_show_box mt10">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">留言咨询</span></div>
+
+    {yun:}foreach item=v from=$zixun{/yun}
+
+    <div class="train_word_list_bot">
+        <div class="train_word_list_w">
+            <div class="train_word_list_img_ft">
+                <a href="{yun:}url m=wap c=ask a=myquestion uid='`$v.uid`'{/yun}"><img src="{yun:}$v.pic{/yun}" style="width:40px;height:40px;" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);" /></a>
+            </div>
+            <div class="train_word_list_w_rtt">
+                <span class="train_word_list_w_nm"><a href="{yun:}url m=wap c=ask a=myquestion uid='`$v.uid`'{/yun}">{yun:}$v.nickname{/yun}&nbsp;</a></span>
+                <span>{yun:}$v.ctime|date_format:"%m月%d日"{/yun}</span>
+            </div>
+
+            <div class="train_word_list_yan">{yun:}$v.content{/yun}</div>
+
+        </div>
+    </div>
+
+   
+    {yun:}foreachelse{/yun}
+    <div class="wap_member_no">暂无相关留言!</div>
+    {yun:}/foreach{/yun} {yun:}if $zixun{/yun}
+    <div class="train_jg_more" style="padding-bottom:10px;">
+        <a href="{yun:}url m=wap c=train a=zixun id='`$row.uid`'{/yun}">查看更多</a>
+    </div>{yun:}/if{/yun}
+</div>
+<div style="height:60px;"></div>
+<div class="itwap_bottom">
+    {yun:}if $uid{/yun} {yun:}if $usertype==4{/yun}
+    <div class="itwap_bottom_sc">
+        <a href="javascript:void(0)" onclick="showToast('只有个人和hr可以收藏！')">收藏</a>
+    </div>
+    <div class="itwap_bottom_fx">
+        <a href="javascript:void(0)" onclick="showToast('只有个人和hr可以咨询！')">咨询</a>
+    </div>
+    <div class="itwap_bottom_li">
+        <a href="javascript:void(0)" onclick="showToast('只有个人和hr可以报名！')">立即报名</a>
+    </div>
+    {yun:}else{/yun} {yun:}if $collect.id{/yun}
+    <div class="itwap_bottom_ysc">已收藏</div>{yun:}else{/yun}
+    <div class="itwap_bottom_sc">
+        <a href="javascript:void(0);" onclick="collect_subject('{yun:}$row.id{/yun}','{yun:}url m=wap c=train a=collect{/yun}')">收藏</a>
+    </div>{yun:}/if{/yun}
+    <div class="itwap_bottom_fx">
+        <a href="javascript:void(0);" @click="zixun('{yun:}$row.id{/yun}','{yun:}$row.uid{/yun}');">咨询</a>
+    </div>
+
+    {yun:}if !$baoming{/yun}
+    <div class="itwap_bottom_li">
+        <a href="javascript:void(0);" @click="baomingShow = true">立即报名</a>
+    </div>{yun:}else{/yun}
+    <div class="itwap_bottom_ydg">已报名</div>{yun:}/if{/yun} {yun:}/if{/yun} {yun:}else{/yun}
+    <div class="itwap_bottom_sc">
+        <a href="{yun:}url m=wap c=login{/yun}">收藏</a>
+    </div>
+    <div class="itwap_bottom_fx">
+        <a href="{yun:}url m=wap c=login{/yun}">咨询</a>
+    </div>
+    <div class="itwap_bottom_li">
+        <a href="{yun:}url m=wap c=login{/yun}">立即报名</a>
+    </div>
+    {yun:}/if{/yun}
+</div>
+<!--报名弹出框-->
+<van-popup v-model="baomingShow" round :style="{height: '50%',width: '90%'}">
+<div id="baoming" >
+    <form name="myform" method="post" action="{yun:}url m=wap c=train a=baoming{/yun}" >
+        <ul class="px_zx_list">
+            <li><span class="px_zx_list_span">课程：</span>
+                <div class="px_zx_list_text">{yun:}$row.name{/yun}</div></li>
+            {yun:}if $row.isprice==1{/yun}
+            <li ><span class="px_zx_list_span">金额：</span>
+                <div class="px_zx_list_text" style="color:#f60; font-size:18px;">{yun:}$row.price|floatval{/yun}元</div> </li>{yun:}/if{/yun}
+            <li><span class="px_zx_list_span">姓名：</span>
+               <div class="px_zx_list_text_inp"> <input type="text" id="name" name="name" class="" value="{yun:}$user.name{/yun}" /></div></li>
+            <li><span class="px_zx_list_span">电话：</span>
+                <div class="px_zx_list_text_inp"><input type="text" id="bmphone" name="phone" class="txt_input" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" value="{yun:}$user.phone{/yun}" /></div></li>
+            <li><span class="px_zx_list_span">留言：</span>
+                  <div class="px_zx_list_text_inp"><textarea id="bmcontent" name="content" onclick="check_con();" onblur="over_con();">我想参加这个培训班，请尽快跟我联系。</textarea></div></li>
+            <li >
+            <div class="px_zx_list_bth">
+                <input type="button" name="submit" value="报名" id="submit" class="" onclick="check_baoming(this);"></div></li>
+            <input type="hidden" id="baoming_sid" name="sid" value="{yun:}$row.id{/yun}" />
+            <input type="hidden" id="baoming_s_uid" name="s_uid" value="{yun:}$row.uid{/yun}" />
+            <input type="hidden" id="isprice" name="isprice" value="{yun:}$row.isprice{/yun}" /> {yun:}if $row.isprice==1{/yun} 
+            <input type="hidden" id="price" name="price" value="{yun:}$row.price{/yun}" />{yun:}/if{/yun}
+        </ul>
+    </form>
+</div>
+</van-popup>
+<!--报名弹出框-->
+<!--咨询弹出框-->
+<van-popup v-model="zixunShow" round :style="{height: '30%',width: '90%'}">
+<div id="zixun">
+    <form>
+       <ul class="px_zx_list">
+            <li><span class="px_zx_list_span">电话：</span>
+                <div class="px_zx_list_text_inp">  <input type="text" id="phone" name="phone" class="" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" value="{yun:}$user.phone{/yun}" /></div></li>
+            <li><span class="px_zx_list_span">留言：</span>
+                <div class="px_zx_list_text_inp"> <textarea class="" id="content" name="content"></textarea></div></li>
+            <li>
+             <div class="px_zx_list_bth">    
+             	<input type="hidden" name="sid" id="sid" v-bind:value="id"  />
+                <input type="hidden" name="s_uid" id="s_uid" v-bind:value="s_uid"  />
+                <input type="button" name="submit" value="提交" class=""  onclick="check_zixun(this);"/>
+                </div>
+            </li>
+        </ul>
+    </form>
+</div>
+</van-popup>
+</div>
+<!--咨询弹出框-->
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/train.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript">
+    var wapurl = "{yun:}url m=wap{/yun}";
+        var vm = new Vue({
+        el: '#app',
+        data: {
+            baomingShow:false,
+            zixunShow:false,
+            id:'',
+            s_uid:'',
+        },
+        methods: {
+            zixun(id,s_uid) {
+                this.zixunShow = true;
+                this.id = id;
+                this.s_uid = s_uid;
+            },
+        }
+    });
+</script>
+</body>
+
+</html>

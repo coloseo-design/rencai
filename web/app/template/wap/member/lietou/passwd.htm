@@ -1,0 +1,74 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<section class="wap_member">
+	<div class="mui-collapse-content">
+		<ul class="yunset_password mt15">
+			<li><span class="yunset_password_mname">原密码</span>
+				<div class="mui-input-row">
+					<div class="password_pd">
+						<input type="password" id="password" class="mui-input-password" placeholder="请输入原密码">
+					</div>
+				</div>
+			</li>
+			<li><span class="yunset_password_mname">新密码</span>
+				<div class="mui-input-row">
+					<div class="password_pd">
+						<input type="password" class="mui-input-password" id="passwordnew" placeholder="请输入新密码">
+					</div>
+				</div>
+			</li>
+			{yun:}if $config.reg_pw_sp=='1' || $config.reg_pw_num=='1' || $config.reg_pw_zm=='1'{/yun}
+			<div style=" background:#fff;padding:2px 2px 13px 15px;color:#f00">提示：密码必须包含
+			{yun:}if $config.reg_pw_num=='1'{/yun}数字 {yun:}/if{/yun}
+			{yun:}if $config.reg_pw_zm=='1'{/yun}字母 {yun:}/if{/yun}
+			{yun:}if $config.reg_pw_sp=='1'{/yun}其它字符@!#.$-_{yun:}/if{/yun}
+			</div>
+			{yun:}/if{/yun}
+			<li><span class="yunset_password_mname">确认密码</span>
+				<div class="mui-input-row">
+					<div class="password_pd">
+						<input type="password" class="mui-input-password" id="passwordconfirm"
+							placeholder="请重复输入新密码">
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="yunset_bth_box">
+			<button class="mui-btn mui-btn-primary" type="button" onclick="savepwd();">确认</button>&nbsp;&nbsp;
+		</div>
+	</div>
+
+
+</section>
+<script type="text/javascript">
+	function savepwd(){
+		var password=$("#password").val();
+		var passwordnew=$.trim($("#passwordnew").val());
+		var passwordconfirm=$.trim($("#passwordconfirm").val());
+		if(password<6){
+			showToast('原密码不正确！',2);return false;
+		}
+		if(passwordnew.length<6){
+			showToast('新密码长度必须大于等于6！',2);return false;
+		}
+		if(password == passwordnew){
+			showToast('请输入新密码不同于原密码！', 2);return false;
+		}
+		if(passwordnew != passwordconfirm || passwordconfirm.length<6){
+			showToast('两次输入密码不一致！', 2);return false;
+		}
+		showLoading();
+		$.post(wapurl+"?c=ajax&a=setpwd",{password:password,passwordnew:passwordnew,passwordconfirm:passwordconfirm},function(data){
+			hideLoading();
+			var data=eval("("+data+")");
+			if(data.type==9){
+				window.localStorage.setItem("socketState", "2");
+				showToast(data.msg,2,function(){
+					window.location.href=wapurl+"index.php?c=login";
+				});
+			}else{
+				showToast(data.msg);return false;
+			}
+		});
+	}
+</script>
+</body></html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+	<style type="text/css">
+		.layui-form-radio {
+			margin-top: 0;
+		}
+	</style>
+	<body class="body_ifm">
+		<div class="infoboxp">
+
+			<div class="tty-tishi_top">
+				<div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>提示说明</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">当前隐私号采用云信小号业务接口</div>
+						<div class="admin_new_tip_list">开通业务需要提供企业营业执照以及法人身份证</div>
+						<div class="admin_new_tip_list">云信官网：<a href="http://www.winnerlook.com" target="_balnk">www.winnerlook.com</a> 可联系PHPYUN授权顾问推送云信业务专员，适当降低预充标准，减少试用成本</div>
+					</div>
+				</div>
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form id="chatform" class="layui-form" action="index.php?m=admin_privacy_config&c=save" method="post" onsubmit="return ckprivacy()"
+					 enctype="multipart/form-data" target="supportiframe">
+						<table width="100%" class="table_form">
+							
+						
+							<tr class="admin_table_trbg">
+								<td width="160"  align="right">appID：</td>
+								<td>
+									<input name="sy_privacy_appid" id="sy_privacy_appid" autocomplete="off" class="tty_input t_w480" type="text" value="{yun:}$config.sy_privacy_appid{/yun}" size="60" maxlength="50" />
+									<span class="admin_web_tip">应用-我的应用 查看</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<td width="160"  align="right">TOKEN：</td>
+								<td>
+									<input name="sy_privacy_token" id="sy_privacy_token" autocomplete="off" class="tty_input" type="text" value="{yun:}$config.sy_privacy_token{/yun}" size="60" maxlength="50" />
+									<span class="admin_web_tip">应用-我的应用 查看</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<td width="160"  align="right">有效期：</td>
+								<td>
+									<input name="sy_privacy_time" id="sy_privacy_time" autocomplete="off" class="tty_input" type="text" value="{yun:}$config.sy_privacy_time{/yun}" size="60" maxlength="50" />
+									<span class="admin_web_tip">单位：秒 建议控制120秒以内，有效期越低号码复用率越高，所需号码量越少</span>
+								</td>
+
+							</tr>
+							<tr class="admin_table_trbg">
+								<td width="160"  align="right">通话录音：</td>
+								<td>
+									<div class="layui-input-block">
+										<input name="sy_privacy_callrec" value="1" title="开启" {yun:}if $config.sy_privacy_callrec=="1" {/yun} checked {yun:}/if{/yun} type="radio" />
+										<input name="sy_privacy_callrec" value="2" title="关闭" {yun:}if $config.sy_privacy_callrec=="2" {/yun} checked {yun:}/if{/yun} type="radio" />
+										<span class="admin_web_tip">开启录音会额外计算通信费用</span>
+									</div>
+									
+									
+								</td>
+							</tr>
+							
+							
+							<tr>
+							 <th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">简历隐私号设置</div>
+							 </th>
+						  </tr>
+
+							<tr>
+								<td width="160"  valign="top" align="right">隐私号开关：</td>
+								<td>
+									<div class="layui-input-block" style="margin-top:-10px;">
+										<input type="checkbox" name="sy_privacy_open" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_privacy_open=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							
+							<tr class="admin_table_trbg">
+								<td width="160"  valign="top" align="right">简历隐私模式：</td>
+								<td>
+									<div class="layui-input-block" style="height:26px;overflow: hidden;min-height: 26px;">
+										<input name="sy_privacy_type" value="1" title="全部简历" {yun:}if $config.sy_privacy_type=="1" {/yun} checked {yun:}/if{/yun} type="radio" />
+										<input name="sy_privacy_type" value="2" title="未投递简历" {yun:}if $config.sy_privacy_type=="2" {/yun} checked {yun:}/if{/yun} type="radio" />
+										
+										
+									</div>
+									<span class="admin_web_tip" style="margin-left:3px; margin-right:10px;">全部简历：所有简历联系方式一律采用隐私号模式</span>
+									<span class="admin_web_tip">未投递简历：主动投递并且企业有查看权限的简历开放真实号码，未投递简历采用隐私号</span>
+								</td>
+							</tr>
+							<tr>
+							 <th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">企业隐私号设置</div>
+							 </th>
+						  </tr>
+						  <tr>
+								<td width="160"  valign="top" align="right">隐私号开关：</td>
+								<td>
+									<div class="layui-input-block" style="margin-top:-10px;">
+										<input type="checkbox" name="sy_comprivacy_open" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_comprivacy_open=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+									<span class="admin_web_tip">企业隐私号为减少坐席消耗，只针对后台“会员-企业-企业设置”页面，“查看联系方式-普通模式-投递简历”设置有效</span>
+								</td>
+							</tr>
+
+							<tr class="admin_table_trbg">
+								<td width="160" align="right"></td>
+								<td>
+									<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+									<input class="layui-btn tty_sub" id="chatconfig" type="submit" value="提交" />&nbsp;&nbsp;
+									<input class="layui-btn tty_cz" type="reset" value="重置" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+			
+			
+			function ckprivacy() {
+				var sy_privacy_open = $("input[name=sy_privacy_open]").is(":checked") ? 1 : 2,
+					sy_comprivacy_open = $("input[name=sy_comprivacy_open]").is(":checked") ? 1 : 2,
+					sy_privacy_appid = $("#sy_privacy_appid").val(),
+					sy_privacy_token = $("#sy_privacy_token").val(),
+					sy_privacy_time = $("#sy_privacy_time").val(),
+					sy_privacy_uname = $("#sy_privacy_uname").val(),
+					sy_privacy_idcard = $("#sy_privacy_idcard").val(),
+					sy_privacy_callrec = $("#sy_privacy_callrec").val(),
+					sy_privacy_type = $("input[name='sy_privacy_type']:checked").val();
+					if (sy_privacy_open == 1) {
+						
+						if (!sy_privacy_type) {
+							parent.layer.msg("请选择简历隐私模式！", 2, 8);
+							return false;
+						}
+					}
+					
+					if (sy_privacy_open == 1 || sy_comprivacy_open == 1) {
+					
+					
+					if (sy_privacy_appid == '') {
+						parent.layer.msg("请填写appid！", 2, 8);
+						return false;
+					}
+					if (sy_privacy_token == '') {
+						parent.layer.msg("请填写token！", 2, 8);
+						return false;
+					}
+					if (sy_privacy_time == '') {
+						parent.layer.msg("请填写有效期！", 2, 8);
+						return false;
+					}
+					if (sy_privacy_uname == '') {
+						parent.layer.msg("请填写绑定人姓名！", 2, 8);
+						return false;
+					}
+					if (sy_privacy_idcard == '') {
+						parent.layer.msg("请填写绑定人身份证！", 2, 8);
+						return false;
+					}
+					
+				}
+				loadlayer();
+			}
+		</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

@@ -1,0 +1,144 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+{yun:}include file="$trainstyle/left.htm"{/yun}
+<div class="right_column frt mt20">
+<div class="right_mycurriculum_h1">预约名单</div>
+<div class="right_nav_box">
+    <ul class="right_nav_box_list">
+<li {yun:}if $smarty.get.status==""{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=sign_up">全部</a></li>
+<li {yun:}if $smarty.get.status=="1"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=sign_up&status=1">已联系</a></li>
+<li {yun:}if $smarty.get.status=="2"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=sign_up&status=2">未联系</a></li>
+</ul>
+</div>
+<div class="right_column_border_reservation">
+{yun:}if $rows{/yun}
+<div class="new_Leave_list_tit new_Leave_list_h flt">
+  <div class="new_Leave_li_list_tit new_Leave_w110">姓名 </div>
+  <div class="new_Leave_li_list_tit new_Leave_w138">手机号码 </div>
+  <div class="new_Leave_li_list_tit yue_kc">预约课程 </div>
+  <div class="new_Leave_li_list_tit yue_time">预约时间 </div>
+  <div class="new_Leave_li_list_tit yue_cz">操作 </div>
+</div>
+{yun:}/if{/yun}
+<div class="clear"></div>
+<div class="Reservation_list" style="padding:0px;">
+
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<form action="{yun:}$now_url{/yun}" method="post" target="supportiframe" id='myform' class="layui-form">
+{yun:}foreach item=v from=$rows{/yun}
+{yun:}assign var="state" value=$v.order_state{/yun}
+
+
+<div class="new_Leave_list_order flt">
+  <div class="sigm_up_box_checkbox"><input type="checkbox" name="delid[]" value="{yun:}$v.id{/yun}" class="Reservation_list_check Reservation_list_check_mt5" lay-skin="primary"></div>
+  <div class="new_Leave_li_list new_Leave_w95">{yun:}$v.name{/yun}</div>
+  <div class="new_Leave_li_list new_Leave_w180">{yun:}$v.phone{/yun} </div>
+  <div class="new_Leave_li_list yue_kc">{yun:}$v.sub_name{/yun} </div>
+  <div class="new_Leave_li_list yue_time" >{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun} </div>
+  <div class="new_Leave_li_list yue_cz">
+<a href="javascript:void(0)" onclick="layer_del('确定删除该报名信息？','index.php?c=sign_up&delid={yun:}$v.id{/yun}');">删除</a>
+
+{yun:}if $v.status!='1'{/yun}
+<em class="px_line">|</em>
+<a  href="javascript:void(0)" onclick="ylx('{yun:}$v.id{/yun}')">设为已联系</a>
+{yun:}/if{/yun}
+</div>
+<div class="sigm_up_box_r_p">预约说明：{yun:}$v.content{/yun}</div>
+</div>
+
+
+
+{yun:}foreachelse{/yun}
+      <div class="msg_no">暂无相关信息</div>
+{yun:}/foreach{/yun}
+{yun:}if !empty($rows){/yun}
+<div class="sigm_up_box sigm_up_box_bg">
+<div class="sigm_up_box_checkbox_w50"><input id='checkAll' type="checkbox" lay-filter="alltrain"  lay-skin="primary" class="right_column_news_cbox"><label for="checkAll">全选</label></div>
+
+<input type="button" value="删除" class="right_column_news_sub" onclick="return really1('delid[]');">
+<input type="hidden" name="status" value="0" />
+{yun:}if $smarty.get.status!="1"{/yun}
+<input class="btn-v3" type="button" value="设为已联系" onclick="return really2('delid[]');">
+{yun:}/if{/yun}
+
+</div>
+{yun:}/if{/yun}
+</form>
+</div>
+</div>
+</div>
+</div>
+<script>
+	layui.use(['form','layer', 'laydate'], function(){
+    	var $ = layui.$,
+			form = layui.form,
+			laydate = layui.laydate,
+			layer = layui.layer;
+    	
+    	form.on('checkbox(alltrain)', function (data) {
+       	 	$("input[name='delid[]']").each(function () {
+            	this.checked = data.elem.checked;
+        	});
+        	form.render('checkbox');
+      	});
+  	});
+function really1(name){
+	var chk_value =[];    
+	$('input[name="'+name+'"]:checked').each(function(){    
+		chk_value.push($(this).val());   
+	});
+	if(chk_value.length==0){
+		layer.msg("请选择要删除的数据！",2,8);return false;
+	}else{
+		$("input[name=status]").val(0);
+		layer.confirm("确定删除吗？",function(){
+			setTimeout(function(){$('#myform').submit()},0); 
+		});
+	}
+}
+function really2(name){
+	var chk_value =[];    
+	$('input[name="'+name+'"]:checked').each(function(){    
+		chk_value.push($(this).val());   
+	});
+	if(chk_value.length==0){
+		layer.msg("请选择要设为已联系的数据！",2,8);return false;
+	}else{
+		layer.confirm("确定要设为已联系吗？",function(){
+			layer.load('请稍候....', 0);
+			$.post("index.php?c=sign_up", {
+				'delid': chk_value,
+				'status': 1
+			}, function(data) {
+				if (data) {
+					layer.closeAll();
+					var res =  eval('(' + data + ')');
+					layer.msg(res.msg, res.tm, res.st, function(){
+						location.reload();
+					});
+				}
+			});
+		});
+	}
+}
+function ylx(id){
+	layer.load('请稍候....', 0);
+	$.post("index.php?c=sign_up", {
+		'delid': id,
+		'status': 1
+	}, function(data) {
+		if (data) {
+			layer.closeAll();
+			var res =  eval('(' + data + ')');
+			layer.msg(res.msg, res.tm, res.st, function(){
+				location.reload();
+			});
+		}
+	});
+}
+</script>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

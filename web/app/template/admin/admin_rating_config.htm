@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+    <form class="layui-form">
+        <div class="infoboxp">
+            <div class="tty-tishi_top">
+            <div class="tabs_info">
+                <ul>
+                    <li><a href="index.php?m=admin_comset">企业设置</a></li>
+                    <li><a href="index.php?m=admin_comset&c=logo">头像设置</a></li>
+                    <li><a href="index.php?m=admin_comset&c=comspend">消费设置</a></li>
+                    <li class="curr"><a href="index.php?m=admin_comset&c=rating">套餐设置</a></li>
+                    <li><a href="index.php?m=admin_comset&c=reward">职位推广设置</a></li>
+                </ul>
+            </div>
+
+            <div class="admin_new_tip">
+                <a href="javascript:;" class="admin_new_tip_close"></a>
+                <a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+                    <div class="admin_new_tip_list">注：该页面的功能设置，不会对现有的数据生效，只对后产生的数据生效，请根据需要，谨慎设置。</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+                <div class="tag_box">
+                    <div>
+                        <table width="100%" class="table_form">
+                            <tr class="admin_table_trbg">
+                                <th width="200" style="float: left;padding-top: 20px;">企业会员模式：</th>
+                                <td>
+                                    <div class="admin_rating_config_box">
+                                        <div class="admin_rating_config_box_list">
+                                            <input type="radio" name="com_vip_type" lay-filter="com_vip_type" value="1" title="时间模式" {yun:}if $config.com_vip_type==1{/yun}checked{yun:}/if{/yun}>
+                                            <input type="radio" name="com_vip_type" lay-filter="com_vip_type" value="2" title="套餐模式" {yun:}if $config.com_vip_type==2{/yun}checked{yun:}/if{/yun}>
+                                            <input type="radio" name="com_vip_type" lay-filter="com_vip_type" value="0" title="同时开启" {yun:}if $config.com_vip_type==0{/yun}checked{yun:}/if{/yun}>
+                                            <div class="clear"></div>
+                                            <span class="admin_web_tip" style="margin-left:0px;">注：时间模式，在设置的时间内，不受套餐数限制，但是有每日上限操作。</span>
+                                            <div class="clear"></div>
+                                            <span class="admin_web_tip" style="margin-left:0px;">注：套餐模式，在设置的时间内，受套餐数限制，用完即止。</span>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th width="200" style="float: left;padding-top: 20px;">套餐消费模式：</th>
+                                <td>
+                                    <div class="admin_rating_config_box">
+                                        <div class="admin_rating_config_box_list">
+                                            <input type="radio" name="com_integral_online" value="1" title="抵扣消费" {yun:}if $config.com_integral_online==1{/yun}checked{yun:}/if{/yun}>
+                                            <input type="radio" name="com_integral_online" value="2" title="金额消费" {yun:}if $config.com_integral_online==2{/yun}checked{yun:}/if{/yun}>
+                                            <input type="radio" name="com_integral_online" value="3" title="{yun:}$config.integral_pricename{/yun}消费" {yun:}if $config.com_integral_online==3{/yun}checked{yun:}/if{/yun}>
+                                            <input type="radio" name="com_integral_online" value="4" title="套餐消费" {yun:}if $config.com_integral_online==4{/yun}checked{yun:}/if{/yun}>
+                                            <div class="clear"></div>
+                                            <span class="admin_web_tip" style="margin-left:0px;">抵扣消费：账户积分抵扣部分或者全部金额操作！在会员套餐使用完的情况下，会员可以通过{yun:}$config.integral_pricename{/yun}抵扣金额，或者购买会员的方式进行消费的模式</span>
+                                            <div class="clear"></div>
+                                            <span class="admin_web_tip" style="margin-left:0px;">金额消费：在会员套餐使用完的情况下，会员通过消费金额，或者购买会员的方式进行套餐相关的操作</span>
+                                            <div class="clear"></div>
+                                            <span class="admin_web_tip" style="margin-left:0px;">{yun:}$config.integral_pricename{/yun}消费：在会员套餐使用完的情况下，会员通过购买消费账户积分，或者购买会员的方式进行套餐相关的操作</span>
+                                            <div class="clear"></div>
+                                            <span class="admin_web_tip" style="margin-left:0px;">套餐消费：在会员套餐使用完的情况下，会员仅可购买会员才可以继续进行套餐内操作</span>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th width="160" class="t_fr">单独购买：</th>
+                                <td>
+                                    <div class="layui-input-block">
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="issuejob" lay-skin="primary" title="发布职位" {yun:}if in_array("issuejob",$com_single_can){/yun} checked {yun:}/if{/yun} >
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="jobtop" lay-skin="primary" title="职位置顶" {yun:}if in_array("jobtop",$com_single_can){/yun} checked {yun:}/if{/yun} >
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="jobrec" lay-skin="primary" title="职位推荐" {yun:}if in_array("jobrec",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="joburgent" lay-skin="primary" title="职位紧急" {yun:}if in_array("joburgent",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="sxjob" lay-skin="primary" title="刷新职位" {yun:}if in_array("sxjob",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="downresume" lay-skin="primary" title="下载简历" {yun:}if in_array("downresume",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="invite" lay-skin="primary" title="邀请面试" {yun:}if in_array("invite",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="zph" lay-skin="primary" title="报名招聘会" {yun:}if in_array("zph",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="createson" lay-skin="primary" title="创建子账号" {yun:}if in_array("createson",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="chat" lay-skin="primary" title="{yun:}$config.sy_chat_name{/yun}" {yun:}if in_array("chat",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="zphnet" lay-skin="primary" title="报名网络招聘会" {yun:}if in_array("zphnet",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singlebuy_Ctr" name="com_single_can[]" value="spview" lay-skin="primary" title="视频面试" {yun:}if in_array("spview",$com_single_can){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                    
+                                    </div>
+                                    <span class="admin_web_tip">提示：已选中的项目可以在套餐外单独使用金额、积分等购买，未选中则必须购买相应的套餐或增值包。</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th width="200" style="float: left;padding-top: 20px;">强制金额消费项目：</th>
+                                <td>
+                                    <div class="layui-input-block">
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="vip" lay-skin="primary" title="会员套餐" {yun:}if in_array("vip",$sy_only_price){/yun} checked {yun:}/if{/yun} >
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="pack" lay-skin="primary" title="增值服务" {yun:}if in_array("pack",$sy_only_price){/yun} checked {yun:}/if{/yun} >
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="issuejob" lay-skin="primary" title="发布职位" {yun:}if in_array("issuejob",$sy_only_price){/yun} checked {yun:}/if{/yun} >
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="jobtop" lay-skin="primary" title="职位置顶" {yun:}if in_array("jobtop",$sy_only_price){/yun} checked {yun:}/if{/yun} >
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="jobrec" lay-skin="primary" title="职位推荐" {yun:}if in_array("jobrec",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="joburgent" lay-skin="primary" title="职位紧急" {yun:}if in_array("joburgent",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="sxjob" lay-skin="primary" title="刷新职位" {yun:}if in_array("sxjob",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="downresume" lay-skin="primary" title="下载简历" {yun:}if in_array("downresume",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="invite" lay-skin="primary" title="邀请面试" {yun:}if in_array("invite",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="zph" lay-skin="primary" title="报名招聘会" {yun:}if in_array("zph",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="createson" lay-skin="primary" title="创建子账号" {yun:}if in_array("createson",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="chat" lay-skin="primary" title="{yun:}$config.sy_chat_name{/yun}" {yun:}if in_array("chat",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="zphnet" lay-skin="primary" title="报名网络招聘会" {yun:}if in_array("zphnet",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+                                        <div class="layui-input-inline" style="margin: 0px 30px 15px 0;width: 150px;">
+                                            <input type="checkbox" class="singleCtr" name="sy_only_price[]" value="spview" lay-skin="primary" title="视频面试" {yun:}if in_array("spview",$sy_only_price){/yun} checked {yun:}/if{/yun}>
+                                        </div>
+
+                                    </div>
+                                    <span class="admin_web_tip">提示：已选中的项目仅可使用金额购买。</span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <th width="200" style="float: left;padding-top: 20px;">上架职位消耗职位发布数量：</th>
+                                <td>
+                                    <div class="admin_rating_config_box">
+                                        <div class="admin_rating_config_box_list">
+
+                                            <input type="radio" name="upjob_jobnum" value="0" title="否" {yun:}if $config.upjob_jobnum==0{/yun}checked{yun:}/if{/yun}>
+
+                                            <input type="radio" name="upjob_jobnum" value="1" title="是" {yun:}if $config.upjob_jobnum==1{/yun}checked{yun:}/if{/yun}>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th width="200"  class="t_fl">职位推广取消：</th>
+                                <td>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="tg_back" value="1" title="开启" {yun:}if $config.tg_back==1{/yun}checked{yun:}/if{/yun}>
+
+                                            <input type="radio" name="tg_back" value="2" title="关闭" {yun:}if $config.tg_back==2{/yun}checked{yun:}/if{/yun}>
+                                        </div>
+                                        <span class="admin_web_tip">开启职位推广取消功能：企业会员主动关闭职位推广，剩余推广套餐，返还到企业账号（例如：设置置顶10天，推广了5天，关闭推广，剩余5天返回到企业账户）。</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th width="200"  class="t_fl">购买会员套餐累加：</th>
+                                {yun:}if is_array($qy_rows){/yun}
+                                <td>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            {yun:}foreach item=v from=$qy_rows{/yun}
+                                            <input type="checkbox" name="rating_add" value="{yun:}$v.id{/yun}" lay-skin="primary" title="{yun:}$v.name{/yun}"
+                                                   {yun:}if in_array($v.id,$rating_add){/yun}checked{yun:}/if{/yun}> {yun:}/foreach{/yun}
+                                        </div>
+                                        <span class="admin_web_tip">当前会员套餐未到期，购买新会员，选中的套餐数据按累加计算（套餐数量和套餐时间）。</span>
+                                    </div>
+                                </td>
+                                {yun:}else{/yun}
+                                <td>
+                                    <div class="iradio_flat_height">
+                                        暂无等级，
+                                        <a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+                                        <input type="hidden" name="com_rating" value="0">
+                                    </div>
+                                </td>
+                                {yun:}/if{/yun}
+                            </tr>
+
+
+
+                            <tr class="admin_table_trbg">
+                                <th width="200" class="t_fl">企业注册默认等级：</th>
+                                {yun:}if is_array($qy_rows){/yun}
+                                <td>
+
+                                    <div style="width:400px;"  class="admin_rating_config_box">
+                                        <div class="layui-input-block">
+                                        <select name="com_rating" id="com_rating">
+                                            {yun:}foreach item=v from=$qy_rows{/yun}
+                                            <option value="{yun:}$v.id{/yun}"{yun:}if $config.com_rating==$v.id{/yun}selected{yun:}/if{/yun}> {yun:}$v.name{/yun}</option>{yun:}/foreach{/yun}
+                                        </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                {yun:}else{/yun}
+                                <td>
+                                    <div class="iradio_flat_height">
+                                        暂无等级，
+                                        <a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+                                        <input type="hidden" name="com_rating" value="0">
+                                    </div>
+                                </td>
+                                {yun:}/if{/yun}
+                            </tr>
+                            <tr>
+                                <th width="200" class="t_fl">会员到期后默认为：</th>
+                                 {yun:}if is_array($qy_rows){/yun}
+                                <td>
+                                    <div class="admin_rating_config_box">
+                                        <div class="layui-input-block" style="width:400px;">
+                                            <select name="com_vip_done" id="com_vip_done">
+                                                <option value="0">过期会员</option>
+                                                {yun:}foreach from=$qy_rows item=v{/yun}
+
+                                                <option value="{yun:}$v.id{/yun}"  {yun:}if $config.com_vip_done==$v.id{/yun}selected{yun:}/if{/yun}>{yun:}$v.name{/yun}</option>
+
+                                                {yun:}/foreach{/yun}
+                                            </select>
+                                        </div>
+                                        <span class="admin_web_tip">如设置的不是过期会员，用户现有会员等级到期后按选择的等级设置套餐数量、到期时间</span>
+                                    </div>
+                                </td>
+                                {yun:}else{/yun}
+                                <td>
+                                    <div class="iradio_flat_height">
+                                        暂无等级，
+                                        <a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+                                        <input type="hidden" name="com_rating" value="0">
+                                    </div>
+                                </td>
+                                {yun:}/if{/yun}
+                            </tr>
+
+                            <tr>
+                                <th width="200" class="t_fl">免费查看和下载投递简历：</th>
+                                {yun:}if is_array($qy_rows){/yun}
+                                <td>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="com_look" value="0" lay-skin="primary" title="过期会员" {yun:}if $com_look && in_array('0',$com_look){/yun}checked{yun:}/if{/yun}>
+                                            {yun:}foreach item=v from=$qy_rows{/yun}
+                                            <input type="checkbox" name="com_look" value="{yun:}$v.id{/yun}" lay-skin="primary" title="{yun:}$v.name{/yun}" {yun:}if in_array($v.id,$com_look){/yun}checked{yun:}/if{/yun}>
+                                            {yun:}/foreach{/yun}
+                                        </div>
+                                        <span class="admin_web_tip">企业是选中的会员套餐，可以免费查看联系方式、下载求职者主动向企业投递的简历。</span>
+                                    </div>
+                                </td>
+                                {yun:}else{/yun}
+                                <td>
+                                    <div class="iradio_flat_height">
+                                        暂无等级，
+                                        <a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+                                        <input type="hidden" name="com_rating" value="0">
+                                    </div>
+                                </td>
+                                {yun:}/if{/yun}
+
+                            </tr>
+                            <tr>
+                                <tr class="admin_table_trbg">
+                                    <th width="200">&nbsp;</th>
+                                    <td align="left">
+                                        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+                                        <input class="layui-btn tty_sub" id="mconfig" type="button" name="config" value="提交" />&nbsp;&nbsp;
+                                        <input class="layui-btn tty_cz" type="reset" value="重置" /></td>
+                                </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                layui.use(['form'], function() {
+                    var form = layui.form,
+                        $ = layui.$;
+
+                    form.on('radio(com_vip_type)', function(data) {
+                        if(data.value == 2) {
+                            $("#timeVipLimit").hide();
+                        } else {
+                            $("#timeVipLimit").show();
+                        }
+                    })
+                });
+                $(function() {
+                    $("#mconfig").click(function() {
+
+                        var com_single_can = [];
+                        $('.singlebuy_Ctr').each(function(){
+                            
+                            if($(this).is(":checked")){
+                                com_single_can.push($(this).val());
+                            }
+                        });
+
+                        let com_look = "", rating_add = "";
+
+                        $('input[name="com_look"]:checked').each(function() {
+                            if(com_look == "") {
+                                com_look = $(this).val();
+                            } else {
+                                com_look = com_look + "," + $(this).val();
+                            }
+                        });
+
+                        $('input[name="rating_add"]:checked').each(function() {
+                            if(rating_add == "") {
+                                rating_add = $(this).val();
+                            } else {
+                                rating_add = rating_add + "," + $(this).val();
+                            }
+                        });
+
+                        var sy_only_price = [];
+                        $('.singleCtr').each(function(){
+
+                            if($(this).is(":checked")){
+                                sy_only_price.push($(this).val());
+                            }
+                        })
+
+                        loadlayer();
+                        $.post("index.php?m=admin_comset&c=save", {
+                            config: $("#mconfig").val(),
+                            com_rating: $("#com_rating").val(),
+                            com_integral_online: $("input[name=com_integral_online]:checked").val(),
+                            sy_only_price:sy_only_price.length > 0 ? sy_only_price : '',
+                            upjob_jobnum: $("input[name=upjob_jobnum]:checked").val(),
+                            tg_back: $("input[name=tg_back]:checked").val(),
+                            package_data_acc: $("input[name=package_data_acc]:checked").val(),
+                            com_vip_type: $("input[name=com_vip_type]:checked").val(),
+                            com_vip_done: $("#com_vip_done").val(),
+
+
+                            isDayActionAllCheck: $("#isDayActionAllCheck").attr('checked') ? 1 : 0,
+                            isDayActionZeroCostCheck: $("#isDayActionZeroCostCheck").attr('checked') ? 1 : 0,
+                            com_look: com_look,
+                            rating_add: rating_add,
+                            com_single_can:com_single_can.length>0 ? com_single_can : '',
+
+                            pytoken: $("#pytoken").val()
+                        }, function(data, textStatus) {
+                            parent.layer.closeAll('loading');
+                            config_msg(data);
+                        });
+                    });
+                })
+            </script>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="tabs_info">
+					<ul>
+						<li class="curr">
+							<a href="index.php?m=admin_chat_useful">用户常用语</a>
+						</li>
+						<li>
+							<a href="index.php?m=admin_chat_useful&c=usefulSet">自定义常用语</a>
+						</li>
+					</ul>
+				</div>				
+				<div class="clear"></div>
+				<div class="admin_new_search_box">
+					<form action="index.php" name="myform" method="get" style="float:left">
+						<input name="m" value="admin_chat_useful" type="hidden" />
+						<div class="admin_new_search_name">搜索类型：</div>
+						<div class="admin_Filter_text formselect" did="dtype">
+							<input type="button" value="{yun:}if $smarty.get.type=='' ||$smarty.get.type=='1' {/yun}用户{yun:}elseif $smarty.get.type=='2' {/yun}内容{yun:}/if{/yun}" class="admin_Filter_but" id="btype" />
+							<input type="hidden" name="type" id="type" value="{yun:}if $smarty.get.type=='' {/yun}1{yun:}else{/yun}{yun:}$smarty.get.type{/yun}{yun:}/if{/yun}" />
+							<div class="admin_Filter_text_box" style="display:none" id="dtype">
+								<ul>
+									<li><a href="javascript:void(0)" onClick="formselect('1','type','用户')">用户</a></li>
+									<li><a href="javascript:void(0)" onClick="formselect('2','type','内容')">内容</a></li>
+								</ul>
+							</div>
+						</div>
+						<input class="admin_Filter_search" type="text" name="keyword" size="25" style="float:left" value="{yun:}$smarty.get.keyword{/yun}" placeholder="请输入你要搜索的关键字" autocomplete="off" />
+						<input class="admin_Filter_bth" type="submit" name="news_search" value="搜索" />
+						
+					</form>
+					{yun:}include file="admin/admin_search.htm"{/yun}
+				</div>
+				<div class="clear"></div>				
+			</div>
+			<div class="tty_table-bom">
+			<div class="table-list">
+				<div class="admin_table_border">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form action="index.php?m=admin_chat_useful&c=del" target="supportiframe" name="myform" method="post" id='myform'>
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th><label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+								<th align="left"> 
+									{yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun}
+									<a href="{yun:}searchurl order=desc t=id m=admin_chat_useful untype='order,t'{/yun}">编号<img src="images/sanj.jpg" /></a> {yun:}else{/yun} 
+									<a href="{yun:}searchurl order=asc t=id m=admin_chat_useful  untype='order,t'{/yun}">编号<img src="images/sanj2.jpg" /></a> 
+									{yun:}/if{/yun} 
+								 </th>
+								<th align="left">用户名/用户</th>
+								<th align="left" width="500">内容</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							{yun:}foreach item=v key=key from=$rows{/yun}
+							<tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+								<td><input type="checkbox" value="{yun:}$v.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+								<td align="left" class="td1"><span>{yun:}$v.id{/yun}</span></td>
+								<td align="left">{yun:}$v.username{/yun}{yun:}if $v.uname{/yun} / {yun:}/if{/yun}{yun:}$v.uname{/yun}</td>
+								<td align="left" width="500">
+									{yun:}$v.content{/yun}
+								</td>
+								<td>
+									<a href="javascript:void(0);" data-id="{yun:}$v.id{/yun}" data-content="{yun:}$v.content{/yun}" class="admin_new_c_bth admin_new_c_bth_yl editcc">修改</a>
+									<a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=admin_chat_useful&c=del&id={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+								</td>
+							</tr>
+							{yun:}/foreach{/yun}
+							<tr>
+								<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+								<td colspan="9">
+									<label for="chkAll2">全选</label>&nbsp;
+									<input class="admin_button" type="button" name="delsub" value="删除所选" onClick="return really('del[]')" />
+								</td>
+							</tr>
+							{yun:}if $total > $config.sy_listnum {/yun}
+							<tr>
+								{yun:}if $pagenum==1{/yun}
+								<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun} <td colspan="3"> 从 {yun:}($pagenum-1) *
+									$config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共
+										{yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="7" class="digg">{yun:}$pagenav{/yun}</td>
+							</tr>
+							{yun:}/if{/yun}
+						</tbody>
+
+					</table>
+					<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+			</div>
+		</div>
+		</div>
+		<script>
+			layui.use(['form','layer'], function(){
+				var form = layui.form,
+					layer = layui.layer,
+					$ = layui.$;
+					
+				$('#addcc').on('click', function(){
+					layer.prompt({title: '请输入常用语'}, function(value, index, elem){
+						layer.close(index);
+						var pytoken = $('#pytoken').val();
+						$.post('index.php?m=admin_chat_useful&c=add', {pytoken: pytoken, content: value}, function(){
+							window.location.reload();
+						});
+					});
+				});
+				$('.editcc').on('click', function(){
+					var id = $(this).attr('data-id');
+					var content = $(this).attr('data-content');
+					layer.prompt({title: '请输入常用语',value: content}, function(value, index, elem){
+						layer.close(index);
+						var pytoken = $('#pytoken').val();
+						$.post('index.php?m=admin_chat_useful&c=add', {pytoken: pytoken, content: value, id: id}, function(){
+							window.location.reload();
+						});
+					});
+				});
+			})
+		</script>
+	</body>
+
+</html>

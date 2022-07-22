@@ -1,0 +1,75 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+  <div class="com_tit"><span class="com_tit_span">赏金转换{yun:}$config.integral_pricename{/yun}</span></div>
+    <div class=right_box>
+      <div class=admincont_box>
+		
+        <div class="clear"></div>
+        <div class="job_list_tit">
+          <ul class="">
+            <li {yun:}if $smarty.get.c=="jobpack" && $smarty.get.act=="change"{/yun}class="job_list_tit_cur" {yun:}/if{/yun}><a href="index.php?c=jobpack&act=change">转换{yun:}$config.integral_pricename{/yun}</a></li>
+            <li {yun:}if $smarty.get.c=="jobpack" && $smarty.get.act=="changelist"{/yun} class="job_list_tit_cur" {yun:}/if{/yun}><a href="index.php?c=jobpack&act=changelist">转换记录</a></li>
+          </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="com_body">
+          <div class="admin_new_tip mt20">
+            <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+            <div class="admin_new_tip_list_cont">
+              <div class="admin_new_tip_list">单笔转换金额{yun:}if $config.packprice_min_recharge gt 0{/yun}必须达到{yun:}$config.packprice_min_recharge{/yun}元{yun:}else{/yun}不限{yun:}/if{/yun}
+			  ,一日最多转换{yun:}if $config.paypack_max_recharge gt 0{/yun}{yun:}$config.paypack_max_recharge{/yun}次{yun:}else{/yun}次数不限{yun:}/if{/yun}
+			  ,已经转换{yun:}$changeNum{/yun}次。 </div>
+              <div class="admin_new_tip_list">兑换比为：1元={yun:}$config.integral_proportion{/yun}点{yun:}$config.integral_pricename{/yun} </div>
+            </div>
+          </div> 
+          <div class="clear"></div>
+          <div class="clear"></div>
+          <div class="packloglost_box_l_b">  
+              <div class="com_release_box">
+			<ul>
+             <li>
+				 <div class="com_release_name"><i class="ff0">*</i> 可转换金额</div>
+			 <div class="com_release_cont">   <div class="com_release_cont_text">  <span class="withdraw_tx_box_n">￥{yun:}$statis.packpay{/yun}</span>元</div>
+             </div>
+             </li>
+			 <li>
+				 <div class="com_release_name"><i class="ff0">*</i> 转换金额</div>
+			 <div class="com_release_cont"> 
+             <div class="com_release_cont_text"> 
+			 <input type="text" id="changeprice" name="changeprice" onkeyup="changepriceprice(this);"  class="layui-input" placeholder="自定义" maxlength='11' autocomplete="off"/>
+			 
+			 </div>
+             </div>
+             </li>
+             <li>
+				 <div class="com_release_name">转换{yun:}$config.integral_pricename{/yun}</div>
+			 <div class="com_release_cont"><div class="com_release_cont_text"><span class="payintegral" id="payintegral">0</span>个{yun:}$config.integral_pricename{/yun}<input type="hidden" name="changeintegral" id="changeintegral" size="20" value=""  class="layui-input"></div>
+             </div>
+             </li>
+              <li>		
+				  {yun:}if $statis.packpay>0{/yun}
+				  <input  type="button" value="转换" name=nextstep class="btn_01" onclick="changetrsist();">
+				  {yun:}else{/yun}
+				  <input  type="button" value="不可转换" name=nextstep class="btn_01"  disabled>
+				  {yun:}/if{/yun}
+			  </li>
+             </ul>
+             </div>         
+          </div>        
+          <div class="clear"></div>      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script>
+var packpay='{yun:}$statis.packpay{/yun}';//packpay可转换金额
+var proportion='{yun:}$config.integral_proportion{/yun}';//proportion转换积分比例
+var minchangeprice='{yun:}$config.packprice_min_recharge{/yun}';//minchangeprice最低转换金额
+var changeNum = '{yun:}$changeNum{/yun}';changeNum//已转回次数
+var packpaymax = '{yun:}$config.paypack_max_recharge{/yun}';packpaymax//每日最多转换次数
+
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun} 

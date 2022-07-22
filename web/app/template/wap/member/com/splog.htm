@@ -1,0 +1,91 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue" class="wap_member none">
+
+	<span v-for="(item, zk) in list" :key="zk">
+		<div class="com_member_hr">
+		    <div class="com_member_hr_name" @click="toresume(item.uid)">
+		        <div style=" padding-left:10px;font-size:16px; font-weight:bold">{{item.runame}}</div> 
+					<a class="wap_member_com_lokr">查看简历</a>
+		        <span class="com_member_hr_date"></span>
+		    </div>
+		
+		    <div class="com_member_user_box">
+		        <div class="com_member_hr_tj">
+		            <div class="com_member_hr_p1">
+		                <span class="member_c9">性别：</span>{{item.sex_n}} &nbsp;&nbsp;&nbsp;
+		                <span class="member_c9">经验：</span><span class="">{{item.exp_n}}</span> &nbsp;&nbsp;&nbsp;
+		                <span class="member_c9">学历：</span><span class="">{{item.edu_n}}</span>
+		            </div>
+		        </div>
+		        <div class="com_member_hr_p1">
+		            <span class="member_c9">视频时长：</span>  <em style="color:#C00">{{item.sptime_n}}</em>
+		        </div>
+		        <div class="com_member_hr_p1">
+		            <span class="member_c9">开始时间：</span>{{item.ctime_n}}
+		        </div>
+		        <div class="com_member_hr_p5" v-if="item.remark">备注：<em style="color:#C00">{{item.remark}}</em></div>
+		    </div>
+		</div>
+	</span>
+    <div v-if="count ==2">
+        <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange"/>
+    </div>
+
+    <span v-show="count==0">
+		<div class="wap_member_no">暂无视频记录~ 您可以主动邀请人才哦！</div>
+		<div>
+		    <a class="wap_member_no_submit" href="{yun:}url m=wap c=resume{/yun}">去搜索人才</a>
+		</div>
+	</span>
+</div>
+<script>
+    var currentPage = parseInt('{yun:}$smarty.get.page{/yun}') || 1;
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data: {
+            list: [],
+            limit: 10,
+            total: 0,
+            page: currentPage,
+        },
+        computed: {
+            count() {
+                if (this.total > this.limit) {
+                    return 2;
+                } else if (this.list.length == 0) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        },
+        created() {
+            this.getList();
+        },
+        methods: {
+            getList: function () {
+                showLoading();
+                var that = this;
+                var paramer = {};
+                paramer['page'] = this.page;
+                paramer['limit'] = this.limit;
+                var url = '{yun:}url d=wxapp h=com m=zphnet c=spviewLog{/yun}';
+                $.post(url, paramer, function (data) {
+                    hideLoading();
+                    var res = data.data;
+                    that.list = res.list;
+                    that.total = res.total;
+                    $("#yunvue").css('display', 'block');
+                }, 'json');
+            },
+            pageChange: function (e) {
+                location.href = 'index.php?c=special&page=' + e;
+            },
+            toresume(uid) {
+                window.location.href = wapurl + 'index.php?c=resume&a=show&uid=' + uid;
+            }
+        }
+    })
+</script>
+</body>
+</html>

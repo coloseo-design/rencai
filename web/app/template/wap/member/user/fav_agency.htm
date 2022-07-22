@@ -1,0 +1,40 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<div class="m_taball">
+	<div class="m_taballbox">
+<ul class=" ">
+<li><a href="index.php?c=baoming_subject">报名课程</a></li>
+<li><a href="index.php?c=fav_subject">收藏课程</a></li>
+<li><a href="index.php?c=atn_teacher">关注讲师</a></li>
+<li class="m_taballactive"><a href="index.php?c=fav_agency">关注机构</a></li>
+<li><a href="index.php?c=subject_zixun">留言</a></li>
+</ul> 
+  </div>  </div>
+<div class="m_cardbox">
+{yun:}foreach item=v from=$rows{/yun}
+
+<div class="m_cardbg">
+ <div class="com_member_hr_name"> 
+<a href="{yun:}url m=wap c=train a=agencyshow id=$v.sc_uid{/yun}"  class="wap_member_com_name  com_member_hr_cblue">{yun:}$v.name{/yun}</a>
+</div>
+
+ <div class="com_member_hr_p1 mt10"><span class="member_c9">关注时间 </span>{yun:}$v.time|date_format:"%Y-%m-%d"{/yun}</div>
+ 
+<div class="com_member_hr_cz">
+<a href="javascript:void(0)" onclick="vant_del('是否取消关注？','index.php?c=delagency&id={yun:}$v.id{/yun}')" class="yun_member_hr_bth">取消关注</a>
+<a href="{yun:}url m=wap c=train a=agencyshow id=$v.sc_uid{/yun}" class="yun_member_hr_bth">查看详情</a>
+</div>
+</div>
+
+{yun:}foreachelse{/yun}
+<div class="wap_member_no">
+目前您未关注任何培训机构<div><a class="wap_member_no_search" href="{yun:}url m=wap c=train a=agency{/yun}">去搜索我感兴趣的培训机构</a></div>
+</div>
+{yun:}/foreach{/yun}
+</div>
+
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+</div>
+</div>
+</div>
+</body>
+</html>

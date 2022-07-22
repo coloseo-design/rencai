@@ -1,0 +1,59 @@
+{yun:}include file="$wapstyle/fheader.htm"{/yun}
+
+<section class="wap_member">
+    {yun:}if $rows{/yun}
+    <div id="slider" class="mui-slider">
+   
+            <div id="zplist" class="flexiblebox" style="border:none;">
+              
+                <ul>
+                    {yun:}foreach item=v from=$rows{/yun} 
+                      <li>
+                          <div class="wap_member_msg ">
+                              <div class="wap_member_date">
+                                  <span class="yun_m_job_date_n">&nbsp;
+                                    <a href="{yun:}url  m=wap c=gqlist a=taskshow id=$v.task_id {/yun}" class="job_list_jobname ">{yun:}$v.task_name{/yun}</a>
+                                  </span>
+                              </div>
+                              <div class="yun_m_job_list_zt">
+                                 联系人：{yun:}$v.link_man{/yun}
+                                <span class="wap_member_msg_job_s">联系电话：{yun:}$v.link_moblie{/yun} </span>
+                            </div>
+                              <div class="yun_m_job_list_zt">浏览时间：{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}</div>
+                              <div class="yun_member_bth">
+                                  <a href="javascript:void(0)" onclick="delbrowse({yun:}$v.id{/yun})"  class="yun_member_sub  ">删除</a>
+                                  <a href="{yun:}url  m=wap c=gqlist a=taskshow id=$v.task_id {/yun}" class="yun_member_sub ">详情</a>
+                              </div>
+                          </div>
+                      </li>
+                {yun:}/foreach{/yun}
+                    
+                </ul>
+
+               
+            </div>
+        </div>
+    {yun:}else{/yun}
+        <div class="wap_member_no">暂无浏览供求任务
+                  <div>
+                      <a href="{yun:}url  m=wap c=gqlist a=task{/yun}"  class="wap_member_no_submit">我要主动找供求任务</a>
+                  </div>
+		</div>
+    {yun:}/if{/yun}
+</section>
+<script>
+    // mui('.mui-scroll-wrapper').scroll();
+    function delbrowse(id){
+       showConfirm('确定删除浏览供求任务', function() {
+          $.get(wapurl+"/index.php?c=free&a=delbrowse",{id:id},function(data){
+           if(data==1){
+              showToast('浏览供求任务删除成功',2,function(){location.reload();});
+          }else{
+              showToast('浏览供求任务删除失败',2);return false;
+          }
+        });
+      })
+    }
+</script>
+</body>
+</html>

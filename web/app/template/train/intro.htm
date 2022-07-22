@@ -1,0 +1,25 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+  <div class="training_cur ftl">
+    <div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > 机构简介 </div>
+  </div>
+{yun:}include file="$trainstyle/top.htm"{/yun}
+  <div class="Courses_content_box  ftl ">
+    <div class="Courses_Table_detail ftl mt10">
+      <div class="Agency_Int_p">{yun:}$row.content{/yun}</div>
+    </div>
+  </div> 
+  {yun:}include file="$trainstyle/reclist.htm"{/yun}
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+{yun:}include file="$trainstyle/footer.htm"{/yun}

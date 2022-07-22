@@ -1,0 +1,83 @@
+{yun:}foreach item=v from=$lists{/yun}
+
+ <section style="padding:0px 0px 10px 0px;">   <section style=" margin-top:-20px;">
+  <section style="display: flex;flex-direction: column;justify-content: flex-end;align-items: flex-end;"> 
+
+  <section style="width:20px;height:20px;background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/f_icon2.png) no-repeat; background-size:100%; display:inline-block;transform: translate(0px,40px);"> </section> </section>
+ 
+    <section style=" display: flex;flex-direction: column;justify-content: flex-end;"> <section style="width:20px;height:20px;background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/f_icon1.png) no-repeat; background-size:100%; display:inline-block;transform: translate(0px,20px);"> </section> </section>
+      </section>
+ <section style="border:2px solid #5b4ef6;padding:6px;">
+  <section style="border:1px solid #5b4ef6;">
+  
+<section  style="border-bottom:1px solid #5b4ef6; text-align:center;padding:14px 0;font-size:18px;color:#5b4ef6; font-weight:bold">{yun:}$v.name{/yun}</section>
+  <section style="padding:0 20px 20px 20px;">
+    <section style=" text-align:center; padding-top:20px;">
+  <section style="width: 110px;height:60px; background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/zp.png) no-repeat; background-size:100%; display:inline-block"></section>
+  </section>
+  {yun:}foreach item=v1 key=k1 from=$v.row{/yun}
+  
+      <section style=" margin-top:10px; margin-bottom:10px;">
+        <section style="height:16px; border-bottom:6px solid #fed1cf; display:inline-block"><section style="color:#5b4ef6; font-weight:bold; font-size:18px;">{yun:}$v1.name{/yun}</section>
+        </section>
+        {yun:}if $v1.job_exp{/yun}
+        <section  style="padding:10px 0">经验要求：{yun:}$v1.job_exp{/yun}</section>
+        {yun:}/if{/yun}
+        {yun:}if $v1.job_edu{/yun}
+        <section  style="padding:10px 0">学历要求：{yun:}$v1.job_edu{/yun}</section>
+        {yun:}/if{/yun}
+        {yun:}if isset($v1.job_salary){/yun}
+        <section  style="padding:10px 0">薪资：{yun:}$v1.job_salary{/yun}{yun:}if $v1.job_salary!='面议'{/yun}(元/月){yun:}/if{/yun}</section>
+        {yun:}/if{/yun}
+        {yun:}if $v1.description{/yun}
+        <section  style=" line-height:26px;">工作职责：<section style=" display:inline-block">{yun:}$v1.description{/yun}</section></section>
+        {yun:}/if{/yun}
+      </section>
+				{yun:}/foreach{/yun}
+      {yun:}if $v.linkman || $v.linktel || $v.address{/yun}  
+      <section style=" text-align:center; padding-top:20px;">
+        <section style="width: 110px;height:60px; background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/lx.png) no-repeat; background-size:100%; display:inline-block"></section>
+      </section>
+      {yun:}/if{/yun}
+    <section style=" line-height:30px;">   
+      {yun:}if $v.linkman{/yun}         
+      <section>联系人：{yun:}$v.linkman{/yun}</section>
+      {yun:}/if{/yun}
+      {yun:}if $v.linktel{/yun} 
+      <section>联系电话：{yun:}$v.linktel{/yun}</section>
+      {yun:}/if{/yun}
+      {yun:}if $v.address{/yun} 
+      <section>公司地址：{yun:}$v.address{/yun}</section>
+      {yun:}/if{/yun}
+    </section>
+
+				<section style="text-align: center;color: #666666;margin-top: 20px;">
+											{yun:}if $ewmtype != 'xcx'{/yun}
+						<p style="text-align:center;" align="center"><img style="width:50%; max-width:180px;" src="{yun:}pubqrcode  toc=company toa=show toid=$v.uid totype=$ewmtype{/yun}"><br /></p>
+						{yun:}else{/yun}
+						<p style="text-align:center; padding-top:20px;">
+						 <a  data-miniprogram-type="text"  data-miniprogram-appid="{yun:}$wxpaydata.sy_xcxappid{/yun}" data-miniprogram-path="/pages/company/show?id={yun:}$v.uid{/yun}" class="weapp_text_link" href="" style="color: rgb(51, 51, 51);padding: 6px 1.4em;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;max-width: 100%;font-size: 14px;display: inline-block;border-radius: 50px;letter-spacing: 1.5px;background: rgba(247, 215, 73, 0.86);box-sizing: border-box !important;overflow-wrap: break-word !important;">查看详情</a></p>
+						{yun:}/if{/yun}
+						<p style="text-align:center;color:#999;" align="center">{yun:}$config.sy_webname{/yun}<br />{yun:}$config.sy_weburl{/yun}</p>
+
+
+
+
+</section>
+
+</section>
+</section>
+
+</section>
+<section style=" margin-top:-40px;">
+  <section style="display: flex;flex-direction: column;justify-content: flex-end;align-items: flex-end;"> 
+
+  <section style="width:20px;height:20px;background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/f_icon4.png) no-repeat; background-size:100%; display:inline-block;transform: translate(0px,20px);"> </section> </section>
+ 
+    <section style=" display: flex;flex-direction: column;justify-content: flex-end;"> <section style="width:20px;height:20px;background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/f_icon3.png) no-repeat; background-size:100%; display:inline-block;transform: translate(0px,0px);"> </section> </section>
+    </section>
+</section>
+
+
+
+{yun:}/foreach{/yun}

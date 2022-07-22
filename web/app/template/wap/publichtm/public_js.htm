@@ -1,0 +1,67 @@
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/nativeshare.htm"{/yun}
+
+{yun:}if $config.sy_spview_web == 1 && $uid && ($usertype ==1 || $usertype ==2){/yun}
+<!--邀请视频面试   start-->
+<div id="spviewModal" class="none">
+	<div class="wapspms_bg"></div>
+	<div class="wapspms_show">
+		<div class="wapspms_com">
+			<div class="wapspms_comlogo"><img id="modalLogo" src=""></div>
+			<div class="wapspms_comname" id="modalName"></div>
+			<div>邀请你进行视频面试</div>
+		</div>
+		<div class="wapspms_cz">
+			<a href="javascript:void(0);" onclick="closeSp()" class="wapspms_cz_a"><i class="wapspms_cz_icon"></i><div class="wapspms_cz_p">拒绝</div></a>
+			<a href="javascript:void(0);" onclick="allowSp()" class="wapspms_cz_a wapspms_cz_aml"><i class="wapspms_cz_icon wapspms_cz_icon_js"></i><div class="wapspms_cz_p">接受</div></a>
+		</div>
+	</div>
+</div>
+<!--邀请视频面试   end-->
+{yun:}/if{/yun}
+
+<!--底部导航弹出-->
+<div id="footerVue" class="none">
+	<van-popup v-model="yunfoot" position="bottom" round>
+		<footer>
+		    <div class="footerbox">
+				 <div class="footerbox_tit">
+		        <div class="foot_nav_close" @click="yunfoot = false"></div>
+		        
+		            <div class="foot_nav_chiose_t">请选择</div>
+		        </div>
+		        <div class="foot_nav_box">
+		
+		            {yun:}foreach from=$navlist key=key item=v{/yun}
+					<dl class="index_navlist" style="height:70px;">
+						<a href="{yun:}$v.url_n{/yun}">
+							<dt class="index_nav_icon"><image src="{yun:}$v.pic_n{/yun}" ></image></dt>
+							<dd>{yun:}$v.name{/yun}</dd>
+						</a>
+					</dl>
+					{yun:}/foreach{/yun}
+		                        
+		        </div>
+		    </div>
+		</footer>
+	</van-popup>
+</div>
+<script>
+var footerVue = new Vue({
+        el: '#footerVue',
+        data: {
+			yunfoot: false
+		},
+		mounted(){
+			document.getElementById('footerVue').style.display = 'block';
+		}
+	});
+</script>
+
+{yun:}if !empty($smarty.get.c) && (!in_array($smarty.get.c, array('job','resume')) || !empty($smarty.get.a)){/yun}
+<div class='none'>{yun:}tongji{/yun}</div>
+{yun:}/if{/yun}

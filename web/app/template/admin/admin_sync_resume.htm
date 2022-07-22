@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">			     
+            <div class="tabs_info">
+                <ul>
+                    <li {yun:}if !$smarty.get.sync{/yun}class="curr" {yun:}/if{/yun}>
+                        <a href="index.php?m=admin_sync_resume">未同步简历</a>
+                    </li>
+                    
+					<li {yun:}if $smarty.get.sync==2 {/yun}class="curr" {yun:}/if{/yun}>
+                        <a href="index.php?m=admin_sync_resume&sync=2">已同步简历</a>
+                    </li>
+                </ul>
+            </div>
+
+			<div class="clear"></div>
+			
+			<div class="admin_new_search_box">
+                <div class="admin_new_search_name">搜索类型：</div>
+                <form  class="layui-form" action="index.php" name="myform" method="get">
+                    <input name="m" value="admin_sync_resume" type="hidden" />
+					<input type="hidden" id="sync" name="sync" value="{yun:}if $smarty.get.sync{/yun}{yun:}$smarty.get.sync{/yun}{yun:}else{/yun}1{yun:}/if{/yun}">
+                    <div class="admin_new_search_name">搜索类型：</div>
+                    <div class="admin_Filter_text formselect" did='dkeytype'>
+                        <input type="button" {yun:}if $get_type.keytype=='' ||$get_type.keytype=='1' {/yun} value="简历名称" {yun:}elseif $get_type.keytype=='2' {/yun} value="用户姓名"{yun:}/if{/yun} class="admin_Filter_but" id="bkeytype">
+                        <input type="hidden" name="keytype" id="keytype" {yun:}if $get_type.keytype=='' ||$get_type.keytype=='1' {/yun} value="1" {yun:}elseif $get_type.keytype=='2' {/yun} value="2" {yun:}/if{/yun}/>
+                        <div class="admin_Filter_text_box" style="display:none" id="dkeytype">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" onClick="formselect('1','keytype','简历名称')">简历名称</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" onClick="formselect('2','keytype','用户姓名')">用户姓名</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="text" value="" placeholder="请输入你要搜索的关键字" name='keyword' class="admin_new_text">
+                    <input type="submit" value="搜索" name='search' class="admin_new_bth">
+					
+					<div class="clear"></div>
+					
+					<div class="">
+					
+							<div class="">
+								<span >登录时间：</span>
+								<input name="login_date" type="radio"  title="两个月" checked />
+							</div>
+						{yun:}foreach item=row key=key from=$search_list{/yun}
+							<div class="">
+								<span >{yun:}$row.name{/yun}：</span>
+								{yun:}foreach item=r key=k from=$row.value{/yun}
+									<input type="radio" value="{yun:}$k{/yun}" title="{yun:}$r{/yun}" name='{yun:}$t{/yun}' 
+									{yun:}if ($smarty.get.$t!==false && $smarty.get.$t==$k) || ($smarty.get.$t=='' && $k==90){/yun}
+									checked
+									{yun:}/if{/yun}
+									/>
+								{yun:}/foreach{/yun}   
+							</div>
+						{yun:}/foreach{/yun}
+							<div class="" style="line-height:height;" >
+								<span class="">工作经验：</span>
+								<font size="2">
+								{yun:}foreach item=v from=$userdata.user_word{/yun}
+								<input type="checkbox" value="{yun:}$v{/yun}" title="{yun:}$userclass_name[$v]{/yun}" name='exp[]' {yun:}if in_array($v,$smarty.get.exp){/yun}checked{yun:}/if{/yun}/>
+								{yun:}/foreach{/yun}
+							</div>
+							<div class="" style="line-height:height;" >
+								<span class="">学历：</span>
+								<font size="2">
+								{yun:}foreach item=v from=$userdata.user_edu{/yun}
+								<input type="checkbox" value="{yun:}$v{/yun}" title="{yun:}$userclass_name[$v]{/yun}" name='edu[]' {yun:}if in_array($v,$smarty.get.edu){/yun}checked{yun:}/if{/yun}/>
+								{yun:}/foreach{/yun}
+							</div>
+					</div>
+
+                </form>
+
+            </div>
+			
+            <div class="clear"></div>
+			<div class="admin_statistics">
+				数据统计：
+				<em class="admin_statistics_s">总数：<span class="ajaxresumeall">0</span></em>
+				搜索结果：<span>{yun:}$total{/yun}</span>；
+			</div>    
+			<div class="clear"></div>
+			
+			<div class="table-list" style="color:#898989">
+                <div class="admin_table_border">
+
+                    <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                    <form action="index.php" target="supportiframe" name="myform" method="get" id='myform'>
+                        <input name="m" value="admin_sync_resume" type="hidden" />
+                        <input name="c" value="del" type="hidden" />
+                        <table width="100%">
+                            <thead>
+                                <tr class="admin_table_top">
+									<th width="60">简历ID</th>
+                                    <th width="120" align="left">姓名/用户名</th>
+                                    <th align="left">基本信息</th>
+                                    <th align="left">求职意向</th>
+                                    <th align="left" width="100">完整度</th>
+                                    <th>更新时间</th>
+									<th>发布时间</th>
+                                    <th>来源</th>
+                                    <th>审核状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {yun:}foreach item=v key=key from=$rows{/yun}
+                                <tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg" {yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+                                    <td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.id{/yun}</span></td>
+                                    <td class="gd" align="left">
+                                        <div class="">
+										 <a class="admin_com_name resume-preview" href="javascript:void(0);" pid="{yun:}$v.id{/yun}">{yun:}$v.uname{/yun}</a>
+										</div>
+                                        <div class="mt8">
+                                            {yun:}$v.username{/yun}
+                                        </div>
+                                    </td>
+									<td class="od" align="left">
+ 										<div>{yun:}$v.sex_n{/yun},{yun:}$v.age_n{/yun}岁<br>{yun:}$v.edu_n{/yun},{yun:}$v.exp_n{/yun}</div>
+                                    </td>
+									<td class="od" align="left">
+                                        <div class="">
+                                            <span class="admin_resume_yx">{yun:}if $v.city_n{/yun}{yun:}$v.city_n{/yun}</span> {yun:}if $v.citynum>1{/yun}
+                                            <a href="javascript:void(0)" class="city_name_all" v="{yun:}$v.cityall{/yun}"><img src="images/bg_wechat_help.png"></a>
+                                            {yun:}/if{/yun} {yun:}/if{/yun}
+                                        </div>
+                                        <div class="mt5">
+                                            <span>{yun:}if $v.minsalary&&$v.maxsalary{/yun}￥{yun:}$v.minsalary{/yun}-{yun:}$v.maxsalary{/yun}{yun:}else if $v.minsalary{/yun}￥{yun:}$v.minsalary{/yun}以上{yun:}else{/yun}面议{yun:}/if{/yun}</span>,{yun:}$v.report_n{/yun},{yun:}$v.type_n{/yun}
+                                        </div>
+                                    </td>
+                                    <td class="ud" align="left">
+                                        <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                                            <div class="layui-progress-bar" lay-percent="{yun:}$v.integrity{/yun}%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+									{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}  
+                                    </td>
+									<td>
+										{yun:}if $v.ctime{/yun}
+											{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}
+										{yun:}else{/yun}
+											{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}
+										{yun:}/if{/yun}
+									</td>
+									<td>
+										<div>{yun:}$source[$v.source]{/yun}</div>
+										{yun:}if $v.doc==1{/yun}【粘贴简历】{yun:}/if{/yun}
+									</td>
+                                    <td>
+										{yun:}if $v.r_status == 1{/yun}
+											{yun:}if $v.state=='1'{/yun}
+												<span class="admin_com_Audited">已审核</span>
+											{yun:}elseif $v.state == 3{/yun}
+												<span class="admin_com_tg">未通过</span>
+											{yun:}elseif $v.state == 0{/yun}
+												<span class="admin_com_noAudited">未审核</span>
+											{yun:}/if{/yun}
+										{yun:}else{/yun}
+											<span class="admin_com_Lock">已锁定</span>
+										{yun:}/if{/yun}
+									</td>
+								</tr>
+								{yun:}/foreach{/yun}
+								<tr style="background:#f1f1f1;">
+									<td colspan="4">
+										<input class="admin_button" type="button" name="delsub" value="同步{yun:}if $smarty.get.sync{/yun}老{yun:}else{/yun}新{yun:}/if{/yun}数据" onClick="tongbu()" />
+									</td>
+									<td colspan="7" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+					</form>
+				</div>
+			</div>
+		</div>	
+
+		<div id="tongbu" style="display:none; ">
+            <div class="">
+				<input type="hidden" id="where" name="where" value="{yun:}$where{/yun}">
+				<input type="hidden" id='syncsign' value="{yun:}$syncsign{/yun}">
+				<table width="100%" class="table_form">
+						<tr>
+							<th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">同步{yun:}if $smarty.get.sync{/yun}老{yun:}else{/yun}新{yun:}/if{/yun}数据</span></th>
+						</tr>
+						<tr>
+							<th width="160">列表总数量：</th>
+							<td>
+								<div class="yun_admin_divh" id="resumecount">0</div>
+								<input type="hidden" id="allcount" value="0"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="160">本次同步数量：</th>
+							<td><input class="input-text tips_class" type="text" id="nowlimit" value="10"/></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="160">同步基数：</th>
+							<td><input class="input-text tips_class" type="text" id="resumelimit" value="10"/></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+							<span class="admin_web_tip">提示：每次同步简历数量，建议设置为100以内，不宜过大</span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="border-bottom:none;" >
+								<input class="admin_button" id="resumesync" type="button" name="resumesync" value="开始同步" />&nbsp;&nbsp;
+								<input class="admin_button" type="button" onClick="layer.closeAll();" value='取消'>
+							</td>	
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align:center;">
+							<span class="">点击同步即表示您同意 <a href="{yun:}$config.sy_weburl{/yun}/about/service.html"  style="color:#4c7cc5;">同步协议</a></span>
+							</td>
+						</tr>
+				</table>
+               
+            </div>
+        </div>	
+		<script>
+			$(function() {
+				layui.use(['layer', 'form', 'element'], function() { });
+				var sync = $("#sync").val();
+				$.post('index.php?m=admin_sync_resume&c=resumeNum', {sync:sync,pytoken: $("#pytoken").val()}, function(data) {
+					var datas = eval('(' + data + ')');
+					if(datas.num) {
+						$('.ajaxresumeall').html(datas.num);
+						$("#resumecount").html(datas.num);
+						$("#allcount").val(datas.num);
+					}
+				});
+				$(".city_name_all").hover(function() {
+                    var city_name = $(this).attr('v');
+                    if($.trim(city_name) != '') {
+                        layer.tips(city_name, this, {
+                            guide: 1,
+                            style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+                        });
+                        $(".xubox_layer").addClass("xubox_tips_border");
+                    }
+                }, function() {
+                    var city_name = $(this).attr('v');
+                    if($.trim(city_name) != '') {
+                        layer.closeAll('tips');
+                    }
+                });
+				$("#resumesync").click(function() {
+					var ii = parent.layer.msg('数据传输中,请不要关闭或刷新页面！',30,16);
+					postcrm(ii, "index.php?m=admin_sync_resume&c=resume",0);
+				});
+			})
+
+			function postcrm(ii, page) {
+				var allcount = $('#allcount').val();
+				var count = $('#nowlimit').val();
+				var limit = $('#resumelimit').val();
+				var sync = $('#sync').val();
+				var where = $('#where').val();
+				if(count>allcount){
+					parent.layer.msg('同步数量不能超过总数量', 2, 8);return false;
+				}
+				if(limit>100){
+					parent.layer.msg('同步基数不能超过100', 2, 8);return false;
+				}
+				$.post('index.php?m=admin_sync_resume&c=resume', {
+					sync: sync,
+					count: count,
+					limit: limit,
+					page: page,
+					where: where,
+					pytoken: $("#pytoken").val(),
+					syncsign: $("#syncsign").val()
+				}, function(data) {
+					var info = eval('(' + data + ')');
+					parent.layer.close(ii);
+					if(info.error==0){
+						if(info.msg) {
+							parent.layer.msg(info.msg, 3, 5);
+						} else {
+							parent.layer.msg('数据同步失败', 2, 5);
+						}
+						window.location.href = 'index.php?m=admin_sync_resume';
+					}else if (info.error==2){
+						parent.layer.msg('数据同步成功', 2, 6);
+						window.location.href = 'index.php?m=admin_sync_resume';
+					}else if (info.error==1){
+						var msg = '数据已传输 ' + info.count + '条，请耐心等待！';
+						if(info.reptelnum>0){
+							msg += '<br> 本次同步重复 ' + info.reptelnum +'条，具体情况请登录云平台查看';
+						}
+						var ii = parent.layer.msg(msg,30,16);
+						postcrm(ii, info.page);
+					}
+				});
+			}
+			
+			function tongbu() {
+				add_class('简历同步', '500', '380', '#tongbu', '');
+            }
+
+			$(".resume-preview").click(function() {
+				var id = $(this).attr("pid");
+				$('body').css('overflow-y', 'hidden');
+				$.layer({
+					type: 2,
+					shadeClose: true,
+					title: '简历预览',
+					area: ['755px', ($(window).height() - 30) +'px'],
+					iframe: {src: 'index.php?m=admin_resume&c=resumePreview&id='+id},
+					close: function(){
+						$('body').css('overflow-y', '');
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

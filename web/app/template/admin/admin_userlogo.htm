@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+			<div class="tabs_info">
+				<ul>
+					<li><a href="index.php?m=admin_userset">个人设置</a></li>
+					<li class="curr"><a href="index.php?m=admin_userset&c=logo">头像设置</a></li>
+					<li><a href="index.php?m=admin_userset&c=userspend">消费设置</a></li>
+				</ul>
+			</div>
+
+			<div class="clear"></div>
+			
+			<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+			
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form class="layui-form" action="index.php?m=admin_userset&c=saveLogo" method="post" enctype="multipart/form-data" target="supportiframe">
+						<table width="100%" class="table_form">
+							<tr>
+								<th width="150" class="t_fl">默认男生头像：</th>
+								<td>
+									<div style="height: 40px;">
+										<button id="noupload_man" type="button" class="yun_bth_pic multiupload" lay-data="{parentid: 'imgparent_man',path: 'logo',sex:'man'}">上传图片</button>
+									</div>
+									
+									<div class="layui-upload {yun:}if empty($config.sy_member_icon_arr){/yun}none{yun:}/if{/yun}" id="manpics">
+										<blockquote  class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">预览图：
+										    <div class="layui-upload-list" id="imgparent_man">
+										    	{yun:}foreach key=key  item=manpic from=$config.sy_member_icon_arr{/yun}
+										    	<div id="manpic_{yun:}$key{/yun}" class="tx_set_list">
+										    		<img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$manpic{/yun}">
+										    		<a href="javascript:void(0);" class="delPic" data-sex="man" data-id="manpic_{yun:}$key{/yun}" onclick="delPic(this)">删除</a>
+										    		<input type="hidden" name="manicon_sys[]" value="{yun:}$manpic{/yun}">
+										    	</div>
+										    	{yun:}/foreach{/yun}
+										    </div>
+										</blockquote>
+									</div>
+								</td> 
+							</tr>
+							<tr>
+								<th width="150" class="t_fl">默认女生头像：</th>
+								<td>
+									<div style="height: 40px;">
+										<button id="noupload_woman" type="button" class="yun_bth_pic multiupload" lay-data="{parentid: 'imgparent_woman',path: 'logo',sex:'woman'}">上传图片</button>
+									</div>
+									
+									<div class="layui-upload {yun:}if empty($config.sy_member_iconv_arr){/yun}none{yun:}/if{/yun}" id="womanpics">
+										<blockquote  class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">预览图：
+										    <div class="layui-upload-list" id="imgparent_woman">
+										    	{yun:}foreach key=wkey  item=womanpic from=$config.sy_member_iconv_arr{/yun}
+										    	<div id="womanpic_{yun:}$wkey{/yun}" class="tx_set_list">
+										    		<img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$womanpic{/yun}">
+										    		<a href="javascript:void(0);" class="delPic" data-sex="woman" data-id="womanpic_{yun:}$wkey{/yun}" onclick="delPic(this)">删除</a>
+										    		<input type="hidden" name="womanicon_sys[]" value="{yun:}$womanpic{/yun}">
+										    	</div>
+										    	{yun:}/foreach{/yun}
+										    </div>
+										</blockquote>
+									</div>
+								</td> 
+								
+							</tr>
+							<tr>
+								<th width="150" class="t_fl">默认职业技能和作品：</th>
+								<td>
+									
+									
+									<button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_member_skill',imgid: 'imgskill',path:'logo'}">上传图片</button>
+									<img id="imgskill" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_member_skill{/yun}" width="60" height="60" {yun:}if !$config.sy_member_skill{/yun}class="none"{yun:}/if{/yun}>
+									<input type="hidden" id="layupload_type" value="2" />
+								</td>
+							</tr>
+							<tr>
+								<th width="150">&nbsp;</th>
+								<td>
+									<input class="tty_sub" type="submit" name="submit" value="提交" />&nbsp;&nbsp;
+									<input class="tty_cz" type="reset" value="重置" />
+								</td>
+							</tr>
+						</table>
+						<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+			var man_num = '{yun:}count($config.sy_member_icon_arr){/yun}';
+			var woman_num = '{yun:}count($config.sy_member_iconv_arr){/yun}';
+			
+			var man_restnum = 6-parseInt(man_num);
+			var woman_restnum = 6-parseInt(woman_num);
+			layui.use(['layer','form','upload'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					upload = layui.upload,
+					$ = layui.$;
+
+				
+				
+				var layaccept = 'images', layexts = 'jpg|png|gif|bmp|jpeg';
+				
+				var man_uploadListIns=upload.render({
+					elem: '#noupload_man'
+					,auto: false
+					,bindAction: '#test9'   //触发上传的对象，暂未用到
+					,accept: layaccept
+					,multiple:true
+					,field:'man_files[]'
+					,exts: layexts
+					,choose: function(obj){
+						uploadChoose(this,obj);
+					}
+				});
+				var woman_uploadListIns=upload.render({
+					elem: '#noupload_woman'
+					,auto: false
+					,bindAction: '#test9'   //触发上传的对象，暂未用到
+					,accept: layaccept
+					,multiple:true
+					,field:'woman_files[]'
+					,exts: layexts
+					,choose: function(obj){
+						uploadChoose(this,obj);
+					}
+				});
+				
+			});
+			function uploadChoose(_this,obj){
+				var parentid = null;
+				var sex = null;
+
+				var files = obj.pushFile();
+				var num = Object.keys(files).length;
+				for(let i in files){
+					delete files[i];
+				}
+
+				
+				var restnum  = 0;
+				sex = _this.sex;
+
+				parentid = _this.parentid;
+				
+				if(sex=='man'){
+					restnum = man_restnum;
+				}else if(sex=='woman'){
+					restnum = woman_restnum;
+				}
+				
+				if(num>restnum){
+					parent.layer.msg("最多只能设置6个默认头像！", 2, 8);
+					return false;
+				}else{
+					if(sex=='man'){
+						man_restnum -= num;
+					}else if(sex=='woman'){
+						woman_restnum -= num;
+					}
+				}
+				
+				obj.preview(function(index, file, result){
+
+					if(parentid){
+						var timestamp = (new Date()).getTime();
+						$('#'+sex+'pics').removeClass('none');
+						$('#'+parentid).removeClass('none');
+
+						var id 		=	sex+'add_'+timestamp+'_'+index;
+
+						var imghtml	=	'<div id="'+id+'"class="tx_set_list">';
+						imghtml		+=	'<img  src="'+result+'" >';
+						imghtml		+=	'<a id="" href="javascript:void(0);" class="delPic" data-sex="'+sex+'" data-id="'+id+'" onclick="delPic(this)">删除</a>';
+						imghtml		+=	'<input name="preview_'+sex+'[]" type="hidden" value="'+result+'"/>';
+						imghtml		+=	'</div>';
+						$('#'+parentid).append(imghtml);
+					}
+					//删除
+					$('.delPic').on('click', function(){
+						if(sex=='man'){
+							man_uploadListIns.config.elem.next()[0].value = '';
+						}else if(sex=='woman'){
+							woman_uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+						}
+						
+						delPic(this);
+					});
+				});
+				
+			}
+			function delPic(obj){
+
+				var sex	=	$(obj).attr('data-sex');
+				if(sex=='man'){
+					if (man_restnum == 5){
+
+						parent.layer.msg("至少保留1个默认头像！", 2, 8);
+						return false;
+					}else {
+
+						man_restnum += 1;
+					}
+				}else if(sex=='woman'){
+					if (woman_restnum == 5){
+
+						parent.layer.msg("至少保留1个默认头像！", 2, 8);
+						return false;
+					}else{
+
+						woman_restnum += 1;
+					}
+				}
+				var picid	=	$(obj).attr('data-id');
+				$('#'+picid).remove();
+			}
+			
+		</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

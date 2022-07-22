@@ -1,0 +1,133 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<!-- 页面主体部分 -->
+
+<div class="m_tab">	
+<div class="m_tabbox">
+<ul><li onclick="navigateTo('index.php?c=jobpack')">分享职位</li>
+				<li class="m_tabactive">悬赏职位</li>
+       
+    </ul>
+
+       </div>
+                    </div>
+<div class="m_cardbgbox">
+	<div class="m_cardbox ">
+	
+		<div id="yunvue" class="management_body_card_content" v-show="islook" style="display: none;">
+			<div class="cont active" v-if="total > 0">
+				<div class="">
+					<div class="card_content_box_share" v-for="(item,index) in list" :key="index" @click="navigateTo(item.wapurl)">
+						<div class="card_content_title">
+							<div class="card_title_left">
+								<div class="share_top_name">
+									{{item.name}}
+								</div>
+								<div class="share_bom_box">
+									<div class="share_cen_q">赏金总额</div>
+									<div class="share_cen_a">￥{{item.money}}</div>
+								</div>
+							</div>
+							<div @click.stop="navigateTo('index.php?c=rewardlog&jobid=' + item.jobid)"
+								 class="card_title_right">
+								<div class="card_right_number">{{item.sqnum}}</div>
+								<div class="card_right_resume">应聘简历</div>
+							</div>
+						</div>
+						<div class="share_cen">
+							 投递  <span class="share_cen_a">￥{{item.sqmoney}}</span>
+							 面试<span class="share_cen_a">￥{{item.invitemoney}}</span>
+							 入职 <span class="share_cen_a">￥{{item.offermoney}}</span>
+								 
+						</div>
+						<div class="card_content_bom">
+							<div class="card_content_time">{{item.lastupdate}}</div>
+							<div class="card_content_del" @click.stop="deljobpack(item.jobid, index)">
+								<img src="{yun:}$wap_style{/yun}/images/pecuniary_del.png" alt=""width="100%" height="100%">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div v-if="total > limit">
+					<van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange"/>
+				</div>
+			</div>
+			<div v-else>
+			<div class="wap_member_nobg">	<div class="wap_member_no">暂无记录</div>
+				<em class="wap_memberjob_fabu"></em>
+			</div>	</div>
+		</div>
+	</div>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                list: [],
+                islook: false,
+
+                total: 0,
+                pageTotal: 0,
+                page: 1,
+                limit: 20,
+            };
+        },
+        created() {
+            this.getRewardjob();
+        },
+        methods: {
+            getRewardjob: function () {
+                var that = this;
+                var param = {
+                    page: that.page,
+                    limit: that.limit,
+                };
+                showLoading();
+                that.islook = false;
+                $.post('{yun:}url d=wxapp h=com m=job c=reward{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 0) {
+                        that.total = data.total;
+                        that.pageTotal = Math.ceil(data.total / that.limit);
+                        that.list = data.data.length > 0 ? data.data : [];
+                    }
+                    that.islook = true;
+					$("#yunvue").css('display', 'block');
+                }, 'json')
+            },
+            deljobpack: function (id, k) {
+                let that = this,
+                    param = {
+                        jobid: id,
+                    };
+
+                showConfirm('确定取消职位悬赏？', function () {
+                    showLoading('取消中');
+                    $.post('{yun:}url d=wxapp h=com m=job c=deljobpackreward{/yun}', param, function (data) {
+                        hideLoading();
+                        if (data.error == 0) {
+                            showModal(data.msg, function () {
+                                that.list.splice(k, 1);
+                                if (that.list.length == 0) { // 无数据时重新加载页面
+                                    that.page = that.page > 1 ? (that.page - 1) : 1;
+                                    that.getRewardjob();
+                                }
+                            });
+                        } else {
+                            showModal(data.msg);
+                        }
+                    }, 'json')
+                })
+            },
+            pageChange: function (page) {
+                this.page = page;
+                this.getRewardjob();
+            },
+            navigateTo: function (url) {
+                window.location.href = url;
+            },
+        }
+    });
+</script>
+</body>
+</html>

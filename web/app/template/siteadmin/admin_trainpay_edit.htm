@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="./images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="./images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+<link href="./images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<title></title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站培训课程报名详情。</div>
+</div>
+</div>
+
+<div class="infoboxp_top mt10">
+    <h6>培训课程报名详情</h6>
+</div>
+<div class="common-form">
+	 <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+		<table width="100%" class="table_form contentWrap table_form_bg"> 
+			<tr>
+				<td align="right">客户名称：</td>
+				<td><div class="yun_admin_divh">{yun:}$row.name{/yun}</div></td>
+			</tr>
+			<tr>
+				<td align="right">课程名称：</td>
+				<td><div class="yun_admin_divh">{yun:}$subject.name{/yun}</div></td>
+			</tr>
+			<tr>
+				<td align="right">机构名称：</td>
+				<td><div class="yun_admin_divh">{yun:}$row.trainname{/yun}</div></td>
+			</tr>
+			<tr>
+				<td align="right">培训价格：</td>
+				<td><div class="yun_admin_divh">{yun:}$subject.price{/yun}</div></td>
+			</tr>
+			<tr>
+				<td align="right">报名方式：</td>
+				<td><div class="yun_admin_divh">{yun:}if $subject.isprice==1{/yun}在线收费{yun:}else{/yun}到场收费{yun:}/if{/yun}</div></td>
+			</tr>
+			<tr class="admin_table_trbg">
+				<td align="right">联系手机：</td>
+				<td><div class="yun_admin_divh">{yun:}$row.phone{/yun}</div></td>
+			</tr>
+			<tr class="admin_table_trbg">
+				<td align="right">报名时间：</td>
+				<td><div class="yun_admin_divh">{yun:}$row.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div></td>
+			</tr>
+			<tr class="admin_table_trbg">
+				<td align="right">备注：</td>
+				<td>
+			<div class="yun_admin_divh"> {yun:}$row.content{/yun}</div>
+				</td>
+			</tr>
+			{yun:}if $subject.isprice==1{/yun}
+			<tr>
+				<td align="right"  width="230">订单号：</td>
+				<td><div class="yun_admin_divh">{yun:}$order.order_id{/yun}</div></td>
+			</tr>
+			<tr>
+				<td align="right"  width="230">支付状态：</td>
+				<td><div class="yun_admin_divh">{yun:}$order.order_state_n{/yun}</div></td>
+			</tr>
+			{yun:}/if{/yun}
+		<tr>
+			<td align="right">&nbsp;</td>
+			<td > 
+			{yun:}if $subject.isprice==1&&($order.order_state==1||$order.order_state==3){/yun}
+				<input class="admin_button" name="" type="button" value="确认付款" onClick="layer_del('确认缴纳培训课程费用，是否确定？', 'index.php?m=trainpay&c=setpay&id={yun:}$row.id{/yun}');">
+				{yun:}/if{/yun}
+			<input class="admin_button" name="" type="button" value="删除" onClick="layer_del('确定要删除？', 'index.php?m=trainpay&c=del&id={yun:}$row.id{/yun}');">
+				<input class="admin_button" name="" type="button" value="返回" onclick="javascript:history.go(-1);">
+			<input type="hidden" name="pytoken" id='pytoken'  value="{yun:}$pytoken{/yun}">
+			</td>
+		</tr> 
+		 </table>
+</div>
+</div>
+</body>
+</html>

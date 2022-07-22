@@ -1,0 +1,271 @@
+<!--切换身份-->
+<style>
+/*切换身份*/
+.user_roleshow{ padding: 1.066666rem; text-align: center;}
+.user_role_pic{width:180px;height:180px; margin:0 auto;}
+.user_role_pic img{width:100%;height:100%;}
+.user_role{ font-size: 0.426666rem; font-weight: bold;padding:0.533333rem 0}
+.user_role_bth{ padding-top:0.4rem;}
+.user_role_bth_a{ display: block;height:1.2rem; line-height: 1.2rem; background-color: #2778f8;color:#fff;border-radius:0.213333rem; font-size: 0.426666rem; font-weight: bold;}
+.user_role_bth_f{ background-color:#e5eefc ;color: #2778f8}
+.qh_textarea{  background-color: #f8f8f8;border-radius:0.213333rem;padding:0.266666rem   }
+.qh_textarea .qh_textarea_text{width:100%;height:2.133333rem;background-color: #f8f8f8; padding:0; margin:0; font-size:.373333rem;border:none;}
+.qh_bth{ padding:.4rem 0  0 0;width:100%; text-align:center}
+.qh_bt_sq{ background:#2778f8;color:#fff;height:1.28rem; line-height: 1.28rem;border-radisu:0.213333rem ; font-size: 0.426666rem; font-weight: bold;border-radius:0.213333rem; text-align: center; display: block; }
+.identity_cgtip{width:100%; text-align:center; font-size:.373333rem;color:#f00; padding:.266667rem 0;}
+.identity_cgwxtip{width:100%; text-align:center}
+.identity_cgwxewm{width:100%; text-align:center; padding:.266667rem 0;}
+.identity_cgtel{width:100%; text-align:center;  padding-bottom:.533333rem;}
+.identity_jtip{ text-align:center; font-size:.373333rem;color:#333; padding:.266667rem .4rem; line-height:.666667rem;}
+.identity_sq{width:3.2rem;height:1.013333rem; background:#f60;color:#fff;border-radius:.053333rem;border:none; cursor:pointer; padding:0; margin:0;}
+.identity_sqbth{width:100%;  padding:.266667rem 0 .8rem 0;text-align:center;}
+.userchange_shuoming{padding:0.533333rem}
+.qh_bth{}
+ .qh_textareatit{ font-size: 0.426666rem; font-weight: bold; padding-bottom: 0.266666rem;}
+
+</style>
+
+<div id="changeVue" class="none">
+    <div class="user_role_box">
+
+        <!-- 选择身份切换弹出 -->
+        <van-popup v-model="changeUTypeShow" :round="true" position="bottom">
+			<div class="user_roleshow">
+         <div class="user_role_pic"><img src="{yun:}$wap_style{/yun}/images/js_1.png"></div>
+            <div class="user_role">当前身份是"{{ident}}"</div>
+
+           
+
+            <div class="user_role_bth" :class="usertype == 1 ? 'none' : '' ">
+                <span @click="changUserTypeFun(1)" class="user_role_bth_a">切换至求职者</span>
+            </div>
+            <div class="user_role_bth" :class="usertype == 2 ? 'none' : '' ">
+                <span @click="changUserTypeFun(2)" class="user_role_bth_a">切换至招聘者</span>
+            </div>
+            <div class="user_role_bth  " :class="usertype==3 ? 'none' : ''" v-if="lietouWeb==1">
+                <span @click="changUserTypeFun(3)" class="user_role_bth_a user_role_bth_f">切换至猎头/中介</span>
+            </div>
+            <div class="user_role_bth  " :class="usertype==4 ? 'none' : ''" v-if="trainWeb==1">
+                <span @click="changUserTypeFun(4)" class="user_role_bth_a user_role_bth_f">切换至培训机构</span>
+            </div>
+          <!--  <div class="qh_bth">
+                <span onclick="islogout('{yun:}url m=wap c=loginout{/yun}','确认退出吗？');" class="user_role_bth_b">退出登录</span>
+            </div>  -->     </div>
+        </van-popup>
+
+        <!-- 待审核通知 -->
+        <van-popup v-model="dshShow" round closeable  :style="{ width:'80%'}">
+            <div class="userchange_shuoming">
+                <div class="identity_cgtip">
+                    <div>{{dshsm}}</div>
+                </div>
+                <div class="identity_cgwxtip">你可关注微信快速接收审核信息</div>
+                <div class="identity_cgwxewm">
+                    <img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_qcode{/yun}" width="120" height="120">
+                </div>
+                <div class="identity_cgtel">如需快速审核，可拨打热线<div>{yun:}$config.sy_freewebtel{/yun}</div></div>
+            </div>
+        </van-popup>
+
+        <!-- 重新申请 -->
+        <van-popup v-model="reShow" round closeable  :style="{ width:'80%'}">
+            <div class="userchange_shuoming">
+                <div class="identity_jtip">
+                    <div>{{yjjsm}}</div>
+                    <div class="qh_bth">
+                        <span @click="reApply" class="qh_bt_sq" >重新申请</span> 
+                    </div>
+                </div>
+            </div>
+        </van-popup>
+
+        <van-popup v-model="reasonShow" round closeable  :style="{ width:'80%'}">
+			
+            <div class="userchange_shuoming">
+				<div class="qh_textareatit">申请原因</div>
+                <div class="qh_textarea">
+
+                    <textarea v-model="applybody" placeholder="请输入您切换身份的原因"  rows="5" cols="100"  class="qh_textarea_text"></textarea>
+                </div>
+                <div class="qh_bth">
+                    <span @click="applyUserChange"  class="qh_bt_sq" >申请</span> 
+                 
+                </div>
+            </div>
+        </van-popup>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var wapurl = '{yun:}url m=wap{/yun}';
+    var uid =   '{yun:}$smarty.cookies.uid{/yun}',
+        usertype = '{yun:}$smarty.cookies.usertype{/yun}';
+
+    var lietouWeb = '{yun:}$config.sy_lietou_web{/yun}',
+        trainWeb = '{yun:}$config.sy_train_web{/yun}';
+
+    var changeVue = new Vue({
+        el: "#changeVue",
+        data: {
+            changeUTypeShow: false,
+
+            dshShow: false,
+            dshsm: '',
+
+            reShow: false,
+            yjjsm: '',
+
+            reasonShow: false,
+            applybody: '',
+
+            uid: uid,
+            usertype: usertype,
+            applyusertype: 0,
+
+            ident: '',
+
+            lietouWeb: lietouWeb,
+            trainWeb: trainWeb
+        },
+        created(){
+           if (usertype == 1){
+               this.ident = '求职者';
+           }else if (usertype == 2){
+               this.ident = '招聘企业';
+           }else if (usertype == 3){
+               this.ident = '猎头中介';
+           }else if (usertype == 4){
+               this.ident = '培训机构';
+           }
+        },
+		mounted() {
+			document.getElementById('changeVue').style.display = 'block';
+		},
+        methods: {
+            changeUType: function () {
+                $('.yunVueBox').css('display', 'block');
+                this.changeUTypeShow = true;
+            },
+
+            changUserTypeFun: function (uType) {
+                var self = this;
+
+                self.applyusertype = uType;
+
+                if (uType == self.usertype){
+
+                    showToast('转换会员类型与当前会员类型一致,无须申请转！');
+                }else{
+
+                    showLoading();
+
+                    $.post(wapurl + '/index.php?c=ajax&a=applytype', {applyusertype: uType}, function (data) {
+
+                        hideLoading();
+
+                        if (data) {
+                            var data = eval('(' + data + ')');
+
+                            if (data.errcode == 9) {
+
+                                showToast('身份切换成功', 2, function () {
+                                    window.location.href = 'index.php';
+                                });
+                            } else if (data.errcode == 1) {
+
+                                showToast(data.msg, 2, function () {
+                                    window.location.href = data.url;
+                                    return false;
+                                });
+                            } else if (data.errcode == 2) {
+
+                                showToast(data.msg, 2);
+                            } else if (data.errcode == 6) {
+
+
+                                self.dshsm = data.msg;
+                                self.dshShow = true;
+                                self.changeUTypeShow = false;
+                                self.reasonShow = false;
+                                self.reShow = false;
+
+                            } else if (data.errcode == 3) {
+
+                                self.yjjsm = data.msg;
+                                self.reShow = true;
+                                self.changeUTypeShow = false;
+                                self.dshShow = false;
+                                self.reasonShow = false;
+                            } else if (data.errcode == 5) {
+
+                                self.reasonShow = true;
+                                self.reShow = false;
+                                self.changeUTypeShow = false;
+                                self.dshShow = false;
+                            }
+                        }
+                    });
+
+                }
+            },
+
+            reApply:function () {
+                let self = this;
+                self.reasonShow = true;
+                self.reShow = false;
+                self.changeUTypeShow = false;
+                self.dshShow = false;
+            },
+
+            applyUserChange: function () {
+
+                var self = this;
+
+                var applybody = $.trim($("textarea[name='applybody']").val());
+
+                if (parseInt(self.applyusertype) == 0) {
+
+                    showToast('请选择转换类型！');
+                    return false;
+                } else if (self.usertype == self.applyusertype) {
+
+                    showToast('转换会员类型与当前会员类型一致,无须申请转换！');
+                    return false;
+                }
+                if (self.applybody == "") {
+                    showToast('请填写申请说明!');
+                    return false;
+                }
+                showLoading();
+                $.post(wapurl + '/index.php?c=ajax&a=applytype', {applybody: self.applybody, applyusertype: self.applyusertype}, function (msg) {
+                    hideLoading();
+                    var data = eval('(' + msg + ')');
+                    if (data.errcode == '9') {
+
+                        showToast('身份切换成功！', 2, function () {
+                            window.location.href = 'index.php';
+                            return false;
+                        });
+                    } else if (data.msg) {
+
+                        showToast(data.msg, 2,function(){
+                            self.reasonShow=false;
+                            
+                        });
+
+                    } else {
+                        showToast('身份切换失败！', 2);
+                    }
+                })
+            }
+        },
+    });
+
+
+    function changeUType()
+    {
+        changeVue.changeUType();
+    }
+
+</script>

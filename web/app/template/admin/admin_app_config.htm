@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="tabs_info">
+					<ul>
+						<li class="curr">
+							<a href="index.php?m=admin_app_config">APP配置</a>
+						</li>
+						<li>
+							<a href="index.php?m=admin_app_config&c=version">版本更新</a>
+						</li>
+						<li>
+							<a href="index.php?m=admin_app_config&c=xybox">首页提示</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="clear"></div>
+
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form id="pushform" class="layui-form" action="index.php?m=admin_app_config&c=save" method="post" target="supportiframe">
+						<table width="100%" class="table_form">
+							<tr>
+								<th width="160">启用APP：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_app_open" lay-skin="switch" lay-text="开放|关闭" {yun:}if $config.sy_app_open=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th colspan="2" class="admin_bold_box">
+									<div class="admin_bold">推送设置</div>
+								</th>
+							</tr>
+							<tr>
+								<th width="160">启用推送：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_push_open" lay-skin="switch" lay-text="开放|关闭" {yun:}if $config.sy_push_open=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160">AppID：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="sy_push_appid" id="sy_push_appid" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.sy_push_appid{/yun}"
+											 size="60" maxlength="255" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160">AppKey：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="sy_push_appkey" id="sy_push_appkey" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.sy_push_appkey{/yun}"
+											 size="60" maxlength="255" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160">AppSecret</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="sy_push_appsecret" id="sy_push_appsecret" autocomplete="off" class="layui-input" type="text"
+											 value="{yun:}$config.sy_push_appsecret{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160">MasterSecret：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="sy_push_masterSecret" id="sy_push_masterSecret" autocomplete="off" class="layui-input" type="text"
+											 value="{yun:}$config.sy_push_masterSecret{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th colspan="2" class="admin_bold_box">
+									<div class="admin_bold">移动端设置</div>
+								</th>
+							</tr>
+							<tr>
+								<th width="160">移动端支付功能：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_iospay" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_iospay=="1" {/yun}
+										 checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th width="160">移动端定位服务功能：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_ioslocation" lay-skin="switch" lay-text="开启|关闭" {yun:}if
+										 $config.sy_ioslocation=="1" {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th width="160">微信登录：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_app_wxlogin" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_app_wxlogin=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th width="160">QQ登录：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_app_qqlogin" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_app_qqlogin=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th width="160">微信客服：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_app_wxkf" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_app_wxkf=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160"></th>
+								<td>
+									<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+									<input class="admin_button tty_sub" id="chatconfig" type="button" onclick="ckpush()" value="提交" />&nbsp;&nbsp;
+									<input class="admin_button tty_cz" type="reset" value="重置" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+
+			function ckpush() {
+				var sy_push_open = $("input[name=sy_push_open]").is(":checked") ? 1 : 2,
+					sy_push_appid = $("#sy_push_appid").val();
+				if (sy_push_open == 1 && sy_push_appid == '') {
+					parent.layer.msg("配置个推后才能启用推送！", 2, 8);
+					return false;
+				}
+				$("#pushform").submit();
+			}
+		</script>
+	</body>
+
+</html>

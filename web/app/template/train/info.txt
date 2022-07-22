@@ -1,0 +1,1 @@
+222||暂无添加作者信息||train||../app/template/train/images/preview.jpg

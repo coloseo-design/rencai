@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script type="text/javascript" src="js/crm.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script type="text/javascript" src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		
+		<title>后台管理</title>
+	</head>
+	
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+			<div class='tabs_info' style="height:36px;">
+	           	<ul>
+		            <li {yun:}if !$depart{/yun}class='curr'{yun:}/if{/yun}><a href='index.php?m=crm_deal'>我的订单</a></li>
+		            {yun:}if in_array('804',$power){/yun}
+		            <li {yun:}if $depart{/yun}class='curr'{yun:}/if{/yun}><a href='index.php?m=crm_deal&depart=1'>下属订单</a></li>
+		            {yun:}/if{/yun}
+	           	</ul>	
+	       	</div>
+		    
+		    <form action="index.php" name="myform"  method="get" class='layui-form'>
+       	
+	       		<input type="hidden" name="m" value="crm_deal" />
+	       		
+	       		{yun:}if $depart{/yun}
+ 					<input type="hidden" name="depart" value="{yun:}$depart{/yun}" />
+ 				{yun:}/if{/yun}
+ 				
+				<div class="crm_search">
+					<table class="crm_search_table"> 
+						<tr>      
+							{yun:}if $depart && $ausers{/yun}			
+							<td width="55">客户经理</td>
+							<td width="100">
+								<div class="crm_search_select">
+									<div class="layui-input-inline">
+										<select name="auid" id="auid">
+											<option value="">请选择</option> 
+											{yun:}foreach from = $ausers item = auser{/yun}
+ 											<option value="{yun:}$auser.uid{/yun}" {yun:}if $smarty.get.auid==$auser.uid{/yun}selected{yun:}/if{/yun}>{yun:}$auser.name{/yun}</option>
+ 											{yun:}/foreach{/yun}
+ 										</select>
+									</div></div>
+								
+							</td>
+							{yun:}/if{/yun}
+								<td width="55">成单日期</td>
+								<td width="100">
+								<div class="crm_search_select">
+									<div class="layui-input-inline">
+										<select name="orDay" id="orDay">
+											<option value="">请选择</option> 
+ 											<option value="1" {yun:}if $smarty.get.orDay==1{/yun}selected{yun:}/if{/yun}>今天</option>
+ 											<option value="2" {yun:}if $smarty.get.orDay==2{/yun}selected{yun:}/if{/yun}>昨天</option>
+ 										</select>
+									</div>
+								</div>
+							</td>
+							   
+								<td width="55">成交会员</td>
+								<td width="100">
+									<div class="crm_search_select">
+									<div class="layui-input-inline">
+										<select name="rating" id="rating" lay-verify="">
+											<option value="">请选择</option> 
+											{yun:}foreach from = $ratinglist item = rating{/yun}
+												<option value="{yun:}$rating.id{/yun}" {yun:}if $smarty.get.rating==$rating.id{/yun}selected{yun:}/if{/yun}>{yun:}$rating.name{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</td>
+							
+							<td>
+								<div class="crm_search_box">
+									
+									<div class="crm_search_box_search formselect" did="or_type_n">
+									
+										<span id='or_type_name'>
+											{yun:}if $smarty.get.or_type==1 || $smarty.get.or_type==''{/yun}公司名
+											{yun:}else if $smarty.get.or_type == 2{/yun}联系人
+											{yun:}/if{/yun}
+										</span>
+									
+										<div class="crm_search_list" style="display:none;"  id="or_type_n"> 
+											<a href="javascript:void(0);" onclick="keySelect('1', 'or_type', '公司名');">公司名</a>
+											<a href="javascript:void(0);" onclick="keySelect('2', 'or_type','联系人');">联系人</a>
+										</div>
+										
+									</div>
+									
+									<input type="hidden" id="or_type" name="or_type" value="{yun:}if $smarty.get.or_type{/yun}{yun:}$smarty.get.or_type{/yun}{yun:}else{/yun}1{yun:}/if{/yun}">
+									<input type="hidden" id="order" name="order" value="desc">
+									<div class="crm_search_text"><input name="keyword" type="text" value="{yun:}$smarty.get.keyword{/yun}" class="layui-input" placeholder="输入关键字搜索"></div>
+								</div>	<button type="submit" class="layui-btn layui-btn-normal" lay-submit="" style="margin-left:10px; background:#31b4e1">搜索</button>
+								<button type="reset" class="layui-btn layui-btn-primary" lay-submit="">重置</button>
+							</td>
+							
+							
+						</tr>
+					
+					</table>  
+				</div>
+	        </form>
+        </div>
+		    <div class="tty_table-bom">
+			<div class="table-list" style="color:#898989; margin-top:10px;">
+				<div class="admin_table_border">
+					<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+						
+						<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+						
+						<table width="100%">
+							<thead>
+								<tr class="admin_table_top">
+									<th style="width:20px;">
+										<label for="chkall">
+											<input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/>
+										</label>
+									</th>
+									<th align="left"> 
+										{yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun} 
+											<a href="{yun:}searchurl order=desc t=id m=crm_deal untype='order,t'{/yun}">编号<img src="images/sanj.jpg"/></a>
+										{yun:}else{/yun} 
+											<a href="{yun:}searchurl order=asc t=id m=crm_deal untype='order,t'{/yun}">编号<img src="images/sanj2.jpg"/></a> 
+										{yun:}/if{/yun} 
+									</th>
+									<th align="left">成交/签约时间</th>
+									<th align="left">成交客户</th>
+									<th align="left">成交金额</th>
+									<th align="left">成交会员</th>
+									<th align="left">有效期开始时间</th>
+									<th align="left">有效期结束时间</th>
+									<th align="left">录入人</th>
+									
+	 							</tr>
+							</thead>
+							
+							<tbody>
+								{yun:}foreach item=v key=key from=$orders{/yun}
+									<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+										<td>
+											<input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all"  name='del[]' onclick='unselectall()' rel="del_chk"  style="margin-left:5px;"/>
+										</td>
+										<td align="left">{yun:}$v.id{/yun}</td>	
+										<td align="left">{yun:}$v.ortime_n{/yun}</td>	
+										<td align="left">
+											<a href="index.php?m=crm_customer&c=com&id={yun:}$v.uid{/yun}" target="_blank">{yun:}$v.comname{/yun}</a>
+											<div class="">	
+												<a href="javascript:OpenContact('{yun:}$v.uid{/yun}','index.php?m=crm_waitingtask&c=ComDetail')" title="联系方式" class="crm_comtel">{yun:}$v.linkman{/yun}</a>
+											</div>
+										</td>
+										<td align="left">{yun:}$v.order_price{/yun}</td>
+										<td align="left">{yun:}$v.rating_name{/yun}</td>			
+										<td align="left">{yun:}$v.vipstime_n{/yun}</td>			
+										<td align="left">
+											{yun:}$v.vipetime_n{/yun}
+											<div>
+												<span style="color:#FF0000">{yun:}$v.vipEDay{/yun}</span>
+												{yun:}if $v.dealNew == 1{/yun}
+													<a class='admin_com_name' id="newDeal" data-uid="{yun:}$v.uid{/yun}" data-name="{yun:}$v.comname{/yun}">续费</a>
+												{yun:}/if{/yun}
+											</div>
+											
+										</td>			
+										<td align="left">{yun:}$v.aname{/yun}</td>								
+										
+									</tr>
+								{yun:}foreachelse{/yun}
+      					
+			      					<tr align="center">
+							        	<td class="ud" colspan="9"><div class="admin_notip">暂无订单记录~</div></td>
+							      	</tr>
+		      					
+		      					{yun:}/foreach{/yun}	
+							 
+								{yun:}if $total > $config.sy_listnum {/yun}
+									<tr>
+										{yun:}if $pagenum==1{/yun}
+											<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+										{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+											<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+										{yun:}else if $pagenum == $pages{/yun}
+											<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+										{yun:}/if{/yun}
+										<td colspan="6" class="digg">{yun:}$pagenav{/yun}</td>
+									</tr>
+								{yun:}/if{/yun}
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+	</body>
+ 	{yun:}include file="$adminstyle/crm_public.htm"{/yun}
+
+</html>

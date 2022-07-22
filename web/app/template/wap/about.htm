@@ -1,0 +1,39 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+
+
+{yun:}if $smarty.get.c == 'miniContact'{/yun}
+<!--小程序浮动客服-->
+<div class="telkf_box_c"><div class="telkf_box"></div></div>
+<div class="telkf">
+<div class="telkf_c">
+<div class="">{yun:}$content.content{/yun}</div></div>
+</div>
+
+{yun:}else{/yun}
+<div class="aboyt_cont">{yun:}$content.content{/yun}</div>
+{yun:}/if{/yun}
+<style>
+body{ background:#fff}
+.aboyt_cont{ padding:0.4rem; line-height:0.666666rem; font-size:0.373333rem}
+</style>
+<script>
+function goBack(){
+	if (navigator.userAgent.indexOf('Firefox') >= 0 ||
+		navigator.userAgent.indexOf('Opera') >= 0 ||
+		navigator.userAgent.indexOf('Safari') >= 0 ||
+		navigator.userAgent.indexOf('Chrome') >= 0 ||
+		navigator.userAgent.indexOf('WebKit') >= 0){
+
+		if(window.history.length > 1){
+			window.history.go( -1 );
+		}else{
+			location.href = wapurl;
+		}
+	}else{ //未知的浏览器
+		window.history.go( -1 );
+	}
+}
+</script>
+</body>
+</html>

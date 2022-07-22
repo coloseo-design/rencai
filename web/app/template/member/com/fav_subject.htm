@@ -1,0 +1,43 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class="com_tit"> <span class="com_tit_span">培训管理</span> </div>
+          <div class="new_com_tit">
+         <div class="job_list_tit">
+         <ul class="">
+     <li {yun:}if $smarty.get.c=="baoming_subject"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=baoming_subject">报名课程</a></li>
+         <li {yun:}if $smarty.get.c=="fav_subject"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_subject">收藏课程</a></li>
+       <li {yun:}if $smarty.get.c=="atn_teacher"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=atn_teacher">关注讲师</a></li> 
+         <li {yun:}if $smarty.get.c=="fav_agency"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=fav_agency">关注机构</a></li>
+         <li {yun:}if $smarty.get.c=="subject_zixun"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=subject_zixun">培训留言</a></li> 
+         </ul></div>
+         </div><div class=right_box>
+      <div class=admincont_box>
+      <div class="train_class">
+	  {yun:}if $rows{/yun}<ul>
+	  {yun:}foreach from=$rows item=job{/yun}
+               <li>
+                   <div class="train_class_img"><a href="{yun:}url m=train c=subshow id='`$job.sid`'{/yun}" target="_blank"><img width="200" height="130"  src="{yun:}$job.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);"/></a></div>
+                   <div class="train_class_tit"><a href="{yun:}url m=train c=subshow id='`$job.sid`'{/yun}" target="_blank">{yun:}$job.name{/yun}</a></div>
+                   <div class="train_class_m">{yun:}$job.ctime|date_format:"%Y-%m-%d"{/yun} </div>
+                   <div class="train_class_city">{yun:}$job.address{/yun}</div>
+                   <div class="train_class_bm"><a href="javascript:void(0)" onclick="layer_del('确定要取消!','index.php?c=fav_subject&act=del&id={yun:}$job.id{/yun}');">取消收藏</a></div>
+               </li>
+		   {yun:}/foreach{/yun}</ul>
+		   {yun:}else{/yun}
+
+      </div>
+      <div class="com_msg_no fl">
+          <p>亲爱的用户，您还没有收藏任何课程！</p>
+          <a href="{yun:}url m=train c=subject{/yun}" target="_blank" class="com_msg_no_bth com_submit">立即搜索我感兴趣的课程收藏>></a> </div>
+		  {yun:}/if{/yun}
+        </div>
+        <div class="diggg" style="float:right; margin-top:10px;">{yun:}$pagenav{/yun}</div>
+    </div>
+
+
+      
+    </div>
+  </div> 
+
+{yun:}include file="$comstyle/footer.htm"{/yun}

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script type="text/javascript" src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+	
+		<div id="comrating"> 
+	 		<form class="layui-form" action="index.php?m=crm_customer&c=uprating" target="supportiframe" method="post" onSubmit="return checkform();">
+	 		
+	    		<table cellspacing='1' cellpadding='1' class="table_form contentWrap" width="100%">
+					<tr>
+						<th align="right">当前会员等级：</th>
+						<td align="left"><p> {yun:}$row.rating_name{/yun}</p></td>
+
+						<th align="right" class="comp_hotjob_line" >账户{yun:}$config.integral_pricename{/yun}：</th>
+						<td> 
+							<div class="admin_company_width220">
+								<input type="text" name="integral"  id="integral" size="15" class="admin_company_jobtext" value="{yun:}$row.integral{/yun}" />
+							</div>
+						</td>
+					</tr>
+	
+					<tr>
+						<th align="right">会员服务等级：</th>
+						<td align="left">
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										
+										<select name="rating" id="ratingid" lay-filter="rating">
+											<option value="">请选择</option>
+											{yun:}foreach from = $ratingarr key=key item=ratlist{/yun}
+												<option value="{yun:}$key{/yun}">{yun:}$ratlist{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+	
+									</div>
+								</div>
+							</div>
+						</td>
+	
+						<th align="right" class="comp_hotjob_line">客户已付费：</th>
+						<td><input type="text" name="price"  id="price" value="" size="15" style="color:#FF0000;" class="admin_company_jobtext"> 元</td>
+						 
+					</tr>
+	 
+					<tr>
+						<th align="right">发布职位数：</th>
+						<td><input type="text" name="job_num"  id="job_num" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.job_num{/yun}"/></td>
+						
+						<th align="right" class="comp_hotjob_line">刷新职位数：</th>
+						<td><input type="text" name="breakjob_num"  id="breakjob_num" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.breakjob_num{/yun}"/></td>
+					</tr>
+	
+					<tr>
+						<th  align="right">发布猎头职位数：</th>
+						<td><input type="text" name="lt_job_num" id="lt_job_num" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.lt_job_num{/yun}"/></td>
+							
+						<th align="right"class="comp_hotjob_line">刷新猎头职位：</th>
+						<td><input type="text" name="lt_breakjob_num"  id="lt_breakjob_num" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.lt_breakjob_num{/yun}"/></td>
+					</tr>
+	
+					
+						
+					<tr class="admin_table_trbg" >
+						<th align="right">发布兼职数：</th>
+						<td><input type="text" name="part_num"  id="part_num" size="15"class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.part_num{/yun}"/></td>
+						
+						<th align="right"class="comp_hotjob_line">刷新兼职数：</th>
+						<td><input type="text" name="breakpart_num"  id="breakpart_num" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.breakpart_num{/yun}"/></td>
+					</tr>
+						
+					<tr class="admin_table_trbg" >
+						<th align="right">剩余下载数：</th>
+						<td><input type="text" name="down_resume"  id="down_resume" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.down_resume{/yun}"/></td>
+						
+						<th align="right"class="comp_hotjob_line">简历下载数：</th>
+						<td><input type="text" name="lt_down_resume"  id="lt_down_resume" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.lt_down_resume{/yun}"/></td>
+					</tr>
+						
+					<tr class="admin_table_trbg" >
+						<th align="right">招聘会报名次数：</th>
+						<td ><input type="text" name="zph_num"  id="zph_num" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.zph_num{/yun}"/></td>
+						
+						<th align="right"class="comp_hotjob_line">邀请面试：</th>
+						<td><input type="text" name="invite_resume"  id="invite_resume" size="15" class="admin_company_jobtext" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" value="{yun:}$row.invite_resume{/yun}"/></td>
+					</tr>
+	
+					<tr class="admin_table_trbg" >
+	
+						<th>会员到期时间：</th>
+						<td colspan="3" style="text-align:left;border-right:0px;"><p id="vipetime" class="admin_company_jobtext">{yun:}$row.vipetime{/yun}</p></td>
+						
+					</tr>
+						    
+					<tr>
+						<th align="center" colspan="4" style="text-align:center;border-right:0px;">
+							<input type="submit"  value='确认' class="admin_examine_bth"/>
+							<input type="button" class="admin_examine_bth_qx closebutton" value='取消' />
+	 					</th>
+					</tr>
+				</table>
+				
+				<input type="hidden" name="pytoken" id="pytoken"  value="{yun:}$pytoken{/yun}">
+				<input type="hidden" name="rating_name" id="rating_name" value="{yun:}$row.rating_name{/yun}">
+				<input type="hidden" name="vip_etime" id="vip_etime" value="{yun:}$row.vip_etime{/yun}">
+				<input type="hidden" name="rating_type" id="rating_type" value="{yun:}$row.rating_type{/yun}">
+				<input type="hidden" name="ratuid" id="ratuid" value="{yun:}$row.uid{/yun}" >
+				
+			</form> 
+		</div>
+		
+		<script>
+		
+			function checkform(){
+				if($("#price").val()==""){
+					parent.layer.msg("请选择客户服务等级！",2,8);
+					return false;
+				}
+			}
+			
+			var index = parent.layer.getFrameIndex(window.name);
+		
+			$('.closebutton').click(function(){
+		 		parent.layer.close(index);
+			});
+		
+			layui.use(['layer', 'form'], function(){
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$,
+					url = "index.php?m=crm_customer&c=getrating";
+		
+				form.on('select(rating)', function(data){
+		
+					if(data.value!=0){
+						$.post(url, {id : data.value, pytoken:$("#pytoken").val()},function(htm){
+							if(htm){
+		
+		 						var dataJson = eval("(" + htm + ")"); 
+		 						$('#lt_job_num').val(dataJson.lt_job_num);
+								$('#lt_down_resume').val(dataJson.lt_resume);
+								$('#lt_editjob_num').val(dataJson.lt_editjob_num);
+								$('#lt_breakjob_num').val(dataJson.lt_breakjob_num);
+								$('#job_num').val(dataJson.job_num);
+								$('#down_resume').val(dataJson.resume);
+								$('#editjob_num').val(dataJson.editjob_num);
+								$('#invite_resume').val(dataJson.interview);
+								$('#breakjob_num').val(dataJson.breakjob_num);
+								$('#part_num').val(dataJson.part_num);
+								$('#editpart_num').val(dataJson.editpart_num);
+								$('#breakpart_num').val(dataJson.breakpart_num);
+								$('#zph_num').val(dataJson.zph_num);
+								$('#vip_etime').val(dataJson.vip_etime);
+								$('#vipetime').text(dataJson.vipetime);
+								$('#price').val(dataJson.price);
+		 						$('#rating_name').val(dataJson.name);
+								$('#rating_type').val(dataJson.type);
+							}
+		
+							form.render('select');
+						});
+						
+					}else{
+						layer.msg('请选择会员等级');
+						$('#price').val('');
+					}
+					
+				});
+			});
+		</script>
+	</body>
+</html>

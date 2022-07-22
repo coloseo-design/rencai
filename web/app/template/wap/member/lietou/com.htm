@@ -1,0 +1,121 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<section class="wap_member">
+	<div class="set_meal_tip">
+		<div class="set_meal_tip_name">尊敬的猎头用户</div>
+		<div class="">您当前是：<span class="set_meal_tip_name_hy">{yun:}$statis.rating_name{/yun}</span> {yun:}if $statis.rating_type=='2'{/yun}(时间会员){yun:}else{/yun}(套餐会员){yun:}/if{/yun}</div>
+		<div>到期时间： 
+			{yun:}if $statis.vip_etime > $todayStart{/yun} 
+				{yun:}$statis.vip_etime|date_format:'%Y-%m-%d' {/yun}
+			{yun:}else if $statis.vip_etime==0{/yun}
+				永久
+			{yun:}else{/yun} 
+			 	{yun:}$statis.vip_etime|date_format:'%Y-%m-%d'{/yun} 
+			<a href="index.php?c=rating" class="set_meal_tip_a">升级套餐</a>
+			{yun:}/if{/yun}
+		</div>
+
+	</div>
+	{yun:}if $statis.rating_type=='2'{/yun}
+	<div class="set_meal_tit">专属服务使用情况</div>
+	<div class="set_meal_tit_p">彩线上方数字表示服务剩余次数</div>
+	<div class="set_meal_box">
+		<div class="set_meal_box_cont">
+			<ul class="set_meal_box_list">
+				<li>
+					<div class="set_meal_box_list_box">
+						<div class="set_meal_name">简历下载</div>
+						<div class="set_meal_n set_meal_n_line3">不限</div>
+					</div>
+				</li>
+				<li>
+					<div class="set_meal_box_list_box">
+						<div class="set_meal_name">职位刷新</div>
+						<div class="set_meal_n set_meal_n_line4">不限</div></div>
+				</li>
+
+				<li>
+					<div class="set_meal_box_list_box">
+						<div class="set_meal_name">发布职位 </div>
+						<div class="set_meal_n set_meal_n_line5">不限</div></div>
+				</li>
+
+				<li>
+					<div class="set_meal_box_list_box">
+						<a href="index.php?c=rating">
+							<div class="set_meal_looktq">查看会员</div>
+							<div class="">套餐特权</div>
+						</a>
+					</div>
+				</li>
+			</ul>
+			</div>
+			</div>
+			<div class="clear"></div>
+			{yun:}else{/yun}
+			<div class="set_meal_tit">专属服务使用情况</div>
+			<div class="set_meal_tit_p">彩线上方数字表示服务剩余次数</div>
+			<div class="set_meal_box">
+				<div class="set_meal_box_cont">
+					<ul class="set_meal_box_list">
+
+						<li>
+							<div class="set_meal_box_list_box">
+								<div class="set_meal_name">简历下载</div>
+								<div class="set_meal_n set_meal_n_line3">{yun:}$statis.lt_down_resume{/yun}</div>
+								<div class="set_meal_yn">总:{yun:}$statis.lt_down_resume{/yun}</div>
+							</div>
+						</li>
+						<li>
+							<div class="set_meal_box_list_box">
+								<div class="set_meal_name">职位刷新</div>
+								<div class="set_meal_n set_meal_n_line4">{yun:}$statis.lt_breakjob_num{/yun}</div>
+								<div class="set_meal_yn">总:{yun:}$statis.lt_breakjob_num{/yun}</div>
+						</li>
+
+						<li>
+							<div class="set_meal_box_list_box">
+								<div class="set_meal_name">发布职位 </div>
+								<div class="set_meal_n set_meal_n_line5">{yun:}$statis.lt_job_num{/yun}</div>
+								<div class="set_meal_yn">总:{yun:}$statis.lt_job_num{/yun}</div>
+						</li>
+
+						<li>
+							<div class="set_meal_box_list_box">
+								<a href="index.php?c=rating">
+									<div class="set_meal_looktq">查看会员</div>
+									<div class="">套餐特权</div>
+								</a>
+							</div>
+						</li>
+					</ul>
+					</div>
+					</div>
+					<div class="clear"></div>
+					{yun:}/if{/yun}
+</section>
+</div>
+<div id="use_card" style="display:none">
+	<div class="com_card_box">
+		<form action="" method="post">
+			<div class="com_card_list"><span class="com_card_list_s">卡号：</span>
+				<input type="text" id="card" name="card" class="com_card_list_text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" /></div>
+			<div class="com_card_list"><span class="com_card_list_s">密码：</span>
+				<input type="password" id="password" name="password" class="com_card_list_text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" /></div>
+			<div class="com_card_list"><input type="submit" name="submit" value="确定" class="com_card_list_bth" /></div>
+		</form>
+	</div>
+</div>
+<script>
+	function use_card() {
+		content = $("#use_card").html();
+		layer.open({
+			type: 1,
+			title: '充值卡充值',
+			closeBtn: [0, true],
+			border: [10, 0.3, '#000', true],
+			area: ['300px', '320px'],
+			content: content
+		});
+	}
+</script>
+</body></html>

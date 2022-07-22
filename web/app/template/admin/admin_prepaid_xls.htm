@@ -1,0 +1,41 @@
+<head>
+    
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	
+	<title>PHP output Excel Example</title>
+ 
+ </head>
+	
+	<table width="100%" border="1">
+		<tr>
+ 			{yun:}if in_array("card",$type){/yun}<th>充值卡编号</th>{yun:}/if{/yun}
+			{yun:}if in_array("password",$type){/yun}<th>充值卡密码</th>{yun:}/if{/yun}
+			{yun:}if in_array("quota",$type){/yun}<th>抵用额度</th>{yun:}/if{/yun}
+ 			<th>有效期</th>
+  			{yun:}if in_array("uid",$type){/yun}<th>使用者UID</th>{yun:}/if{/yun}
+			{yun:}if in_array("username",$type){/yun}<th>使用者</th>{yun:}/if{/yun}
+			{yun:}if in_array("utime",$type){/yun}<th>使用时间</th>{yun:}/if{/yun}
+  		</tr>
+
+		{yun:}foreach item=v key=key from=$list{/yun}
+			<tr>
+				{yun:}if in_array("card",$type){/yun}<td style="vnd.ms-excel.numberformat:@">{yun:}$v.card{/yun}</td>{yun:}/if{/yun}
+				{yun:}if in_array("password",$type){/yun}<td style="vnd.ms-excel.numberformat:@">{yun:}$v.password{/yun}</td>{yun:}/if{/yun}
+				{yun:}if in_array("quota",$type){/yun}<td>{yun:}$v.quota{/yun}</td>{yun:}/if{/yun}
+				
+				{yun:}if in_array("stime",$type) || in_array("etime",$type){/yun}
+					{yun:}if $v.username{/yun}
+						<td><font color="green">已使用</font></td>
+					{yun:}elseif $v.etime lt time(){/yun}
+						<td><font color="red">已过期</font></td>
+					{yun:}else{/yun}
+						<td>{yun:}$v.stime|date_format:"%Y-%m-%d  %H:%M:%S"{/yun} - {yun:}$v.etime|date_format:"%Y-%m-%d  %H:%M:%S"{/yun}</td>
+					{yun:}/if{/yun}
+				{yun:}/if{/yun}
+				
+				{yun:}if in_array("uid",$type){/yun}<td>{yun:}$v.uid{/yun}</td>{yun:}/if{/yun}
+				{yun:}if in_array("username",$type){/yun}<td>{yun:}$v.username{/yun}</td>{yun:}/if{/yun}
+				{yun:}if in_array("utime",$type){/yun}<td>{yun:}$v.utime|date_format:"%Y-%m-%d  %H:%M:%S"{/yun}</td>{yun:}/if{/yun}
+ 			</tr>
+		{yun:}/foreach{/yun}
+    </table>

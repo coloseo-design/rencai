@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="keywords" content="{yun:}$keywords{/yun}" />
+	<meta name="description" content="{yun:}$description{/yun}" />
+	
+	<title>{yun:}$title{/yun}</title>
+</head>
+
+<body class="body_bg">
+	{yun:}include file="$schoolstyle/header.htm"{/yun} 
+
+	<div class="school_w1200">
+		
+		<div class="clear"></div>
+		
+  		<div class="Search_jobs_box"> 
+			
+			<div class="Search_jobs_tit">
+		   		<span class="Search_jobs_tit_s">筛选</span>  
+		   		<div class="searchBox">
+					<form action="{yun:}$config.sy_weburl{/yun}" method="get" id="form" onsubmit="return search_keyword(this,'请输入职位名称的关键字');">
+				      	<input type="hidden" name="m" value="school" />
+				      	<input type="hidden" name="c" value="job" />
+				  		<input type="text" name="keyword" {yun:}if $smarty.get.keyword{/yun}value="{yun:}$smarty.get.keyword{/yun}"{yun:}else{/yun}value="请输入职位名称"{yun:}/if{/yun} onclick="if(this.value=='请输入职位名称'){this.value=''}" onblur="if(this.value==''){this.value='请输入职位名称'}" class="searchBox_text " />
+				    	<input type="submit" value=" " class="searchBox_bth " />
+				    </form>
+				</div>
+		  	</div>
+		  	
+			<div class="Search_citybox">
+         		<div class="Search_cityboxname"> 所在地区</div>
+		 		
+		 		<div class="Search_citybox_right">
+				  	
+				  	<div class="Search_cityall none">
+					  	<a href="{yun:}listurl type=provinceid v=0 m=school c=job{/yun}" class="city_name">全部</a>
+					  	{yun:}foreach from=$city_index item=pid key=key{/yun}
+			          	<a href="{yun:}listurl type=provinceid v=$pid m=school c=job{/yun}" class="city_name {yun:}if $smarty.get.provinceid==$pid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$pid]{/yun}</a>
+			          	{yun:}/foreach{/yun}
+				  	</div>
+		          	
+		          	<div class="Search_cityboxright">
+			          	<a href="javascript:;" onclick="acityshow('1')" class="search_city_list_cur {yun:}if $smarty.get.provinceid && !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}search_city_active{yun:}/if{/yun} {yun:}if !$smarty.get.provinceid{/yun}none{yun:}/if{/yun} acity_two" style="text-decoration:none;cursor:pointer;"><span class="search_city_p">{yun:}$city_name[$smarty.get.provinceid]{/yun}</span><i class="search_city_p_jt"></i><i class="search_city_list_line"></i></a>
+					  	<a href="javascript:;" {yun:}if $smarty.get.cityid{/yun}onclick="acityshow('2')"{yun:}/if{/yun} class="search_city_list_cur {yun:}if $smarty.get.cityid && is_array($city_type[$smarty.get.cityid]){/yun}search_city_active{yun:}/if{/yun} {yun:}if !$smarty.get.provinceid || !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}none{yun:}/if{/yun} acity_three" style="text-decoration:none;cursor:pointer;"><span class="search_city_p">{yun:}if !$smarty.get.cityid{/yun}不限{yun:}else{/yun}{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}/if{/yun}</span><i class="search_city_list_line"></i></a>
+					  	<a href="{yun:}listurl type=provinceid v=0 m=school c=job{/yun}" class="search_city_list_all {yun:}if !$smarty.get.provinceid{/yun}city_name_active{yun:}/if{/yun}">全部</a>
+			          	<div class="search_city_list">
+					  		{yun:}foreach from=$city_index item=pid key=key{/yun}
+			          		<a href="{yun:}listurl type=provinceid v=$pid m=school c=job{/yun}" class="city_name {yun:}if $smarty.get.provinceid && !$smarty.get.cityid{/yun}{yun:}if $key>13{/yun}none{yun:}/if{/yun}{yun:}else if $smarty.get.cityid{/yun}{yun:}if $key>12{/yun}none{yun:}/if{/yun}{yun:}else{/yun}{yun:}if $key>14{/yun}none{yun:}/if{/yun}{yun:}/if{/yun} {yun:}if $smarty.get.provinceid==$pid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$pid]{/yun}</a>
+			          		{yun:}/foreach{/yun}
+					  	</div>
+			          	<a href="javascript:;" class="search_city_list_more" id="acity" style="right:-8px;">更多</a>
+		          	</div>
+		          	
+			    	<div class="Search_cityboxclose {yun:}if !$smarty.get.provinceid || ($smarty.get.provinceid && $smarty.get.cityid && is_array($city_type[$smarty.get.cityid])){/yun}none{yun:}/if{/yun}" id="acity_two"> 
+					  	<a href="{yun:}listurl untype=cityid m=school c=job{/yun}" class="city_name {yun:}if $smarty.get.provinceid&&!$smarty.get.cityid&&!$smarty.get.three_cityid{/yun}city_name_active{yun:}/if{/yun}">不限</a>
+					  	{yun:}foreach from=$city_type[$smarty.get.provinceid] item=cid key=key{/yun}
+					  	<a href="{yun:}listurl type=cityid v=$cid m=school c=job{/yun}" class="city_name {yun:}if $smarty.get.cityid==$cid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$cid]{/yun}</a>
+					  	{yun:}/foreach{/yun}
+					</div>
+					
+					<div class="Search_cityboxclose {yun:}if !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}none{yun:}/if{/yun}" id="acity_three"> 
+					  	<a href="{yun:}listurl untype=three_cityid m=school c=job{/yun}" class="city_name {yun:}if $smarty.get.provinceid && $smarty.get.cityid && !$smarty.get.three_cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a>
+					  	{yun:}foreach from=$city_type[$smarty.get.cityid] item=tid key=key{/yun}
+					  	<a href="{yun:}listurl type=three_cityid v=$tid m=school c=job{/yun}" class="city_name {yun:}if $smarty.get.three_cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a>
+					  	{yun:}/foreach{/yun}
+					</div>
+		    	</div>
+			</div>
+  			<!--City end-->
+  			
+		  	<div class="Search_jobs_form_list">
+			    <div class="Search_jobs_name"> 学历要求</div>
+			    <div class="Search_jobs_sub ">
+			      	<div class="Search_jobs_sub_Box "> 
+			      		<a href="{yun:}listurl edu=0 m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if !$smarty.get.edu{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a>
+			      	 	{yun:}foreach from=$comdata.job_edu item=v key=key{/yun}
+			       			<a href="{yun:}listurl edu=$v m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.edu==$v{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+			       		{yun:}/foreach{/yun}
+			       	</div> 
+			    </div>
+		  	</div>
+		  	
+         <div class="Search_jobs_form_list">
+    <div class="Search_jobs_name"> 更新时间</div>
+    <div class="Search_jobs_sub ">
+      <div class="Search_jobs_sub_Box "> 
+       <a href="{yun:}listurl uptime=0 m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if !$smarty.get.uptime{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a>
+       {yun:}foreach from=$uptime item=v key=key{/yun}
+	         <a href="{yun:}listurl uptime=$key m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.uptime==$key{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$v{/yun}</a>
+	   {yun:}/foreach{/yun}
+       </div>
+    </div>
+  </div>
+  <div class="Search_jobs_form_list">
+    <div class="Search_jobs_name"> 企业性质</div>
+    <div class="Search_jobs_sub ">
+      <div class="Search_jobs_sub_Box "> 
+       <a href="{yun:}listurl m=school pr=0 c=job{/yun}" class="Search_jobs_sub_a {yun:}if !$smarty.get.pr{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a>
+	   
+	   {yun:}foreach from=$comdata.job_pr key=j item=v{/yun}
+	   	  <a href="{yun:}listurl m=school c=job pr={yun:}$v{/yun}{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.pr==$v{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+	   {yun:}/foreach{/yun}
+       </div>
+    </div>
+  </div>
+ 	{yun:}if !$smarty.get.job1 {/yun}
+        <div class="Search_jobs_form_list">
+          <div class="Search_jobs_name"> 所属行业</div>
+          <div class="Search_jobs_sub "> 
+             <div class="Search_jobs_sub_Box "> 
+          <!--点击 更多 增加 Search_jobs_sub_nore --> 
+
+            <a href="{yun:}listurl type=job1 v=0 m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.job1==''{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a> {yun:}foreach from=$job_index item=v key=key{/yun} <a href="{yun:}listurl job1=$v m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.job1==$v{/yun}Search_jobs_sub_cur{yun:}elseif $key>6{/yun}job1list none{yun:}/if{/yun}" >{yun:}$job_name[$v]{/yun}</a> 
+            {yun:}/foreach{/yun}
+            </div>
+		 </div>
+                <div class="zh_more"> <a href="javascript:checkmore('job1list');" id="job1list" rel="nofollow">更多</a> </div>
+        </div>
+        {yun:}/if{/yun}
+        
+        {yun:}if $smarty.get.job1 && !$smarty.get.job1_son{/yun}
+        <div class="Search_jobs_form_list">
+          <div class="Search_jobs_name"> 子类：</div>
+          <div class="Search_jobs_sub ">
+            <a href="{yun:}listurl type=job1_son m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.job1_son==''{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a> {yun:}foreach from=$job_type[$smarty.get.job1] item=v key=key{/yun} <a href="{yun:}listurl job1_son=$v m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.job1_son==$v{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$job_name[$v]{/yun}</a> {yun:}/foreach{/yun}</div>
+        </div>
+        {yun:}/if{/yun}
+        
+        
+        {yun:}if $smarty.get.job1_son && is_array($job_type[$smarty.get.job1_son]){/yun}
+        <div class="Search_jobs_form_list">
+          <div class="Search_jobs_name"> 类别：</div>
+          <div class="Search_jobs_sub ">
+            <a href="{yun:}listurl type=job1_son m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.job_post==''{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a> {yun:}foreach from=$job_type[$smarty.get.job1_son] item=v key=key{/yun} <a href="{yun:}listurl job_post=$v m=school c=job{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.job_post==$v{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$job_name[$v]{/yun}</a> {yun:}/foreach{/yun}</div>
+                    
+		</div>
+        {yun:}/if{/yun}
+
+		{yun:}if $smarty.get.job1||$smarty.get.job1_son||$smarty.get.job_post||$smarty.get.provinceid||$smarty.get.cityid||$smarty.get.three_cityid||$smarty.get.hy||$smarty.get.edu||$smarty.get.exp||$smarty.get.sex||$smarty.get.type||$smarty.get.report||$smarty.get.uptime||$smarty.get.minsalary||$smarty.get.maxsalary||$smarty.get.keyword||$smarty.get.cert||$smarty.get.pr{/yun}
+         <div class="Search_close_box">
+         <div>
+          <div class="Search_clear"> <a href="{yun:}url m=school c=job{/yun}"> 清除所选</a></div>
+         <span class="Search_close_box_s">已选条件：</span>
+         </div>
+            {yun:}if $smarty.get.job1{/yun} <a href="{yun:}listurl untype='job1' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">职位分类：{yun:}$job_name[$smarty.get.job1]{/yun}</a> {yun:}/if{/yun}
+            {yun:}if $smarty.get.job1_son{/yun} <a href="{yun:}listurl untype='job1_son' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$job_name[$smarty.get.job1_son]{/yun}</a> {yun:}/if{/yun}
+            {yun:}if $smarty.get.job_post{/yun} <a href="{yun:}listurl untype='job_post' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$job_name[$smarty.get.job_post]{/yun}</a> {yun:}/if{/yun}
+			
+			{yun:}if $config.cityid=='' &&  $config.three_cityid==''{/yun} 
+				{yun:}if $smarty.get.provinceid{/yun}<a href="{yun:}listurl untype='provinceid' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">工作地点：{yun:}$city_name[$smarty.get.provinceid]{/yun}</a> {yun:}/if{/yun} 
+				{yun:}if $smarty.get.cityid{/yun} <a href="{yun:}listurl untype='cityid' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.cityid]{/yun}</a> {yun:}/if{/yun} 
+			{yun:}/if{/yun}
+            
+            {yun:}if $smarty.get.three_cityid{/yun} <a href="{yun:}listurl untype='three_cityid' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.three_cityid]{/yun}</a> {yun:}/if{/yun}
+            {yun:}if $industry_name[$smarty.get.hy]{/yun} <a href="{yun:}listurl untype='hy' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">行业：{yun:}$industry_name[$smarty.get.hy]{/yun}</a> {yun:}/if{/yun}
+            {yun:}if $smarty.get.edu{/yun} <a href="{yun:}listurl untype='edu' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">学历：{yun:}$comclass_name[$smarty.get.edu]{/yun}</a> {yun:}/if{/yun} 
+            {yun:}if $smarty.get.exp{/yun} <a href="{yun:}listurl untype='exp' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">工作经验：{yun:}$comclass_name[$smarty.get.exp]{/yun}</a> {yun:}/if{/yun} 
+            {yun:}if $smarty.get.sex{/yun} <a href="{yun:}listurl untype='sex' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">性别：{yun:}$com_sex[$smarty.get.sex]{/yun}</a> {yun:}/if{/yun} 
+            {yun:}if $smarty.get.type{/yun} <a href="{yun:}listurl untype='type' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">类型：{yun:}$comclass_name[$smarty.get.type]{/yun}</a> {yun:}/if{/yun} 
+            {yun:}if $smarty.get.report{/yun} <a href="{yun:}listurl untype='report' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">到岗时间：{yun:}$comclass_name[$smarty.get.report]{/yun}</a> {yun:}/if{/yun} 
+           
+            {yun:}if $smarty.get.uptime{/yun} <a href="{yun:}listurl untype='uptime' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">更新时间：{yun:}$uptime[$smarty.get.uptime]{/yun}</a> {yun:}/if{/yun}
+            {yun:}if $smarty.get.pr{/yun} <a href="{yun:}listurl m=school pr=0 c=job{/yun}" class="Search_jobs_c_a disc_fac">企业性质：{yun:}$comclass_name[$smarty.get.pr]{/yun}</a> {yun:}/if{/yun}
+            {yun:}if $smarty.get.minsalary && $smarty.get.maxsalary{/yun}
+            <a href="{yun:}listurl untype='salary' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">薪资：{yun:}$smarty.get.minsalary{/yun}-{yun:}$smarty.get.maxsalary{/yun}</a>
+            {yun:}elseif $smarty.get.minsalary && !$smarty.get.maxsalary{/yun}
+            <a href="{yun:}listurl untype='salary' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">薪资：{yun:}$smarty.get.minsalary{/yun}及以上</a>
+            {yun:}elseif !$smarty.get.minsalary && $smarty.get.maxsalary{/yun}
+            <a href="{yun:}listurl untype='salary' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">薪资：{yun:}$smarty.get.maxsalary{/yun}及以下</a>
+            {yun:}/if{/yun}
+            {yun:}if $smarty.get.keyword{/yun}<a href="{yun:}listurl untype='keyword' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$smarty.get.keyword{/yun}</a> {yun:}/if{/yun} 
+            {yun:}if $smarty.get.cert{/yun}<a href="{yun:}listurl untype='cert' m=school c=job{/yun}" class="Search_jobs_c_a disc_fac">执照已认证企业</a>{yun:}/if{/yun}
+        &nbsp; </div>
+        {yun:}/if{/yun}
+</div>
+<div class="yun_school_xjh_tit">
+<ul class="yun_school_xjh_tit_list">
+	<li {yun:}if !$smarty.get.order{/yun}class="yun_school_job_titcur"{yun:}/if{/yun}>
+		<a href="{yun:}url m=school c=job{/yun}">更新日期</a>
+	</li>
+</ul>
+<span class="yun_school_job_titn">为您找到 <font color="#f00" id="totalshow">{yun:}$total{/yun}</font> 条网申职位</span> </div>
+<div class="yun_school_job">
+<ul>
+    <div class="left_job_all">
+      <div class="job_left_sidebar">
+<!-----竞价置顶---------->
+{yun:}if $smarty.get.page < 2 {/yun}
+
+<div>
+  {yun:}wslist namelen=30 comlen=30 report='auto.report' hy='auto.hy' rec='auto.rec' job1='auto.job1' job1_son='auto.job1_son' job_post='auto.job_post' jobids='auto.jobids' pr='auto.pr' mun='auto.mun' provinceid='auto.provinceid' cityid='auto.cityid'  three_cityid='auto.three_cityid' type='auto.type' edu='auto.edu' exp='auto.exp' sex='auto.sex'  minsalary='auto.minsalary' maxsalary='auto.maxsalary' keyword='auto.keyword' cert='auto.cert' urgent='auto.urgent' bid=1 uptime='auto.uptime' is_graduate='auto.is_graduate' key=key limit=5 item=zd_list name=zdlist1{/yun} 
+	<li name='zhiding'>
+	<div class="yun_school_joblogo"><img src="{yun:}$zd_list.logo{/yun}"    width="80" height="80" /></div>
+	<div class="yun_school_job_cont" style="width:500px;">
+		 <div class="yun_school_job_name"><a href="{yun:}$zd_list.job_url{/yun}" target="_blank">{yun:}$zd_list.name_n{/yun}</a></div> 
+		 <div class="yun_school_job_list"><a href="{yun:}url id={yun:}$zd_list.uid{/yun} m=company c=show{/yun}">{yun:}$zd_list.com_name{/yun}</a></div>
+		 <div class="yun_school_job_city">  {yun:}$zd_list.job_city_one{/yun}-{yun:}$zd_list.job_city_two{/yun}{yun:}if $zd_list.job_city_three{/yun}-{yun:}$zd_list.job_city_three{/yun}{yun:}/if{/yun}		 </div>
+		 </div>
+		 <div class="yun_school_job_right">
+		 <div class="yun_school_job_right_time">
+			开始时间：{yun:}$zd_list.stime{/yun}
+			
+			<img src="{yun:}$config.sy_weburl{/yun}/app/template/default/images/Top.gif"></div>
+		<a href="{yun:}$zd_list.job_url{/yun}" target="_blank" class="yun_school_job_sq">立即报名</a>
+	 </div>
+	</li>
+  {yun:}/wslist{/yun}
+
+</div>
+{yun:}/if{/yun}
+<!-----竞价置顶end---------->
+
+    {yun:}wslist noids=1 namelen=30 comlen=30 ispage=1 report='auto.report' rec='auto.rec' hy='auto.hy' job1='auto.job1' job1_son='auto.job1_son' job_post='auto.job_post' jobids='auto.jobids' pr='auto.pr' mun='auto.mun' provinceid='auto.provinceid' cityid='auto.cityid' ltype='auto.ltype' three_cityid='auto.three_cityid' type='auto.type' edu='auto.edu' exp='auto.exp' sex='auto.sex' minsalary='auto.minsalary' maxsalary='auto.maxsalary' keyword='auto.keyword' key=key sort='auto.sort' cert='auto.cert' urgent='auto.urgent' uptime='auto.uptime' is_graduate='auto.is_graduate' order='auto.order' limit=20 item=job_list name=joblist1{/yun}
+    	<li>
+	<div class="yun_school_joblogo"><img src="{yun:}$job_list.logo{/yun}"    width="80" height="80" /></div>
+	<div class="yun_school_job_cont" style="width:500px;">
+		<div class="yun_school_job_name"><a href="{yun:}$job_list.job_url{/yun}" target="_blank" title="{yun:}$job_list.name{/yun}">{yun:}$job_list.name_n{/yun}</a></div> 
+		<div class="yun_school_job_list"><a href="{yun:}url id={yun:}$job_list.uid{/yun} m=company c=show{/yun}">{yun:}$job_list.com_name{/yun}</a></div>
+		<div class="yun_school_job_city">  {yun:}$job_list.job_city_one{/yun}-{yun:}$job_list.job_city_two{/yun}{yun:}if $job_list.job_city_three{/yun}-{yun:}$job_list.job_city_three{/yun}{yun:}/if{/yun}</div>
+		</div>
+		<div class="yun_school_job_right">
+		<div class="yun_school_job_right_time">
+			开始时间：{yun:}$job_list.stime{/yun}
+		</div>
+		<a href="{yun:}$job_list.job_url{/yun}" target="_blank" class="yun_school_job_sq">立即报名</a>
+	 </div>
+	</li>
+    {yun:}/wslist{/yun}
+        
+        </ul>
+        {yun:}if $total!=0 || is_array($zd_list){/yun}
+        <div class="clear"></div>
+        <div class="search_pages">
+          <div class="pages">{yun:}$pagenav{/yun}{yun:}$totalshow{/yun}</div> &nbsp;<br/>
+        </div>
+        <input value='{yun:}$smarty.get.ltype{/yun}' type='hidden' id='ltype'/>
+        {yun:}else{/yun} 
+        <!--没搜索到-->
+        <div class="seachno">
+          <div class="seachno_left"><img src="{yun:}$style{/yun}/images/search-no.gif" width="144" height="102"></div>
+          <div class="listno-content"> <strong>很抱歉，没有找到满足条件的网申职位</strong><br>
+            <span> 建议您：<br>
+            1、适当减少已选择的条件<br>
+            2、适当删减或更改搜索关键字<br>
+            </span> <span> 热门关键字：<br>
+            {yun:}key limit=7 recom=1 type=3 item=klist{/yun} <a href="{yun:}listurl  type=keyword v=$klist.key_title m=school c=job{/yun}" class="jos_tag_a" title="{yun:}$klist.key_title{/yun}">{yun:}$klist.key_name{/yun}</a> {yun:}/key{/yun}</span> </div>
+        </div>
+        {yun:}/if{/yun} </div>
+   </div>
+</div>
+</div>
+<div class="clear"></div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}",integral_pricename='{yun:}$config.integral_pricename{/yun}';</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/class.public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$style{/yun}/js/com_index.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/search.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script>
+var zd = $('li[name=zhiding]').length;
+var zs = $('#zs').text();
+$('#zs').text(parseInt(zd)+parseInt(zs));
+</script>
+  {yun:}include file="$trainstyle/footer.htm"{/yun}  

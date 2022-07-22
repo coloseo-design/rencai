@@ -1,0 +1,98 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<script src="{yun:}$wap_style{/yun}/js/flexible.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/base.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+
+<section>
+    <div class="warp_content clear" id="app">
+        <div class="job_list_content">
+
+            {yun:}zphnet ispage=1 limit=10 item=zlist{/yun}
+            <div class="zphnet_banner_list">
+                <a href="" class="zphnet_banner_a"></a>
+                <div class="zphnet_banner_sd" style="position: relative;">
+                    <a href="{yun:}url m=wap c=zphnet a=show id='`$zlist.id`' form='list'{/yun} " class="zphnet_banner_a">
+                        <div class="zphnet_listbanner">
+                            <img src="{yun:}$zlist.pic_wap{/yun}" class="zphnet_banner_img">
+                            {yun:}if $zlist.stime<'0'&&$zlist.etime>'0'{/yun}
+                            <span class="zphnet_baomingzhong">进行中</span>
+                            {yun:}elseif $zlist.stime>'0'{/yun}
+                            <span class="zphnet_baomingzhong2">预定中</span>
+                            {yun:}elseif $zlist.etime < 0{/yun}
+                            <span class=" yijieshu">已结束</span>
+                            {yun:}/if{/yun}
+                        </div>
+                    </a>
+                    <div class="zphnet_listcontent">
+                        <a href="{yun:}url m=wap c=zphnet a=show id='`$zlist.id`' form='list'{/yun}" class="zphnet_banner_a">
+                            <h1><span class="zphnet_video_icon"></span>{yun:}$zlist.title{/yun} </h1>
+                            <div class="zphnet_list_num">
+                                <span>浏览</span><span class="zphnet_content_num">{yun:}$zlist.hits{/yun}</span><span>次</span><span class="zphnet_xian_t">|</span>
+                                <span>企业</span><span class="zphnet_content_num">{yun:}$zlist.comnum{/yun}</span><span>家</span><span class="zphnet_xian_t">|</span>
+                                <span>岗位</span><span class="zphnet_content_num">{yun:}$zlist.jobnum{/yun}</span><span>个</span><span class="zphnet_xian_t">|</span>
+                                <span>参与</span><span class="zphnet_content_num">{yun:}$zlist.usernum{/yun}</span><span>人</span>
+
+                            </div>
+                            <div class="zphnet_list_time">
+                                <span class="zphnet_content_time">开始时间：{yun:}$zlist.starttime|date_format:"%Y-%m-%d"{/yun}</span>
+                                <span class="zphnet_content_time">结束时间：{yun:}$zlist.endtime|date_format:"%Y-%m-%d"{/yun}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {yun:}/zphnet{/yun}
+			<div class="newpade_box">
+            {yun:}if $total > 10{/yun}
+            <van-pagination v-model="currentPage" :total-items="total" :items-per-page="perpage" force-ellipses @change="pageChange" />
+            {yun:}/if{/yun}
+			</div>
+        </div>
+    </div>
+
+    {yun:}if !$total{/yun}
+    <div class="wap_member_no">很抱歉，还没有发布网络招聘会的相关信息</div>
+    {yun:}/if{/yun}
+</section>
+
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script>
+    var timeId = setInterval(function () {
+        var html = $('.zphnet_baomingzhong').html() + '·'
+        if (html == '进行中····') {
+            html = '进行中'
+        }
+        $('.zphnet_baomingzhong').html(html)
+    }, 600)
+
+    var timeId2 = setInterval(function () {
+        var html = $('.zphnet_baomingzhong2').html() + '·'
+        if (html == '预定中····') {
+            html = '预定中'
+        }
+        $('.zphnet_baomingzhong2').html(html)
+    }, 600)
+    var currentPage = parseInt('{yun:}$smarty.get.page{/yun}'),
+        total = parseInt('{yun:}$total{/yun}'),
+        pagelink = '{yun:}$pagelink{/yun}';
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //分页相关
+            currentPage: currentPage ? currentPage : 1,
+            total: total,
+            perpage: 10,
+        },
+        methods: {
+            pageChange: function (e) {
+                var pageurl = pagelink.replace('{{page}}', e);
+                location.href = pageurl;
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

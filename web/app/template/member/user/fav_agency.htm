@@ -1,0 +1,55 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+          <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">我的培训</span> <i class="member_right_h1_icon user_bg"></i></div>
+      
+      
+		<div class="job_list_tit"> 
+			<ul class="">
+				<li {yun:}if $smarty.get.c=='baoming_subject'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=baoming_subject">报名课程</a></li>
+				 	<li {yun:}if $smarty.get.c=='fav_subject'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_subject">收藏课程</a>{yun:}if $msgnum{/yun}<i class="left_sidebar_leftmune_icon">{yun:}$msgnum{/yun}</i>{yun:}/if{/yun}</li>
+			      	<li {yun:}if $smarty.get.c=='atn_teacher'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=atn_teacher">关注讲师</a></li>
+			 		<li {yun:}if $smarty.get.c=='fav_agency'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_agency">关注机构</a></li>
+			 		<li {yun:}if $smarty.get.c=='subject_zixun'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=subject_zixun">培训留言</a></li>
+	     	</ul> 
+     	</div>
+       <div class="train_bm">
+          {yun:}if $rows{/yun}
+      
+       <div class="train_bm_tit">
+             <div class="train_bm_name train_zx_jgname"><span class="train_bm_kcname_pd">机构名称</span> </div>   
+             <div class="train_bm_name train_zx_kcname">培训课程</div>    
+             <div class="train_bm_name train_zx_dh">机构地区</div>    
+             <div class="train_bm_name train_zx_time">关注时间</div>       
+             <div class="train_bm_name train_zx_cz">操作</div>   
+            </div>
+      
+    
+		    {yun:}foreach item=v from=$rows{/yun}
+              <div class="train_bm_list">
+             <div class="train_bm_name train_zx_jgname"><span class="train_bm_kcname_pd"><a href="{yun:}url m=train c=agencyshow id=$v.sc_uid{/yun}" target="_blank" class="">{yun:}$v.name{/yun}</a> </span> </div>   
+             <div class="train_bm_name train_zx_kcname">{yun:}if $v.num>0{/yun}
+                    <span >{yun:}$v.subname{/yun} </span>
+                    <a class="" href="{yun:}url m=train c=mysubject id=$v.sc_uid{/yun}" target="_blank">共{yun:}$v.num{/yun}门课程>></a>
+                    {yun:}else{/yun} 暂无课程 {yun:}/if{/yun}</div>    
+             <div class="train_bm_name train_zx_dh">{yun:}$v.city_n{/yun}</div>    
+             <div class="train_bm_name train_zx_time">{yun:}$v.time|date_format:'%Y-%m-%d'{/yun}</div>       
+             <div class="train_bm_name train_zx_cz"><a href="javascript:void(0)" onclick="layer_del('您确定要取消关注？', 'index.php?c=fav_agency&act=del&id={yun:}$v.id{/yun}');" class="cblue">取消关注</a></div>   
+            </div>
+            {yun:}/foreach{/yun} 
+      
+            {yun:}else{/yun}
+            <div class="msg_no">
+				<p>亲爱的用户，目前您未关注任何培训机构，想要了解培训机构近况</p>
+			    <p>立即搜索我感兴趣的讲师培训机构吧！</p>
+			    <a href="{yun:}url m=train c=agency{/yun}" target="_blank" class="msg_no_sq uesr_submit">立即搜索我感兴趣的培训机构>></a>
+			</div>
+            {yun:}/if{/yun}
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>
+</div>
+{yun:}include file="$userstyle/footer.htm"{/yun} 

@@ -1,0 +1,179 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+
+	<script>
+		var weburl = "{yun:}$config.sy_weburl{/yun}";
+		function searchByTab(obj){
+
+			var field = $(obj).attr('data-field');
+			var value = $(obj).attr('data-value');
+			
+			if(field == 'all'){
+				location.href	=	'{yun:}url m=wap c=$smarty.get.c{/yun}';
+			}else if(field == 'starttime'){
+				location.href	=	'{yun:}searchurl m=wap c=spview starttime="'+value+'" untype="starttime"{/yun}';
+			}
+
+		}
+	</script>
+	<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}"
+	 type="text/css">
+</head>
+<body>
+
+	
+	<div class="body_wap">
+
+
+	<section>
+		<div class="wapsearch_box">
+		<ul class="wapspmsnav ">
+				<li onclick="searchByTab(this);" data-field="all" class="{yun:}if !$smarty.get.starttime{/yun}jobsearchnavcur{yun:}/if{/yun}">全部</li>
+				<li onclick="searchByTab(this);" data-field="starttime" data-value="endsub" class="{yun:}if $smarty.get.starttime=='endsub'{/yun}jobsearchnavcur{yun:}/if{/yun}">预约中</li>
+			
+				{yun:}if $config.three_cityid&&$config.sy_web_site=='1'{/yun}
+				<li class="wapspmsnav_s Substation popup" data-pop="Substation">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}$city_name[$config.three_cityid]{/yun}</span>
+					
+					</a><i class="jobsearchicon"></i>
+				</li>
+				{yun:}else if $config.cityid&&$config.sy_web_site=='1'{/yun}
+				<li class="wapspmsnav_s Substation popup" data-pop="Substation">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}$city_name[$config.cityid]{/yun}</span>
+						
+					</a><i class="jobsearchicon"></i>
+				</li>
+				{yun:}else{/yun}
+				<li class="wapspmsnav_s grade popup" data-pop="grade">
+					<a href="javascript:void(0);" onclick="areashow();" class="searchOptions_list_a">
+						<span class="job_ov">
+							{yun:}if $city_name[$smarty.get.cityid] || $city_name[$smarty.get.provinceid]{/yun}
+							{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}$city_name[$smarty.get.provinceid]{/yun}
+							{yun:}elseif $city_name[$smarty.get.three_cityid]{/yun}
+							{yun:}$city_name[$smarty.get.three_cityid]{/yun}
+							{yun:}elseif $config.cityid&&$config.sy_web_site=='1'{/yun}
+							{yun:}$city_name[$config.cityid]{/yun}
+							{yun:}else{/yun}
+							区域
+							{yun:}/if{/yun}
+						</span>
+					</a>
+					<i class="jobsearchicon"></i>
+				</li>
+				{yun:}/if{/yun}
+				<li class="wapspmsnav_s Sorthy popup" data-pop="Sorthy">
+					<a href="javascript:void(0);" onclick="hyshow()" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}if $industry_name[$smarty.get.hy]{/yun}{yun:}$industry_name[$smarty.get.hy]|mb_substr:0:6:'utf-8'{/yun}{yun:}else{/yun}行业{yun:}/if{/yun}</span>
+					</a><i class="jobsearchicon"></i>
+				</li>
+				<li class="wapspmsnav_s Sortpr popup" data-pop="Sortpr">
+					<a href="javascript:void(0);" onclick="prshow();" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}if $comclass_name[$smarty.get.pr]{/yun}{yun:}$comclass_name[$smarty.get.pr]{/yun}{yun:}else{/yun}性质{yun:}/if{/yun}
+						</span>
+					</a>
+					<i class="jobsearchicon"></i>
+				</li>
+				<input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}">
+				<input type="hidden" id="waptype" value="1">
+			</ul>
+		</div>
+	</section>
+
+	<div class="clear"></div>
+
+	<div class="spview_box" id="app">
+		
+		{yun:}spview  ispage=1 item=sp order='1' mun='auto.mun' pr='auto.pr' hy='auto.hy'  provinceid='auto.provinceid'
+		cityid='auto.cityid' three_cityid='auto.three_cityid' starttime='auto.starttime' keyword='auto.keyword' limit=10{/yun}
+		<div class="spviewlist">
+			<div class="spviewlist_top">
+				{yun:}if $sp.s_status=='2'{/yun}
+				面试进行中
+				{yun:}else if $sp.s_status=='1'{/yun}
+				{yun:}$sp.starttime_n{/yun}开始
+				{yun:}/if{/yun}
+			</div>
+
+			<a class="spviewlist_con" href="{yun:}$sp.url{/yun}">
+				<div class="spviewlist_con_t">
+					<img src="{yun:}$sp.comlogo{/yun}" alt="" class="spviewlist_con_img">
+					<div class="spviewlist_con_t_name">{yun:}$sp.comname{/yun}</div>
+					<div class="spviewlist_con_t_info">{yun:}$sp.compr{/yun}<span></span>{yun:}$sp.commun{/yun}<span></span>{yun:}$sp.comhy{/yun}</div>
+				</div>
+				<div class="spviewlist_con_b">
+					{yun:}foreach from=$sp.comwel item=comwel{/yun}
+					{yun:}if $comwel && $comwel!='undefined'{/yun}
+					<span>{yun:}$comwel{/yun}</span>
+					{yun:}/if{/yun}
+					{yun:}/foreach{/yun}
+				</div>
+			</a>
+			<div class="spviewlist_bom">
+				{yun:}foreach from=$sp.joblist key=key item=spjob{/yun}
+					{yun:}if $key<=1{/yun}
+					<a href="{yun:}$spjob.job_url{/yun}" class="spviewlist_bom_joblist">{yun:}$spjob.name{/yun}<span>{yun:}$spjob.job_salary{/yun}</span></a>
+					{yun:}/if{/yun}
+				{yun:}/foreach{/yun}
+			</div>
+			<div class="spviewlist_yue">
+				已预约{yun:}$sp.subnum{/yun}人 
+				{yun:}if $sp.s_status=='1'{/yun}
+					<a href="{yun:}$sp.url{/yun}" class="spviewlist_yue_bth">去预约</a>
+				{yun:}else{/yun}
+					<span class="spviewlist_yue_jsbth">停止预约</span>
+				{yun:}/if{/yun}
+			</div>
+		</div>
+		
+		{yun:}spviewelse{/yun}
+			<div class="wap_member_nosearch">
+				<div class="wap_member_no_tip"> 很抱歉,暂时无视频面试！</div>
+			</div>
+		{yun:}/spview{/yun}
+		 <div v-if="total>perpage">
+		<van-pagination v-model="currentPage" :total-items="total" :items-per-page="perpage" force-ellipses @change="pageChange" />
+		</div>
+	</div>
+	{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+	<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$plusstyle{/yun}/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$plusstyle{/yun}/industry.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$plusstyle{/yun}/com.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript">
+	var wapurl = "{yun:}url m=wap{/yun}";
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}'),
+		total = parseInt('{yun:}$total{/yun}'),
+		pagelink=  '{yun:}$pagelink{/yun}';
+
+	var cityParam={
+			sy_web_city_one:'{yun:}$config.sy_web_city_one{/yun}',
+			sy_web_city_two:'{yun:}$config.sy_web_city_two{/yun}',
+		};
+	
+	var cityData	=	cityCategory(cityParam);
+	var jobData		=	"";
+	var hyData = "";
+	var spviewlistvue =  new Vue({
+			el: '#app',
+			data: {
+				//分页相关
+				currentPage:currentPage?currentPage:1,
+		        total:total,
+		        perpage:10,
+		    },
+		    methods:{
+		    	pageChange:function(e){
+		    		var pageurl = pagelink.replace('{{page}}',e);
+		    		location.href = pageurl;
+		    	}
+		    }
+		})
+
+</script>
+{yun:}include file="$wapstyle/publichtm/publictwo.htm"{/yun}
+</body>
+</html>

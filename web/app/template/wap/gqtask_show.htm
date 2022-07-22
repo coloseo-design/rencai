@@ -1,0 +1,25 @@
+{yun:}include file="$wapstyle/header_gq.htm"{/yun}
+<!--任务详细-->
+<div class="free_job_show">
+<div class="free_job_show_tit">{yun:}$show.name{/yun}</div>
+
+<div class="free_job_show_time">{yun:}$show.ctime|date_format:'%Y-%m-%d'{/yun}发布</div>
+</div>
+
+<div class="free_job_usershow_cont">
+<div class="free_job_usershow_p">价格预算：<span class="free_job_usershow_jg">{yun:}$show.salary{/yun}元</span></div>
+<div class="free_job_usershow_p">预计工期：{yun:}$show.edate{/yun}天</div>
+<div class="free_job_usershow_p">接单截止日期：{yun:}$show.etime|date_format:'%Y-%m-%d'{/yun}</div>
+<div class="free_job_usershowtit">项目需求</div>
+<div class="free_job_usershow_p">{yun:}$show.content{/yun}</div>
+<div class="free_job_usershowtit">联系方式</div>
+<div class="free_job_usershow_p">联系人：{yun:}$show.link_man{/yun}</div>
+<div class="free_job_usershow_p">联系电话：
+<span class="free_job_usershow_tel">{yun:}if $config.gq_task_link==0{/yun}{yun:}$show.link_moblie{/yun}{yun:}else{/yun}{yun:}if $uid{/yun}{yun:}$show.link_moblie{/yun}{yun:}else{/yun}{yun:}substr_replace($show.link_moblie,'*******',3,10){/yun}{yun:}/if{/yun}{yun:}/if{/yun}</span></div>
+</div>
+<div class="free_job_usershow_touch"><a href="tel:{yun:}$show.link_moblie{/yun}">联系TA</a></div>
+<div class="clear"></div>
+
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+</body>
+</html>

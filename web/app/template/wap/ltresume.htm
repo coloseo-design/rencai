@@ -1,0 +1,84 @@
+{yun:}include file="$wapstyle/header_lt.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/wap_tck.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<!--header end-->
+<section>
+	<div class="searchOptions clearfix">
+		<ul class="searchOptions_list">
+			<li class="grade popup" data-pop="grade">
+				<a href="javascript:void(0);" class="searchOptions_list_a"><span class="job_ov">{yun:}if $city_name[$smarty.get.cityid] || $city_name[$smarty.get.provinceid]{/yun}{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}$city_name[$smarty.get.provinceid]{/yun}{yun:}elseif $city_name[$smarty.get.three_cityid]{/yun}{yun:}$city_name[$smarty.get.three_cityid]{/yun}{yun:}elseif $config.cityid&&$config.sy_web_site=='1'{/yun}{yun:}$city_name[$config.cityid]{/yun}{yun:}else{/yun}区域{yun:}/if{/yun}</span><i class="searchOptions_icon"></i></a>
+			</li>
+			<li class="Category popup" data-pop="Category">
+				<a href="javascript:void(0);" class="searchOptions_list_a"><span class="job_ov">{yun:}if $jobname{/yun}{yun:}$jobname{/yun}{yun:}else{/yun}意向{yun:}/if{/yun}</span><i class="searchOptions_icon"></i></a>
+			</li>
+			<li class="Sortexp popup" data-pop="Sortexp">
+				<a href="javascript:void(0);" class="searchOptions_list_a"><span class="job_ov">{yun:}if $userclass_name[$smarty.get.exp]{/yun}{yun:}$userclass_name[$smarty.get.exp]{/yun}{yun:}else{/yun}经验{yun:}/if{/yun}</span><i class="searchOptions_icon"></i></a>
+			</li>
+			<li class="Gengduos popup" data-pop="Gengduos" style="border:none">
+				<a href="javascript:void(0);" class="searchOptions_list_a">更多<i class="searchOptions_icon"></i></a>
+			</li>
+			<input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}" />
+			<input type="hidden" id="waptype" value="1" />
+		</ul>
+	</div>
+</section>
+<div class="clear"></div>
+<section>
+	<div class="warp_content clear">
+		<div class="job_list_content">
+			{yun:}userlist height_status='2' limit=20 minsalary='auto.minsalary' maxsalary='auto.maxsalary' edu='auto.edu' order='auto.order' exp='auto.exp' keyword='auto.keyword' hy='auto.hy' provinceid='auto.provinceid' report='auto.report' cityid='auto.cityid' three_cityid='auto.three_cityid' jobin='auto.jobin' type='auto.type' uptime='auto.uptime' post_len=14 city_len=10 ispage=1 islt=4 item=user {/yun}
+            
+            <div class="ltresume_listbox">
+            {yun:}if $user.rec_resume{/yun} <i class="yun_wap_tj">推荐</i>{yun:}/if{/yun}
+            <a href="{yun:}url m=wap c=ltresume a=show id=$user.id{/yun}" >
+            <div class="ltresume_listbox_pd">
+           <div class="ltresume_listbox_tit"><span class="ltresume_listbox_name">{yun:}$user.username_n{/yun}</span><span class="ltresume_listbox_nj">（{yun:}if $user.sex{/yun}{yun:}/if{/yun}
+						{yun:}$user.sex{/yun},{yun:}if $user.age!=0{/yun}{yun:}$user.age{/yun}岁{yun:}/if{/yun}）</span>{yun:}if $user.idcard_status=='1'{/yun} <i class="yun_resume_info_sfrz"></i>{yun:}/if{/yun}
+							{yun:}if $user.moblie_status=='1'{/yun} <i class="yun_resume_info_sjrz"></i>{yun:}/if{/yun}<span class="ltresume_listbox_time">{yun:}$user.time{/yun} </span></div>
+           <div class="ltresume_listbox_info"><span class="ltresume_span ltresume_jy">{yun:}$user.edu_n{/yun}学历</span><span class="ltresume_span ltresume_xl">{yun:}$user.exp_n{/yun}经验</span></div>
+          <div class="ltresume_listbox_photo"> <div class="ltresume_listbox_photo_c">{yun:}if $user.photo!=""{/yun}
+								<img src="{yun:}$user.photo{/yun}"> {yun:}else{/yun}
+								<img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_member_icon{/yun}"> {yun:}/if{/yun}
+								<span class="{yun:}if $user.sex=='女'{/yun}ltresume_tj_xg{yun:}else{/yun}ltresume_tj_xb{yun:}/if{/yun}"></span> </div></div>
+            </div>
+            <div class="ltresume_listbox_yx">
+            <div class="ltresume_listbox_yx_p">意向城市：{yun:}$user.city_name_n{/yun}</div>
+            <div class="ltresume_listbox_yx_p">期望职位：{yun:}$user.name{/yun}</div>
+            {yun:}if $user.tag{/yun}
+						<div class="yunwap_jobfl_box">
+							{yun:}foreach from=$user.tag key=key item=v{/yun} 
+								{yun:}if $key<5{/yun} <span class="yunwap_jobfl">{yun:}$v{/yun}</span>
+								{yun:}/if{/yun} 
+							{yun:}/foreach{/yun}
+						</div>
+						{yun:}/if{/yun}
+            <span class="ltresume_listbox_look">查看</span>
+            </div>
+            </a>
+             </div>
+
+			{yun:}/userlist{/yun} 
+			{yun:}if $total <=0{/yun} {yun:}if $smarty.get.keyword!="" {/yun} 
+			<div class="wap_member_no">没有搜索到优质人才
+				<div>
+					<a class="wap_mb_no_sr" href="{yun:}url m=wap c='ltresume'{/yun}">重新搜索</a>
+				</div>
+		</div>
+		{yun:}else{/yun}
+		<div class="wap_member_no">暂无优质人才
+			<div>
+				<a class="wap_mb_no_sr" href="{yun:}url m=wap c='ltresume'{/yun}">重新搜索</a>
+			</div>
+		</div>
+		{yun:}/if{/yun} {yun:}else{/yun}
+		<div class="pages">{yun:}$pagenav{/yun}</div>
+		{yun:}/if{/yun}
+	</div>
+
+	</div>
+</section>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/publictwo.htm"{/yun}
+</body>
+</html>

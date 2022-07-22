@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>{yun:}$title{/yun}</title>
+		<meta name="keywords" content="{yun:}$keywords{/yun}" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/job.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+	
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+		 		<link href="{yun:}$style{/yun}/style/style.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		 <link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+	</head>
+
+	<body class="body_bg">
+		{yun:}include file="$tplstyle/header.htm"{/yun}
+<div class="clear"></div>
+		<div class="yun_content">
+			<div class="current_Location com_current_Location png none">
+				<div class="fl">您当前的位置：
+					<a href="{yun:}$config.sy_weburl{/yun}">首页</a> > <span>视频面试</span>
+				</div>
+			</div>
+
+			<div class="clear"></div>
+
+
+			<div class="firm_search_box">
+				<div class="firm_search_boxbor" style=" margin-top:20px;">
+					<form method="get" name="myform" onsubmit="return search_keyword(this,'请输入关键字');" action="{yun:}if !$config.sy_spviewdir{/yun}index.php{yun:}else{/yun}{yun:}url m=spview{/yun}{yun:}/if{/yun}"> 
+						<input class="firm_search_text" id="ipt" type="text" placeholder='请输入关键字' value="{yun:}if $getinfo.keyword!=" ="{/yun}{yun:}$getinfo.keyword{/yun}{yun:}else{/yun}请输入关键字{yun:}/if{/yun}" name="keyword" onclick="if(this.value=='请输入关键字'){this.value=''}" onblur="if(this.value==''){this.value='请输入关键字'}" />
+						<input type="hidden" name="cityid" id="cityid" value="{yun:}if $smarty.get.cityid{/yun}{yun:}$smarty.get.cityid{/yun}{yun:}/if{/yun}"/>
+						<input class="firm_search_submit yun_bg_color" type="submit" value="搜索 " />
+						
+					</form>
+				</div>
+				
+				
+			</div>
+
+			<div class="fiem_seach_chlose">
+				{yun:}if $config.sy_web_site==1 && $config.cityname && $config.cityname!=$config.sy_indexcity{/yun}
+					<div class="fiem_seach_chlose_list">
+						<div class="Search_cityboxname"> 地区：</div>
+						<div class="Search_citybox_right">
+							<div class="Search_cityboxright">
+								<div class="search_secondcity_list">
+									{yun:}if !$smarty.get.cityid && $smarty.get.three_cityid{/yun} 
+										<a class="city_name city_name_active" style="text-decoration:none;cursor:pointer;">
+											{yun:}$city_name[$smarty.get.three_cityid]{/yun}
+										</a> 
+									{yun:}else{/yun}
+										{yun:}if $smarty.get.cityid{/yun}
+											{yun:}if is_array($city_type[$smarty.get.cityid]){/yun} 
+												<a href="{yun:}listurl m=spview untype=three_cityid{/yun}" class="city_name {yun:}if !$smarty.get.three_cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a> 
+												{yun:}foreach from=$city_type[$smarty.get.cityid] item=tid key=key{/yun} 
+													<a href="{yun:}listurl m=spview type=three_cityid v=$tid{/yun}" class="city_name {yun:}if $smarty.get.three_cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a> 
+												{yun:}/foreach{/yun}
+											{yun:}else{/yun} 
+												<a class="city_name city_name_active" style="text-decoration:none;cursor:pointer;">{yun:}$city_name[$smarty.get.cityid]{/yun}</a>
+											{yun:}/if{/yun}
+										{yun:}else{/yun}
+											{yun:}if is_array($city_type[$smarty.get.provinceid]){/yun} 
+												<a href="{yun:}listurl m=spview untype=cityid{/yun}" class="city_name {yun:}if !$smarty.get.cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a> 
+												{yun:}foreach from=$city_type[$smarty.get.provinceid] item=tid key=key{/yun} 
+													<a href="{yun:}listurl  m=spview type=cityid v=$tid{/yun}" class="city_name {yun:}if $smarty.get.cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a>
+												{yun:}/foreach{/yun}
+											{yun:}else{/yun} 
+												<a class="city_name city_name_active" style="text-decoration:none;cursor:pointer;">{yun:}$city_name[$smarty.get.provinceid]{/yun}</a>
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									{yun:}/if{/yun} 
+								</div>
+							</div>
+						</div>
+					</div>
+				{yun:}else if $config.sy_web_city_one {/yun}
+					<div class="fiem_seach_chlose_list">
+						<div class="Search_cityboxname"> 地区：</div>
+						<div class="Search_citybox_right">
+							<div class="Search_cityboxright">
+								<div class="search_secondcity_list">
+									{yun:}if !$smarty.get.cityid && $smarty.get.three_cityid{/yun} 
+										<a class="city_name city_name_active" style="text-decoration:none;cursor:pointer;">
+											{yun:}$city_name[$smarty.get.three_cityid]{/yun}
+										</a> 
+									{yun:}else{/yun}
+										{yun:}if $smarty.get.cityid{/yun}
+											{yun:}if is_array($city_type[$smarty.get.cityid]){/yun} 
+												<a href="{yun:}listurl m=spview untype=three_cityid{/yun}" class="city_name {yun:}if !$smarty.get.three_cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a> 
+												{yun:}foreach from=$city_type[$smarty.get.cityid] item=tid key=key{/yun} 
+													<a href="{yun:}listurl m=spview type=three_cityid v=$tid{/yun}" class="city_name {yun:}if $smarty.get.three_cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a> 
+												{yun:}/foreach{/yun}
+											{yun:}else{/yun} 
+												<a class="city_name city_name_active" style="text-decoration:none;cursor:pointer;">{yun:}$city_name[$smarty.get.cityid]{/yun}</a>
+											{yun:}/if{/yun}
+										{yun:}else{/yun}
+											{yun:}if is_array($city_type[$smarty.get.provinceid]){/yun} 
+												<a href="{yun:}listurl m=spview untype=cityid{/yun}" class="city_name {yun:}if !$smarty.get.cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a> 
+												{yun:}foreach from=$city_type[$smarty.get.provinceid] item=tid key=key{/yun} 
+													<a href="{yun:}listurl  m=spview type=cityid v=$tid{/yun}" class="city_name {yun:}if $smarty.get.cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a>
+												{yun:}/foreach{/yun}
+											{yun:}else{/yun} 
+												<a class="city_name city_name_active" style="text-decoration:none;cursor:pointer;">{yun:}$city_name[$smarty.get.provinceid]{/yun}</a>
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									{yun:}/if{/yun} 
+								</div>
+							</div>
+						</div>
+					</div>
+				{yun:}else{/yun}
+					<div class="Search_citybox">
+			          	<div class="Search_cityboxname"> 地点：</div>
+			          	<div class="Search_citybox_right">
+			            	<div class="Search_cityall none"> 
+			            		<a href="{yun:}listurl m=spview type=provinceid v=0{/yun}" class="city_name">全部</a> 
+			            		{yun:}foreach from=$city_index item=pid key=key{/yun} 
+			            			<a href="{yun:}listurl m=spview type=provinceid v=$pid{/yun}" class="city_name {yun:}if $smarty.get.provinceid==$pid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$pid]{/yun}</a> 
+			            		{yun:}/foreach{/yun} 
+			            	</div>
+			            	<div class="Search_cityboxright"> 
+			            		<a href="javascript:;" onclick="acityshow('1')" class="search_city_list_cur {yun:}if $smarty.get.provinceid && !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}search_city_active{yun:}/if{/yun} {yun:}if !$smarty.get.provinceid{/yun}none{yun:}/if{/yun} acity_two" style="text-decoration:none;cursor:pointer;">
+			            			<span class="search_city_p">{yun:}$city_name[$smarty.get.provinceid]{/yun}</span>
+			            			<i class="search_city_p_jt"></i>
+			            			<i class="search_city_list_line"></i>
+			            		</a> 
+			            		<a href="javascript:;" {yun:}if $smarty.get.cityid{/yun}onclick="acityshow('2')" {yun:}/if{/yun} class="search_city_list_cur {yun:}if $smarty.get.cityid && is_array($city_type[$smarty.get.cityid]){/yun}search_city_active{yun:}/if{/yun} {yun:}if !$smarty.get.provinceid || !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}none{yun:}/if{/yun} acity_three" style="text-decoration:none;cursor:pointer;">
+			            			<span class="search_city_p">
+									{yun:}if !$smarty.get.cityid{/yun}
+										不限
+									{yun:}else{/yun}
+										{yun:}$city_name[$smarty.get.cityid]{/yun}
+									{yun:}/if{/yun}</span>
+			            			<i class="search_city_list_line"></i>
+			            		</a> 
+			            		<a href="{yun:}listurl m=spview type=provinceid v=0{/yun}" class="search_city_list_all {yun:}if !$smarty.get.provinceid{/yun}city_name_active{yun:}/if{/yun}">全部</a>
+			              		<div class="search_city_list"> 
+			              			{yun:}foreach from=$city_index item=pid key=key{/yun} 
+			              				<a href="{yun:}listurl m=spview type=provinceid v=$pid{/yun}" class="city_name {yun:}if $smarty.get.provinceid && !$smarty.get.cityid{/yun}{yun:}if $key>13{/yun}none{yun:}/if{/yun}{yun:}else if $smarty.get.cityid{/yun}{yun:}if $key>12{/yun}none{yun:}/if{/yun}{yun:}else{/yun}{yun:}if $key>14{/yun}none{yun:}/if{/yun}{yun:}/if{/yun} {yun:}if $smarty.get.provinceid==$pid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$pid]{/yun}</a> 
+			              			{yun:}/foreach{/yun} 
+			              		</div>
+			              		<a href="javascript:;" class="search_city_list_more" id="acity">更多</a> 
+			              	</div>
+			              	
+			            	<div class="Search_cityboxclose {yun:}if !$smarty.get.provinceid || ($smarty.get.provinceid && $smarty.get.cityid && is_array($city_type[$smarty.get.cityid])){/yun}none{yun:}/if{/yun}" id="acity_two"> 
+								<a href="{yun:}listurl m=spview untype=cityid{/yun}" class="city_name {yun:}if $smarty.get.provinceid&&!$smarty.get.cityid&&!$smarty.get.three_cityid{/yun}city_name_active{yun:}/if{/yun}">不限</a> 
+								{yun:}foreach from=$city_type[$smarty.get.provinceid] item=cid key=key{/yun} 
+								<a href="{yun:}listurl m=spview type=cityid v=$cid{/yun}" class="city_name {yun:}if $smarty.get.cityid==$cid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$cid]{/yun}</a> 
+								{yun:}/foreach{/yun} 
+							</div>
+			            	<div class="Search_cityboxclose {yun:}if !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}none{yun:}/if{/yun}" id="acity_three"> 
+								<a href="{yun:}listurl m=spview untype=three_cityid{/yun}" class="city_name {yun:}if $smarty.get.provinceid && $smarty.get.cityid && !$smarty.get.three_cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a> 
+								{yun:}foreach from=$city_type[$smarty.get.cityid] item=tid key=key{/yun} 
+									<a href="{yun:}listurl m=spview type=three_cityid v=$tid{/yun}" class="city_name {yun:}if $smarty.get.three_cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a> 
+								{yun:}/foreach{/yun} 
+							</div>
+			          </div>
+			        </div>
+				{yun:}/if{/yun} 
+
+				<div class="fiem_seach_chlose_list">
+					<div class="fiem_seach_chlosename">行业：</div>
+					<div class="fiem_seach_chlose_list_r" style="width:1010px; float:left">
+						<a href="{yun:}listurl m=spview type=hy v=0{/yun}" class="fiem_seach_chlose_list_a {yun:}if !$smarty.get.hy{/yun}fiem_seach_chlose_list_cur{yun:}/if{/yun}">全部</a>
+						{yun:}foreach from=$industry_index key=j item=v{/yun}
+							<a href="{yun:}listurl m=spview type=hy v=$v{/yun}" class="fiem_seach_chlose_list_a {yun:}if $smarty.get.hy==$v{/yun}fiem_seach_chlose_list_cur{yun:}/if{/yun} {yun:}if $j>6{/yun}list_hy_more none{yun:}/if{/yun}">{yun:}$industry_name[$v]{/yun}</a>
+						{yun:}/foreach{/yun}
+					</div>
+                    <div class="zh_more">
+						<a href="javascript:void(0);" onclick="hy_more_click(this)">更多</a> 
+                    </div>
+				</div>
+				
+				<div class="fiem_seach_chlose_list"><div class="fiem_seach_chlosename">性质：</div>
+					<div class="fiem_seach_chlose_list_r">
+						<a href="{yun:}listurl m=spview type=pr v=0{/yun}" class="fiem_seach_chlose_list_a {yun:}if !$smarty.get.pr{/yun}fiem_seach_chlose_list_cur{yun:}/if{/yun}">全部</a>
+						{yun:}foreach from=$comdata.job_pr key=j item=v{/yun}
+							<a href="{yun:}listurl m=spview type=pr v=$v{/yun}" class="fiem_seach_chlose_list_a {yun:}if $smarty.get.pr==$v{/yun}fiem_seach_chlose_list_cur{yun:}/if{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+						{yun:}/foreach{/yun}
+					</div>
+				</div>
+
+				
+				
+				
+				{yun:}if ($smarty.get.provinceid && !$config.sy_web_city_one) || ($smarty.get.cityid && !$config.sy_web_city_two) ||$smarty.get.three_cityid||$smarty.get.hy||$smarty.get.pr||$smarty.get.keyword{/yun}
+					<div class="Search_close_box">
+						
+						<div>
+							<div class="Search_clear"> <a href="{yun:}url m=spview{/yun}"> 清除所选</a></div>
+							<span class="Search_close_box_s">已选条件：</span>
+						</div>
+						
+						{yun:}if $config.cityid=='' &&  $config.three_cityid==''{/yun} 
+							{yun:}if $smarty.get.provinceid && !$config.sy_web_city_one{/yun}<a href="{yun:}listurl m=spview untype='provinceid'{/yun}" class="Search_jobs_c_a disc_fac">工作地点：{yun:}$city_name[$smarty.get.provinceid]{/yun}</a> {yun:}/if{/yun} 
+							{yun:}if $smarty.get.cityid && !$config.sy_web_city_two{/yun} <a href="{yun:}listurl m=spview untype='cityid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.cityid]{/yun}</a> {yun:}/if{/yun} 
+						{yun:}/if{/yun}
+						
+						{yun:}if $smarty.get.three_cityid{/yun} <a href="{yun:}listurl m=spview untype='three_cityid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.three_cityid]{/yun}</a> {yun:}/if{/yun}
+						{yun:}if $industry_name[$smarty.get.hy]{/yun} <a href="{yun:}listurl m=spview untype='hy'{/yun}" class="Search_jobs_c_a disc_fac">行业：{yun:}$industry_name[$smarty.get.hy]{/yun}</a> {yun:}/if{/yun}
+						{yun:}if $smarty.get.pr{/yun} <a href="{yun:}listurl m=spview untype='pr'{/yun}" class="Search_jobs_c_a disc_fac">性质：{yun:}$comclass_name[$smarty.get.pr]{/yun}</a> {yun:}/if{/yun}
+						{yun:}if $smarty.get.keyword{/yun} <a href="{yun:}listurl m=spview untype='keyword'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$smarty.get.keyword{/yun}</a> {yun:}/if{/yun}
+						
+					</div>
+				{yun:}/if{/yun}
+				
+			</div>
+
+			<div class="clear"></div>
+
+			<div class="spview_idx">
+
+				{yun:}spview ispage=1 item=sp order='1'  mun='auto.mun' pr='auto.pr' hy='auto.hy'  provinceid='auto.provinceid'
+		cityid='auto.cityid' three_cityid='auto.three_cityid' starttime='auto.starttime' keyword='auto.keyword' limit=12{/yun}
+				<div class="spviewlist">
+					<div class="spviewlist_top">
+						{yun:}if $sp.s_status=='2'{/yun}
+						<a class="spviewlist_top_tips_ms">
+							<i></i>
+							面试进行中
+						</a>
+						{yun:}else if $sp.s_status=='1'{/yun}
+						<div class="spviewlist_top_tips">
+						<i class="spviewlist_top_tipsicon"></i>{yun:}$sp.starttime_n{/yun}开始
+						</div>
+						{yun:}else if $sp.s_status=='3'{/yun}
+						<a class="spviewlist_top_tips_msover">
+							<i></i>
+							面试已结束
+						</a>
+						{yun:}/if{/yun}
+					</div>
+
+					<div class="spviewlist_con">
+						<div class="spviewlist_con_t">
+							<img src="{yun:}$sp.comlogo{/yun}" alt="" class="spviewlist_con_img">
+							<a href="{yun:}$sp.com_url{/yun}" class="spviewlist_con_t_name">{yun:}$sp.comname{/yun}</a>
+							<div class="spviewlist_con_t_info">{yun:}$sp.compr{/yun}<span></span>{yun:}$sp.commun{/yun}<span></span>{yun:}$sp.comhy{/yun}</div>
+						</div>
+						<div class="spviewlist_con_b">
+
+							{yun:}foreach from=$sp.comwel item=comwel{/yun}
+							{yun:}if $comwel{/yun}
+							<span>{yun:}$comwel{/yun}</span>
+							{yun:}/if{/yun}
+							{yun:}/foreach{/yun}
+							
+						</div>
+					</div>
+					<div class="spviewlist_bom">
+						{yun:}foreach from=$sp.joblist key=key item=spjob{/yun}
+							{yun:}if $key<=1{/yun}
+							<a class="spviewlist_bom_joblist" href="{yun:}$spjob.job_url{/yun}">{yun:}$spjob.name{/yun}<span>{yun:}$spjob.job_salary{/yun}</span></a>
+							{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+					</div>
+					<div class="spviewlist_zwall">
+						共有<span>{yun:}$sp.jobnum{/yun}</span>个视频面试职位
+						<a href="{yun:}$sp.url{/yun}">查看></a>
+					</div>
+					{yun:}if $sp.s_status=='1'{/yun}
+					<div class="spviewlist_yue">
+						<a href="{yun:}$sp.url{/yun}" class="spviewlist_yuego">预约视频面试</a>
+					</div>
+					{yun:}else{/yun}
+					<div class="spviewlist_yue">
+						<a href="javascript:void(0)" class="spviewlist_yueover">预约已结束</a>
+					</div>
+					{yun:}/if{/yun}
+				</div>
+				{yun:}spviewelse{/yun}	
+				<div class="clear"></div>
+				<div class="no_tip">很抱歉，还没有视频面试的相关信息</div>
+				{yun:}/spview{/yun}	
+			</div>
+		</div>
+		
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script>
+			var weburl = "{yun:}$config.sy_weburl{/yun}",
+				integral_pricename = '{yun:}$config.integral_pricename{/yun}';
+		</script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/search.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<!--[if IE 6]>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script>
+		DD_belatedPNG.fix('.png,.user_photo_bg');
+		</script>
+		<![endif]-->
+		
+		{yun:}include file="$tplstyle/public_search/login.htm"{/yun}
+		{yun:}include file="$tplstyle/footer.htm"{/yun}

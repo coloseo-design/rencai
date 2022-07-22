@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name="keywords" content="{yun:}$keywords{/yun}" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/douxu.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<title>{yun:}$title{/yun}</title>
+	</head>
+
+	<body>
+		{yun:}include file="$tplstyle/header.htm"{/yun}
+		<div class="clear"></div>
+		<div class="bannerbg">
+		  <div id="persons">
+			<div class="swiper-container">
+			  <div class="swiper-wrapper">
+				{yun:}xjhlive len=18 order=stime sort=desc item=hx limit=5{/yun}
+				<div class="swiper-slide">
+				  <a href="{yun:}$hx.url{/yun}" class=""><img src="{yun:}$hx.pic{/yun}" alt="" width="540" height="340" />
+				  <div class="xjhtext">{yun:}$hx.name{/yun}</div>
+					{yun:}if $hx.livestatus==1{/yun}
+								
+					<span class="xjhb_t">即将直播</span>
+					{yun:}else if $hx.livestatus==2{/yun}
+					<span class="xjhb_t">往期回顾</span>
+					{yun:}else if $hx.livestatus==3{/yun}
+					<span class="xjhb_t">正在直播</span>
+					{yun:}/if{/yun}
+				  </a>
+				</div>
+				{yun:}/xjhlive{/yun}
+			  </div>
+			</div>
+			<div class="swiper-pagination"></div>
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		  </div>
+      </div>
+      <div class="clear"></div>
+		<div class="w1200">
+
+			<div class="xjh_box">
+				<div class="xjh_box_c">
+					<div class="xjh_tit">
+						<span class="xjh_tit_s"><i class="xjh_titline"></i>热门直播</span>
+					</div>
+          
+					<!--列表循环-->
+					{yun:}xjhlive ispage=1 ishot=1 len=18 order=stime sort=asc item=xlist limit=9{/yun}
+					<div class="xjh_list">
+						<div class="xjh_list_pic">
+
+							<a href="{yun:}$xlist.url{/yun}" class="">
+								<img src="{yun:}$xlist.pic{/yun}" width="380" height="225" />
+
+								{yun:}if $xlist.livestatus==1{/yun}
+									{yun:}if $xlist.substatus==1{/yun}
+									<span class="xjhb_t" style="right:10px;">即将直播</span>
+									{yun:}if $usertype == 1{/yun}
+									<span class=" xjh_yuebth">立即预约</span>
+									{yun:}/if{/yun} 
+									{yun:}elseif $xlist.substatus==2{/yun}
+									<span class="xjhb_t"  style="right:10px;">即将直播</span>
+									<span class=" xjh_yuebth">您已预约</span>
+									{yun:}/if{/yun} 
+									{yun:}if $xlist.subnum>0{/yun}
+									<div class="xjh_list_wantlook">
+										<span class="xjh_list_wantlook_n">{yun:}$xlist.subnum{/yun}人想看</span>
+									</div>
+									{yun:}/if{/yun}
+									<div class="xjh_list_bg"></div>
+								{yun:}else if $xlist.livestatus==3{/yun}
+									<div class="xjh_list_zb">
+										<span class="xjh_list_zbz">正在直播</span>
+									</div>
+									<span class="xjh_list_look">立即观看 </span>
+									<div class="xjh_list_wantlook">
+										<span class="xjh_list_wantlook_n">{yun:}$xlist.hits{/yun}人次观看</span>
+									</div>
+									<div class="xjh_list_bg"></div>
+								{yun:}/if{/yun}
+							</a>
+						</div>
+						<div class="xjh_list_info">
+							<div class="xjh_list_name">
+								<a href="{yun:}$xlist.url{/yun}">{yun:}$xlist.name{/yun}</a>
+							</div>
+							<div class="xjh_list_kh">
+								<span class="xjh_list_time">{yun:}$xlist.stime_n{/yun}-{yun:}$xlist.etime_n{/yun}</span>
+							</div>
+						</div>
+					</div>
+					{yun:}xjhliveelse{/yun}
+                     	<div class="clear"></div>
+						<div class="no_tip">很抱歉，近期还没有宣讲会的相关信息</div>
+                		<div class="clear"></div>
+					{yun:}/xjhlive{/yun}
+					<div class="search_pages">
+						<div class="pages">{yun:}$pagenav{/yun}</div>
+					</div>
+					<!--列表循环 end-->
+					<div class="xjh_tit" style="width:1200px;">
+						<span class="xjh_tit_s"><i class="xjh_titline"></i>往期回顾</span>
+						<a href="{yun:}url m=xjhlive c=playback{/yun}" class="xjh_tit_more">更多></a>
+					</div>
+					<!--列表循环-->
+					<!--回放效果-->
+					{yun:}xjhlive len=18 livestatus=2 order=stime sort=desc item=xblist limit=9{/yun}
+					<div class="xjh_list">
+						<div class="xjh_list_pic">
+
+							<a href="{yun:}$xblist.url{/yun}" class="">
+								<img src="{yun:}$xblist.pic{/yun}" width="380" height="225" />
+								<div class="xjh_list_wantlook">
+									<span class="xjh_list_wantlook_n">{yun:}$xblist.hits{/yun}次观看</span>
+								</div>
+								<div class="xjh_list_bg"></div>
+							</a>
+						</div>
+						<div class="xjh_list_info">
+							<div class="xjh_list_name">
+								<a href="{yun:}$xblist.url{/yun}">{yun:}$xblist.name{/yun}</a>
+							</div>
+							<div class="xjh_list_kh">
+								<span class="xjh_list_time">{yun:}$xblist.stime_n{/yun}-{yun:}$xblist.etime_n{/yun}</span>
+							</div>
+						</div>
+					</div>
+					{yun:}xjhliveelse{/yun}
+                     <div class="clear"></div>
+						<div class="no_tip">很抱歉，还没有直播宣讲会的相关信息</div>
+					{yun:}/xjhlive{/yun}
+					
+				</div>
+			</div>
+		</div>
+		<style>
+			.hp_head_box {
+				box-shadow: none
+			}
+		</style>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+       
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+         <script src="{yun:}$style{/yun}/js/swiper.js?v={yun:}$config.cachecode{/yun}"></script>
+   
+		<script>
+			var personsSwiper = new Swiper('#persons .swiper-container', {
+			  watchSlidesProgress: true,
+			  slidesPerView: 'auto',
+			  centeredSlides: true,
+			  loop: true,
+			  loopedSlides: 5,
+			  autoplay: true,
+			  navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			  },
+			  pagination: {
+				el: '.swiper-pagination',
+			  },
+			  on: {
+				progress: function (progress) {
+				  for (i = 0; i < this.slides.length; i++) {
+					var slide = this.slides.eq(i);
+					var slideProgress = this.slides[i].progress;
+					modify = 1;
+					if (Math.abs(slideProgress) > 1) {
+					  modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+					}
+					translate = slideProgress * modify * 260 + 'px';
+					scale = 1 - Math.abs(slideProgress) / 5;
+					zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+					slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+					slide.css('zIndex', zIndex);
+					slide.css('opacity', 1);
+					if (Math.abs(slideProgress) > 3) {
+					  slide.css('opacity', 0);
+					}
+				  }
+				},
+				setTransition: function (transition) {
+				  for (var i = 0; i < this.slides.length; i++) {
+					var slide = this.slides.eq(i)
+					slide.transition(transition);
+				  }
+
+				}
+			  }
+			})
+		</script>
+  
+		{yun:}include file="$tplstyle/public_search/login.htm"{/yun}
+		{yun:}include file="$tplstyle/footer.htm"{/yun}
+	</body>

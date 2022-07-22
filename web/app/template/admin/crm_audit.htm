@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+    <form action='index.php' method='get' class='layui-form' style='display:none;' id="search_form" autocomplete='off'>
+        <input type="hidden" name="m" value="crm_audit" />
+        <div class="crm_record_list">
+            <div class="crm_record_name"><span class="admin_required_icon"></span>起始日期：</div>
+            <div class="crm_record_textbox">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" id="stime" name="stime" class="layui-input" style="width:300px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="crm_record_list">
+            <div class="crm_record_name"><span class="admin_required_icon"></span>结束日期：</div>
+            <div class="crm_record_textbox">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" id="etime" name="etime" class="layui-input" style="width:300px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="crm_record_list">
+            <span class="crm_record_name">&nbsp;</span>
+            <div class="crm_record_textbox">
+                <input type="submit" value='确认' class="admin_examine_bth">
+                <input type="button" onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;">
+            </div>
+        </div>
+    </form>
+    <div class="infoboxp">
+        <div class="tty-tishi_top">
+            <div class="tabs_info">
+                <ul>
+                    <li class='curr'><a href="index.php?m=crm_audit">查账助手</a></li>
+                </ul>
+            </div>
+            <div class="crm_searctime">
+                <ul>
+                    <li {yun:}if $smarty.get.time=='' && !$smarty.get.stime && !$smarty.get.etime{/yun}class='curr'{yun:}/if{/yun}> <a href="index.php?m=crm_audit">全部</a></li>
+                    <li {yun:}if $smarty.get.time==-1{/yun}class='curr'{yun:}/if{/yun}> <a href="index.php?m=crm_audit&time=-1">今天</a></li>
+                    <li {yun:}if $smarty.get.time==1{/yun}class='curr'{yun:}/if{/yun}> <a href="index.php?m=crm_audit&time=1">昨天</a></li>
+                    <li {yun:}if $smarty.get.time==7{/yun}class='curr'{yun:}/if{/yun}> <a href="index.php?m=crm_audit&time=7">7天内</a></li>
+                    <li {yun:}if $smarty.get.time==30{/yun}class='curr'{yun:}/if{/yun}> <a href="index.php?m=crm_audit&time=30">30天内</a></li>
+                    <li {yun:}if $smarty.get.time==90{/yun}class='curr'{yun:}/if{/yun}> <a href="index.php?m=crm_audit&time=90">90天内</a></li>
+                    <li {yun:}if $smarty.get.stime || $smarty.get.etime {/yun}class='curr'{yun:}/if{/yun}> <a href="javascript:void(0);" onclick='searchForm();'>自定义</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="tty_table-bom">
+            <div class="table-list" style="margin-top:10px;">
+                <div class="admin_table_border">
+                    
+                    <div class="admin_crmTable">
+                        <ul>
+                            {yun:}foreach item=v key=key from=$order{/yun}
+                            <li>
+                                <div class="admin_crmTable_title crmTable">
+                                    <div class="titleOne">
+                                        <p><span>{yun:}$v.day{/yun}</span>&nbsp;/&nbsp;{yun:}$v.month{/yun}&nbsp;/&nbsp;{yun:}$v.year{/yun}</p>
+                                    </div>
+                                    <div class="titleTwo">
+                                        <p>支出<span>-{yun:}$v.out{/yun}</span></p>
+                                        <p>收入<span>+{yun:}$v.num{/yun}</span></p>
+                                    </div>
+                                </div>
+                                <div class="admin_crmTable_content crmTable ">
+                                    {yun:}foreach item=v1 key=k from=$v.orders{/yun}
+                                    <div class="Table_contentInfo">
+                                        <span>{yun:}if $v1.crm_name{/yun}{yun:}$v1.crm_name{/yun}{yun:}else{/yun}未绑定业务员{yun:}/if{/yun}</span>
+                                        <span>收</span>
+                                        <span>{yun:}$v1.order_price{/yun}</span>
+                                        <span>{yun:}$v1.order_type_n{/yun}</span>
+                                        <span>{yun:}$v1.name{/yun}</span>
+                                    </div>
+                                    {yun:}/foreach{/yun}
+                                </div>
+                            </li>
+                            {yun:}/foreach{/yun}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script>
+    layui.use(['form', 'laydate'], function() {
+        var laydate = layui.laydate,
+            form = layui.form,
+            $ = layui.$;
+
+        laydate.render({
+            elem: '#stime',
+            type: 'date'
+        });
+
+        laydate.render({
+            elem: '#etime',
+            type: 'date'
+        });
+    });
+
+    function searchForm() {
+        layer.open({
+            type: 1,
+            anim: 5,
+            title: '自定义搜索',
+            content: $('#search_form'),
+            area: ["450px", "280"],
+            offset: ['20px', ''],
+        });
+    }
+    </script>
+    {yun:}include file="$adminstyle/checkdomain.htm"{/yun}
+</body>
+
+</html>

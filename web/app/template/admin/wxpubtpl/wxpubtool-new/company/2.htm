@@ -1,0 +1,70 @@
+ 
+		{yun:}foreach item=v from=$lists{/yun}
+         <section style="padding:40px 0px 20px 0px;"> 
+  <section style=" background:#ffffff;border-radius:5px;box-shadow: #ffe8e8 0px 0px 5px 3px;"> 
+    <section style="height:40px; background:#ff6262;border-radius:5px 5px 0 0;  box-shadow:
+             inset 0px -15px 15px -15px #c32222; "> 
+    <span style="width:13px;height:13px; background:#febfbf;border-radius:50%; display:inline-block; margin-left:15px; margin-top:13px;"></span>
+        <span style="width:13px;height:13px; background:#febfbf;border-radius:50%; display:inline-block; margin-left:5px; margin-top:13px;"></span>
+            <span style="width:13px;height:13px; background:#febfbf;border-radius:50%; display:inline-block; margin-left:5px; margin-top:13px;"></span>
+            
+            		<section style="width: 80px;height:110px; background: url({yun:}$admin_style{/yun}/wxpubtpl/wxpubtool-new/company/images/needle.png) no-repeat; background-size:100%;transform: translate(170px,-65px);"></section>
+    
+    </section>
+  
+    <section style="padding:10px  0px 0 0px; text-align:center"> 
+     <section style=" border-bottom:1px solid #ff6262; display:inline-block; padding-bottom:4px;">
+      <section style="font-size:18px;padding:10px 0; border-bottom:4px solid #ff6262;color:#333;display:inline-block"> {yun:}$v.name{/yun} </section> 
+    </section> 
+       
+     </section>  
+   <section style="padding:0px 20px 20px 20px;">
+   
+   
+   				{yun:}foreach item=v1 key=k1 from=$v.row{/yun}
+                
+                  <section style=" margin-top:20px;">
+    <section style="border-left:3px solid #ffa414; padding-left:4px;"> <section style="height:30px; line-height:30px; background:#ffa414; display:inline-block;padding:0px 20px 0 10px;color:#ffffff;font-size:16px;">{yun:}$v1.name{/yun} </section>    </section> 
+   <section style="padding:15px 0"> 薪资：<span style="color:#fb5e5e">{yun:}$v1.job_salary{/yun}{yun:}if $v1.job_salary!='面议'{/yun}(元/月){yun:}/if{/yun}</span>   </section> 
+   <section style=" line-height:24px;"> <span style="color:#5599ff">工作职责：</span> <section style=" display:inline-block"> {yun:}$v1.description{/yun} </section>   </section> 
+    </section> 
+    {yun:}/foreach{/yun}
+     <section style="padding:20px 0 0 0 ">
+       <section style="border-top:1px solid #ff6262; border-bottom:1px solid #ff6262;padding:20px 0 20px 0 ">
+     
+         <section>联系人：{yun:}$v.linkman{/yun}</section>
+			<section style="padding:10px 0">联系电话：{yun:}$v.linktel{/yun}</section>
+			<section>公司地址：{yun:}$v.address{/yun}</section>
+        </section> 
+      </section> 
+      
+						{yun:}if $ewmtype != 'xcx'{/yun}
+						<p style="text-align:center; padding-top:15px;" align="center"><img style="width:150px; width:150px;" src="{yun:}pubqrcode  toc=company toa=show toid=$v.uid totype=$ewmtype{/yun}"><br /></p>
+						{yun:}else{/yun}
+						<p style="text-align:center; padding-top:20px;">
+						 <a  data-miniprogram-type="text"  data-miniprogram-appid="{yun:}$wxpaydata.sy_xcxappid{/yun}" data-miniprogram-path="/pages/company/show?id={yun:}$v.uid{/yun}" class="weapp_text_link" href="" style="color: rgb(51, 51, 51);padding: 6px 1.4em;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;max-width: 100%;font-size: 14px;display: inline-block;border-radius: 50px;letter-spacing: 1.5px;background: rgba(247, 215, 73, 0.86);box-sizing: border-box !important;overflow-wrap: break-word !important;">查看详情</a></p>
+						{yun:}/if{/yun}
+						<p style="text-align:center;color:#999;" align="center">{yun:}$config.sy_webname{/yun}<br />{yun:}$config.sy_weburl{/yun}</p>
+					</section>
+				</section>
+				
+                
+                
+ 
+   
+      </section> 
+      </section> 
+
+  
+      
+   </section>
+ 
+ 
+ </section>
+        
+        
+        
+        
+
+		{yun:}/foreach{/yun}
+ 

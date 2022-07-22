@@ -1,0 +1,66 @@
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<div class="tty-tishi_top" style="padding: 5px 15px 0px 15px;">	
+	<div class="admin_tj_newlist">
+		<span class="admin_tj_newname">统计类别：</span>
+		<a href="index.php?m=admin_tongji&c=reg&days=7"{yun:}if $smarty.get.c=='reg'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>会员注册统计</a>
+		<a href="index.php?m=admin_tongji&c=lookjob&days=7"{yun:}if $smarty.get.c=='lookjob'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>职位浏览统计</a> 
+		<a href="index.php?m=admin_tongji&c=lookresume&days=7"{yun:}if $smarty.get.c=='lookresume'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>简历浏览统计</a>
+		<a href="index.php?m=admin_tongji&c=useridmsg&days=7"{yun:}if $smarty.get.c=='useridmsg'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>邀请面试统计</a>
+		<a href="index.php?m=admin_tongji&c=downresume&days=7" {yun:}if $smarty.get.c=='downresume'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>简历下载统计</a>
+		<a href="index.php?m=admin_tongji&c=useridjob&days=7"{yun:}if $smarty.get.c=='useridjob'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>简历投递统计</a>
+		<a href="index.php?m=admin_tongji&c=order&days=7" {yun:}if $smarty.get.c=='order'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>财务统计</a>
+		<a href="index.php?m=admin_tongji&c=ad&days=7" {yun:}if $smarty.get.c=='ad'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>广告统计</a>
+		<a href="index.php?m=admin_tongji&c=company&days=7" {yun:}if $smarty.get.c=='company'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>企业统计</a>
+		<a href="index.php?m=admin_tongji&c=job&days=7" {yun:}if $smarty.get.c=='job'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>职位数据统计</a>
+		<a href="index.php?m=admin_tongji&c=resume&days=7"{yun:}if $smarty.get.c=='resume'{/yun} class="admin_tj_cur"{yun:}/if{/yun}>简历数据统计</a>
+	</div>
+	
+	<form action="index.php" name="myform" method="get" onSubmit="return cktimesave()" >
+        <div class="admin_tj_newlist">
+			<span class="admin_tj_newname">统计时间：</span>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=-1&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a {yun:}if $smarty.get.days=='-1'{/yun}admin_tj_cur{yun:}/if{/yun}">昨天</a>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=1&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a {yun:}if $smarty.get.days=='1'{/yun}admin_tj_cur{yun:}/if{/yun}">今天</a>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=7&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a  {yun:}if $smarty.get.days=='7'{/yun}admin_tj_cur{yun:}/if{/yun}">一周内</a>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=30&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a  {yun:}if $smarty.get.days=='30'{/yun}admin_tj_cur{yun:}/if{/yun}">一月内</a>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=90&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a  {yun:}if $smarty.get.days=='90'{/yun}admin_tj_cur{yun:}/if{/yun}">三月内</a>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=180&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a  {yun:}if $smarty.get.days=='180'{/yun}admin_tj_cur{yun:}/if{/yun}">半年</a>
+			<a href="javascript:;" onclick="tongjiChange('index.php?m=admin_tongji&c={yun:}$smarty.get.c{/yun}&days=360&did={yun:}$smarty.get.did{/yun}')" class="admin_tj_a  {yun:}if $smarty.get.days=='360'{/yun}admin_tj_cur{yun:}/if{/yun}">一年</a>
+			<input name="m" value="admin_tongji" type="hidden"/>
+			{yun:}if $smarty.get.c{/yun}
+			<input name="c" value="{yun:}$smarty.get.c{/yun}" type="hidden"/>
+			{yun:}/if{/yun}
+			{yun:}if $smarty.get.did{/yun}
+			<input name="did" value="{yun:}$smarty.get.did{/yun}" type="hidden"/>
+			{yun:}/if{/yun}
+			<input class="admin_tj_sjd" type="text" id="date" name="date" value="{yun:}$smarty.get.date{/yun}" placeholder="选择时间段"/>
+       
+			<script type="text/javascript">
+				layui.use(['laydate'], function(){
+					var laydate = layui.laydate
+						,$ = layui.$;
+						
+					laydate.render({
+						elem: '#date',range:'~'
+					});
+				});
+				function tongjiChange(url){
+					loadlayer();
+					window.location.href = url;
+				}
+			</script>
+			
+		
+		<input  class="admin_tj_sjd1d"  type="submit" name="" value="查询"/>
+
+		</div>
+		{yun:}if $smarty.get.c=='order'{/yun}
+		<div class="admin_tj_newlist">
+			<span class="admin_tj_newname">分站选择：</span>
+			{yun:}foreach from=$Dname key=key item=dlist{/yun}
+				<a href="index.php?m=admin_tongji&c=order&days={yun:}$smarty.get.days{/yun}&did={yun:}$key{/yun}" class="admin_tj_a  {yun:}if $smarty.get.did==$key{/yun}admin_tj_cur{yun:}/if{/yun}"">{yun:}$dlist{/yun}</a>
+			{yun:}/foreach{/yun}
+		</div>
+		{yun:}/if{/yun}
+ 	</form>
+	
+</div>

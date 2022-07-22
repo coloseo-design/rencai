@@ -1,0 +1,26 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+	{yun:}include file="$trainstyle/left.htm"{/yun}
+	<div class="right_column frt mt20">
+		<div class="right_column_h1">
+			<span class="right_column_h1_span flt">{yun:}$config.integral_pricename{/yun}管理</span> 
+		</div>
+        <div class="right_nav_box">
+			<ul class="right_nav_box_list">
+				<li {yun:}if $smarty.get.c=="integral"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}任务</a></li>
+				<li {yun:}if $smarty.get.c=="integral_reduce"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=integral_reduce">{yun:}$config.integral_pricename{/yun}规则</a></li>
+				<li {yun:}if $smarty.get.c=="reward_list"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=reward_list">{yun:}$config.integral_pricename{/yun}兑换</a></li>
+			</ul>
+		</div>
+		<div class="right_column_border_integral">
+			<div class="right_column_border">  
+				<div class="msg_no">暂无相关信息</div>
+			</div>
+		</div>
+	</div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+	<div class="infoboxp">
+
+		<div class="admin_new_tip">
+			<a href="javascript:;" class="admin_new_tip_close"></a>
+			<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+			<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+			<div class="admin_new_tip_list_cont">
+				<div class="admin_new_tip_list">该页面展示了平台视频招聘会视频信息记录。</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="clear"></div> 
+
+
+     	<div class="admin_statistics">数据统计：
+        	<em class="admin_statistics_s">有效视频次数：<span class="ajaxall">0</span></em>
+			<em class="admin_statistics_s">通话时长：<span class="ajaxtime">0</span></em>
+			<em class="admin_statistics_s">平均单场时长：<span class="ajaxavg">0</span></em>
+		
+		</div>
+    	<div class="clear"></div>
+	 
+		<div class="table-list">
+			<div class="admin_table_border">
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+				<form action="index.php?m=admin_splog&c=delSplog" name="myform" method="post" target="supportiframe" id='myform'>
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th style="width:20px;"><label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+								<th align="left">ID</th>
+								<th align="left">房间号</th>
+								<th align="left" width="200">企业</th>
+								<th align="left" width="200">求职者</th>
+								<th>通话时长</th>
+								<th>开始时间</th>
+								<th>面试岗位</th>
+								<th>来源渠道</th>
+								<th width="150" class="admin_table_th_bg">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{yun:}foreach item=v key=key from=$rows{/yun}
+							<tr align="center"{yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+								<td >
+									<input type="checkbox" value="{yun:}$v.id{/yun}" name='del[]' onclick='unselectall()' class="check_all" rel="del_chk" />
+								</td>
+								<td align="left" >{yun:}$v.id{/yun}</td>
+								<td align="left" >{yun:}$v.roomid{/yun}</td>
+								<td align="left" >{yun:}$v.comname{/yun}</td>
+								<td align="left" >{yun:}$v.runame{/yun}</td>
+								<td>{yun:}$v.sptime_n{/yun}</td>
+								<td>{yun:}$v.ctime_n{/yun}</td>
+								<td>{yun:}$v.jobname{/yun}</td>
+								<td>{yun:}if $v.sid>0{/yun}企业面试间{yun:}elseif $v.zid>0{/yun}网络招聘会{yun:}else{/yun}在线聊天{yun:}/if{/yun}</td>
+								<td>
+									<a href="javascript:void(0)" class="admin_new_c_bth admin_new_c_bth_sc mt5" onClick="layer_del('确定要删除？', 'index.php?m=admin_splog&c=delSplog&delid={yun:}$v.id{/yun}&zid={yun:}$v.zid{/yun}');">删除</a>
+								</td>
+							</tr>
+							{yun:}/foreach{/yun}
+							<tr>
+								<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+								<td colspan="8"><label for="chkAll2">全选</label>&nbsp;
+								<input class="admin_button"  type="button" name="delsub" value="删除所选"  onclick="return really('del[]')"/>
+							</td>
+							</tr>
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="7" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+					<input type="hidden" name="pytoken" id="pytoken"  value="{yun:}$pytoken{/yun}" />
+					<input type="hidden" name="zid" value="{yun:}$smarty.get.id{/yun}" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<style>
+		.admin_compay_fp{width:340px; margin-top:15px;}
+		.admin_compay_fp_s{width:100px; text-align:right; font-weight:bold; display:inline-block}
+		.admin_compay_fp_sub{width:140px;height:25px;border:1px solid #ddd;}
+		.admin_compay_fp_sub1{width:40px;height:27px; background:#3692cf;color:#fff;border:none; cursor:pointer}
+	
+		.layui-layer-page .layui-layer-content{
+			overflow: visible !important;
+		}
+	</style>
+	<script>
+		layui.use(['form'], function(){form = layui.form;});
+
+		 $(document).ready(function(){
+
+			var id = '{yun:}$smarty.get.id{/yun}';	 
+
+			$.get("index.php?m=admin_splog&c=splogNum&id="+id, function(data) {
+				var datas = eval('(' + data + ')');
+				if(datas.spLogAllNum) {
+				  	$('.ajaxall').html(datas.spLogAllNum);
+					$('.ajaxtime').html(datas.spLogAlltime);
+					$('.ajaxavg').html(datas.spLogAvgNum);
+				}
+			});
+		 });
+	</script>
+</body>
+</html>

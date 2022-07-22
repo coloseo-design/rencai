@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+	
+	<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	
+	<title>后台管理</title>
+	
+</head>
+
+<body style="background:#EEF2F5;height:auto; overflow:auto">
+
+ 	<div class="infoboxp">
+
+   		<div class="crm_comw1200">
+   		
+			<div class="crm_com">
+				<div class="crm_com_logo">
+					<img src="{yun:}$Info.logo{/yun}" width="110" height="110" />
+				</div>
+				
+				<div class="crm_com_name">{yun:}$Info.name{/yun}</div>
+				
+				<div class="crm_com_info">会员名：{yun:}$Info.username{/yun}，UID：{yun:}$Info.uid{/yun} </div>
+				<div class="crm_com_info_data">
+					<div class="crm_com_info_list"><div class="crm_com_info_n">{yun:}$Info.rating_name{/yun}</div> {yun:}$Info.vipstime|date_format:"%Y-%m-%d"{/yun} 至 {yun:}$Info.vipetime|date_format:"%Y-%m-%d"{/yun}</div>
+					<div class="crm_com_info_list"><div class="crm_com_info_n">{yun:}$Info.reg_date|date_format:"%Y-%m-%d"{/yun}</div>注册时间</div>
+					<div class="crm_com_info_list"><div class="crm_com_info_n">{yun:}$Info.lastupdate_day{/yun}</div>最后登录</div>
+					<div class="crm_com_info_list"><div class="crm_com_info_n">{yun:}$Info.integral{/yun}</div>{yun:}$config.integral_pricename{/yun}   </div>
+					<div class="crm_com_info_list"><div class="crm_com_info_n">{yun:}$Info.inJobNum{/yun}</div>在招职位 </div>
+					<div class="crm_com_info_list"><div class="crm_com_info_n">{yun:}$Info.sqNum{/yun}</div>收到简历  </div>
+					<div class="crm_com_info_list crm_com_info_list_end"><div class="crm_com_info_n">{yun:}$Info.llNum{/yun}</div>未查看简历 </div>
+				</div>
+				
+				<div class="crm_com_info_cz">
+					<a href="javascript:void(0);" class="crm_com_info_cz_bth" onclick="toMember('index.php?m=crm_customer&c=Imitate&uid={yun:}$Info.uid{/yun}','{yun:}$Info.usertype{/yun}')">企业中心</a>
+					<a href="javascript:void(0);" class="crm_com_info_cz_bth" onclick="toMember('index.php?m=crm_customer&c=Imitate&uid={yun:}$Info.uid{/yun}&type=job&w=1','{yun:}$Info.usertype{/yun}')">刷新职位</a>
+					<a href="javascript:void(0);" class="crm_com_info_cz_bth" onclick="toMember('index.php?m=crm_customer&c=Imitate&uid={yun:}$Info.uid{/yun}&type=map','{yun:}$Info.usertype{/yun}')">设置地图</a>
+					<a href="https://www.tianyancha.com/search?key={yun:}$Info.name{/yun}" target="_blank" class="crm_com_info_cz_bth">工商信息</a>
+				</div>
+				
+			</div>
+			
+			<div class="crm_kf_box">
+				<span class="crm_kf_p">客户经理： <span class="crm_kf_name">{yun:}$Info.crm_name{/yun}</span> </span>
+				{yun:}if $auid == $Info.crm_uid {/yun}
+					<a href="javascript:void(0);" class="crm_kf_box_bth" id="Deliver" data-uid="{yun:}$Info.uid{/yun}">转交</a>
+					<a href="javascript:void(0);" class="crm_kf_box_bth" id="Giveup" data-uid="{yun:}$Info.uid{/yun}">放弃</a>
+				{yun:}/if{/yun}
+				
+				{yun:}if $Info.crm_uid==0 {/yun}
+					<a href="javascript:void(0);" class="crm_kf_box_bth CrmnewReceive" data-uid="{yun:}$Info.uid{/yun}" >领取</a>
+ 				{yun:}/if{/yun}
+ 				
+				<span class="crm_kf_p2">客户状态：{yun:}$Info.crm_status_n{/yun}</span>
+				<a href="javascript:void(0);" class="crm_kf_box_bth" id="UserStatus" data-uid="{yun:}$Info.uid{/yun}" data-status="{yun:}$Info.crm_status{/yun}-{yun:}$Info.crm_status_n{/yun}">修改</a>
+				
+				<span class="crm_kf_p2">客户等级：{yun:}$Info.crm_type_n{/yun}</span>
+				<a href="javascript:void(0);" class="crm_kf_box_bth" id="LevelType" data-uid="{yun:}$Info.uid{/yun}" data-type="{yun:}$Info.crm_type{/yun}-{yun:}$Info.crm_type_n{/yun}">修改</a>
+			</div>
+			<div class="crm_com_show">
+			
+				<div class="crm_com_list">
+					<ul>
+						<li {yun:}if $type==1{/yun}class="crm_com_list_cur"{yun:}/if{/yun}><a href="index.php?m=crm_customer&c=com&id={yun:}$Info.uid{/yun}&type=1">联系反馈</a></li>
+						<li {yun:}if $type==2{/yun}class="crm_com_list_cur"{yun:}/if{/yun}><a href="index.php?m=crm_customer&c=com&id={yun:}$Info.uid{/yun}&type=2">客户资料</a></li>
+						<li {yun:}if $type==3{/yun}class="crm_com_list_cur"{yun:}/if{/yun}><a href="index.php?m=crm_customer&c=com&id={yun:}$Info.uid{/yun}&type=3">操作记录</a></li>
+						<li {yun:}if $type==4{/yun}class="crm_com_list_cur"{yun:}/if{/yun}><a href="index.php?m=crm_customer&c=com&id={yun:}$Info.uid{/yun}&type=4">合同订单</a></li>
+					</ul>
+					
+					<div class="crm_com_list_cz">
+						<a href="javascript:void(0);" id="newOut"  data-uid="{yun:}$Info.uid{/yun}" data-name="{yun:}$Info.name{/yun}" class="crm_com_info_cz_bth">外出</a>
+					 	
+					 	{yun:}foreach from=$crmTaskType item=v{/yun}
+							<a href="javascript:void(0);" data-id="{yun:}$v{/yun}" data-uid="{yun:}$Info.uid{/yun}" data-name="{yun:}$Info.name{/yun}" data-info='1' class="crm_com_info_cz_bth CrmnewTask">{yun:}$crmClassName[$v]{/yun}</a>
+						{yun:}/foreach{/yun}
+					</div>
+					
+				</div>
+				
+				<div class="crm_com_cont" {yun:}if $type!=1{/yun}style="display:none;"{yun:}/if{/yun}>
+					
+					<div class="crm_com_show_left">
+						
+						<div class="crm_com_show_jl">
+							<a href="index.php?m=crm_customer&c=com&id={yun:}$Info.uid{/yun}&type=1" class="crm_com_show_jl_a {yun:}if !$smarty.get.all{/yun}crm_com_show_jl_a_cur{yun:}/if{/yun}">我的联系记录</a>
+							<a href="index.php?m=crm_customer&c=com&id={yun:}$Info.uid{/yun}&type=1&all=1" class="crm_com_show_jl_a {yun:}if $smarty.get.all{/yun}crm_com_show_jl_a_cur{yun:}/if{/yun}">全部记录</a>
+						</div>
+						
+						{yun:}foreach from=$logList key=k item=logone{/yun}
+							{yun:}if $k==0{/yun}
+								<div class="crm_com_show_last">
+									{yun:}$logone.aname{/yun}
+									【{yun:}$logone.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}】
+									{yun:}$logone.content{/yun}
+								</div>
+							{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+						
+						<ul class="crm_com_show_list">
+							{yun:}foreach from = $followList key=key item=flist{/yun}
+							<li>
+								<span class="crm_com_czx_user">{yun:}$flist.aname{/yun}</span> 
+								【{yun:}$flist.type_n{/yun}】 联系 <span class="crm_com_czx_user">{yun:}$flist.linkman{/yun}</span> 
+								{yun:}if $flist.moblie{/yun}【{yun:}$flist.moblie{/yun}】{yun:}/if{/yun}
+								{yun:}$flist.atime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}
+								<div class="">{yun:}$flist.content{/yun}</div>
+							</li>
+							{yun:}/foreach{/yun}
+						</ul>
+						<div class="">
+							{yun:}if $ftotal > 4{/yun}
+							<table>
+								<tr>
+									<td class="digg">{yun:}$fpagenav{/yun}</td>
+									<td>&nbsp;&nbsp;共 {yun:}$ftotal{/yun} 条记录</td>
+								</tr>
+							</table>
+							{yun:}/if{/yun}
+						</div>
+					</div>
+					
+					<div class="crm_com_show_right">
+						
+						<div class="crm_com_show_textarea">
+							<textarea id="fRemark" placeholder='备注：（简要说明跟进内容，与客户的交流情况。）'>{yun:}$followInfo.content{/yun}</textarea>
+						</div>
+
+						<form class='layui-form' lay-filter='crmFollow'>
+							<div class="crm_com_fs_info">
+								<div class="layui-form-item">
+									<div class="layui-inline">
+										<label class="layui-form-label">跟进方式：</label>
+									    <div class="layui-input-inline" style="width:90px;">
+	 								      	<select name="fWay" id="fWay">
+	 									        {yun:}foreach from=$followWay item=way{/yun}
+										        <option value="{yun:}$way{/yun}" {yun:}if $followInfo.type == $way{/yun}selected{yun:}/if{/yun}>{yun:}$crmClassName[$way]{/yun}</option>
+										        {yun:}/foreach{/yun}
+									      	</select>
+									    </div>
+										<label class="layui-form-label">跟进时间：</label>
+									 	<div class="layui-input-inline" style="width:140px;" >
+									      	<input type="text" id="info_ftime" name="ftime" value="" class="layui-input" />
+									    </div> 
+								 	</div>
+								</div>
+
+								<div class="layui-form-item">
+									<div class="layui-inline">
+										<label class="layui-form-label">联系人员：</label>
+										<div class="layui-input-inline" style="width:90px;">
+									      	<input type="text" id="flinkman" value="{yun:}$Info.linkman{/yun}" placeholder="联系人"  class="layui-input" />								    
+									 	</div>
+										<label class="layui-form-label">联系方式：</label>
+									 	<div class="layui-input-inline" style="width:140px;" >
+									      	<input type="text" id="flinktel" value="{yun:}$Info.linktel{/yun}" placeholder="联系方式"  class="layui-input" />
+									    </div> 
+								 	</div>
+								</div>
+							</div>
+							<div class="crm_com_fs_info">	
+								<div class="layui-form-item">
+								    <div class="layui-input-block">
+								      	<div class="layui-input-inline" style="width:110px;padding-left:25px;">
+								      		<input type="checkbox" title="下次跟进" lay-filter="isfollow" id='follow' value="1" {yun:}if $followInfo.time>0{/yun}checked{yun:}/if{/yun} />
+								      	</div>
+								     	<div class="layui-input-inline ftime_div" {yun:}if $followInfo.time == 0{/yun}style="display:none;"{yun:}/if{/yun}>
+								      		<input type="text" id='info_ptime' name="ptime" placeholder="" class="layui-input" lay-filter="ptime" style="width:140px;" />
+								    	</div>
+								    </div>
+								</div>
+							</div>
+							<div class="crm_com_fs_info">	
+
+
+						    	<input type="hidden" value="{yun:}$followInfo.taskid{/yun}" id="task_id"/>
+								<div class="layui-form-item">
+								    <div class="layui-input-block">
+								      	<div class="layui-input-inline">
+											{yun:}if $followInfo{/yun}
+											<input type="button" value="更 新" class="crm_com_ds_submit_bc crmConcern" data-fid="{yun:}$followInfo.id{/yun}"/>
+											{yun:}/if{/yun}
+											<input type="button" value="新 增" class="crm_com_ds_submit_bc crmConcern" />
+										</div>
+								    </div>
+								</div>
+						    </div>
+						</form>
+						
+						
+						<div class="crm_com_fs_box">
+							<div class="crm_com_ds_bth">
+								<input type="button" class="crm_com_ds_submit msgCrmTp tpLink" value="联系通知" data-tp="crmlink" />&nbsp;
+			 	            	<input type="button" class="crm_com_ds_submit msgCrmTp" value="联系注册" data-tp="crmreg" />&nbsp; 
+	                       		<input type="button" class="crm_com_ds_submit msgCrmTp" value="提醒登录" data-tp="crmtlogin" /> &nbsp;
+	                        	<input type="button" class="crm_com_ds_submit msgCrmTp" value="会员到期" data-tp="crmtvip" /> &nbsp;
+	                       		<input type="button" class="crm_com_ds_submit msgCrmTp" value="新简历" data-tp="crmtresume"/> &nbsp;  
+					   		</div>
+							<div class="crm_com_show_textarea">
+								<textarea id="sms_conent" class="textarea" style="width: 98%;height:60px;" disabled=""></textarea>
+							</div>
+							<div class="crm_com_fs_info">字数统计：<em id="msgLength">0</em>(一条最多62个字) 
+								<input type="text" id="msgPhone" value="{yun:}$Info.linktel{/yun}"  class="crm_com_fs_text" /> 
+								<input type="hidden" id="msgTp" value="crmlink" /> 
+								<input type="button" value="发送短信" class="crm_com_ds_submit_bc" id="btnSendMsg"/>
+							</div>
+					   	</div>
+					   	
+					 	<div class="crm_com_fs_box">
+					 		<div class="crm_com_ds_bth">
+								<span>备注信息：</span>
+					   		</div>
+							<div class="crm_com_show_textarea"><textarea id="crm_remark_com" placeholder='备注：（方便每次打开都能了解企业的一些个性情况，长期有效，可修改。）'>{yun:}$Info.crm_remark{/yun}</textarea></div>
+							{yun:}if $Info.crm_uid == $auid{/yun}
+							<input type="button" class="crm_com_ds_submit_bc" value="保存备注"  style="margin-top:10px;" id="crmRemarkCom" />
+							{yun:}/if{/yun}
+						</div>
+					</div>
+				</div>
+				
+				<div class="crm_com_cont" {yun:}if $type!=2{/yun}style="display:none;"{yun:}/if{/yun}>
+					
+					<div class="crm_com_show_left">
+						<div class="crm_com_show_tit">企业基本资料</div>
+						<div class="crm_com_show_p">
+							<div class="">企业名称：{yun:}$Info.name{/yun}</div>
+							<div class="">企业性质：{yun:}$Info.pr_n{/yun}</div>
+							<div class="">所属行业：{yun:}$Info.hy_n{/yun}</div>
+							<div class="">所在地区：{yun:}$Info.job_city_one{/yun}/{yun:}$Info.job_city_two{/yun}</div>
+							<div class="">详细地址：{yun:}$Info.address{/yun}</div>
+							<div class="">企业规模：{yun:}$Info.mun_n{/yun}</div>
+							<div class="">注册资金：{yun:}$Info.money{/yun}{yun:}$Info.moneytype_n{/yun}</div>
+							<div class="">企业网址：{yun:}$Info.website{/yun}</div>
+							<div class="">企业福利：{yun:}$Info.welfare{/yun}</div>
+							<div class="">企业简介：{yun:}$Info.conetnt{/yun}</div>
+						</div>
+					</div>
+					
+					<div class="crm_com_show_right" style="padding-bottom:50px">
+						<div class="crm_com_show_tit">企业联系方式</div>
+						<input type="hidden" value="{yun:}$Info.uid{/yun}" id="crmComid" />  
+						
+						<div class="crm_com_tellist">
+							<span class="crm_com_telname">联系人：</span>
+							<div class="">
+								<input type="text" value="{yun:}$Info.linkman{/yun}" id="linkman"  placeholder="请输入联系人姓名" class="crm_com_teltext" />  
+							</div> 
+							<input type="text" value="{yun:}$Info.linkjob{/yun}" id="linkjob" placeholder="请输入联系人职称" class="crm_com_teltext mt10" />
+							 
+						</div>
+						
+						<div class="crm_com_tellist">
+							<span class="crm_com_telname">联系电话：</span>
+							<div class="">
+								<input type="text" value="{yun:}$Info.linktel{/yun}" id="linktel" placeholder="请输入联系手机" class="crm_com_teltext" />  
+							</div>
+							<div class=""><input type="text" value="{yun:}$Info.linkphone{/yun}" id="linkphone" placeholder="请输入固定电话" class="crm_com_teltext mt10" /></div>
+						</div>
+						
+						<div class="crm_com_tellist">
+							<span class="crm_com_telname">联系邮箱：</span>
+							<div class="">
+								<input type="text" value="{yun:}$Info.linkmail{/yun}" id="linkmail" placeholder="请输入邮箱" class="crm_com_teltext" /> 
+							</div>
+						</div>
+						
+						<div class="crm_com_tellist"><input type="button" value="保存" class="crm_com_ds_submit_bc" id="crmComInfo" /></div>
+						
+						<div class="crm_com_show_tit">企业帐号管理</div>
+						<div class="crm_com_tellist">
+							<span class="crm_com_telname">用户名：</span>
+							<input type="text" value="{yun:}$Info.username{/yun}" id='username' class="crm_com_teltext" />
+							<input type="hidden" value="{yun:}$Info.uid{/yun}" id="uid" />
+							<input type="button" value="保存" class="crm_com_ds_submit_bc" onclick="editname('{yun:}$Info.username{/yun}');" />
+						</div>
+						<div class="crm_com_tellist">
+							<span class="crm_com_telname">修改密码：</span>
+							<input type="text" value="" id="newPass" placeholder="请填写新密码"  class="crm_com_teltext" /> 
+							<input type="button" value="保存" class="crm_com_ds_submit_bc" id="upPassword"/>
+						</div>
+                        
+					</div>
+				</div>
+				
+				<div class="crm_com_cont" {yun:}if $type!=3{/yun}style="display:none;"{yun:}/if{/yun}>
+					<table width="100%" class="crm_com_cont_tale">
+						<tr>
+							<th>操作时间</th>
+							<th>操作人</th>
+							<th>操作描述</th>
+							<th>备注</th>
+						</tr>
+						{yun:}foreach from=$logList item=log{/yun}
+						<tr>
+							<td >{yun:}$log.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</td>
+							<td >{yun:}$log.aname{/yun}</td>
+							<td >{yun:}$log.content{/yun}</td>
+							<td >{yun:}$log.remark{/yun}</td>
+						</tr>
+						{yun:}/foreach{/yun}
+						
+						{yun:}if $logtotal > $config.sy_listnum {/yun}
+							<tr>
+								<td class="digg">{yun:}$logpagenav{/yun}</td>
+								<td>&nbsp;&nbsp;共 {yun:}$logtotal{/yun} 条记录</td>
+								<td colspan="2"></td>
+							</tr>
+						{yun:}/if{/yun}
+					</table>
+				</div>
+				
+				<div class="crm_com_cont" {yun:}if $type!=4{/yun}style="display:none;"{yun:}/if{/yun}>
+					
+					<div style="padding:10px;">
+						<form action="" name="myform" method="get" class='layui-form' >
+							
+							<input type="hidden" name="m" value="crm_customer" />
+							<input type="hidden" name="c" value="com" />
+							<input type="hidden" name="id" value="{yun:}$Info.uid{/yun}" />
+							<input type="hidden" name="type" value="4" />
+							
+							<div class="crm_search">
+								<table class="crm_search_table"> 
+									<tr>    
+										 
+										<td>
+											<div class="layui-form-item">
+												<label class="layui-form-label">订单状态</label>
+											    <div class="layui-input-inline">
+											      	<select name="orState" id="orState" lay-filter="orState">
+											        	<option value="">请选择</option> 
+														<option value="1" {yun:}if $smarty.get.orState==1{/yun}selected{yun:}/if{/yun}>待审批</option>
+														<option value="2" {yun:}if $smarty.get.orState==2{/yun}selected{yun:}/if{/yun}>已完成</option>
+											      	</select>
+											    </div>
+											</div>
+										</td>  
+										
+										<td>
+											<div class="layui-form-item">
+												<label class="layui-form-label">付款方式</label>
+											    <div class="layui-input-inline">
+											      	<select name="orType" id="orType" lay-filter="orType">
+											        	<option value="">请选择</option> 
+														{yun:}foreach from=$canpay key=key item=cp{/yun}
+														<option value="{yun:}$key{/yun}" {yun:}if $smarty.get.orType==$key{/yun}selected{yun:}/if{/yun}>{yun:}$cp{/yun}</option>
+														{yun:}/foreach{/yun}
+													</select>
+											    </div>
+											</div>
+										</td>   
+										
+										<td>
+											<div class="layui-form-item">
+												<label class="layui-form-label">订单类型</label>
+											    <div class="layui-input-inline">
+											      	<select name="orRating" id="orRating" lay-filter="orRating">
+											        	<option value="">请选择</option> 
+														{yun:}foreach from=$ratingArr item=rating{/yun}
+															<option value="{yun:}$rating.id{/yun}" {yun:}if $smarty.get.orRating==$rating.id{/yun}selected{yun:}/if{/yun}>{yun:}$rating.name{/yun}</option>
+														{yun:}/foreach{/yun}
+													</select>
+											    </div>
+											</div>
+										</td>   
+									</tr>
+									
+									<tr>       
+										<td>
+											<div class="layui-form-item">
+											    <div class="layui-inline">
+											      	<label class="layui-form-label">订单时间</label>
+											      	<div class="layui-input-inline" style="width: 100px;">
+											        	<input type="text" name="orStime" id="orStime" value="{yun:}$smarty.get.orStime{/yun}" placeholder="请选择开始日期" autocomplete="off" class="layui-input" />
+											      	</div>
+											      	<div class="layui-form-mid">-</div>
+											      	<div class="layui-input-inline" style="width: 100px;">
+											        	<input type="text" name="orEtime" id="orEtime" value="{yun:}$smarty.get.orEtime{/yun}" placeholder="请选择结束日期" autocomplete="off" class="layui-input" />
+											      	</div>
+											    </div>
+										  	</div>
+										 </td>  
+										 
+										<td>
+											<div class="layui-form-item">
+											    <label class="layui-form-label">订单号</label>
+											    <div class="layui-input-inline">
+											      	<input type="text" name="orKeyword" placeholder="请输订单号" autocomplete="off" class="layui-input" /> 
+											    </div>
+											</div>
+										</td>
+										
+										<td>
+											<div class="layui-form-item">
+												<label class="layui-form-label"></label>
+											    <div class="layui-input-block">
+											      	<button type="submit" class="layui-btn" lay-submit="">搜索</button>
+											      	<button type="button" id="newDeal" data-uid="{yun:}$Info.uid{/yun}" data-name="{yun:}$Info.name{/yun}" data-info='1' class="layui-btn layui-btn-primary">新增</button>
+											    </div>
+											</div>
+										</td>
+										
+									</tr>
+								
+								</table>  
+							</div>
+				        
+							 
+						</form>
+					</div>
+					
+					<table width="100%" class="crm_com_cont_tale">
+						<tr>
+							<th>订单号</th>
+							<th>开通会员</th>
+							<th>订单金额</th>
+							<th>提交人</th>
+							<th>提交时间</th>
+							<th>状态</th>
+
+						</tr>
+						{yun:}foreach from=$orderList item=order{/yun}
+						<tr>
+							<td>{yun:}$order.order_id{/yun}</td>
+							<td>{yun:}$order.rating_name{/yun}</td>
+							<td>{yun:}$order.order_price{/yun}</td>
+							<td>{yun:}$order.aname{/yun}</td>
+							<td>{yun:}$order.order_time|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</td>
+							<td>
+								{yun:}if $order.order_state == 1{/yun} 待审批
+								{yun:}else if $order.order_state == 2{/yun} 已完成
+								{yun:}/if{/yun}
+							</td>
+ 						</tr>
+						{yun:}/foreach{/yun}
+						
+						{yun:}if $orderTotal > $config.sy_listnum {/yun}
+							<tr>
+								<td class="digg">{yun:}$orderpagenav{/yun}</td>
+								<td>&nbsp;&nbsp;共 {yun:}$orderTotal{/yun} 条记录</td>
+								<td colspan="4"></td>
+							</tr>
+						{yun:}/if{/yun}
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}" />
+ 
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script>
+		
+		layui.use([ 'form', 'laydate' ], function() {
+			var form 	= layui.form, 
+				laydate = layui.laydate, 
+				$ 		= layui.$;
+			
+			form.on('checkbox(isfollow)', function(data){
+				if(data.elem.checked){
+					$(".ftime_div").show();
+			  	}else{
+			  		$(".ftime_div").hide();
+			  	}
+			});   
+			var d = new Date(),
+			str = '';
+			str += d.getHours() + ':';
+			str += d.getMinutes() + ':';
+			str += d.getSeconds();
+				
+			// 跟进时间
+			laydate.render({
+				elem : '#info_ftime',
+				type : 'datetime'
+				,value: new Date({yun:}$followInfo.ftime_n{/yun})
+				,min :	-7
+				,max : str
+			});
+			
+			// 计划跟进时间（下次）
+			laydate.render({
+				elem : '#info_ptime',
+				type : 'datetime'
+				,value: new Date({yun:}$followInfo.time_n{/yun})
+			});
+			
+			
+			var now = new Date();
+			var nowM= now.getMonth()+1;
+			var nowY= now.getFullYear();
+			
+			laydate.render({
+				elem : '#orStime',
+				type : 'date',
+				btns : ['now', 'confirm'],
+				value: '{yun:}$smarty.get.orStime{/yun}'
+			});
+			
+			laydate.render({
+				elem : '#orEtime',
+				type : 'date',
+				value: '{yun:}$smarty.get.orEtime{/yun}'
+			});
+		});
+	
+		function toMember(url, usertype){
+			if (usertype !='2'){
+				if(usertype == '1'){
+					var u = '求职者';
+				}else if (usertype == '3'){
+					var u = '猎头';
+				}else if (usertype == '4'){
+					var u = '培训';
+				}
+				parent.layer.confirm("该账户当前身份为"+u+"，以招聘者身份模拟进入可能导致部分功能无法正常使用，是否确认进入？", function() {
+					parent.layer.closeAll();
+					window.open(url);
+				});
+			}else{
+				window.open(url);
+			}
+		}
+		
+		$(document).ready(function() {
+			
+			var uid		=	'{yun:}$Info.uid{/yun}';
+			var pytoken = 	$('#pytoken').val();
+
+			$.post('index.php?m=crm_customer&c=getMsgTpl', {uid: uid, tp: 'crmlink', pytoken: pytoken}, function(data){
+				
+				var data = eval('('+data+')');
+				
+				if(data.errcode == '9'){
+					$('.tpLink').removeClass('crm_com_ds_submit').addClass('crm_com_ds_submit_bc');
+					$("#sms_conent").html(data.content);
+					$("#msgLength").html(data.length);
+				}else if (data.errcode == '8'){
+					$('.msgCrmTp').removeClass('crm_com_ds_submit_bc crm_com_ds_submit').addClass('crm_com_ds_submit');
+					$("#sms_conent").html('');
+					$("#msgLength").html(0);
+					return false;
+				}
+				
+			})
+			
+		});
+
+	</script>
+	
+	{yun:}include file="$adminstyle/crm_public.htm"{/yun}
+</body>
+</html>

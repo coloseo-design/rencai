@@ -1,0 +1,280 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+	<div class="admin_mainbody">
+		{yun:}include file="$comstyle/left.htm"{/yun}
+		<div class=right_box>
+			<div class="com_tit">
+				<span class="com_tit_span">好友助力</span>
+			</div>
+		<div class="vip_boxshow">	<div class="vip_boxshow_c">
+		
+		<div class="report_uaer_list ">
+			<div class="report_uaer_list_h1">开通超级会员</div>
+			<div class="report_uaer_list_p">为企业提供多样化的套餐服务</div>
+		     <ul>
+		       {yun:}if $config.com_vip_type==2{/yun}
+		       <li><a href="index.php?c=right" >套餐会员</a></li>
+		       {yun:}/if{/yun}
+		       
+		       {yun:}if $config.com_vip_type==1{/yun}
+		       <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+		       {yun:}/if{/yun}
+		       
+		       {yun:}if $config.com_vip_type==0{/yun}
+		       <li><a href="index.php?c=right" >套餐会员</a></li>
+		       <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+		       {yun:}/if{/yun}
+		       {yun:}if $statis.rating_type != 2 && !$vipIsDown && $config.com_integral_online != 4 {/yun}
+				<li><a href="index.php?c=right&act=added" >增值包</a></li>
+				{yun:}/if{/yun}
+		     <li><a href="index.php?c=ad" > 购买广告位</a></li>
+		     <li ><a href="index.php?c=pay" >充值服务</a></li>
+		     <li><a href="index.php?c=paylogtc" >我的服务</a></li>
+		     <li><a href="index.php?c=paylog&consume=ok" >订单管理</a></li>
+		     {yun:}if $config.sy_com_invoice == 1{/yun}
+		            <li><a href="index.php?c=invoice"  >发票管理</a></li>
+		           {yun:}/if{/yun}
+		     <li><a href="index.php?c=coupon_list" >优惠卡券</a></li>
+		     <li><a href="index.php?c=jobpack&act=loglist"  >赏金收益</a></li>
+				 {yun:}if $config.sy_help_open == 1{/yun}
+				 <li class="report_uaer_list_cur"><a href="index.php?c=friendhelp" >好友助力</a></li>
+				 {yun:}/if{/yun}
+		     <li><a  href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}管理</a></li>
+		     </ul>
+		   </div>
+		   <div class="vip_box_dq">参加活动需满足：至少有1个正在招聘中的职位</div>
+			     <div class="paylogpc" >
+					
+					<div class="help_box">
+						{yun:}if $helpinfo{/yun}
+						
+						<!-- 已开始-->
+						<table class="com_received_resume mt20">
+							<tr>
+								<th>活动状态</th>
+								<th>助力人数</th>
+								<th>操作</th>
+							</tr>
+
+							<tr>
+								<td><span class="help_box_wks_p">分享助力正在进行中...</span></td>
+								<td align="center">
+									{yun:}if $helpinfo.zlnum>0{/yun} 
+									
+										<!--有好友助力-->
+										目前已有 <span class="help_box_zlhy">{yun:}$helpinfo.zlnum{/yun}</span>位好友为您助 <a href="javascript:;" onclick="getlog('{yun:}$helpinfo.id{/yun}');" class="help_box_zlhy_more">查看更多好友 ></a>
+										<div class="help_box_wks_pic">
+											{yun:}foreach from=$loglist key=key item=log{/yun} 
+												<img src="{yun:}$log.wxpic{/yun}" width="40" height="40">
+											{yun:}/foreach{/yun}
+										</div>
+										<div class="help_box_wks_bth">
+											<a href="javascript:;" class="help_box_bth addhelp">邀请好友 ,
+												助我成功</a>
+	
+										</div> 
+										<!--有好友助力 end-->
+									{yun:}else{/yun} 
+									
+										<!--没有好友助力-->
+										<div class="help_box_hyno">还没有好友为您助力哦！赶快邀请好友吧~</div>
+										<div class="help_box_wks_bth">
+											<a href="javascript:;" class="help_box_bth addhelp">邀请好友 , 助我成功</a>
+										</div> 
+										<!--没有好友助力 end--> 
+									{yun:}/if{/yun}
+								</td>
+								<td align="center" width="120">
+									<a href="javascript:;" onclick="getpackage('{yun:}$helpinfo.id{/yun}');" class="help_box_lqqy">领取权益</a>
+								</td>
+							</tr>
+						</table>
+						<!-- 已开始 end-->
+						
+						{yun:}else{/yun}
+						
+						<!-- 未开始-->
+						<div class="help_box_wks">
+							<div class="help_box_wks_titbox">
+								<div class="help_box_wks_p">
+									邀请好友助力您可免费获得以下招聘权限：
+								</div>
+							</div>
+							<div class="help_box_wks_content">
+								{yun:}foreach from=$nowpackage item=npack{/yun}
+								<div class="help_box_bzlist">
+									<span class="help_box_zl_n">+{yun:}$npack.zl{/yun} 助力</span>
+									<span class="help_box_hd">获得 {yun:}$npack.num{/yun} 次</span>
+									<span class="help_box_hd_name">{yun:}$npack.name{/yun}</span>
+								</div>
+								{yun:}/foreach{/yun}
+							</div>
+						<div class="new_hyzlbox">	<a href="javascript:;" class="new_hyzl addhelp">立即参加，领取福利</a>	</div>
+						</div>
+						<!-- 未开始 end-->
+						
+						{yun:}/if{/yun} 
+						
+						{yun:}if $rows{/yun}
+						<div class="help_box_over">- 以下助力已结束，您可以领取未领取的权益 -</div>
+						<div class="com_received_resumenew">
+						<table class="com_received_resume">
+							<tr>
+								<th width="140">活动状态</th>
+								<th width="140">开始时间</th>
+								<th width="140">结束时间</th>
+								<th width="140">助力人数</th>
+								<th>获得权益</th>
+								<th width="120">操作</th>
+							</tr>
+							{yun:}foreach from=$rows item=list{/yun}
+							<tr>
+								<td align="center">已结束</td>
+								<td align="center">{yun:}$list.stime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+								<td align="center">{yun:}$list.etime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+								<td align="center">
+									{yun:}$list.zlnum{/yun}位 <a href="javascript:;" onclick="getlog('{yun:}$list.id{/yun}');" class="help_member_look">查看</a>
+								</td>
+								<td>
+									{yun:}foreach from=$list.getpackage item=packlist{/yun}
+										{yun:}$packlist.name{/yun}： {yun:}$packlist.num{/yun} 
+									{yun:}/foreach{/yun}
+								</td>
+								<td align="center" width="120">
+									{yun:}if $list.state == 1{/yun} 
+										<span class="help_box_ybth">已领取</span> 
+									{yun:}else{/yun}
+										<a href="javascript:;" onclick="getpackage('{yun:}$list.id{/yun}');" class="help_box_lqqy">领取权益</a> 
+									{yun:}/if{/yun}
+								</td>
+							</tr>
+							{yun:}/foreach{/yun}
+
+						</table></div>
+						<!--   已结束 -->
+						<div class="pages">{yun:}$pagenav{/yun}</div>
+						{yun:}/if{/yun}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="loglist" class="help_userbox none">
+	<div class="help_usercont"></div>
+</div>
+
+<style>
+.help_userbox {
+	width: 500px;
+}
+
+.help_userlist {
+	width: 100%;
+	float: left;
+	padding: 10px 0;
+}
+
+.help_userlist span {
+	display: block;
+	line-height: 40px;
+	float: left;
+	text-align: center
+}
+
+.help_userlist_xh {
+	width: 100px;
+	float: left;
+}
+
+.help_userlist_tx {
+	width: 80px;
+	float: left
+}
+
+.help_userlist_tx img {
+	border-radius: 50%;
+}
+
+.help_userlist_wx {
+	width: 150px;
+	line-height: 40px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.help_userlist_time {
+	width: 150px;
+}
+
+.help_usercont {
+	width: 100%;
+	height: 360px;
+	overflow: auto
+}
+
+.help_userlist_top {
+	font-weight: bold
+}
+</style>
+<script>
+	function getpackage(id) {
+
+		var loadi = layer.load('执行中，请稍候...', 0);
+
+		$.post('index.php?c=friendhelp&act=getpackage', {
+			id : id
+		}, function(data) {
+			layer.closeAll();
+			data = eval('(' + data + ')');
+			if (data.msg) {
+				layer.msg(data.msg, 2, 8);
+			} else {
+
+				layer.msg('领取失败', 2, 8);
+			}
+
+		});
+	}
+
+	function getlog(id) {
+
+		var loadi = layer.load('执行中，请稍候...', 0);
+
+		$.post('index.php?c=friendhelp&act=loglist',{id : id},function(data) {
+			layer.closeAll();
+			if (data) {
+				data = eval('(' + data + ')');
+				var html = '<div class="help_userlist help_userlist_top"><span class="help_userlist_xh">序号</span><span class="help_userlist_tx">头像</span><span class="help_userlist_wx">微信名称</span><span class="help_userlist_time">助力时间</span></div>';
+				for ( var k in data) {
+					html = html
+							+ '<div class="help_userlist"><span class="help_userlist_xh">'
+							+ (parseInt(k) + 1)
+							+ '</span><span class="help_userlist_tx"><img src="'+data[k].wxpic+'" width="40" height="40"></span><span class="help_userlist_wx">'
+							+ data[k].wxname
+							+ '</span><span class="help_userlist_time">'
+							+ data[k].time + '</span></div>';
+				}
+				$('.help_usercont').html(html);
+				$.layer({
+					type : 1,
+					title : '助力好友',
+					offset : [ '40px', '' ],
+					closeBtn : [ 0, true ],
+					border : [ 10, 0.3, '#000', true ],
+					area : [ '500px', '440px' ],
+					page : {
+						dom : "#loglist"
+					}
+				});
+	
+			} else {
+				layer.msg('暂无助力记录！', 2, 8);
+			}
+	
+		});
+	}
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

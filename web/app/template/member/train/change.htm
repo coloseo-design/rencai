@@ -1,0 +1,93 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+	{yun:}include file="$trainstyle/left.htm"{/yun}
+	<div class="right_column frt mt20">	
+		<div class="right_column_border">
+			<div class="right_column_h1"><span class="right_column_h1_span flt">金额管理</span></div>		
+			<div class="clear"></div>
+			<div class="job_list_tit">
+				<ul class="">
+					<li class="job_list_tit_cur"><a href="index.php?c=subpay&act=change">金额转换</a></li>
+					<li class=""><a href="index.php?c=subpay&act=changelist">转换记录</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="resume_Prompt">
+				单笔转换金额{yun:}if $config.packprice_min_recharge gt 0{/yun}必须达到{yun:}$config.packprice_min_recharge{/yun}元{yun:}else{/yun}不限{yun:}/if{/yun}
+			  ,一日最多转换{yun:}if $config.paypack_max_recharge gt 0{/yun}{yun:}$config.paypack_max_recharge{/yun}次{yun:}else{/yun}次数不限{yun:}/if{/yun}
+			  ,已经转换{yun:}$changeNum{/yun}次。
+			</div>
+			<div class="clear"></div>
+			<div class="clear"></div>
+			<div class="packloglost_box_l_b">
+					<div class="com_release_box">
+						<ul>
+							<li>
+								<div class="com_release_name"> 可转换金额：</div>
+								<div class="com_release_cont">   
+									<div class="com_release_cont_text">  
+										<span class="withdraw_tx_box_n">￥{yun:}$statis.packpay{/yun}</span>  元          
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="com_release_name"> 转换金额：</div>
+								<div class="com_release_cont"> 
+									<div class="com_release_cont_text"> 
+										<input type="text" name="changeprice" id="changeprice" onkeyup="changepriceprice(this);" size="20" value="" class="layui-input" placeholder="自定义" maxlength='11' autocomplete="off">   
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="com_release_name"> 转换{yun:}$config.integral_pricename{/yun}：</div>
+								<div class="com_release_cont">   
+									<div class="com_release_cont_text"> 
+										<span class="payintegral" id="payintegral" style="font-size:30px;color:#f60;margin-right:5px;">0</span>个{yun:}$config.integral_pricename{/yun}
+										<input type="hidden" name="changeintegral" id="changeintegral" size="20" value=""  class="layui-input">           
+									</div>
+								</div>
+							</li>
+							<li>
+								 {yun:}if $statis.packpay>0{/yun}
+									<input type="submit" value="转换" name=nextstep class="btn_01" onclick="changetrainlist();">
+								{yun:}else{/yun}
+									<input type="button" value="不可转换" name=nextstep class="layui-btn layui-btn-disabled" >
+								{yun:}/if{/yun}
+							</li>
+						</ul>
+					</div>
+			</div>
+		</div>	
+	</div>	
+</div>
+<script>
+var packpay='{yun:}$statis.packpay{/yun}';//packpay可转换金额
+var proportion='{yun:}$config.integral_proportion{/yun}';//proportion转换积分比例
+var minchangeprice='{yun:}$config.packprice_min_recharge{/yun}';//minchangeprice最低转换金额
+var changeNum = '{yun:}$changeNum{/yun}';changeNum//已转回次数
+var packpaymax = '{yun:}$config.paypack_max_recharge{/yun}';packpaymax//每日最多转换次数
+function changetrainlist(){
+	var changeprice = $("#changeprice").val();
+	var changeintegral = $("#changeintegral").val();
+	if(changeprice==""){
+		layer.msg('请正确填写转换金额！',2,8);return false;
+	}else if(parseInt(changeNum)>=parseInt(packpaymax)&&parseInt(packpaymax)>0){
+		layer.msg('今日转换次数已达上限，请明日再来！',2,8);return false;
+	}
+	loadlayer();
+	$.post('index.php?c=subpay&act=savechange',{changeprice:changeprice,changeintegral:changeintegral},function(data){
+		layer.closeAll('loading');
+		data = JSON.parse(data);
+		if(data.error==1){
+			layer.msg(data.msg,2,9,function(){window.location.href="index.php?c=subpay&act=change";});
+		}else{
+			layer.msg(data.msg,2,8);return false;
+		}
+	});
+}
+</script> 
+{yun:}include file="$trainstyle/footer.htm"{/yun}

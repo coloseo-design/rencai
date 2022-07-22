@@ -1,0 +1,100 @@
+{yun:}include file="$wapstyle/header.htm"{/yun}
+<!-- 页面头部 -->
+<div id="app">
+	
+	<div class="wap_search_header" style="padding:8px 20px 8px 40px">
+		
+		<a class="wap_search_left" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack(){yun:}/if{/yun}">
+			<img src="{yun:}$wap_style{/yun}/images/nav_icon_return.png" alt="" style="width: 100%;">
+		</a>
+		<a class="hd-lbtn" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}"><i class="header_newreturn"></i></a>
+		<form method="get" action="{yun:}$config_wapdomain{/yun}/index.php">
+			<input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}">
+			<div class="wap_search_text">
+				<input type="text" value="{yun:}$smarty.get.keyword{/yun}" onkeyup="this.value = this.value.replace(/[,]/g,'');" id="input_search" name="keyword" class="" placeholder="搜索关键字">
+				
+			
+			<input type="hidden" value="{yun:}$smarty.get.livestatus{/yun}" name='livestatus'>
+			<div class="wap_search_bth">
+				<input type="submit" value="搜索" class="">
+			</div></div>
+		</form>
+	</div>
+	<div class="xjhsearch">
+	<ul class="xjhsearchnav ">
+		<li class="xjh_nava {yun:}if !$smarty.get.livestatus{/yun}xjhsearchnavcur{yun:}/if{/yun}" ><a href="{yun:}url m=wap c=xjhlive keyword=$smarty.get.keyword{/yun}">全部</a></li>
+		<li class="xjh_nava {yun:}if $smarty.get.livestatus=='3'{/yun}xjhsearchnavcur{yun:}/if{/yun}"><a href="{yun:}url m=wap c=xjhlive livestatus=3 keyword=$smarty.get.keyword{/yun}">进行中</a></li>
+		<li class="xjh_nava {yun:}if $smarty.get.livestatus=='1'{/yun}xjhsearchnavcur{yun:}/if{/yun}"><a href="{yun:}url m=wap c=xjhlive livestatus=1 keyword=$smarty.get.keyword{/yun}">待开始</a></li>
+		<li class="xjh_nava {yun:}if $smarty.get.livestatus=='2'{/yun}xjhsearchnavcur{yun:}/if{/yun}" ><a href="{yun:}url m=wap c=xjhlive livestatus=2 keyword=$smarty.get.keyword{/yun}">回看</a></li>
+	</ul>
+	</div>
+     <!-- 页面主体部分 -->
+     <div class="Enterprise_library_body">
+        <div class="Enterprise_library_cards">
+            <div class="conts active">
+                {yun:}xjhlive ispage=1 len=19 livestatus='auto.livestatus' keyword='auto.keyword' order=ls  item=xlist limit=20{/yun}
+                <a href="{yun:}url m=wap c=xjhlive a=show id='`$xlist.id`'{/yun}">
+                    <div class="Enterprise_library_card">
+                        <div class="Enterprise_library_logo">
+                            <img src="{yun:}$xlist.pic{/yun}" alt="" width="100%" height="100%">
+                        </div>
+                        <div class="Enterprise_library_box">
+                            <div class="Enterprise_library_name">{yun:}$xlist.name{/yun}</div>
+                            <div class="Enterprise_library_timebox">
+                                <div class="Enterprise_library_time">直播时间：{yun:}$xlist.stime_n{/yun}</div>
+                                <object>
+                                    <a href="javascript:;">
+                                        {yun:}if $xlist.livestatus==1{/yun} 
+                                            <div class="Enterprise_library_await">待开始</div>
+                                        {yun:}else if $xlist.livestatus==2{/yun} 
+                                            <div class="Enterprise_library_playback">观看回放</div> 
+                                        {yun:}else if $xlist.livestatus==3{/yun} 
+                                            <div class="Enterprise_library_btn">进行中</div> 
+                                        {yun:}/if{/yun}
+                                    </a>
+                                </object>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {yun:}/xjhlive{/yun}
+           </div>
+        </div>
+    </div>
+    {yun:}if !$total{/yun}
+        <div class="wap_member_no">很抱歉，还没有相关信息</div>
+        {yun:}if $smarty.get.keyword!=''{/yun}
+            <div>
+                <a class="wap_member_no_submit" href="{yun:}url m=wap c=xjhlive{/yun}">重新搜索</a>
+            </div>
+        {yun:}/if{/yun}
+    {yun:}else{/yun}
+        <div v-if="total>perpage">
+        <van-pagination v-model="currentPage" :total-items="total" :items-per-page="perpage" force-ellipses @change="pageChange" />
+        </div>
+    {yun:}/if{/yun}
+</div>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script type="text/javascript">
+    var currentPage = parseInt('{yun:}$smarty.get.page{/yun}'),
+        total = parseInt('{yun:}$total{/yun}'),
+        pagelink=  '{yun:}$pagelink{/yun}';
+
+        var joblistvue =  new Vue({
+            el: '#app',
+            data: {
+                //分页相关
+                currentPage:currentPage?currentPage:1,
+                total:total,
+                perpage:20,
+            },
+            methods:{
+                pageChange:function(e){
+                    var pageurl = pagelink.replace('{{page}}',e);
+                    location.href = pageurl;
+                }
+            }
+        })
+</script>
+</body>
+</html>

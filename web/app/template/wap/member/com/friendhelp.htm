@@ -1,0 +1,211 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<div id="helpVue" class="none">
+    <div class="Friends_help_header_warn">
+        <div class="help_header_warn_icon">
+            <img src="{yun:}$wap_style{/yun}/images/Friends_help_trumpet.png" alt="" width="100%" height="100%">
+        </div>
+        <div class="help_header_warn_text">参加活动需满足：至少有1个正在招聘中的职位</div>
+    </div>
+    <!-- 整体部分 -->
+    <div class="Friends_help_body">
+        <div class="help_body_banner" @click="addHelp">
+            <img src="{yun:}$wap_style{/yun}/images/dredge_invite.png" alt="">
+        </div>
+        <div class="Friends_help_card" v-if="helping">
+            <div class="Friends_help_card_title">活动助力进行中</div>
+            <div class="help_card_linetiem">
+                <div class="help_card_linetiem_name">活动时间</div>
+                <div class="help_card_linetiem_time">{{helpInfo.stime_n}} 至 {{helpInfo.etime_n}}</div>
+            </div>
+
+            <div v-if="zlNum > 0">
+                <div class="Friends_help_center" >
+                    <div class="Friends_help_center_text">共有<i>{{zlNum}}</i>位好友为您助力，</div>
+                    <div class="center_text" @click="getLog(helpInfo.id)">
+                        <div class="center_text_ti">查看好友助力</div>
+                        <div class="center_text_icon">
+                            <img src="{yun:}$wap_style{/yun}/images/Friends_help_next.png" alt="" width="100%" height="100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="Friends_help_btn" @click="getPackage(helpInfo.id)">领取权益</div>
+            </div>
+            <div v-else>
+                <div class="Friends_help_center" >
+                    <div class="Friends_help_center_text">共有<i>0</i>位好友为您助力，</div>
+                </div>
+                <div class="Friends_help_btn" @click="addHelp">邀请好友</div>
+            </div>
+        </div>
+
+        <div class="Friends_help_card" v-for="(item,hKey) in helpList" :key="hKey">
+            <div class="Friends_help_card_title">活动助力已结束</div>
+            <div class="help_card_linetiem">
+                <div class="help_card_linetiem_name">活动时间</div>
+                <div class="help_card_linetiem_time">{{item.stime_n}} 至 {{item.etime_n}}</div>
+            </div>
+            <div class="Friends_help_center">
+                <div class="Friends_help_center_text">共有<i>{{item.zlnum}}</i>位好友为您助力；</div>
+                <div class="center_text" v-if="item.zlnum > 0" @click="getLog(item.id)">
+                    <div class="center_text_ti">查看好友助力</div>
+                    <div class="center_text_icon">
+                        <img src="{yun:}$wap_style{/yun}/images/Friends_help_next.png" alt="" width="100%" height="100%">
+                    </div>
+                </div>
+            </div>
+            <div class="Friends_help_equity" v-if="item.zlnum > 0">
+                <div class="help_equity_title">获得权益</div>
+                <div class="help_equity_body">
+                    <div v-for="(packList,gKey) in item.getpackage" :key="gKey">
+                        <div class="equity_body_post">{{packList.name}}<i>{{packList.num}}</i>次</div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="item.zlnum > 0">
+                <div class="Friends_help_forbidbtn" v-if="item.state == 1">已领取权益</div>
+                <div class="Friends_help_btn" @click="getPackage(item.id)" v-else>领取权益</div>
+            </div>
+        </div>
+
+        <div v-if="total>limit">
+            <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" />
+        </div>
+
+    </div>
+
+    <van-popup v-model="showOther" position="center">
+        <div class="tck_bg"></div>
+        <div class="help_hytck">
+            <div class="help_hytck_tit">助力好友<img src="{yun:}$wap_style{/yun}/images/close.png" class="help_hytck_close" @click="showOther=false"></div>
+            <div class="help_hytck_tx_box">
+                <div class="help_hytck_tx">
+                    <div v-for="(item,okey) in otherLog" :key="okey">
+                        <img :src="item.wxpic" class="help_hytck_tx_img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </van-popup>
+
+</div>
+<script>
+    var wapurl = '{yun:}url m=wap{/yun}';
+    var currentPage = parseInt('{yun:}$smarty.get.page{/yun}') || 1;
+    var helpVue = new Vue({
+        el: '#helpVue',
+        data() {
+            return {
+                helpInfo: {},
+                helping: false,
+
+                helpList: [],
+
+                logList: [],
+
+                zlNum: 0,
+                otherLog: [],
+                showOther: false,
+                page: currentPage,
+                limit: 10,
+                total:0
+            }
+        },
+        computed: {
+            helpCount() {
+                if (this.total > this.limit) {
+                    return 2;
+                } else if (this.helpList.length == 0) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        },
+        created() {
+            this.getHelp();
+        },
+        methods: {
+            getHelp: function () {
+                var that = this;
+                var param = {
+                    page: that.page,
+                    limit: that.limit
+                };
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=friendhelp{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 0) {
+                        let res = data.data;
+                        if (res.helpinfo) {
+                            that.helpInfo = res.helpinfo;
+                            that.zlNum = parseInt(res.helpinfo.zlnum);
+                            that.logList = res.loglist;
+                            that.helping = res.helping;
+                        }
+                        if (res.list && res.list.length > 0) {
+                            that.helpList = that.helpList.concat(res.list);
+                        }
+                        that.total = res.total ? res.total : 0;
+                        $('#helpVue').css('display', 'block');
+                    }
+                }, 'json')
+            },
+            addHelp:function () {
+                var that = this;
+                var param = {
+                    rand: Math.random()
+                };
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=friendhelp c=addfriendhelp{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 0) {
+                        let res = data.data;
+
+                        window.location.href = wapurl+ 'index.php?c=friendhelp&a=share&id='+res.id+'&token='+res.token;
+                    } else {
+                        showModal(data.msg);
+                    }
+                }, 'json')
+            },
+            getPackage:function (id) {
+                var that = this;
+                var param = {
+                    id: id
+                };
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=friendhelp c=getpackage{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.msg) {
+                        showModal(data.msg);
+                    }else{
+                        showModal('领取失败');
+                    }
+                }, 'json')
+            },
+            getLog:function (id) {
+
+                var that = this;
+                var param = {
+                    id: id
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=friendhelp c=getlog{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 0) {
+                        let res = data.data;
+                        that.otherLog = res.loglist;
+                        that.showOther = true;
+                    }
+                }, 'json')
+            },
+            pageChange:function(e){
+                location.href = 'index.php?c=friendhelp&page='+e;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

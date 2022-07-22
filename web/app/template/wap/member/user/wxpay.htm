@@ -1,0 +1,87 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<section class="wap_member">
+	<div class="pay_qrzbox">
+		<div class="pay_tit">支付结果确认中...</div>
+
+		<div class="pay_djs"><span id="times">30</span> 秒后将自动关闭此页面</div>
+	</div>
+</section>
+<script src="{yun:}$wap_style{/yun}/js/wx.sdk.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+	var outdsq = null,
+		orderdsq = null;
+	
+	function TimeOut(i) {
+		if (i > 1) {
+			i = i - 1;
+			document.getElementById('times').innerText = i;
+			outdsq = setTimeout("TimeOut(" + i + ");", 1000);
+		} else {
+			clearTimeout(orderdsq);
+			showModal('支付结果确认失败，请刷新页面或联系网站客服', function(){
+				// 处理浏览历史，防止返回后重复到本页面
+				window.history.replaceState({}, "", "?c=paylog");
+				window.location.reload();
+			})
+		}
+	}
+	var id = '{yun:}$id{/yun}';
+	//调用微信JS api 支付
+	function jsApiCall() {
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			{yun:}$jsApiParameters {/yun},
+			function(res) {
+				if (res.err_msg == "get_brand_wcpay_request:ok") {
+					TimeOut(30);
+					setTimeout("wxorderstatus(" + id + ")", 2000);
+				} else if(res.err_msg == "get_brand_wcpay_request:cancel" ) {
+					clearTimeout(outdsq);
+					showToast('取消支付！',2,function(){
+						// 处理浏览历史，防止返回后重复到本页面
+						window.history.replaceState({}, "", "?c=pay");
+						window.location.reload();
+					});	
+				} else {
+					clearTimeout(outdsq);
+					showToast('支付失败', 2, function() {
+						// 处理浏览历史，防止返回后重复到本页面
+						window.history.replaceState({}, "", "?c=pay");
+						window.location.reload();
+					});
+				}
+
+			});
+		}
+
+		function wxorderstatus(orderid) {
+			$.post('{yun:}$config.sy_weburl{/yun}/api/wxpay/wxorder.php', {orderid: orderid}, function(data) {
+				if (data == 1) {
+					clearTimeout(outdsq);
+					clearTimeout(orderdsq);
+					showToast('支付成功！', 2, function() {
+						// 处理浏览历史，防止返回后重复到本页面
+						window.history.replaceState({}, "", "?c=paylog");
+						window.location.reload();
+					});
+				}else{
+					orderdsq = setTimeout("wxorderstatus(" + orderid + ")", 2000);
+				}
+			});
+		}
+		$(document).ready(function() {
+			if (typeof WeixinJSBridge == "undefined") {
+				if (document.addEventListener) {
+					document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+				} else if (document.attachEvent) {
+					document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+					document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+				}
+			} else {
+				jsApiCall();
+			}
+		});
+</script>
+{yun:}include file="$wapstyle/member/public/phptoast.htm"{/yun}
+</body>
+</html>

@@ -1,0 +1,221 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+
+<style>
+	.index_jobtit .mui-active {
+		position: relative;
+		color: #f60
+	}
+	
+	.index_jobtit .mui-active:after {
+		width: 26px;
+		height: 2px;
+		background: #f60;
+		display: inline-block;
+		position: absolute;
+		left: 50%;
+		bottom: 0px;
+		content: '';
+		margin-left: -13px;
+	}
+	
+	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+		color: #f60
+	}
+</style>
+
+<div class="main_member_body">
+	
+	{yun:}if $rows{/yun}
+		<div id="slider" class="mui-slider">
+		
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted index_jobtit">
+				<a class="mui-control-item  mui-active" href="#zplist">招聘中</a>
+				<a class="mui-control-item" href="#shlist">待审核</a>
+				<a class="mui-control-item" href="#xjlist">已下架</a>
+			</div>
+			
+			<div class="mui-slider-group">
+				<div id="zplist" class="mui-slider-item mui-control-content" style="border:none;">
+					{yun:}if $zp>0{/yun}
+						{yun:}foreach from=$rows item=job{/yun}
+							{yun:}if $job.status==1 && $job.zp_status==0{/yun}
+								<div class="wap_member_msg ">
+									<div class="wap_member_date">
+										<span class="yun_m_job_date_n">
+											<a href="{yun:}url m=wap c=post a=jobshow id=$job.id{/yun}" class="job_list_jobname com_member_hr_cblue">{yun:}$job.job_name{/yun}</a>
+										</span>
+										<span style="float:right;padding-right:10px">{yun:}$job.lastupdate|date_format:"%Y-%m-%d"{/yun}</span>
+									</div>
+									<div class="lt_wap_list">
+										<div class="yun_m_job_list_zt">
+											{yun:}if $job.salary{/yun}<span class="lt_wap_mt">{yun:}$job.salary{/yun}</span> {yun:}/if{/yun} 
+											{yun:}if $city_name[$job.provinceid]{/yun} {yun:}$city_name[$job.provinceid]{/yun}-{yun:}$city_name[$job.cityid]{/yun} {yun:}/if{/yun} 
+											{yun:}if $ltclass_name[$job.exp]{/yun} {yun:}$ltclass_name[$job.exp]{/yun}经验 {yun:}/if{/yun} 
+											{yun:}if $ltclass_name[$job.edu]{/yun} {yun:}$ltclass_name[$job.edu]{/yun}学历 {yun:}/if{/yun}
+										</div>
+										{yun:}if $job.rebates{/yun}
+											<div class="yun_m_job_list_zt">
+												赏金：<span class="lt_wap_q">{yun:}$job.rebates{/yun}{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}</span>
+											</div>
+										{yun:}/if{/yun}
+									</div>
+									<div class="yun_member_bth">
+										<a href="javascript:vant_del('确定要删除？','index.php?c=jobdel&id={yun:}$job.id{/yun}');" class="yun_member_sub  yun_member_bth1">删除</a>
+										<a href="javascript:void(0)" class="yun_member_sub  yun_member_bth1" onclick="ltRefreshJobWap('{yun:}$job.id{/yun}')">刷新</a>
+										<a href="index.php?c=jobadd&id={yun:}$job.id{/yun}" class="yun_member_sub yun_member_bth2">修改</a>
+										<a href="javascript:void(0)" onclick="vant_del('','index.php?c=jobset&status=1&id={yun:}$job.id{/yun}')" class="yun_member_sub yun_member_bth3">下架</a>
+									</div>
+								</div>
+							{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+					{yun:}else{/yun}
+						<div class="wap_member_no">暂无职位</div>
+					{yun:}/if{/yun}
+					
+				</div>
+				
+				<div id="shlist" class="mui-slider-item mui-control-content" style="border:none;">
+					{yun:}if $sh>0{/yun}
+						{yun:}foreach from=$rows item=job{/yun}
+							{yun:}if $job.status!=1{/yun}
+								<div class="wap_member_msg ">
+									<div class="wap_member_date">
+										<span class="yun_m_job_date_n">
+											<a href="{yun:}url m=wap c=post a=jobshow id=$job.id{/yun}" class="job_list_jobname com_member_hr_cblue">{yun:}$job.job_name{/yun}</a>
+										</span>
+										<div class="wap_member_date_r">
+											{yun:}if $job.status==3{/yun}
+												<span class="wap_member_wtg" {yun:}if $job.statusbody{/yun}onclick="showToast('{yun:}$job.statusbody{/yun}');return false;"{yun:}/if{/yun}>未通过</span> 
+											{yun:}elseif $job.status==0{/yun}
+												<em>未审核</em> 
+											{yun:}/if{/yun}
+										</div>
+									</div>
+									
+									<div class="lt_wap_list">
+										<div class="yun_m_job_list_zt">
+											{yun:}if $job.salary{/yun}<span class="lt_wap_mt">{yun:}$job.salary{/yun}</span>{yun:}/if{/yun}
+											{yun:}if $city_name[$job.provinceid]{/yun} {yun:}$city_name[$job.provinceid]{/yun}-{yun:}$city_name[$job.cityid]{/yun} {yun:}/if{/yun}
+											{yun:}if $ltclass_name[$job.exp]{/yun} {yun:}$ltclass_name[$job.exp]{/yun}经验 {yun:}/if{/yun} 
+											{yun:}if $ltclass_name[$job.edu]{/yun} {yun:}$ltclass_name[$job.edu]{/yun}学历 {yun:}/if{/yun}
+										</div>
+										{yun:}if $job.rebates{/yun}
+											<div class="yun_m_job_list_zt">
+												赏金：<span class="lt_wap_q">{yun:}$job.rebates{/yun}{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}</span>
+											</div>
+										{yun:}/if{/yun}
+									</div>
+									<div class="yun_member_bth">
+										<a href="javascript:vant_del('确定要删除？','index.php?c=jobdel&id={yun:}$job.id{/yun}');" class="yun_member_sub  yun_member_bth1">删除</a>						
+										<a href="index.php?c=jobadd&id={yun:}$job.id{/yun}" class="yun_member_sub yun_member_bth2">修改</a>
+									</div>
+								</div>
+							{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+					{yun:}else{/yun}
+						<div class="wap_member_no">暂无职位</div>
+					{yun:}/if{/yun}
+				</div>
+				
+				<div id="xjlist" class="mui-slider-item mui-control-content" style="border:none;">
+				    {yun:}if $xj>0{/yun}
+						{yun:}foreach from=$rows item=job{/yun}
+							{yun:}if $job.zp_status==1{/yun}
+								<div class="wap_member_msg ">
+									<div class="wap_member_date">
+										<span class="yun_m_job_date_n">
+											<a href="{yun:}url m=wap c=post a=jobshow id=$job.id{/yun}" class="job_list_jobname com_member_hr_cblue">{yun:}$job.job_name{/yun}</a>
+										</span>
+										<span style="float:right;padding-right:10px">{yun:}$job.lastupdate|date_format:"%Y-%m-%d"{/yun}</span>
+									</div>
+									<div class="lt_wap_list">
+										<div class="yun_m_job_list_zt">
+											{yun:}if $job.salary{/yun}<span class="lt_wap_mt">{yun:}$job.salary{/yun}</span>{yun:}/if{/yun} 
+											{yun:}if $city_name[$job.provinceid]{/yun} {yun:}$city_name[$job.provinceid]{/yun}-{yun:}$city_name[$job.cityid]{/yun} {yun:}/if{/yun} 
+											{yun:}if $ltclass_name[$job.exp]{/yun} {yun:}$ltclass_name[$job.exp]{/yun}经验 {yun:}/if{/yun} 
+											{yun:}if $ltclass_name[$job.edu]{/yun} {yun:}$ltclass_name[$job.edu]{/yun}学历 {yun:}/if{/yun}
+										</div>
+										
+										{yun:}if $job.rebates{/yun}
+										<div class="yun_m_job_list_zt">
+											赏金：<span class="lt_wap_q">{yun:}$job.rebates{/yun}{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}</span>
+										</div>
+										{yun:}/if{/yun}
+									</div>
+									<div class="yun_member_bth">
+										<a href="javascript:vant_del('确定要删除？','index.php?c=jobdel&id={yun:}$job.id{/yun}');" class="yun_member_sub  yun_member_bth1">删除</a>
+										<a href="index.php?c=jobadd&id={yun:}$job.id{/yun}" class="yun_member_sub yun_member_bth2">修改</a>
+										<a href="javascript:void(0)" onclick="vant_del('','index.php?c=jobset&status=0&id={yun:}$job.id{/yun}')" class="yun_member_sub yun_member_bth3"><span class="yun_member_yzt">已下架</span>上架招聘</a>
+									</div>
+								</div>
+							{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+					{yun:}else{/yun}
+						<div class="wap_member_no">暂无职位</div>
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>
+	{yun:}else{/yun}
+		<div class="wap_member_no">
+			您还没有发布职位。
+			<div>
+				<a href="javascript:void(0)" onclick="jobadd_url('{yun:}$addltjobnum{/yun}','{yun:}$config.integral_job{/yun}','lietou','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');"  class="wap_member_no_submit">发布职位</a>
+			</div> 
+		</div>
+	{yun:}/if{/yun}
+</div>
+
+<script>
+	function ltRefreshJobWap(jobId) {
+
+		var weburl = '{yun:}url m=wap{/yun}';
+		var integral = '{yun:}$config.integral_jobefresh{/yun}';
+		var online = '{yun:}$config.com_integral_online{/yun}';
+		var pro = '{yun:}$config.integral_proportion{/yun}';
+		
+		var ajaxUrl = weburl + "member/index.php?c=ajax_refresh_job";
+		var integral_pricename = '{yun:}$config.integral_pricename{/yun}';
+		showLoading()
+		
+		$.post(ajaxUrl, {jobid: jobId}, function(data) {
+			
+			hideLoading(); 
+			
+			data = eval('(' + data + ')');
+
+			if(data.error == 1) {
+
+				showToast(data.msg, 2, function() {
+					window.location.href = '';
+				});
+			} else if(data.error == 2) {
+				
+				if(online == 3) {
+	                
+            		var msg = "您的等级特权已用完，继续操作将消费" + integral * pro + integral_pricename+"，是否继续？";
+                } else {
+                 	
+                	var msg = "您的等级特权已用完，继续操作将消费" + integral + "元，是否继续？";
+                }
+
+                showConfirm(msg,function(){
+                	window.location.href = "index.php?c=server&server=sxjob&id=" + jobId;
+                });
+				 
+
+			} else {
+				if(data.url){
+					showToast(data.msg, 2, function() {
+						window.location.href = "index.php?c=rating";
+					});
+				}else{
+					showToast(data.msg, 2);
+				}
+			}
+
+		});
+	}
+	
+</script>
+</body></html>

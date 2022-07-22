@@ -1,0 +1,183 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+<div class="training_cur ftl">
+<div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > 培训课程 </div>
+</div>
+
+<div class="training_subject_search ftl ">
+
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">课程分类</div>
+<div class="training_subject_search_list_right ftl">
+<a href="{yun:}listurl m=train c=subject type=nid v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.nid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$subject_index{/yun}
+<a href="{yun:}listurl m=train c=subject type=nid v=$v{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.nid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$subject_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+{yun:}if $smarty.get.nid!=""&&$smarty.get.nid!="0"{/yun}
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">课程子类</div>
+<div class="training_subject_search_list_right"><a href="{yun:}listurl m=train c=subject type=tnid v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.tnid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$subject_type[$smarty.get.nid]{/yun}
+<a href="{yun:}listurl m=train c=subject type=tnid v=$v{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.tnid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$subject_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+{yun:}/if{/yun}
+<div class="training_subject_search_list ftl" >
+<div class="training_subject_search_list_left ftl">开课类型</div>
+<div class="training_subject_search_list_right"><a href="{yun:}listurl m=train c=subject  type=type v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.type{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$subject_type_index{/yun}
+<a href="{yun:}listurl m=train c=subject  type=type v=$v{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.type==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$subject_type_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+<div class="training_subject_search_list ftl" >
+<div class="training_subject_search_list_left ftl">关&nbsp;键&nbsp; 字</div>
+<div class="training_subject_search_list_right ftl">
+
+<div class="sub_search">
+<form method="get" action="{yun:}if !$config.sy_traindir{/yun}index.php{yun:}else{/yun}{yun:}url m=train{/yun}{yun:}/if{/yun}">
+{yun:}if  !$config.sy_traindir{/yun}<input type="hidden" value="train" name="m" />{yun:}/if{/yun}
+<input type="hidden" name="c" value="subject" />
+<input type="text" name="keyword" value="" placeholder="搜索课程" class="Search_Courses_text  ftl">
+<input type="submit" value="" class="Search_Courses_bth1 ftl">
+</form>
+
+</div>
+</div>
+</div>
+{yun:}if $smarty.get.type||$smarty.get.nid||$smarty.get.tnid||$smarty.get.keyword{/yun}
+<div class="Search_close_box">
+<div><div class="Search_clear"> <a href="{yun:}url m=train c=subject{/yun}"> 清除所选</a></div>
+<span class="Search_close_box_s">已选条件：</span></div>
+{yun:}if $smarty.get.nid{/yun} <a href="{yun:}listurl m=train c=subject untype='nid'{/yun}" class="Search_jobs_c_a disc_fac">课程分类：{yun:}$subject_name[$smarty.get.nid]{/yun}</a> {yun:}/if{/yun}
+{yun:}if $smarty.get.tnid{/yun} <a href="{yun:}listurl m=train c=subject untype='tnid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$subject_name[$smarty.get.tnid]{/yun}</a> {yun:}/if{/yun}
+{yun:}if $smarty.get.type{/yun} <a href="{yun:}listurl m=train c=subject untype='type'{/yun}" class="Search_jobs_c_a disc_fac">上课时间：{yun:}$subject_type_name[$smarty.get.type]{/yun}</a> {yun:}/if{/yun} 
+{yun:}if $smarty.get.keyword{/yun} <a href="{yun:}listurl m=train c=subject untype='keyword'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$smarty.get.keyword{/yun}</a> {yun:}/if{/yun} 
+&nbsp; </div>
+{yun:}/if{/yun}
+
+</div>
+<div class="training_subject_closex">
+<div class="training_subject_title"><span class="training_subject_span">课程列表</span>
+{yun:}if $subjectkeyword{/yun}
+<em class="training_subject_tag ftl">您是不是要找： 
+{yun:}key limit=8 recom=1 type=9 item=keylist{/yun} <a href="{yun:}$keylist.url{/yun}" class="training_subject_tag_a" target="_blank">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun}
+</em>
+{yun:}else{/yun}
+<em class="training_subject_tag ftl">&nbsp;</em>
+{yun:}/if{/yun}
+</div>
+<div class="training_subject_c_box ftl  ">
+
+<div class="training_subject_Sort ftl"><span class="sub_search_n ftl">共<span class="training_cur_b">{yun:}$total{/yun}</span>个课程</span>
+<div class="sltBar">
+<ul class="sUl">
+<li><a class="i_s {yun:}if $smarty.get.order==""{/yun}i_s_curr{yun:}else{/yun}i_si{yun:}/if{/yun}" href="{yun:}url m=train c=subject{/yun}">默认排序</a></li>
+{yun:}if $smarty.get.orderby=='ctime_asc'{/yun}
+<li><a class="i_s {yun:}if $smarty.get.order=='ctime'{/yun}i_s_curr{yun:}else{/yun}i_si{yun:}/if{/yun}" href="{yun:}listurl m=train c=subject  type=orderby v='ctime_desc'{/yun}"><i class="{yun:}if $smarty.get.order=='ctime'&&$smarty.get.t=='asc'{/yun}i_s_up{yun:}elseif $smarty.get.order=='ctime'&&$smarty.get.t=='desc'{/yun}i_s_down{yun:}/if{/yun} png "></i>最新发布</a></li>
+{yun:}else{/yun}
+<li><a class="i_s {yun:}if $smarty.get.order=='ctime'{/yun}i_s_curr{yun:}else{/yun}i_si{yun:}/if{/yun}" href="{yun:}listurl m=train c=subject  type=orderby v='ctime_asc'{/yun}"><i class="{yun:}if $smarty.get.order=='ctime'&&$smarty.get.t=='asc'{/yun}i_s_up{yun:}elseif $smarty.get.order=='ctime'&&$smarty.get.t=='desc'{/yun}i_s_down{yun:}/if{/yun} png "></i>最新发布</a></li>
+{yun:}/if{/yun}
+{yun:}if $smarty.get.orderby=='hits_asc'{/yun}
+<li><a class="i_s {yun:}if $smarty.get.order=='hits'{/yun}i_s_curr{yun:}else{/yun}i_si{yun:}/if{/yun}" href="{yun:}listurl m=train c=subject  type=orderby v='hits_desc'{/yun}"><i class="{yun:}if $smarty.get.order=='hits'&&$smarty.get.t=='asc'{/yun} i_s_up{yun:}elseif $smarty.get.order=='hits'&&$smarty.get.t=='desc'{/yun} i_s_down{yun:}/if{/yun} png"></i>关注度</a></li>
+{yun:}else{/yun}
+<li><a class="i_s {yun:}if $smarty.get.order=='hits'{/yun}i_s_curr{yun:}else{/yun}i_si{yun:}/if{/yun}" href="{yun:}listurl m=train c=subject  type=orderby v='hits_asc'{/yun}"><i class="{yun:}if $smarty.get.order=='hits'&&$smarty.get.t=='asc'{/yun} i_s_up{yun:}elseif $smarty.get.order=='hits'&&$smarty.get.t=='desc'{/yun} i_s_down{yun:}/if{/yun} png"></i>关注度</a></li>
+{yun:}/if{/yun}
+
+<li>
+<form method="get" action="{yun:}if !$config.sy_traindir{/yun}index.php{yun:}else{/yun}{yun:}url m=train{/yun}{yun:}/if{/yun}">
+{yun:}if  !$config.sy_traindir{/yun}<input type="hidden" value="train" name="m" />{yun:}/if{/yun}
+<input type="hidden" name="c" value="subject" />
+<span class="input-text input-price"><span><input name="minprice" class="price-field" type="text"></span><b>￥</b></span>
+-
+<span class="input-text input-price"><span><input name="maxprice" class="price-field" type="text"></span><b>￥</b></span>
+<input type="submit" value="确定" class="training_subject_Sort_sub">
+</form>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="training_subject_content ftl">
+<div class="training_kc_box ftl mt15">
+
+{yun:}foreach item=v from=$rows{/yun}
+<div class="training_kc_list">
+<div class="training_kc_boxpic ftl"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank">
+<img src="{yun:}$v.pic{/yun}" width="280" height="158" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);">
+</a></div>
+
+<div class="training_kc_info" style="width:440px;">
+<div class="training_kc_name"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank">{yun:}$v.name{/yun}</a></div>
+<div class="training_kc_jg"><span class="training_kc_jg_n">￥{yun:}$v.price{/yun}</span> 元</div>
+<div class="training_kc_p" ><span class="training_Courses_span">课程分类：</span>{yun:}$subject_name[$v.tnid]{/yun}  <span class="training_Courses_span training_Courses_span_ml">开课类型：</span>{yun:}$v.type_n{/yun}</div>
+
+<div class="training_kc_p" ><span class="training_Courses_span">机构名称：</span> {yun:}$v.comname{/yun}</div>
+<div class="training_kc_p">
+<span class="training_Courses_span" >培训地址：</span> {yun:}$v.address{/yun}</div>
+
+</div>
+
+
+
+
+<div class="training_Courses_zx ftr"><a {yun:}if $uid{/yun}{yun:}if $usertype==4{/yun} href="javascript:;" onclick="layer.msg('只有个人用户和hr才可以咨询课程！',2,8)"{yun:}else{/yun}href="javascript:zixun('{yun:}$v.uid{/yun}','{yun:}$v.id{/yun}');"{yun:}/if{/yun}{yun:}else{/yun}href="javascript:showlogin('1');"{yun:}/if{/yun} class="training_Courses_zx_a">立即咨询</a>
+{yun:}if $v.baomingnum{/yun}<div class="training_Courses_zx_n" >{yun:}$v.baomingnum{/yun}人报名</div>{yun:}/if{/yun}
+
+</div>
+
+
+</div>
+
+{yun:}foreachelse{/yun}
+<div class="seachno">
+  <div class="seachno_left"><img src="{yun:}$train_style{/yun}/images/search-no.gif" width="144" height="102"></div>
+  <div class="listno-content"> <strong>很抱歉，没有找到满足条件的课程</strong><br>
+    <span> 建议您：<br>
+    1、适当减少已选择的条件<br>
+    2、适当删减或更改搜索关键字<br>
+    </span> <span> 热门关键字：<br>
+{yun:}key limit=8 recom=1 type=9 item=keylist{/yun} <a href="{yun:}$keylist.url{/yun}" class="jos_tag_a" target="_blank">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun}</span></div>
+</div>
+{yun:}/foreach{/yun}
+</div>
+<div class="clear"></div>
+<div class="pages">{yun:}$pagenav{/yun}</div>
+<!--分页-->
+</div>
+{yun:}include file="$trainstyle/right.htm"{/yun}
+
+</div>
+<!--咨询弹出框-->
+<div id="zixun" style="width:400px;background:#fff; " class="none">
+  <form name="myform" method="post" target="supportiframe" action="{yun:}url m=train c=zixun{/yun}" onsubmit="return check_zixun();">
+    <ul class="Sign_up_box" style="padding:10px;">
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">电话：</span>
+        <input type="text" id="phone" name="phone" class="txt_input" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')"></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">留言：</span>
+        <textarea class="txt_textarea" id="content" name="content"></textarea></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">&nbsp;</span>
+        <input type="submit" name="submit" value="提交" class="txt_input_submit"></li>
+        <input type="hidden" name="sid" value="" />
+        <input type="hidden" name="s_uid" value="" />
+    </ul>
+</form>
+</div></div>
+<!--咨询弹出框-->
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$train_style{/yun}/js/train_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+{yun:}include file="$trainstyle/footer.htm"{/yun} 

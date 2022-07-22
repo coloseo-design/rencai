@@ -1,0 +1,62 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun} 
+<section class="wap_member">
+	<div class="wap_member_comp_h1"><span>优惠卡券</span></div>
+	
+	{yun:}foreach from=$rows item=v{/yun}
+		<div class="coupon_list_box">
+
+			<!--未使用情况-->
+			{yun:}if $v.status=='1'{/yun}
+				<div class="coupon_list">
+					<div class="coupon_list_left">
+						<div class="coupon_list_left_n">￥<span class="coupon_list_left_n_m">{yun:}$v.coupon_amount{/yun}</span></div>
+						<div class="coupon_list_left_p">满 {yun:}$v.coupon_scope{/yun} 使用</div>
+					</div>
+					
+					<div class="coupon_list_right_time">使用时间：{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun} 至 {yun:}$v.validity|date_format:"%Y-%m-%d"{/yun}</div>
+					<div class="coupon_list_right_qm">优惠券码：{yun:}$v.number{/yun}</div>
+					<div class="">
+						<!--<a href="javascript:void(0)" onclick="handsel('{yun:}$v.id{/yun}')" class="coupon_list_right_zs">可赠送</a>-->
+						未使用
+					</div>
+				</div>
+			{yun:}/if{/yun}
+	
+			<!--已使用情况-->
+			{yun:}if $v.status=='2'{/yun}
+				<div class="coupon_list coupon_list_cur">
+					<div class="coupon_list_left">
+						<div class="coupon_list_left_n">￥<span class="coupon_list_left_n_m">{yun:}$v.coupon_amount{/yun}</span></div>
+						<div class="coupon_list_left_p">满 {yun:}$v.coupon_scope{/yun} 使用</div>
+					</div>
+				
+					<div class="coupon_list_right_time">使用时间：{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun} 至 {yun:}$v.validity|date_format:"%Y-%m-%d"{/yun}</div>
+					<div class="coupon_list_right_qm">优惠券码：{yun:}$v.number{/yun}</div>
+					<div class="">已使用 </div>
+					<a href="javascript:void(0)" onclick="vant_del('确定要删除？','index.php?c=delcoupon&id={yun:}$v.id{/yun}')"class="coupon_list_right_cz">删除</a>
+				</div>
+			{yun:}/if{/yun}
+	
+			<!--已过期情况-->
+			{yun:}if $v.status=='3'{/yun}
+				<div class="coupon_list coupon_list_cur">
+					<div class="coupon_list_left">
+						<div class="coupon_list_left_n">￥<span class="coupon_list_left_n_m">{yun:}$v.coupon_amount{/yun}</span></div>
+						<div class="coupon_list_left_p">满 {yun:}$v.coupon_scope{/yun} 使用</div>
+					</div>
+					
+					<div class="coupon_list_right_time">使用时间：{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun} 至 {yun:}$v.validity|date_format:"%Y-%m-%d"{/yun}</div>
+					<div class="coupon_list_right_qm">优惠券码：{yun:}$v.number{/yun}</div>
+					<div class="">已过期 </div>
+					<a href="javascript:void(0)" onclick="vant_del('确定要删除？','index.php?c=delcoupon&id={yun:}$v.id{/yun}')"class="coupon_list_right_cz">删除</a>
+				</div>
+			{yun:}/if{/yun}
+		</div>
+	{yun:}foreachelse{/yun}
+		
+		<div class="wap_member_no">暂无优惠券</div>
+		
+	{yun:}/foreach{/yun}
+
+</section>
+</body></html> 

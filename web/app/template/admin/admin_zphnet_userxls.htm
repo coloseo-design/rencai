@@ -1,0 +1,34 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>PHP output Excel Example</title>
+</head>
+
+<table width="100%" border="1">
+	<tr>
+		<th colspan="10">个人信息</th>
+ 	</tr>
+
+    <tr>
+		<th>姓名</th>
+		<th>意向职位</th>
+		<th>期望城市</th>
+		<th>性别</th>
+		<th>年龄</th>
+		<th>工作经验</th>
+		<th>薪资</th>
+		<th>最高学历</th>
+    </tr>
+
+    {yun:}foreach item=v from=$list{/yun}
+		<tr>
+			<td>{yun:}$v.uname{/yun}</td>
+			<td>{yun:}$v.job_classname{/yun}</td>
+			<td>{yun:}$v.city_classname{/yun}</td>
+			<td>{yun:}$v.sex_n{/yun}</td>
+			<td>{yun:}$v.age_n{/yun}</td>
+			<td>{yun:}$v.exp_n{/yun}</td>
+			<td>{yun:}$v.salary{/yun}</td>
+			<td>{yun:}$v.edu_n{/yun}</td>			
+		</tr>
+    {yun:}/foreach{/yun}
+</table>

@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+	<style>
+	  .layui-input{
+	    width:230px;
+	  }
+	</style>
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+	
+	<div class="infoboxp">
+  		
+  		
+ 
+  		<div class="admin_add_box">
+    		<div class="admin_add_box_c">
+    		
+      			
+      			<form class="layui-form" name="myform" action="index.php?m=crm_concern&c=save" method="post"  target="supportiframe" onsubmit="return checkform();">
+
+        			<div class="admin_add_list">
+				   		<div class="admin_add_list_name"> 客户名称 </div>
+			          	<div class="admin_add_list_right">
+			             	<div class="layui-input-inline">
+						    	<select name="comid" lay-verify="required" lay-search="">
+						    		{yun:}if $com{/yun}
+						          		<option value="{yun:}$com.uid{/yun}">{yun:}$com.name{/yun}</option>
+						         	{yun:}else if $coms{/yun}
+										<option value=''></option>
+						         		{yun:}foreach from = $coms item = v {/yun}
+						          			<option value="{yun:}$v.uid{/yun}" {yun:}if $v.uid == $row.comid{/yun}selected{yun:}/if{/yun} >{yun:}$v.name{/yun}</option>
+						          		{yun:}/foreach{/yun}
+						        	{yun:}/if{/yun}
+						        </select>
+						 	</div>
+			          	</div>
+					</div>
+					
+					<div class="admin_add_list">
+			          	<div class="admin_add_list_name">跟进时间</div>
+			          	<div class="admin_add_list_right">
+			            	<input class="layui-input" id="time" name="time" placeholder="yyyy-MM-dd HH:mm:ss" type="text"/>
+			            	<font color="gray"></font>
+			          	</div>
+			        </div>
+			        
+         			<div class="admin_add_list">
+			          	<div class="admin_add_list_name">跟进方式</div>
+			          	<div class="admin_add_list_right">
+			          		<div class="layui-input-inline">
+						    	<select name="type" lay-filter="type">
+						         	<option value="">请选择</option>
+						        	{yun:}foreach from = $cache.crmdata.follow_way key=key item=v{/yun}
+						        		<option value="{yun:}$v{/yun}" {yun:}if $v == $row.type{/yun}selected{yun:}/if{/yun}>{yun:}$cache.crmclass_name[$v]{/yun}</option>
+			              			{yun:}/foreach{/yun}
+						        </select>
+						 	</div>
+			          	</div>
+			        </div>
+			        
+			        <div class="admin_add_list">
+			          	<div class="admin_add_list_name">跟进阶段</div>
+			          	<div class="admin_add_list_right">
+			          		<div class="layui-input-inline">
+						    	<select name="status" lay-filter="status">
+						    		<option value=''></option>
+ 						        	{yun:}foreach from = $cache.crmdata.follow_time key=key item=v{/yun}
+						        		<option value='{yun:}$v{/yun}' title='{yun:}$cache.crmclass_name[$v]{/yun}' {yun:}if $v == $row.status{/yun}selected{yun:}/if{/yun}>{yun:}$cache.crmclass_name[$v]{/yun}</option>
+			              			{yun:}/foreach{/yun}
+						        </select>
+						 	</div>
+									
+			          	</div>
+			        </div>
+        
+			        <div class="admin_add_list" id="content">
+			          	<div class="admin_add_list_name">跟进内容</div>
+			        	<div class="admin_add_list_right">
+			            	<textarea name="content" class="layui-textarea">{yun:}$row.content{/yun}</textarea>
+			            	<font color="gray"></font>
+			          	</div>
+			        </div>
+
+			        <div class="admin_add_list">
+			          	<div class="admin_add_list_name">客户状态</div>
+			          	<div class="admin_add_list_right">
+			          		<div class="layui-input-inline">
+						    	<select name="c_status" lay-filter="c_status">
+ 						        	{yun:}foreach from = $cache.crmdata.client_status key=key item=v{/yun}
+						        		<option value='{yun:}$v{/yun}' title='{yun:}$cache.crmclass_name[$v]{/yun}' {yun:}if $v == $com.crm_status{/yun}selected{yun:}/if{/yun}>{yun:}$cache.crmclass_name[$v]{/yun}</option>
+			              			{yun:}/foreach{/yun}
+						        </select>
+						 	</div>
+						 	
+						 	<div class="layui-input-inline rating" style='display:none;'>
+								<select name="rating_name" id="rating_name" lay-filter="rating_name" >
+									<option value="">请选择会员等级</option>
+									{yun:}foreach from=$rating_list item=v{/yun}
+										<option  value="{yun:}$v.id{/yun}" title='{yun:}$v.name{/yun}'>{yun:}$v.name{/yun}</option>
+									{yun:}/foreach{/yun}
+								</select>
+							</div>
+									
+			          	</div>
+			        </div>
+			        
+			        <div class="admin_add_list">
+			          	<div class="admin_add_list_name">备注信息</div>
+			          	<div class="admin_add_list_right">
+			            	<textarea name="note" class="layui-textarea">{yun:}$row.note{/yun}</textarea>
+			            	<font color="gray"></font>
+			          	</div>
+			        </div>
+			        
+			        
+			        <div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span> 是否创建新的跟进任务</div>
+						<div class="admin_add_list_right">
+							<div class="layui-form-item">
+							    <div class="layui-input-block">
+							      	<input type="checkbox" name='is_task' lay-skin="switch" lay-filter="switchTask" lay-text="ON|OFF" {yun:}if $row.taskid{/yun}checked{yun:}/if{/yun}>
+							    </div>
+							</div>
+						</div>
+					</div>
+					
+					<div class='waitingTask' {yun:}if !$row.taskid{/yun}style='display:none;'{yun:}/if{/yun}>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 任务标题</div>
+							<div class="admin_add_list_right">
+								<input type="text"  value="{yun:}$tinfo.title{/yun}" id="title" name="title" class="input-text">		
+							</div>
+						</div>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 下次跟进时间</div>
+							<div class="admin_add_list_right">
+								<div class="layui-form-item">
+									<div class="layui-inline">
+								      	<div class="layui-input-inline">
+								        	<input type="text" class="layui-input" id='stime' name='stime' placeholder="yyyy-MM-dd HH:mm:ss" style='width:230px;'>
+								      	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 任务内容描述</div>
+							
+							<div class="admin_add_list_right">
+								<textarea  id="content" name="task_content" cols="100" rows="8"  class="layui-textarea">{yun:}$tinfo.content{/yun}</textarea>
+							</div>
+						</div>
+					</div>
+  
+        			<div class="admin_add_list">
+          				
+          				<input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;增加跟进记录&nbsp;" />
+          				
+  		  			</div>
+
+        			<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+        			
+      			</form>
+    		</div>
+  		</div>
+	</div>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript">
+	  	layui.use(['form', 'laydate'], function(){
+	    	var form = layui.form
+	    		,laydate = layui.laydate
+	    		,$ = layui.$;
+	
+	    	laydate.render({
+		      	elem: '#time'
+		      	,type: 'datetime'
+ 		     	,value: new Date({yun:}$row.time{/yun})
+		    });
+	    	
+	    	laydate.render({
+		      	elem: '#stime'
+			  	,type: 'datetime'
+			  	,value: new Date({yun:}$tinfo.stime{/yun})
+			});
+		    
+		    form.on('select(c_status)', function(data){
+ 				if(data.value == '9'){/* 成交客户 */
+					$('.rating').show();
+ 				}else{
+ 					$('.rating').hide();
+ 				}
+ 			});
+ 			
+ 			form.on('switch(switchTask)', function(data){
+ 				if(this.checked){
+ 					$('.waitingTask').show();
+ 				}else{
+ 					$('.waitingTask').hide();
+ 				}
+			});
+		});	
+			
+	  	function checkform(){
+ 	    	
+			var now		=	Date.parse(new Date()) / 1000;
+
+			var	time	=	$('#time').val();
+ 	    		time	=	Date.parse(new Date(time)) / 1000;
+	    		
+			if(time > now){
+				layer.msg('跟进时间应小于当前时间哦~');
+				return false;
+			}
+
+			var stime	=	$('#stime').val();
+
+			if(stime && $('input[name="is_task"]:checked').val()){
+ 	    		stime	=	Date.parse(new Date(stime)) / 1000;
+				
+				if(stime < now){
+					layer.msg(stime+'新任务时间应该大于当前时间哦~');
+					return false;
+				}
+
+			}
+	    	return true;
+	  	}
+	
+		 
+		/* 返回执行结果 */
+		function returnmessage2(frame_id){
+
+			if(frame_id == '' || frame_id == undefined){
+				
+				frame_id	= 	'supportiframe';
+				
+			}
+ 			
+			var index	=	parent.layer.getFrameIndex(window.name);
+			
+			var message = 	$(window.frames[frame_id].document).find("#layer_msg").val();
+			
+			if(message != null){
+				
+				var url			=	$(window.frames[frame_id].document).find("#layer_url").val();
+				var layer_time	=	$(window.frames[frame_id].document).find("#layer_time").val();
+				var layer_st	=	$(window.frames[frame_id].document).find("#layer_st").val();
+				 
+				parent.layer.msg(message, layer_time, Number(layer_st),function(){ 
+					
+					parent.layer.close(index);
+					
+				});
+				 
+			}
+		}
+	</script>
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage2('supportiframe');" style="display:none"></iframe>
+	
+</body>
+</html>

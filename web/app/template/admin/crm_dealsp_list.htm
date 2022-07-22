@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/crm.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	
+	<title>后台管理</title>
+	
+	<style>
+		.admin_new_c_bth{
+			width:50px !important;
+		}
+	</style>
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp">
+	<div class="tty-tishi_top">
+		<div class='tabs_info'>
+			<ul>
+				<li class='curr'><a href='index.php?m=crm_dealsp'>订单审批</a></li>
+				<li><a href='index.php?m=crm_dealsp&c=getOrders'>订单分配</a></li>
+			</ul>
+		</div>
+
+		<form action='index.php' method='get' class='layui-form' style='display:none;' id="search_form">
+
+			<input type="hidden" name="m" value="crm_dealsp" />
+			<div class="crm_record_list">
+				<div class="crm_record_name"><span class="admin_required_icon"></span>客户名称：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" id='comname' name='comname'  style='width:280px;' autocomplete="off">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="crm_record_name"><span class="admin_required_icon"></span>订单编号：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" id='order_id' name='order_id'  style='width:280px;' autocomplete="off">
+							</div>
+						</div>
+					</div>
+				</div>
+				<span class="crm_record_name">&nbsp;</span>
+				<div class="crm_record_textbox">
+					<input type="submit"  value='确认' class="admin_examine_bth">
+					<input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;">
+				</div>
+			</div>
+		</form>
+
+		<div>
+			<div class="crm_follow_up"><a href="javascript:void(0);" onclick='searchForm();' class="crm_follow_up_a crm_follow_up_sicon">搜索</a></div>
+		</div>
+	</div>
+
+	<div class="tty_table-bom">
+		<div class="table-list" style="color:#898989; margin-top:10px;">
+			<div class="admin_table_border">
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+
+					<input name="m" value="crm_dealsp" type="hidden" />
+					<input name="c" value="del" type="hidden" />
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th style="width:20px;">
+									<label for="chkall">
+										<input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/>
+									</label>
+								</th>
+								<th align="left">
+									{yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun}
+										<a href="{yun:}searchurl order=desc t=id m=crm_dealsp untype='order,t'{/yun}">订单id<img src="images/sanj.jpg"/></a>
+									{yun:}else{/yun}
+										<a href="{yun:}searchurl order=asc t=id m=crm_dealsp untype='order,t'{/yun}">订单id<img src="images/sanj2.jpg"/></a>
+									{yun:}/if{/yun}
+								</th>
+								<th align="left">客户名称(公司名称)</th>
+								<th align="left">订单编号</th>
+								<th align="left">订单金额</th>
+								<th align="left">会员套餐</th>
+								<th align="left">支付方式</th>
+								<th align="left">备注</th>
+								<th align="left">业务员</th>
+								<th align="left">状态</th>
+								<th align="center">操作</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{yun:}foreach item=v key=key from=$orders{/yun}
+								<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+									<td>
+										<input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all"  name='del[]' onclick='unselectall()' rel="del_chk"  style="margin-left:5px;"/>
+									</td>
+									<td align="left">{yun:}$v.id{/yun}</td>
+									<td align="left">{yun:}$v.comname{/yun}</td>
+									<td align="left">{yun:}$v.order_id{/yun}</td>
+									<td align="left">{yun:}$v.order_price{/yun}</td>
+									<td align="left">{yun:}$v.rating_name{/yun}</td>
+									<td align="left">{yun:}$v.order_type_n{/yun}</td>
+									<td align="left">{yun:}$v.order_remark{/yun}</td>
+									<td align="left">{yun:}$v.aname{/yun}</td>
+									<td align="left">{yun:}$v.order_state_n{/yun}</td>
+									<td align="center">
+										<a href="javascript:void(0)" onClick="layer_del('审批通过，该订单将充值到客户账户，是确认？', 'index.php?m=crm_dealsp&c=spDeal&id={yun:}$v.id{/yun}');" class="crm_submit ">审批</a>
+										<a href="index.php?m=crm_dealsp&c=getOrderInfo&id={yun:}$v.id{/yun}" class="crm_submit_rw">查看</a>
+										<a href="javascript:void(0);" onClick="layer_del('确定要删除？', 'index.php?m=crm_dealsp&c=del&id={yun:}$v.id{/yun}');" class="crm_submitqx  " >删除</a>
+									</td>
+								</tr>
+							{yun:}foreachelse{/yun}
+
+								<tr align="center">
+									<td class="ud" colspan="13"><div class="admin_notip">暂无需要审批订单~</div></td>
+								</tr>
+
+							{yun:}/foreach{/yun}
+
+							<tr>
+								<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+								<td colspan="10">
+									<label for="chkAll2">全选</label>&nbsp;
+									<input class="admin_button" type="button" name="delsub" value="删除所选" onClick="return really('del[]')" />
+								</td>
+							</tr>
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	layui.use(['layer', 'form'], function(){
+		var form = layui.form,
+			$ = layui.$;
+	});
+
+	function searchForm(){
+		layer.open({
+			type: 1,
+			anim: 5,
+			title: '搜索订单',
+			content: $('#search_form'),
+			area:["450px", "250px"]
+		});
+	}
+</script>
+	
+</body>
+</html>

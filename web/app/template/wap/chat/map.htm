@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title>{yun:}$config.sy_webname{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+<meta name="description" content="{yun:}$description{/yun}" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width" initial-scale="1"/>
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width"/>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<style>
+html {width: 100%;height: 100%;-webkit-text-size-adjust: none;-moz-text-size-adjust: none;-ms-text-size-adjust: none;-o-text-size-adjust: none;text-size-adjust: none;}
+body {width: 100%;height: 100%;margin: 0;padding: 0;font-size:0.9em;line-height: 1.5;background:#f8f8f8;font-family: PingFang SC,Hiragino Sans GB,Microsoft YaHei;}
+.header{width:100%;height:48px; }
+.header_bg{width:100%;height:48px;background:#3b7cff; position:relative; z-index:10;}
+.hd-lbtn {position:relative;display:block;width:20px;height:20px;color:#fff;position:absolute;left:5px;top:3px}
+.header_top_l{width:40px;height:48px; line-height:47px;color:#333; position:absolute;left:15px;top:0; ;}
+.header_top_l:after{content: ' ';width: 12px;height: 12px;border: #fff solid;-webkit-transform: rotate(-135deg);border-width: 1px 1px 0 0;color: #828282;display: inline-block; position:absolute;left:0px;top:17px;}
+.header_h1{width:100%; text-align:center; font-size:18px;color:#fff; padding:9px 0}
+.jobmap_box_footer{width:100%; position:fixed;bottom:0px;left:0px; background:#fff;}
+.jobmap_box{ background:#fff; padding:10px;}
+.jobmap_comname{ font-size:20px;}
+.jobmap_comsdd{ color:#999}
+.jobmap_box_look{ background:#fff; border-top: 1px solid #eee; padding:10px 0; text-align:center}
+#allmap {width: 100%;height: 80%;overflow: hidden;margin:0;}
+</style>
+</head>
+<body>
+<header>
+	<div class="header" >
+		<div class="header_bg"> 
+			<a class="hd-lbtn" href="javascript:goBack();"><i class="header_top_l"></i></a>
+			<div class="header_h1">查看位置</div>
+		</div>
+	</div>
+ </header>
+<div id="allmap"></div>
+<div class="jobmap_box_footer">
+	<div class="jobmap_box">
+	<div class="jobmap_comname">{yun:}$location.name{/yun}</div>  
+	</div>
+	<div class="jobmap_box_look">
+	<a href="javascript:void(0);" onclick="way('{yun:}$location.name{/yun}')">查看路线</a>  
+	</div>
+</div>
+<input type="hidden" id="map_x" value="{yun:}$mapx{/yun}"/>
+<input type="hidden" id="map_y" value="{yun:}$mapy{/yun}"/>
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script> 
+<link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript">
+	var wapurl = '{yun:}url m=wap{/yun}';
+	var cityname = '';
+	var x = '{yun:}$location.lng{/yun}';
+	var y = '{yun:}$location.lat{/yun}';
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(x, y);
+	map.centerAndZoom(point, 15);
+	var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+
+	var map_x = $("#map_x").val();
+	var map_y = $("#map_y").val();
+	setTimeout(function(){
+		if(map_x==0 && map_y==0){
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function (r) {
+				if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+					$("#map_x").val(r.point.lng);
+					$("#map_y").val(r.point.lat); 
+					cityname = r.address.district;
+				}else {
+					if (this.getStatus() == "6" || this.getStatus() == "7") {
+						showToast('开启手机定位后才能使用此功能');
+						return false;
+					}else {
+						showToast('地图定位出错');
+						return false;
+					}
+				}
+			}, { enableHighAccuracy: true })
+		}
+	},1000);
+
+	function way(name){
+		var map_x=$("#map_x").val(),map_y=$("#map_y").val();
+		if(map_x>0 && map_y>0){
+			location.href = 'https://api.map.baidu.com/direction?origin=latlng:' + parseFloat(map_y).toFixed(5) + ',' + parseFloat(map_x).toFixed(5) + '|name:当前位置&destination=latlng:' + parseFloat(y).toFixed(5) + ',' + parseFloat(x).toFixed(5) + '|name:'+ name +'&mode=driving&region='+ cityname +'&output=html';
+		}else{
+			showLoading();
+		}
+	}
+</script> 
+</body>
+</html>

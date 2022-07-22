@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}" />
+<meta name="description" content="{yun:}$description{/yun}" />
+</head>
+<body class="body_bg">
+  {yun:}include file="$schoolstyle/header.htm"{/yun} 
+<div class="school_w1200"> 
+  <div class="clear"></div>
+  <div class="Search_jobs_box"> 
+   <div class="Search_jobs_tit"><span class="Search_jobs_tit_s">筛选</span> 
+     <div class="searchBox" >
+    <form action="{yun:}$config.sy_weburl{/yun}/school/" method="get" id="form" onsubmit="return search_keyword(this,'请输入公司名称');">
+	  <input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}">
+            <input type="text" name="keyword" value="{yun:}if $smarty.get.keyword{/yun}{yun:}$smarty.get.keyword{/yun}{yun:}else{/yun}请输入公司名称{yun:}/if{/yun}" onclick="if(this.value=='请输入公司名称'){this.value=''}" onblur="if(this.value==''){this.value='请输入公司名称'}" class="searchBox_text ">
+            <input type="submit" value=" " class="searchBox_bth">
+    </form>
+  </div>  </div>
+    <!--   city-->
+    <div class="Search_citybox">
+      <div class="Search_cityboxname"> 宣讲地区</div>
+      <div class="Search_citybox_right">
+        <div class="Search_cityall none"> <a href="{yun:}url m=school c=xjh untype=provinceid{/yun}" class="city_name">全部</a>
+		{yun:}foreach from=$city_index item=value key=key{/yun}
+		<a href="{yun:}listurl m=school c=xjh type=provinceid v=$value{/yun}" class="city_name {yun:}if $smarty.get.provinceid==$value{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$value]{/yun}</a>
+		{yun:}/foreach{/yun}
+		</div>
+        <div class="Search_cityboxright">
+		  <a href="javascript:;" onclick="acityshow('1')" class="search_city_list_cur {yun:}if $smarty.get.provinceid && !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}search_city_active{yun:}/if{/yun} {yun:}if $smarty.get.provinceid==''{/yun}none{yun:}/if{/yun} acity_two" style="text-decoration:none;cursor:pointer;"><span class="search_city_p">{yun:}$city_name[$smarty.get.provinceid]{/yun}</span><i class="search_city_p_jt"></i><i class="search_city_list_line"></i></a>
+		  <a href="javascript:;" {yun:}if $smarty.get.cityid{/yun}onclick="acityshow('2')"{yun:}/if{/yun} class="search_city_list_cur {yun:}if $smarty.get.cityid && is_array($city_type[$smarty.get.cityid]){/yun}search_city_active{yun:}/if{/yun} {yun:}if $smarty.get.cityid==''{/yun}none{yun:}/if{/yun} acity_three" style="text-decoration:none;cursor:pointer;"><span class="search_city_p">{yun:}$city_name[$smarty.get.cityid]{/yun}</span><i class="search_city_list_line"></i></a>
+		  <a href="{yun:}listurl m=school c=xjh untype=provinceid{/yun}" class="search_city_list_all {yun:}if $smarty.get.provinceid==''{/yun}city_name_active{yun:}/if{/yun}">全部</a>
+          <div class="search_city_list">
+		  {yun:}foreach from=$city_index item=value key=key{/yun}{yun:}if $key lt 16{/yun}
+		  <a href="{yun:}listurl m=school c=xjh type=provinceid v=$value{/yun}" class="city_name {yun:}if $smarty.get.provinceid==$value{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$value]{/yun}</a>
+		  {yun:}/if{/yun}{yun:}/foreach{/yun}
+          <a href="javascript:;" class="search_city_list_more" id="acity">更多</a>
+		</div>
+        <div class="Search_cityboxclose {yun:}if !$smarty.get.provinceid || ($smarty.get.provinceid && $smarty.get.cityid && is_array($city_type[$smarty.get.cityid])){/yun}none{yun:}/if{/yun}" id="acity_two"> 
+		  <a href="{yun:}listurl m=school c=xjh untype=cityid{/yun}" class="city_name {yun:}if $smarty.get.provinceid&&!$smarty.get.cityid&&!$smarty.get.three_cityid{/yun}city_name_active{yun:}/if{/yun}">不限</a>
+		  {yun:}foreach from=$city_type[$smarty.get.provinceid] item=cid key=key{/yun}
+		  <a href="{yun:}listurl m=school c=xjh type=cityid v=$cid{/yun}" class="city_name {yun:}if $smarty.get.cityid==$cid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$cid]{/yun}</a>
+		  {yun:}/foreach{/yun}
+		  </div>
+		  <div class="Search_cityboxclose {yun:}if !$smarty.get.cityid || !is_array($city_type[$smarty.get.cityid]){/yun}none{yun:}/if{/yun}" id="acity_three"> 
+		  <a href="{yun:}listurl m=school c=xjh untype=three_cityid{/yun}" class="city_name {yun:}if $smarty.get.provinceid && $smarty.get.cityid && !$smarty.get.three_cityid {/yun}city_name_active{yun:}/if{/yun}">不限</a>
+		  {yun:}foreach from=$city_type[$smarty.get.cityid] item=tid key=key{/yun}
+		  <a href="{yun:}listurl m=school c=xjh type=three_cityid v=$tid{/yun}" class="city_name {yun:}if $smarty.get.three_cityid==$tid{/yun}city_name_active{yun:}/if{/yun}">{yun:}$city_name[$tid]{/yun}</a>
+		  {yun:}/foreach{/yun}
+		  </div>
+      </div>
+    </div>
+  </div>
+  <!--   city end-->
+  <div class="Search_jobs_form_list">
+    <div class="Search_jobs_name"> 院校层次</div>
+    <div class="Search_jobs_sub ">
+      <div class="Search_jobs_sub_Box ">
+        <a href="{yun:}listurl m=school c=xjh untype=level{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.level==''{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a>
+        {yun:}foreach from=$schoolata.school_level item=value key=key{/yun}
+        <a href="{yun:}listurl m=school c=xjh type=level v=$value{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.level==$value{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$schoolclass_name[$value]{/yun}</a>
+        {yun:}/foreach{/yun}
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="Search_jobs_form_list">
+    <div class="Search_jobs_name"> 举办时间</div>
+    <div class="Search_jobs_sub ">
+      <div class="Search_jobs_sub_Box "> 
+      <a href="{yun:}listurl m=school c=xjh untype=adtime{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.adtime==''{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">全部</a>
+      {yun:}foreach from=$adtime item=value key=key{/yun}
+      <a href="{yun:}listurl m=school c=xjh type=adtime v=$key{/yun}" class="Search_jobs_sub_a {yun:}if $smarty.get.adtime==$key{/yun}Search_jobs_sub_cur{yun:}/if{/yun}">{yun:}$value{/yun}</a>
+      {yun:}/foreach{/yun}
+      </div>
+    </div>
+  </div>
+  {yun:}if $smarty.get.provinceid||$smarty.get.cityid||$smarty.get.level||$smarty.get.adtime||$smarty.get.keyword{/yun}
+  <div class="Search_close_box">
+         <div>
+          <div class="Search_clear"> <a href="{yun:}url m=school c=xjh{/yun}"> 清除所选</a></div>
+         <span class="Search_close_box_s">已选条件：</span>
+         </div>
+		 {yun:}if $smarty.get.provinceid{/yun}<a href="{yun:}listurl m=school c=xjh untype=provinceid{/yun}" class="Search_jobs_c_a disc_fac">城市：{yun:}$city_name[$smarty.get.provinceid]{/yun}</a>&nbsp; {yun:}/if{/yun}
+		 {yun:}if $smarty.get.cityid{/yun}<a href="{yun:}listurl m=school c=xjh untype=cityid{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.cityid]{/yun}</a>&nbsp; {yun:}/if{/yun}
+		 {yun:}if $smarty.get.level{/yun}<a href="{yun:}listurl m=school c=xjh untype=level{/yun}" class="Search_jobs_c_a disc_fac">院校层次：{yun:}$schoolclass_name[$smarty.get.level]{/yun}</a>&nbsp; {yun:}/if{/yun}
+		 {yun:}if $smarty.get.adtime{/yun}<a href="{yun:}listurl m=school c=xjh untype=adtime{/yun}" class="Search_jobs_c_a disc_fac">举办时间：{yun:}$adtime[$smarty.get.adtime]{/yun}</a>&nbsp; {yun:}/if{/yun}
+         {yun:}if $smarty.get.keyword{/yun}<a href="{yun:}listurl m=school c=xjh untype=keyword{/yun}" class="Search_jobs_c_a disc_fac">关键字：{yun:}$smarty.get.keyword{/yun}</a>&nbsp; {yun:}/if{/yun}
+		 </div>
+  
+  {yun:}/if{/yun}
+</div>
+<div class="yun_school_xjh_tit">
+<ul class="yun_school_xjh_tit_list"><li {yun:}if !$smarty.get.tp{/yun}class="yun_school_job_titcur"{yun:}/if{/yun}><a href="{yun:}url m=school c=xjh{/yun}">近期校招宣讲会</a></li><li {yun:}if $smarty.get.tp{/yun}class="yun_school_job_titcur"{yun:}/if{/yun}><a href="{yun:}listurl m=school c=xjh type=tp v=1{/yun}">往期校招宣讲会</a></li></ul>
+<span class="yun_school_job_titn">为您找到 <font color="#f00" id="totalshow">0</font> 条校招宣讲会信息</span> </div>
+<div class="yun_school_job_left">
+<ul>
+{yun:}xjh comlen=10 provinceid='auto.provinceid' cityid='auto.cityid' level='auto.level' adtime='auto.adtime' tp='auto.tp' keyword='auto.keyword' limit=10 ispage=1 item=xjhlist{/yun}
+<li>
+<div class="yun_school_job_pic"><img src="{yun:}$xjhlist.pic{/yun}"width="80" height="80"></div>
+<div class="yun_school_job_cont">
+<div class="yun_school_job_name"><span>  {yun:}$xjhlist.xjh_date{/yun}({yun:}$xjhlist.xjh_week{/yun}){yun:}$xjhlist.xjh_shour{/yun}-{yun:}$xjhlist.xjh_ehour{/yun}</span></div> 
+<div class="">
+<div class="yun_school_xjh_info">
+<a href="{yun:}$xjhlist.com_url{/yun}" class="yun_school_xjh_a" title="{yun:}$xjhlist.com_name{/yun}"> {yun:}$xjhlist.com_name{/yun}</a> <span class="yun_school_xjh_info_s">宣讲城市：</span>{yun:}$xjhlist.city_two{/yun} <span class="yun_school_xjh_info_s">宣讲高校：</span><a href="{yun:}$xjhlist.sch_url{/yun}" class="yun_school_xjh_a"> {yun:}$xjhlist.sch_name{/yun}</a></div>
+地址：{yun:}$xjhlist.address{/yun}
+ </div> </div>
+ <div class="yun_school_xjh_zt">
+ {yun:}if $xjhlist.stime lt time()&& $xjhlist.etime gt time(){/yun}
+ <font color="green">举办中</font>
+ {yun:}elseif $xjhlist.etime lt time(){/yun}
+ <font color="red">已举办</font>
+ {yun:}elseif $xjhlist.stime gt time(){/yun}
+ {yun:}if !$uid{/yun}
+ <a href="javascript:;" onclick="showlogin()" class="school_show_listgz">关注</a>
+ {yun:}else{/yun}
+    {yun:}if $xjhlist.atnid{/yun}
+        <a href="javascript:;"  onclick="layer_del('您确定要取消关注？', '{yun:}url m=school c=del_xjh  id={yun:}$xjhlist.atnid{/yun}{/yun}');"  class="school_show_listgzygz">取消关注</a>
+    {yun:}else{/yun}
+        {yun:}if $usertype==1{/yun}
+         <a href="javascript:;" onclick="atnxjh('{yun:}$xjhlist.id{/yun}','{yun:}$xjhlist.uid{/yun}')" class="school_show_listgz">关注</a>
+        {yun:}else{/yun}
+            <a href="javascript:void(0);" onclick="layer.msg('只有个人用户才能关注', 2, 8)" class="school_show_listgz">关注</a> 
+        {yun:}/if{/yun}
+    {yun:}/if{/yun}
+    {yun:}/if{/yun}
+ {yun:}/if{/yun}
+ </div>
+ <div class="yun_school_xjh_zt">
+ {yun:}if !$uid{/yun}
+ <a href="javascript:;" onclick="showlogin('1')" style="color:green;">我要报错</a>
+ {yun:}else{/yun}
+    <a href="javascript:;" onclick="reportxjh('{yun:}$xjhlist.id{/yun}','{yun:}$xjhlist.uid{/yun}','{yun:}$xjhlist.com_name{/yun}')" style="color:green;">我要报错</a>
+ {yun:}/if{/yun}
+ </div>
+</li>
+
+{yun:}xjhelse{/yun}
+
+<div class="school_show_nomsg">暂无校招宣讲会信息</div>
+{yun:}/xjh{/yun}
+</ul>
+<div class="clear"></div>
+   <div class="search_pages">
+          <div class="pages">{yun:}$pagenav{/yun}{yun:}$totalshow{/yun}</div></div>
+</div>
+
+<div class="yun_school_xjh_right">
+<div class="yun_school_xjh_right_tit">名企校招宣讲会信息推荐</div>
+<ul class="yun_school_xjh_rlist">
+{yun:}xjh comlen=8 limit=5 item=rlist{/yun}
+<li>
+<a href="{yun:}$rlist.com_url{/yun}" class="yun_school_xjh_right_jobname" title="{yun:}$rlist.com_name{/yun}">{yun:}$rlist.com_name{/yun}</a> 
+<div class="yun_school_xjh_right_jobinfo">[{yun:}$rlist.city_two{/yun}] {yun:}$rlist.sch_name{/yun}</div>
+<div class="yun_school_xjh_right_jobtime">{yun:}$rlist.stime|date_format:'%m月%d日'{/yun}</div>
+</li>
+{yun:}xjhelse{/yun}
+<div class="">暂无校招宣讲会信息</div>
+{yun:}/xjh{/yun}
+</ul>
+</div>
+
+</div>
+<div class="clear"></div>
+<div class="none" id="xjhreport">
+  <div style="background:none;padding: 10px 20px 20px;">
+    <input id="x_uid" value="" type="hidden"/>
+    <input id="id" value="" type="hidden"/>
+    <input id="c_name" value="" type="hidden"/>
+    <div style="margin-bottom:10px;"><span style="width:120px; float:left;">错误校招宣讲会信息</span><em>
+      <textarea rows="2" cols="38" id="e_reason" style="width:338px;height:60px;"></textarea>
+      </em>
+    </div>
+    <div style="margin-bottom:10px;"><span style="width:120px; float:left;">正确的校招宣讲会信息</span><em>
+      <textarea rows="2" cols="38" id="r_reason" style="width:338px;height:60px;"></textarea>
+      </em>
+    </div>
+    <div style="margin-bottom:10px;"> <span style="width:120px; float:left;">验 证 码</span>
+      <input type="text" style="height:30px;" id="report_authcode" style="float:left; margin-right:5px;" maxlength="4"/>
+      <img id="vcodeimg" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" /> 
+      <a href="javascript:void(0);" onclick="checkCode('vcodeimg');">看不清?</a></div>
+    <div> <span style="width:120px; float:left;">&nbsp;</span>
+      <a class="yun_school_job_sq" onclick="xjhSub('vcodeimg');">提交</a>
+    </div>
+  </div>
+</div> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/search.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+<script src="{yun:}$school_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}",integral_pricename='{yun:}$config.integral_pricename{/yun}';</script>
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun} 
+{yun:}include file="$tplstyle/footer.htm"{/yun}  

@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<title>后台管理</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body class="body_ifm">
+		<div id="infobox2" style="display:none; width: 500px; ">
+			<div id="infobox">
+				<form action="index.php?m=invoice&c=status" target="supportiframe" method="post" class="layui-form" onsubmit="return htStatus()">
+					<table class="admin_examine_table" cellspacing="1" cellpadding="1" style="width:500px;">
+						<tr>
+							<th width="80" align="right">状态：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<input type="radio" name="status" value="1" id="status1" title="已审核">
+										<input type="radio" name="status" value="2" id="status2" title="未通过">
+										<input type="radio" name="status" value="3" id="status3" title="已打印">
+										<input type="radio" name="status" value="4" id="status4" title="已邮寄">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="80" class="t_fr">审核说明：</th>
+							<td><textarea id="statusbody" name="statusbody" class="admin_intextarea"></textarea></td>
+						</tr>
+						<tr align="center">
+							<td colspan="2">
+								<input type="submit" value='确认' class="admin_examine_bth">
+								<input type="button" onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'>
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+					<input name="pid" value="0" type="hidden">
+				</form>
+			</div>
+		</div>
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="admin_new_search_box">
+					<form action="index.php" name="myform" method="get">
+						<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+						<input name="m" value="invoice" type="hidden" />
+						<input name="status" value="{yun:}$smarty.get.status{/yun}" type="hidden" />
+						<div class="admin_new_search_name">充值单号：</div>
+						<input class="admin_new_text" placeholder="输入你要搜索的关键字" type="text" name="keyword" size="25">
+						<input class="admin_Filter_bth" type="submit" name="news_search" value="检索" />
+						<a href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();" class="admin_new_search_gj">高级搜索</a>
+					</form>
+					{yun:}include file="admin/admin_search.htm"{/yun}
+				</div>
+				<div class="clear"></div>
+			</div>
+
+
+			<div class="tty_table-bom">
+				<div class="table-list">
+					<div class="admin_table_border">
+						<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form action="index.php" name="myform" id='myform' method="get" target="supportiframe">
+							<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+							<input name="m" value="invoice" type="hidden" />
+							<input name="c" value="del" type="hidden" />
+							<table width="100%">
+								<thead>
+									<tr class="admin_table_top">
+
+										<th style="width:20px;"><label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+										<th> {yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun}
+											<a href="{yun:}searchurl order=desc t=id m=invoice untype='order,t'{/yun}">编号<img src="images/sanj.jpg" /></a>
+											{yun:}else{/yun}
+											<a href="{yun:}searchurl order=asc t=id m=invoice untype='order,t'{/yun}">编号<img src="images/sanj2.jpg" /></a>
+											{yun:}/if{/yun}
+										</th>
+
+										<th align="left">
+											{yun:}if $smarty.get.t=="addtime" && $smarty.get.order=="asc"{/yun}
+											<a href="{yun:}searchurl order=desc t=addtime m=invoice untype='order,t'{/yun}">申请时间<img src="images/sanj.jpg" /></a>
+											{yun:}else{/yun}
+											<a href="{yun:}searchurl order=asc t=addtime m=invoice untype='order,t'{/yun}">申请时间<img src="images/sanj2.jpg" /></a>
+											{yun:}/if{/yun}
+										</th>
+
+										<th align="left" width="230">发票抬头</th>
+										<th>开票总额 </th>
+										<th>开票性质 </th>
+										<th align="left">发票申请人</th>
+										<th>联系电话</th>
+										<th>电子邮箱</th>
+										<th>发票状态</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									{yun:}foreach item=job key=key from=$rows{/yun}
+									<tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg" {yun:}/if{/yun} id="list{yun:}$job.id{/yun}">
+										<td><input type="checkbox" value="{yun:}$job.id{/yun}" name='del[]' onclick='unselectall()' class="check_all"
+											 rel="del_chk" /></td>
+										<td align="left" class="td1" style="text-align:center;"><span>{yun:}$job.id{/yun}</span></td>
+
+										<td align="left">{yun:}$job.addtime|date_format:"%Y-%m-%d"{/yun}</td>
+
+										<td align="left">
+											{yun:}$job.title|mb_substr:0:20:"utf-8"{/yun} {yun:}if strlen($job.title)>20{/yun}
+											<a href="index.php?m=invoice&c=show&id={yun:}$job.id{/yun}" class="admin_cz_sc">[查看]</a>
+											{yun:}/if{/yun}
+										</td>
+
+										<td>￥{yun:}$job.price{/yun}</td>
+
+										<td>{yun:}if $job.style!='2'{/yun}纸质（快递）{yun:}else if $job.style=='2'{/yun}电子（邮箱）{yun:}/if{/yun}</td>
+
+										<td align="left">{yun:}$job.comname{/yun}</td>
+
+										<td>{yun:}$job.link_moblie{/yun}</td>
+
+										<td>{yun:}$job.email{/yun}</td>
+
+
+										<td>{yun:}if $job.status==1{/yun}<span class="admin_com_Audited">已审核</span>{yun:}elseif
+											$job.status=='2'{/yun}<span class="admin_com_tg">未通过</span>{yun:}elseif $job.status=='3'{/yun}<span class="admin_com_Lock">已打印</span>{yun:}elseif
+											$job.status=='4'{/yun}<span class="admin_com_Lock">已邮寄</span>{yun:}elseif $job.status=='0'{/yun}<span class="admin_com_noAudited">未审核</span>{yun:}/if{/yun}</td>
+										<td>
+											<a href="index.php?m=invoice&c=show&id={yun:}$job.id{/yun}" class="admin_new_c_bth admin_new_c_bth_yl">查看</a>
+											<a href="javascript:void(0);" class="status admin_new_c_bth admin_new_c_bthsh" pid="{yun:}$job.id{/yun}"
+											 status="{yun:}$job.status{/yun}">审核</a>
+										</td>
+									</tr>
+									{yun:}/foreach{/yun}
+									<tr>
+										<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+										<td colspan="12"><label for="chkAll2">全选</label> &nbsp;
+											<input class="admin_button" type="button" name="delsub" value="批量审核" onClick="audall();" />
+											<input class="admin_button" type="button" name="delsub" value="批量删除" onClick="return really('del[]')" /></td>
+									</tr>
+									{yun:}if $total > $config.sy_listnum {/yun}
+									<tr>
+										{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+										{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun} <td colspan="3"> 从 {yun:}($pagenum-1) *
+											$config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+											{yun:}else if $pagenum == $pages{/yun}
+											<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共
+												{yun:}$total{/yun} 条</td>
+											{yun:}/if{/yun}
+											<td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+									</tr>
+									{yun:}/if{/yun}
+								</tbody>
+
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="showbox" style="display:none; width: 340px; overflow:hidden ">
+			<div id="showboxmsg" style="width:320px; padding:10px;height:150px; line-height:25px; font-size:14px; overflow:auto">
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+
+			function audall() {
+				var codewebarr = "";
+				$(".check_all:checked").each(function() { //由于复选框一般选中的是多个,所以可以循环输出
+					if (codewebarr == "") {
+						codewebarr = $(this).val();
+					} else {
+						codewebarr = codewebarr + "," + $(this).val();
+					}
+				});
+				if (codewebarr == "") {
+					parent.layer.msg('您还未选择任何信息！', 2, 8);
+					return false;
+				} else {
+					$("input[name=pid]").val(codewebarr);
+					$("#statusbody").val('');
+					$("input[name='status']").attr('checked', false);
+					$.layer({
+						type: 1,
+						title: '发票状态审核',
+						closeBtn: [0, true],
+						border: [10, 0.3, '#000', true],
+						area: ['515px', '300px'],
+						page: {
+							dom: "#infobox2"
+						}
+					});
+				}
+			}
+			$(function() {
+				$(".status").click(function() {
+					var pid = $(this).attr("pid");
+					var status = $(this).attr("status");
+					$("#status" + status).attr("checked", true);
+					layui.use(['form'], function() {
+						var form = layui.form;
+						form.render();
+					});
+					var pytoken = $("#pytoken").val();
+					$("input[name=pid]").val(pid);
+					$.post("index.php?m=invoice&c=statusbody", {
+						id: pid,
+						pytoken: pytoken
+					}, function(msg) {
+						$("#statusbody").val(msg);
+						$.layer({
+							type: 1,
+							title: '发票状态审核',
+							closeBtn: [0, true],
+							border: [10, 0.3, '#000', true],
+							area: ['515px', '265px'],
+							page: {
+								dom: "#infobox2"
+							}
+						});
+					});
+				});
+			});
+
+			function showbox(title, msg) {
+				$('#showboxmsg').html(msg);
+				$.layer({
+					type: 1,
+					title: title,
+					closeBtn: [0, true],
+					border: [10, 0.3, '#000', true],
+					area: ['350px', '210px'],
+					page: {
+						dom: "#showbox"
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

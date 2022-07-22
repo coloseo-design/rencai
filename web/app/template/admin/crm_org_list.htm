@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+	<title>组织架构</title>
+</head>
+
+<body class="body_ifm">
+
+		
+	<div class="crmorg_box">
+		<div class="crmorg_left">
+			<div>
+				{yun:}foreach from=$orgArr item=org{/yun}
+				<div class="crmorg_lf_comname_box">
+					<div class="crmorg_lf_comname nowrap" data-url="index.php?m=crm_org&c=orgShow&id={yun:}$org.id{/yun}">
+						<i class="arrow"></i>
+						<i class="department"></i>
+						{yun:}$org.name{/yun}
+					</div>
+					<i class="refresh" onclick="location.reload();"></i>
+				</div>
+				
+				
+				<ul class="crmorg_lf_list">
+					{yun:}foreach from=$org.part item=orgt{/yun}
+					<li>
+						<div class="crmorg_lflist_name {yun:}if $smarty.get.id==$orgt.id{/yun}crmorg_lflist_name2{yun:}/if{/yun}" data-url="index.php?m=crm_org&c=orgShow&id={yun:}$orgt.id{/yun}"><i class="arrow_w"></i>{yun:}$orgt.name{/yun}({yun:}$orgt.num{/yun})</div>
+						
+						<ul class="crmorg_lf_list {yun:}if $smarty.get.id!=$orgt.id && $orgInfo.fid!=$orgt.id{/yun}none{yun:}/if{/yun}">
+							{yun:}foreach from=$orgt.part item=v{/yun}
+							<li><div class="crmorg_lflist_name {yun:}if $smarty.get.id==$v.id{/yun}crmorg_lflist_name2{yun:}/if{/yun}" data-url="index.php?m=crm_org&c=orgShow&id={yun:}$v.id{/yun}">{yun:}$v.name{/yun}（{yun:}$v.num{/yun}）</div></li>
+							{yun:}/foreach{/yun}
+						</ul>
+						
+					</li>
+					{yun:}/foreach{/yun}
+				</ul>
+				{yun:}/foreach{/yun}
+			</div>
+		</div>
+		
+		<div class="crmorg_right">
+        	<iframe name="right" id="rightMain" src="index.php?m=crm_org&c=orgShow" frameborder="false" scrolling="auto" style="border:none;" width="100%" height="800" allowtransparency="true"></iframe>
+		</div>
+		
+	</div>
+		
+	
+	<script>
+	
+		$(".crmorg_lflist_name").each(function(){
+			var clk = 1;
+			$(this).click(function(){
+				var targetUrl	=	$(this).attr('data-url');
+				$('.crmorg_lflist_name').removeClass("crmorg_lflist_name2")
+				$(this).addClass("crmorg_lflist_name2")
+				clk++;
+				if(clk % 2 == 0){
+					$(this).siblings(".crmorg_lf_list").slideDown(300)
+				}else{
+					$(this).siblings(".crmorg_lf_list").slideUp(300)
+				}
+				$("#rightMain").attr('src', targetUrl);
+			})
+		})
+		
+		$(".crmorg_lf_comname").each(function(){
+			var clk2 = 0;
+			$(this).click(function(){
+				var targetUrl	=	$(this).attr('data-url');
+				clk2++;
+				if(clk2 % 2 == 0){
+					$(this).parent().siblings(".crmorg_lf_list").slideDown(300)
+				}else{
+					$(this).parent().siblings(".crmorg_lf_list").slideUp(300)
+				}
+				$("#rightMain").attr('src', targetUrl);
+			})
+		})
+		
+		 
+	</script>
+</body>
+</html>

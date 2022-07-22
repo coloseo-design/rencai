@@ -1,0 +1,36 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<section class="main_member_cot_box">
+	{yun:}if $config.sy_withdraw==1{/yun}
+	<ul class="yun_m_tit">
+	<li>
+			<a href="index.php?c=consume ">消费明细</a>
+		</li>	
+		<li class="yun_m_tit_cur">
+			<a href="index.php?c=withdrawlist">提现明细</a>
+		</li>
+	</ul>
+	{yun:}/if{/yun}
+	<div class="wap_member_post_list">
+		{yun:}foreach item=v from=$rows{/yun}
+			<div class="com_member_hr">
+				<div class="user_member_box">
+					<div class="com_member_hr_p1"><span class="member_c9">真实姓名：</span>{yun:}$v.real_name{/yun}</div>
+					<div class="com_member_hr_p1"><span class="member_c9">提现金额：</span>{yun:}$v.price{/yun}</div>
+					<div class="com_member_hr_p1"><span class="member_c9">手续费：</span>{yun:}$v.pound_price{/yun}</div>
+					<div class="com_member_hr_p1"><span class="member_c9">状态：</span>{yun:}$v.order_state_n{/yun}</div>
+					<div class="com_member_hr_p1"><span class="member_c9">提现时间：</span>{yun:}$v.time|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+					{yun:}if $v.order_remark{/yun}
+						<div class="com_member_hr_p1"><span class="member_c9">原因：</span>{yun:}$v.order_remark{/yun}</div>
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		{yun:}foreachelse{/yun}
+			<div class="wap_member_no">暂无相关信息</div>
+		{yun:}/foreach{/yun}
+	</div>
+</section>
+</body>
+</html>

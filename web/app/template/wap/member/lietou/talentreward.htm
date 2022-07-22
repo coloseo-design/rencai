@@ -1,0 +1,80 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/talent.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<section class="wap_member">
+<div class="wap_member_comp_h1"><span>赏金推荐</span></div>
+</section>
+<section>
+         
+          <div class="talentreward_list">
+          <div class=""><span class="talentreward_z_n">￥{yun:}$job.money{/yun}</span><em class="talentreward_z_dw">(总赏金)</em></div>
+        <div class="talentreward_mx">
+        {yun:}if $job.sqmoney{/yun}
+        <div class="talentreward_mx_p"><i class="talentreward_mx_n">￥{yun:}$job.sqmoney{/yun}</i> <span class="talentreward_mx_sj">投递赏金</span> <i class="reward_hb_list_line"></i></div>
+        {yun:}/if{/yun}
+        {yun:}if $job.invitemoney{/yun}
+        <div class="talentreward_mx_p"><i class="talentreward_mx_n">￥{yun:}$job.sqmoney{/yun}</i><span class="talentreward_mx_sj">面试赏金</span> <i class="reward_hb_list_line"></i></div>
+        {yun:}/if{/yun}
+        {yun:}if $job.offermoney{/yun}
+        <div class="talentreward_mx_p"><i class="talentreward_mx_n">￥{yun:}$job.offermoney{/yun}</i><span class="talentreward_mx_sj">入职赏金</span> </div>{yun:}/if{/yun}
+        </div>
+<div class="talentreward_jobname"> {yun:}$job.jobinfo.name{/yun}</div>
+
+        <div class="talentreward_jobinfo"> 
+        <span class="Company_Basic_information_xz">{yun:}$job.jobinfo.job_salary{/yun}</span> 
+        
+        {yun:}if $job.jobinfo.edu{/yun}<span class="talentreward_list_line">|</span>{yun:}$job.jobinfo.job_edu{/yun}学历{yun:}/if{/yun}
+        
+        {yun:}if $job.jobinfo.exp{/yun}<span class="talentreward_list_line">|</span>{yun:}$job.jobinfo.job_exp{/yun}经验{yun:}/if{/yun}
+        </div>
+       <div class="talentreward_jobinfo"> 
+        职位要求：
+        {yun:}if $job.edu{/yun}有相关教育经历{yun:}/if{/yun}
+        {yun:}if $job.exp{/yun}有相关工作经历{yun:}/if{/yun}
+        {yun:}if $job.project{/yun}有相关项目经历{yun:}/if{/yun}
+        {yun:}if $job.skill{/yun}有相关技能证书{yun:}/if{/yun}
+    </div>   </div>
+</section>
+<section>
+<div class="wap_member_job_show">
+
+{yun:}if !empty($rows){/yun}
+
+{yun:}foreach item=v from=$rows{/yun}
+<div class="com_member_hr ">
+<div class="com_member_hr_name"><span class="yun_m_job_date_n">&nbsp;
+ <a class="job_list_jobname com_member_hr_cblue">{yun:}$v.name{/yun}</a> 
+</span>
+{yun:}if $v.telstatus=='1'{/yun}
+{yun:}if $v.rewardstatus=='1'{/yun} <font color="#FF0000">(推荐中)</font>{yun:}else{/yun}
+
+<input type='button' value='推荐' data-jobid='{yun:}$job.jobinfo.id{/yun}' data-eid='{yun:}$v.id{/yun}' class=' talentreward_jobinfo_bth lt_reward_sq'>
+
+{yun:}/if{/yun}
+
+{yun:}else{/yun}手机未认证，不可推荐{yun:}/if{/yun}
+
+</div>
+<div class="com_member_user_box">
+<div class="com_member_hr_tj">
+<div class="com_member_hr_p1">
+	<span class="member_c9">期望职位：</span>{yun:}$v.jobname{/yun}  &nbsp;&nbsp;&nbsp;
+	<span class="member_c9">经验：</span><span class="">{yun:}$v.exp_n{/yun}</span>   &nbsp;&nbsp;&nbsp;
+	<span class="member_c9">学历：</span><span class="">{yun:}$v.edu_n{/yun}</span>
+</div>
+<div class="com_member_hr_p1"><span class="member_c9">工作地区：</span>{yun:}$v.city_one{/yun} {yun:}$v.city_two{/yun}</div>
+</div>
+<div class="com_member_hr_p1"><span class="member_c9">期望薪资：</span>{yun:}$v.salary{/yun}</div>
+
+</div>
+</div>
+{yun:}/foreach{/yun}
+{yun:}else{/yun}
+<div class="wap_member_no">您还没有简历<br><a href="index.php?c=talentexpect" class="wap_member_no_submit">充实简历库</a></div>
+{yun:}/if{/yun}
+
+</div>
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+</section>
+</div>
+
+</body></html> 

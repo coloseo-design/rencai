@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+{yun:}include file="$lietoustyle/public.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/jianli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/guanli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/account.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+</head>
+<body>
+{yun:}include file="$lietoustyle/header.htm"{/yun} 
+<div class="m_content">
+  <div class="wrap"> 
+  {yun:}include file="$lietoustyle/left.htm"{/yun}
+	 <div class="m_inner_youb fr">
+			<div class="lt_m_tit">
+           <ul class="lt_m_tit_list">
+				<li {yun:}if $smarty.get.c=="jobpack" && $smarty.get.act=="withdraw"{/yun} class="lt_m_tit_list_cur" {yun:}/if{/yun}><a href="index.php?c=jobpack&act=withdraw">赏金提现</a></li>
+				<li {yun:}if $smarty.get.c=="jobpack" && $smarty.get.act=="change"{/yun} class="lt_m_tit_list_cur" {yun:}/if{/yun}><a href="index.php?c=jobpack&act=change">转换{yun:}$config.integral_pricename{/yun}</a></li>			    
+            </ul>
+		</div>
+        <div class="clear"></div>
+        <div id="gms_showclew"></div>
+        <div class="clear"></div>
+        <div class="resume_box_list" style="padding-right:30px;">    
+			<div class="resume_Prompt_box"><div  class="resume_Prompt"><i class="resume_Prompt_icon"></i>单笔转换金额{yun:}if $config.packprice_min_recharge gt 0{/yun}必须达到{yun:}$config.packprice_min_recharge{/yun}元{yun:}else{/yun}不限{yun:}/if{/yun}
+			  ,一日最多转换{yun:}if $config.paypack_max_recharge gt 0{/yun}{yun:}$config.paypack_max_recharge{/yun}次{yun:}else{/yun}次数不限{yun:}/if{/yun}
+			  ,已经转换{yun:}$changeNum{/yun}次。</div></div>
+			<div class="clear"></div>
+			<div class="withdraw_tx_box">
+				<span class="withdraw_tx_box_d"> 可提现金额：</span> <span class="withdraw_tx_box_n">￥{yun:}$statis.packpay{/yun}</span>  元
+			</div>
+            <div class="clear"></div>
+			<div class="packloglost_box_l_b">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="com_pay_table">
+					<tr>
+						<th height="30" width="170">转换金额：<span class="com_pay_table_pay_s">*</span></th>
+						<td>
+							<input type="text" name="changeprice" id="changeprice" onkeyup="changepriceprice(this);"  autocomplete="off" placeholder=" 自定义" maxlength='11' size="20"  class="com_pay_table_pay_text"> <span class="packloglost_box_l_b_ts">1元={yun:}$config.integral_proportion{/yun}点{yun:}$config.integral_pricename{/yun}</span>
+						</td>
+					</tr>
+					<tr>
+						<th height="30" width="170">转换{yun:}$config.integral_pricename{/yun}：<span class="com_pay_table_pay_s">*</span></th>
+						<td>
+							<span class="payintegral" id="payintegral">0</span>个{yun:}$config.integral_pricename{/yun}<input type="hidden" name="changeintegral" id="changeintegral" size="20" value=""  class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<th>&nbsp;</th>
+						<td height="40"><div style="padding:10px 0;">		
+							{yun:}if $statis.packpay>0{/yun}
+							<input  type="button" value="转换" name=nextstep class="layui-btn" onclick="changetrsist();">
+							{yun:}else{/yun}
+							<input  type="button" value="不可转换" name=nextstep class="layui-btn"  disabled>
+							{yun:}/if{/yun}
+						</td>
+					</tr> 
+				</table>  
+			</div>
+            <div class="clear"></div>
+		</div>
+     </div>
+   </div>
+</div>
+<script>
+var packpay='{yun:}$statis.packpay{/yun}';//packpay可转换金额
+var proportion='{yun:}$config.integral_proportion{/yun}';//proportion转换积分比例
+var minchangeprice='{yun:}$config.packprice_min_recharge{/yun}';//minchangeprice最低转换金额
+var changeNum = '{yun:}$changeNum{/yun}';changeNum//已转回次数
+var packpaymax = '{yun:}$config.paypack_max_recharge{/yun}';packpaymax//每日最多转换次数
+
+</script>
+{yun:}include file="$lietoustyle/footer.htm"{/yun}

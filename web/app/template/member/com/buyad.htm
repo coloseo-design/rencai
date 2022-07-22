@@ -1,0 +1,110 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+	<div class="admin_mainbody"> 
+	{yun:}include file="$comstyle/left.htm"{/yun} 
+	<script>
+		function checknum(){
+			var time=$("#buy_time").val();
+			var integral=$("#integral").val();
+			var btype=$("#btype").val();
+			$("#integral_buy").val(time*integral);
+			if(btype==1){
+				$("#span_integral_buy").html(time*integral+'{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}');
+			}else{
+				$("#span_integral_buy").html(time*integral+'元');
+			}
+		}
+	</script>
+<div class="com_tit"><span class="com_tit_span"> 招聘广告服务</span><span class=remind></span></div>
+    <div class=right_box>
+		<div class=admincont_box>
+			
+		<div class="job_list_tit">
+			<ul class="">
+				<li {yun:}if $smarty.get.c=="ad"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=ad">购买广告位</a></li> 
+				<li {yun:}if $smarty.get.c=="ad_order"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=ad_order">广告订单</a></li>
+			</ul>
+		</div>
+        <div class="com_body">
+			<div class="admin_new_tip mt20">
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list"> 
+						您还有{yun:}if !$statis.integral{/yun}0{yun:}else{/yun}{yun:}$statis.integral_format{/yun}{yun:}/if{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} 
+					</div>
+				</div>
+			</div>
+
+			<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+			<div class="admin_note2">
+				<form name='alipayment' action="index.php?c=buysave" method='post' enctype="multipart/form-data" target="supportiframe" id='myform'>
+					<div class="com_release_box">
+						<input type="hidden" name="type" value="ad" />
+						<input type="hidden" name="aid" value="{yun:}$smarty.get.id{/yun}" />
+						<input type="hidden" name="unit_buy" value="{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}" />
+						<input type="hidden" id="integral" name="integral" value="{yun:}$row.integral_buy{/yun}">
+						<input type="hidden" id="btype" name="btype" value="{yun:}$row.btype{/yun}">
+						
+						<ul>
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 广告位名称 </div>
+								<div class="com_release_buyad_name">{yun:}$row.class_name{/yun}</div>
+								<input type="hidden" name="adname" value="{yun:}$row.class_name{/yun}" class="com_info_text">
+							</li>
+							
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 广告位规格 </div>
+								<div class="com_release_buyad_name">{yun:}$row.x{/yun}px*{yun:}$row.y{/yun}px</div>
+							</li>
+
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 广告名称 </div>
+								<input type="text" name="ad_name" value="{yun:}$ad.ad_name{/yun}" id='ad_name'  class="com_info_text">
+							</li>
+							
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 广告图片 </div>
+								<button type="button" class="layui-btn layui-btn-normal noupload"  lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">选择文件</button>
+								<input type="hidden" id="laynoupload" value="1"/> <span id="imgparent" class=" none"> 
+	                      <img id="imgicon" src="{yun:}$row.pic_url{/yun}" width="38" height="38"> 
+	                    </span>
+							</li>
+
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 广告链接 </div>
+								<input type="text" name="pic_src" value="{yun:}$ad.pic_src{/yun}" id='pic_src'  class="com_info_text">
+							</li>
+
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 购买时长 </div>
+								<input id="buy_time" type="text" name="buy_time" value="1"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" style="width:40px;" onblur="checknum();"  class="com_info_text">
+								<em style=" line-height:30px;"> 月</em>
+							</li>
+							
+							<li>
+								<div class="com_release_name"><i class="ff0">*</i> 广告位费用</div>
+								<div class="com_release_buyad_name">   
+									<span id="span_integral_buy" >
+										{yun:}if $row.btype==1{/yun}
+											{yun:}$row.integral_buy{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}
+										{yun:}else{/yun}
+											{yun:}$row.integral_buy{/yun}元
+										{yun:}/if{/yun}
+									</span>
+								</div>
+								<input type="hidden" name="integral_buy" id='integral_buy' value="{yun:}$row.integral_buy{/yun}" >
+							</li>
+							<li>
+								<input type="hidden" name="banksub" value="提交"/>
+								<input type="button"  onclick="buyad();"value="确认订单" class="btn_01">
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+        </div>
+	</div>
+    </div>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

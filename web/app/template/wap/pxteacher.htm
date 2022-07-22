@@ -1,0 +1,81 @@
+{yun:}include file="$wapstyle/header_train.htm"{/yun}
+<div class="itwap_top_c">
+	<ul>
+			{yun:}if $config.three_cityid&&$config.sy_web_site=='1'{/yun}
+				<li class="Substation popup" data-pop="Substation">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}$city_name[$config.three_cityid]{/yun}</span>
+						<i class="itwap_top_icon"></i>
+					</a>
+				</li>
+			{yun:}else if $config.cityid&&$config.sy_web_site=='1'{/yun}
+				<li class="Substation popup" data-pop="Substation">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}$city_name[$config.cityid]{/yun}</span>
+						<i class="itwap_top_icon"></i>
+					</a>
+				</li>
+			{yun:}else{/yun}  
+				<li class="grade popup" data-pop="grade">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">
+							{yun:}if $city_name[$smarty.get.cityid] || $city_name[$smarty.get.provinceid]{/yun}
+								{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}$city_name[$smarty.get.provinceid]{/yun}
+							{yun:}elseif $city_name[$smarty.get.three_cityid]{/yun}
+								{yun:}$city_name[$smarty.get.three_cityid]{/yun}
+							{yun:}else{/yun}
+								区域
+							{yun:}/if{/yun}
+						</span>
+						<i class="itwap_top_icon"></i>
+					</a>
+				</li>
+			{yun:}/if{/yun}
+
+         <li class="Sortly popup" data-pop="Sortly"><a href="javascript:void(0);" class="searchOptions_list_a">{yun:}if $subject_name[$smarty.get.sid]{/yun}{yun:}$subject_name[$smarty.get.sid]{/yun}{yun:}else{/yun}领域{yun:}/if{/yun}<i class="itwap_top_icon"></i></a></li>
+         <li class="Sorthys popup" data-pop="Sorthys"><a href="javascript:void(0);" class="searchOptions_list_a">{yun:}if $industry_name[$smarty.get.hy]{/yun}{yun:}$industry_name[$smarty.get.hy]{/yun}{yun:}else{/yun}行业{yun:}/if{/yun}<i class="itwap_top_icon"></i></a></li>
+     </ul><input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}" />
+</div>
+{yun:}foreach item=v from=$rows{/yun}
+
+<div class="train_teacher_list">
+<div class="train_teacher_pic">
+<a href="{yun:}url m=wap c=train a=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}"><img src="{yun:}$v.pic{/yun}"  onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxteacher_icon{/yun}',2);" /></a></div>
+<div class="train_teacher_name"><a href="{yun:}url m=wap c=train a=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}">{yun:}$v.name{/yun}</a></div>
+<div class="train_teacher_z">{yun:}$subject_name[$v.sid]{/yun}讲师</div>
+<div class="">
+	{yun:}if $city_name[$v.cityid]{/yun}<span class="train_teacher_city">{yun:}$city_name[$v.cityid]{/yun}</span>{yun:}/if{/yun}{yun:}$v.train_name|mb_substr:0:12:'utf-8'{/yun}</div>
+{yun:}if $uid{/yun}
+        {yun:}if $usertype=='4'{/yun}
+        <div class="train_teacher_gz"><a href="javascript:void(0)" onclick="showToast('培训用户不能关注讲师！');" class="" >关注</a></div>
+		{yun:}else{/yun} 
+		  {yun:}if $v.atn{/yun} 
+                <div class="train_teacher_gz" id="gz_{yun:}$v.id{/yun}"><a href="javascript:void(0)" onclick="atnteacher('{yun:}$v.id{/yun}','{yun:}$v.uid{/yun}')" id='atn_{yun:}$v.id{/yun}' class="" >取消关注</a> </div>		
+				{yun:}else{/yun}
+				<div class="train_teacher_gz" id="gz_{yun:}$v.id{/yun}"><a href="javascript:void(0)" onclick="atnteacher('{yun:}$v.id{/yun}','{yun:}$v.uid{/yun}')" id='atn_{yun:}$v.id{/yun}' class="">关注</a> </div>		
+				{yun:}/if{/yun}
+        {yun:}/if{/yun} 
+        {yun:}else{/yun} 
+         <div class="train_teacher_gz"><a href="{yun:}url m=wap c=login{/yun}" class="" >关注</a></div>
+        {yun:}/if{/yun}  
+</div>        
+        
+     </div>
+</div>
+{yun:}foreachelse{/yun}
+ {yun:}if $smarty.get.keyword!="" {/yun}
+  <div class="wap_member_no">没有搜索到相关讲师<div><a class="wap_mb_no_sr" href="{yun:}url m=wap c=train a=teacher{/yun}">重新搜索</a></div></div>
+  {yun:}else{/yun}
+  <div class="wap_member_no">暂无相关讲师<div><a class="wap_mb_no_sr" href="{yun:}url m=wap c='train' a='teacher'{/yun}">重新搜索</a></div></div>
+  {yun:}/if{/yun}
+{yun:}/foreach{/yun}
+{yun:}if $pagenav{/yun}
+<div class="pages">{yun:}$pagenav{/yun}</div>
+{yun:}/if{/yun}
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/wap_tck.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/peixun.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+{yun:}include file="$wapstyle/publictwo.htm"{/yun}
+</body></html>

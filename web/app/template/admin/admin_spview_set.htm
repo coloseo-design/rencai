@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="../js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="../js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="../js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="main_tag">
+				<div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">视频面试--待开发。</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="tty_table-bom">
+					<div class="tag_box">
+					<!--	<div class="">
+							<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+							<form method="post" target="supportiframe" action="index.php?m=admin_spview_set&c=save" onsubmit="return checkForm();" class="layui-form">
+							<table width="100%" class="table_form">
+								<tr>
+									<th width="150" class="t_fl">视频请求等待时长(秒)：</th>
+									<td>
+										<input class="layui-input t_w160" type="text" name="sy_spview_wait" id="sy_spview_wait" value="{yun:}$config.sy_spview_wait{/yun}" size="50" maxlength="255" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+										<span class="admin_web_tip">视频面试发出请求，等待对方接通的等待时长。单位：秒。建议设60秒以上，时间太短对方可能来不及接通。（类似打电话，响铃时间）</span>
+									</td>
+								</tr>
+
+								<tr>
+					                <th width="150" class="t_fl">单次视频面试时长(分)：</th>
+					                <td>
+										<input class="layui-input t_w160" type="text" name="sy_spview_time" id="sy_spview_time" value="{yun:}$config.sy_spview_time{/yun}" size="50" maxlength="255" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+										<span class="admin_web_tip">双方一次可以视频面试时长。单位：分</span>
+									</td>
+					            </tr>
+								<tr>
+					                <th width="150" class="t_fl">停止预约时限(时)：</th>
+					                <td>
+										<input class="layui-input t_w160" type="text" name="sy_spview_yytime" id="sy_spview_yytime" value="{yun:}$config.sy_spview_yytime{/yun}" size="50" maxlength="255" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')" />
+										<span class="admin_web_tip">视频面试开始前X小时停止预约。提前一段时间停止预约，有利于企业的面试准备工作。单位：小时</span>
+									</td>
+					            </tr>
+								<tr class="admin_table_trbg">
+									<th width="150" class="t_fl">App Key：</th>
+									<td>
+										<input name="sy_spview_appkey" autocomplete="off" class="tty_input t_w480" type="text" value="{yun:}$config.sy_spview_appkey{/yun}" size="60" maxlength="50" />
+										<span class="admin_web_tip"><a href="https://www.wanxiangku.com" target="_blank">前往申请视频聊天秘钥</a></span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg">
+									<th width="150" class="t_fl">App Secret：</th>
+									<td>
+										<input name="sy_spview_appsecret" autocomplete="off" class="tty_input" type="text" value="{yun:}$config.sy_spview_appsecret{/yun}" size="60" maxlength="50" />
+									</td>
+								</tr>
+								<tr>
+									<th width="150">视频聊天剩余数量：</th>
+									<td>
+										<input class="tty_input t_w160" type="text" id="rest_num" value="0" readonly="readonly" size="10" />分钟
+									</td>
+								</tr>
+								<tr class="">
+									<th>&nbsp;</th>
+									<td align="left">
+										<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}"/>
+										<input class="tty_sub" type="submit" name="set_config" value="提交"/>&nbsp;&nbsp;
+										<input class="tty_cz" type="reset" value="重置" />
+									</td>
+								</tr>
+							</table>
+							</form>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+			function checkForm(){
+				loadlayer();
+			}
+			$(function(){
+				var pytoken = $("#pytoken").val();
+				$.post("index.php?m=admin_spview_set&c=get_restnum",{pytoken : pytoken},function(data){
+					if(data){
+						var res = eval('('+data+')');
+						if(res.num){
+							$("#rest_num").val(res.num);
+						}else{
+							$("#rest_num").val(0);
+						}
+					}
+				});
+			})
+		</script>
+
+	</body>
+</html>

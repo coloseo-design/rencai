@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="keywords" content="{yun:}$keywords{/yun}" />
+	<meta name="description" content="{yun:}$description{/yun}" />
+	<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$style{/yun}/style/douxu.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+	<title>{yun:}$title{/yun}</title>
+</head>
+
+<body>
+	{yun:}include file="$tplstyle/header.htm"{/yun}
+	<div class="clear"></div>
+	<div class="xjh_banner"></div>
+	<div class="w1200">
+
+		<div class="xjh_box">
+			<div class="xjh_box_c">
+				<div class="xjh_tit">
+					<span class="xjh_tit_s"><i class="xjh_titline"></i>往期回顾</span>
+				</div>
+				<!--列表循环 end-->
+				{yun:}xjhlive ispage=1 len=18 livestatus=2 order=stime sort=desc item=xblist limit=9{/yun}
+				<div class="xjh_list">
+					<div class="xjh_list_pic">
+
+						<a href="{yun:}$xblist.url{/yun}" class="">
+							<img src="{yun:}$xblist.pic{/yun}" width="380" height="225" />
+							<div class="xjh_list_wantlook">
+								<span class="xjh_list_wantlook_n">{yun:}$xblist.hits{/yun}次观看</span>
+							</div>
+							<div class="xjh_list_bg"></div>
+						</a>
+					</div>
+					<div class="xjh_list_info">
+						<div class="xjh_list_name">
+							<a href="{yun:}$xblist.url{/yun}">{yun:}$xblist.name{/yun}</a>
+						</div>
+						<div class="xjh_list_kh">
+							<span class="xjh_list_time">{yun:}$xblist.stime_n{/yun}-{yun:}$xblist.etime_n{/yun}</span>
+						</div>
+					</div>
+				</div>
+				{yun:}xjhliveelse{/yun}
+                    <div class="clear"></div>
+					<div class="no_tip">很抱歉，近期还没有宣讲会的相关信息</div>
+                        <div class="clear"></div>
+				{yun:}/xjhlive{/yun}
+				<div class="search_pages">
+					<div class="pages">{yun:}$pagenav{/yun}</div>
+				</div>
+				<!--列表循环-->
+			</div>
+		</div>
+	</div>
+	<style>
+		.hp_head_box {
+			box-shadow: none
+		}
+	</style>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$tplstyle/footer.htm"{/yun}	

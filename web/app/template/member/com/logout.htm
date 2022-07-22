@@ -1,0 +1,77 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody">
+
+        {yun:}include file="$comstyle/left.htm"{/yun}
+        <div class="com_tit"><span class="com_tit_span">账号设置</span></div>
+
+        <div class=right_box>
+            <div class=vip_boxshow>
+                <div class="vip_boxshow_c">
+                    <div class="report_uaer_list  ">
+                        <div class="report_uaer_list_h1">账号与绑定</div>
+                        <div class="report_uaer_list_p">能获得更多求职者的青睐</div>
+                        <ul>
+                            <li><a href="index.php?c=binding">认证与绑定</a></li>
+                            <li><a href="index.php?c=child">团队管理</a></li>
+                            <li><a href="index.php?c=vs">密码修改</a></li>
+                            {yun:}if $config.sy_user_change==1{/yun}
+                            <li><a href="javascript:void(0)" onclick="changeutype();">切换身份</a></li>
+                            {yun:}/if{/yun}
+                            <li  class="report_uaer_list_cur"><a href="index.php?c=logout">账号注销</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="vip_box" style="margin-top: 0px;;">
+                        <div class=admin_note2>
+                            {yun:}if $step == 1{/yun}
+                            <div class="wxts_box wxts_box_mt30">
+                                <div class="wxts">温馨提示：注销账号后将放弃以下资产和权益</div>
+                                1. 身份信息，账户信息，会员权益将清空且无法恢复<br>
+                                2. 交易记录将被清空<br>
+                                3. 账号绑定的手机邮箱QQ等相关信息将被释放，账号将无法登陆<br>
+                            </div>
+
+                            <div class="admin_password"><span class="text_s_left">&nbsp;密&nbsp;码：</span><input type="password" id="password" name="password" class="com_info_text"/></div>
+                            <div class="admin_password"><span class="text_s_left">&nbsp;</span>
+                                <input type="button" name="submit" class="btn_01" value="申请注销" onclick="logoutApply();">
+                            </div>
+                            {yun:}else{/yun}
+                            <div class="msg_no">
+                                <p>亲爱的用户，您已提交账户注销申请，</p>
+                                <p>工作人员正在进行处理中，注销结果将以短信或邮件的形式通知，请耐心等待~</p>
+                                <p>如果您需要再次使用，请重新注册！</p>
+                            </div>
+                            {yun:}/if{/yun}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function logoutApply() {
+        var password = $('#password').val();
+        if (password == ''){
+            layer.msg('请填写账户密码');
+            return false;
+        }
+        layer.load('执行中，请稍候...',0);
+        $.post('index.php?c=logout&act=logoutApply', {password: password}, function (data) {
+            if (data) {
+                layer.closeAll();
+                var data = eval('('+data+')');
+                if (data.errcode == 9){
+                    layer.msg(data.msg, 2, 9, function () {
+                        location.reload();
+                    });
+                }else{
+                    layer.msg(data.msg, 2, 8);
+                }
+
+            }
+        })
+    }
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

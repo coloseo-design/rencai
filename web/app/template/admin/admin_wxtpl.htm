@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+			<div class="tabs_info">
+				<ul>
+					<li {yun:}if $smarty.get.c==''{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email">邮件推广</a></li>
+					<li {yun:}if $smarty.get.c=='msgtg'{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email&c=msgtg">短信推广</a></li>
+					<li {yun:}if $smarty.get.c=='tgresume'{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email&c=tgresume">简历推广</a></li>
+					<li {yun:}if $smarty.get.c=='tgjob'{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email&c=tgjob">职位推广</a></li>
+					<li {yun:}if $smarty.get.c=='email'{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email&c=email">自定义邮件</a></li>
+					<li {yun:}if $smarty.get.c=='msg'{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email&c=msg">自定义短信</a></li>
+					<li {yun:}if $smarty.get.c=='wxtpl'{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=email&c=wxtpl">公众号模板消息</a></li>
+				</ul>
+			</div>
+
+			<div class="clear"></div>
+			
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">发送公众号模板消息时，请参照 <a href="http://www.wanxiangku.com" target="_blank">公众号模板消息主动推送操作步骤</a> 文档选择合适的模板效果会更好</div>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+			
+			<div class="tag_box mt10">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+
+				<form name="myform" target="supportiframe" method="post" class="layui-form">
+					<table width="100%" class="table_form ">
+						<tr>
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">发送对象</div>
+							</th>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">用户类型：</th>
+							<td>
+								<div class="layui-input-block">
+										
+										<input type="radio" name="utype" value="allbind" checked title="全部" lay-filter="cjtype">
+										<input type="radio" name="utype" value="1" title="个人用户"  lay-filter="cjtype">
+										<input type="radio" name="utype" value="2" title="企业用户" lay-filter="cjtype">
+										<input type="radio" name="utype" value="3" title="猎头用户" lay-filter="cjtype">
+										<input type="radio" name="utype" value="4" title="培训用户" lay-filter="cjtype">
+										<input type="radio" name="utype" value="5" title="自定义用户" lay-filter="cjtype">
+								</div>
+							</td>
+						</tr>
+						<tr id="usercj" class="admin_table_trbg none">
+							<th width="120">通知对象：</th>
+							<td>
+								<div class="layui-input-block">
+									<input type="radio" name="utz" value="" title="不限" checked="checked">
+									<input type="radio" name="utz" value="birthday" title="今天生日">
+									<input type="radio" name="utz" value="expect" title="未创建简历">
+								</div>
+							</td>
+						</tr>
+						<tr id="comcj" class="admin_table_trbg none">
+							<th width="120">通知对象：</th>
+							<td>
+								<div class="layui-input-block">
+									<input type="radio" name="ctz" value="" title="不限" checked="checked">
+									<input type="radio" name="ctz" value="endvip" title="会员7天内到期">
+									<input type="radio" name="ctz" value="jobadd" title="未发布职位">
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">用户活跃度：</th>
+							<td>
+								<div class="layui-input-block">
+										<input type="radio" name="activ" value="all" checked title="全部">
+										<input type="radio" name="activ" value="7"    title="一周">
+										<input type="radio" name="activ" value="30"    title="一月">
+										<input type="radio" name="activ" value="90"    title="三月">
+										<input type="radio" name="activ" value="190"    title="半年">
+										<input type="radio" name="activ" value="365"    title="一年以上">
+								</div>
+							</td>
+						</tr>
+						<tr id="user_email" style="display:none;">
+							<th class="t_fr">账户：</th>
+							<td>
+								<input class="layui-input t_w480" type="text" id="userarr" name="userarr" size="40" value="" />
+								<span class="admin_web_tip">多个用户请用,(半角)隔开</span>
+							</td>
+						</tr>
+						<tr>
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">自定义发送内容</div>
+							</th>
+						</tr>
+						<tr>
+							<th class="t_fr">微信消息模板ID：</th>
+							<td>
+								<input class="layui-input t_w480" type="text" id="wxtplid" name="wxtplid" size="40" value="" />
+								<span class="admin_web_tip">选择合适的消息模板，填写对应模板ID 可参照文档</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th class="t_fr">消息标题：</th>
+							<td>
+								<input class="layui-input t_w480" type="text" id="first" name="first" size="40" value="" />
+							</td>
+						</tr>
+						
+						<tr>
+							<th class="t_fr">正文标题：</th>
+							<td>
+                            <div class="mb_textbox">
+                            <span class="bt_name">标题1：</span>
+                            <div class="mb_text_all">
+								<input class="mb_text" type="text" id="keyword1" name="keyword1"  value="" placeholder="字段名" style="border-radius:0px;"/>                           </div> <div class="clear"></div>
+                                <div class="mb_text_nr">
+                                <input class="mb_text" type="text" id="keyworddata1" name="keyworddata1" size="40" value="" placeholder="内容"/>
+                                </div>
+                                   </div>
+							</td>
+							
+						</tr>
+						<tr>
+							<th class="t_fr"></th>
+							<td>
+                              <div class="mb_textbox">
+                            <span class="bt_name">标题2：</span>
+                            <div class="mb_text_all">
+								<input class="mb_text" type="text" id="keyword2" name="keyword2"  value="" placeholder="字段名"/>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="mb_text_nr">
+                                <input class="mb_text" type="text" id="keyworddata2" name="keyworddata2" size="40" value="" placeholder="内容"/>
+							 </div>
+                                   </div></td>
+							
+						</tr>
+						<tr>
+							<th class="t_fr"></th>
+							<td>
+                              <div class="mb_textbox">
+                            <span class="bt_name">标题3：</span>
+                            <div class="mb_text_all">
+								<input class="mb_text" type="text" id="keyword3" name="keyword3"  value="" placeholder="字段名"/></div>
+                                <div class="clear"></div>
+                                <div class="mb_text_nr"><input class="mb_text" type="text" id="keyworddata3" name="keyworddata3" size="40" value="" placeholder="内容"/>
+							 </div>
+                                   </div></td>
+							
+						</tr>
+						<tr>
+							<th class="t_fr"></th>
+							<td>
+                              <div class="mb_textbox">
+                            <span class="bt_name">标题4：</span>
+                            <div class="mb_text_all">
+								<input class="mb_text" type="text" id="keyword4" name="keyword4"  value="" placeholder="字段名"/></div>
+                                <div class="clear"></div>
+                                <div class="mb_text_nr"><input class="mb_text" type="text" id="keyworddata4" name="keyworddata4" size="40" value="" placeholder="内容"/> </div>
+                                   </div>
+							</td>
+							
+						</tr>
+						<tr>
+							<th class="t_fr"></th>
+							<td>
+                              <div class="mb_textbox">
+                            <span class="bt_name">标题5：</span>
+                            <div class="mb_text_all">
+                            
+								<input class="mb_text" type="text" id="keyword5" name="keyword5"  value="" placeholder="字段名"/></div>
+                               <div class="clear"></div>  
+                                <div class="mb_text_nr"><input class="mb_text" type="text" id="keyworddata5" name="keyworddata5" size="40" value="" placeholder="内容"/> </div>
+                                   </div>
+							</td>
+							
+						</tr>
+						<tr>
+							<th class="t_fr">备注：</th>
+							<td>
+								<input class="layui-input t_w480" type="text" id="remark" name="remark" size="40" value="" />
+							</td>
+							
+						</tr>
+						<tr>
+							<th class="t_fr">链接：</th>
+							<td>
+								<input class="layui-input t_w480" type="text" id="url" name="url" size="40" value="" />
+							</td>
+							
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120"></th>
+							<td>
+								<input class="tty_sub" type="submit" value="&nbsp;发 送&nbsp;" lay-filter="send" lay-submit="" />
+								<input class="tty_cz" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+		</div>
+<style>
+.mb_textbox{}
+.bt_name{width:55px; padding-left:10px; background:#e7e8ea; display:inline-block; float:left;height:38px; line-height:38px;}
+.mb_text_all{width:150px;border:1px solid #e7e8ea; float:left;;border-radius:0px 3px 3px 0;}
+.mb_text_nr{width:478px;border:1px solid #e7e8ea;height:36px;clear:both; margin-top:10px;border-radius:3px;}
+.mb_text{width:100%;height:36px;border:none;border-radius:3px; text-indent:10px;}
+.mb_text:focus{  box-shadow: 0 0 15px #03a9f4;  }
+</style>
+		<script>
+			var page = 1;
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+				$("input[name='utype']").each(function() {
+					$(this).next().click(function() {
+						var val = $(this).prev().val();
+						if(val == '5') {
+							$("#user_email").show();
+							$("input[name=userarr]").val('');
+						} else {
+							$("#user_email").hide();
+							$("input[name=userarr]").val('');
+						}
+					});
+				});
+				form.on('radio(cjtype)', function(data){
+					var typeid = data.value;
+					if(typeid == '1'){
+						$("#usercj").show();
+						$("#comcj").hide();
+					}else if(typeid == '2'){
+						$("#usercj").hide();
+						$("#comcj").show();
+					}else{
+						$("#usercj").hide();
+						$("#comcj").hide();
+					}
+				}); 
+				form.on('submit(send)', function (data) {
+					var field = data.field;
+					if(typeof field.utype === 'undefined') {
+						parent.layer.msg('请选择发送信息的用户！', 2, 8);
+						return false;
+					}
+					if(field.utype == "5") {
+						if(field.userarr == "") {
+							parent.layer.msg('请输入用户名！', 2, 8);
+							return false;
+						}
+					}
+					if(field.wxtplid == '') {
+						parent.layer.msg('请填写微信模板消息ID！', 2, 8);
+						return false;
+					}
+					if(field.first == '') {
+						parent.layer.msg('请填写标题内容！', 2, 8);
+						return false;
+					}
+					if(field.keyword1 == '' || field.keyworddata1=='') {
+						parent.layer.msg('请至少填写一栏正文内容！', 2, 8);
+						return false;
+					}
+					page = 1;
+					sendWxMsg(field, page, "正在发送，请稍候。。。", 3);
+					return false;
+				});
+			});
+			function sendWxMsg(field,page,msg,status){
+				if(status=="3"){
+					var ii = parent.layer.msg(msg,20,{
+						icon:16,shade:0.01
+					});
+					field.page = page;
+					$.ajax({
+						data: field,
+						type: 'post',
+						dataType: 'json',
+						url: 'index.php?m=email&c=wxtpl',
+						success: function (res) {
+							page++;
+							sendWxMsg(field, page, res.msg, res.status);
+						}
+					})
+				}else{
+					parent.layer.close(ii);
+					parent.layer.msg(msg, 2, 9, function(){
+						window.location.reload();
+					});
+				}
+			}
+		</script>
+	</body>
+
+</html>

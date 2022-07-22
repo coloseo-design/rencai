@@ -1,0 +1,455 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<style>
+	.header{ display: none;}
+	</style>
+    <link href="{yun:}$wap_style{/yun}/css/member/memberwap.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<div class="zph_net_content">
+    <div class="zph_net_top">     	<a href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}" class="header_back"></a>   
+        <div class="zbzph_img">
+            <img src="{yun:}$row.banner_wap_n{/yun}">
+        </div>
+        <div class="zph_net_zt">
+            <marquee direction="left">
+                {yun:}foreach from=$look item=lk{/yun}
+                <span class="zphnet_zt">
+                    <b><img src="{yun:}$lk.photo_n{/yun}"></b>
+                    {yun:}$lk.name{/yun}<em class="wlzp_show_fw_n">刚才查看了</em>
+                    {yun:}if $lk.jobname{/yun} {yun:}$lk.jobname{/yun}
+                    {yun:}else{/yun} {yun:}$lk.comname{/yun}的职位
+                    {yun:}/if{/yun}
+                </span>
+                {yun:}/foreach{/yun}
+                {yun:}foreach from=$horn item=ht{/yun}
+                <span class="zphnet_zt"><b><img src="{yun:}$ht.photo_n{/yun}"></b>{yun:}$ht.name{/yun}</span>
+                {yun:}/foreach{/yun}
+            </marquee>
+        </div>
+    </div>
+</div>
+<div class="zph_net_listcontent">
+    <div class="zph_net_nav_new">
+        <div class="zph_net_nav_new_text">
+            <p>{yun:}$row.body_n{/yun}<b onclick="showBody()">查看详情</b></p>
+        </div>
+        <div class="zph_net_number_new">
+            <div class="zph_net_number_list_new">{yun:}$allnum.comnum{/yun} <b>家</b>
+                <div>参会企业</div>
+            </div>
+            <div class="zph_net_number_list_new">{yun:}$allnum.jobnum{/yun} <b>个</b>
+                <div>参会职位</div>
+            </div>
+            <div class="zph_net_number_list_new">{yun:}$allnum.zpnum{/yun} <b>人</b>
+                <div>招聘人数</div>
+            </div>
+            <div class="zph_net_number_list_new">{yun:}$allnum.usernum{/yun} <b>人</b>
+                <div>参会求职者</div>
+            </div>
+        </div>
+    </div>
+    <div id="zph_net_nav" class="zph_net_nav">
+        <ul class="zph_net_nav_list">
+            <li id="zph_net_nav_czqy" class="{yun:}if ($boxtype=='comlist' || !$boxtype) && !$smarty.get.page{/yun}zph_net_nav_cur{yun:}/if{/yun}" onclick="tabChange(this,'comlist')"><a>招聘大厅</a></li>
+            <li id="zph_net_nav_qzdt" class="{yun:}if $boxtype=='hall' || $smarty.get.page{/yun}zph_net_nav_cur{yun:}/if{/yun}" onclick="tabChange(this,'hall')"><a>求职者大厅</a></li>
+        </ul>
+        <div class="zph_net_search">
+            <div class="zph_net_search_c">
+                <form action="index.php" method="get" autocomplete="off">
+                    <input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}" />
+                    <input type="hidden" name="a" value="{yun:}$smarty.get.a{/yun}" />
+                    <input type="hidden" name="id" id="zid" value="{yun:}$smarty.get.id{/yun}" />
+                    <input type="hidden" name="form" value="{yun:}$smarty.get.form{/yun}" />
+                    <input type="hidden" name="ztype" id="ztype" value="job" />
+                    <input type="hidden" name="boxtype" id="boxtype" value="{yun:}if $smarty.get.page{/yun}hall{yun:}else{/yun}{yun:}$boxtype{/yun}{yun:}/if{/yun}" />
+                    <input type="text" name="keyword" id="keyword" value="{yun:}$smarty.get.keyword{/yun}" placeholder="{yun:}if ($boxtype=='comlist' || !$boxtype) && !$smarty.get.page{/yun}搜索职位/公司{yun:}else{/yun}搜索简历名称{yun:}/if{/yun}" class="zph_net_search_text">
+                    <div class="zph_net_search_bth_box">
+                        <input type="submit" value="搜索" class="zph_net_search_bth">
+                        <i class="icon_sousuo"></i>
+                    </div>
+                </form>
+            </div>
+            <!--导航-->
+            
+            {yun:}if $zphArea{/yun}
+            <div class="wlzph_leftnv">
+                <div class="" id="zboxshow" style="display:block">
+                    <div class="wlzph_leftnv_c">
+                        <a href="{yun:}url m=wap c=zphnet a=show id=$row.id form=$smarty.get.form{/yun}#comlist" class="{yun:}if $smarty.get.zw == '' || !$smarty.get.zw{/yun}wlzph_leftnv_cur{yun:}/if{/yun}">全部</a>
+                        {yun:}foreach from=$area key=qkey item=qy{/yun}
+                        <a href="{yun:}url m=wap c=zphnet a=show id=$row.id zw=$qy.id form=$smarty.get.form{/yun}#comlist" class="{yun:}if $smarty.get.zw == $qy.id{/yun}wlzph_leftnv_cur{yun:}/if{/yun}">{yun:}$qy.name{/yun}</a>
+                        {yun:}/foreach{/yun}
+                        <a href="{yun:}url m=wap c=zphnet a=show id=$row.id zw=other form=$smarty.get.form{/yun}#comlist" class="{yun:}if $smarty.get.zw == 'other'{/yun}wlzph_leftnv_cur{yun:}/if{/yun}">其他区域</a>
+                    </div>
+                </div>
+            </div>
+            {yun:}/if{/yun}
+            
+            <!--导航 end-->
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="comlist" class="zphnetdiv {yun:}if $boxtype=='hall' || $smarty.get.page{/yun}none{yun:}/if{/yun}">
+        <div class="zph_net_box">
+            <!--列表-->
+            <div id="comdiv">
+                {yun:}foreach from=$areaCom.com item=zd{/yun}
+                <div class="zph_net_list">
+                    <div class="zph_net_list_c">
+                        <span id="dxzph_{yun:}$zd.uid{/yun}" class="spmszx zphnetOnline none">在线</span>
+                        <div onclick="zphnetLook('{yun:}$row.id{/yun}','{yun:}$zd.uid{/yun}','','{yun:}url m=wap c=company a=show id=$zd.uid{/yun}')" class="zph_net_list_combox">
+                            <div class="zph_net_list_pic"><img src="{yun:}$zd.logo{/yun}"></div>
+                            <div class="zph_net_list_comname">{yun:}$zd.comname{/yun}</div>
+                            <div class="zph_net_list_cominfo">
+                                {yun:}$industry_name[$zd.hy]{/yun}<i class="">|</i>
+                                {yun:}$comclass_name[$zd.pr]{/yun}<i class="">|</i>
+                                {yun:}$comclass_name[$zd.mun]{/yun}
+                            </div>
+                        </div>
+                        <div class="zph_net_list_joblist">
+                            {yun:}foreach from=$zd.job key=zk item=zdjob{/yun}
+                            <div class="zph_net_jobbox">
+                                <!-- <i class="zph_net_list_icon"></i> -->
+                                <div class="zph_net_list_job" onclick="zphnetLook('{yun:}$row.id{/yun}','{yun:}$zdjob.uid{/yun}','{yun:}$zdjob.id{/yun}','{yun:}url m=wap c=job a=comapply id=$zdjob.id{/yun}')">
+                                    {yun:}$zdjob.name{/yun}
+                                </div>
+                                <span class="zph_net_jobxz">{yun:}$zdjob.job_salary{/yun}</span>
+                            </div>
+                            {yun:}/foreach{/yun}
+                        </div>
+                        <!-- 共有{yun:}$zd.jobnum{/yun}个在招职位 -->
+                        <a href="javascript:void(0)" onclick="zphnetLook('{yun:}$row.id{/yun}','{yun:}$zd.uid{/yun}','','{yun:}url m=company c=show id=$zd.uid {/yun}')" class="zph_netjobmore">
+                            查看更多职位 <img src="{yun:}$wap_style{/yun}/images/oei.png"></a>
+                        <div class="zph_net_new_gt">
+							{yun:}if $config.sy_chat_open==1{/yun}
+                            {yun:}if $row.etime < 0{/yun} <a href="javascript:void(0)" onclick="zphend()"> <i> <img src="{yun:}$wap_style{/yun}/images/gouton.png"> </i> 立即沟通</a>
+                                {yun:}else{/yun}
+                                <a href="javascript:void(0)" onclick="jobChat('{yun:}$zd.uid{/yun}','com','{yun:}$usertype{/yun}','','{yun:}$config.sy_chat_name{/yun}','{yun:}$config.sy_user_change{/yun}',this)" data-zid="{yun:}$row.id{/yun}"><i><img src="{yun:}$wap_style{/yun}/images/gouton.png"></i>立即沟通</a>
+                                {yun:}/if{/yun}
+                                {yun:}if $config.sy_spview_web == 1{/yun}
+                                <a href="javascript:void(0)" onclick="spdiv('{yun:}$row.id{/yun}','{yun:}$zd.uid{/yun}','{yun:}$usertype{/yun}', '2')" class="spmswzx"><i><img src="{yun:}$wap_style{/yun}/images/shivideo.png"></i>申请视频面试</a>
+                                {yun:}/if{/yun}
+							{yun:}/if{/yun}
+                        </div>
+                        
+                    </div>
+                    <input type="hidden" name="dxzph[]" value="{yun:}$zd.uid{/yun}" />
+                </div>
+                {yun:}foreachelse{/yun}
+                <div class="wap_member_no">招聘会企业整理中，即将发布</div>
+                {yun:}/foreach{/yun}
+            </div>
+            {yun:}if $areaCom.total > 1{/yun}
+            <div class="pages" style="padding-bottom:20px">
+                <a href="javascript:void(0)" onclick="compage('1')">上一页</a>
+                <select onchange="toZphnetComPage()" id="zphnetComPage">
+                    {yun:}for $var=1 to $areaCom.total{/yun}
+                    <option value="{yun:}$var{/yun}" class="comPageSelect">{yun:}$var{/yun}</option>
+                    {yun:}/for{/yun}
+                </select>
+                <a href="javascript:void(0)" onclick="compage('2')">下一页</a><em>共{yun:}$areaCom.total{/yun}页</em>
+            </div>
+            {yun:}/if{/yun}
+            <!--列表 end-->
+        </div>
+    </div>
+    <!--简历---------------------------------->
+    <div id="hall" class="zph_net_box {yun:}if ($boxtype=='comlist' || !$boxtype) && !$smarty.get.page {/yun}none{yun:}/if{/yun} zphnetdiv">
+        <!--列表-->
+        <div id="halldiv">
+            {yun:}zphnetuser id='auto.id' keyword='auto.keyword' item=user limit=20{/yun}
+            <div class="zphnetuser_list">
+                <div class="zphnetuser_list_c">
+                    <span id="dxzph_{yun:}$user.uid{/yun}" class="spmszx zphnetOnline none">在线</span>
+                    <a href="{yun:}url m=wap c=resume a=show id=$user.id{/yun}">
+                        <div class="">
+                            <div class="zphnetuser_pic"><img src="{yun:}$user.photo_n{/yun}"></div>
+                            <div class="zphnetusername">{yun:}$user.name{/yun}</div>
+                            <div class="zphnetusername_info">
+                                {yun:}$user.uname_n{/yun}
+                                <span class="zph_list_info">({yun:}$user.sex_n{/yun},{yun:}$user.age_n{/yun}岁)</span>
+                            </div>
+                            <div class="zph_list_info_p">
+                                {yun:}$user.edu_n{/yun} <span class="zph_list_line">|</span>
+                                {yun:}$user.exp_n{/yun}
+                            </div>
+                        </div>
+                    </a>
+                    {yun:}if $config.sy_chat_open==1{/yun}
+                    <div class="zphnetusername_bth">
+                        {yun:}if $row.etime < 0{/yun} <a onclick="zphend()" class="zphnetusername_bth_a">立即沟通</a>
+                            {yun:}else if $usertype == 2{/yun}
+                            <a onclick="zphnetChat('{yun:}$user.uid{/yun}','{yun:}$user.id{/yun}','{yun:}$usertype{/yun}','{yun:}$config.sy_chat_name{/yun}',this)" data-zid="{yun:}$row.id{/yun}" class="zphnetusername_bth_a">立即沟通</a>
+                            {yun:}else{/yun}
+                            <a onclick="showToast('非企业用户，暂无聊天权限！');return false;" class="zphnetusername_bth_a">立即沟通</a>
+                            {yun:}/if{/yun}
+                            {yun:}if $config.sy_spview_web == 1{/yun}
+                            {yun:}if $row.etime < 0{/yun} <a onclick="zphend()" class="zphnetusername_bth_a zphnetusername_bth_sp">视频面试</a>
+                                {yun:}else if $usertype == 2{/yun}
+                                <a href="javascript:void(0)" onclick="spdiv('{yun:}$row.id{/yun}','{yun:}$user.uid{/yun}','{yun:}$usertype{/yun}','1')" class="zphnetusername_bth_a zphnetusername_bth_sp">视频面试</a>
+                                {yun:}else{/yun}
+                                <a onclick="showToast('非企业用户，暂无视频权限！');return false;" class="zphnetusername_bth_a zphnetusername_bth_sp">视频面试</a>
+                                {yun:}/if{/yun}
+                                {yun:}/if{/yun}
+                                {yun:}/if{/yun}
+                    </div>
+                </div>
+                <input type="hidden" name="dxzph[]" value="{yun:}$user.uid{/yun}" />
+            </div>
+            {yun:}/zphnetuser{/yun}
+            {yun:}if $total>0{/yun}
+            <div class="pages" style="padding-bottom:20px">
+                {yun:}$pagenav{/yun}
+            </div>
+            {yun:}else{/yun}
+            <div class="wap_member_no">暂无内容</div>
+            {yun:}/if{/yun}
+        </div>
+        <!--列表 end-->
+    </div>
+</div>
+<!--简历 end---------------------------------->
+</div>
+</div>
+<!--zph footer --------------------------------->
+{yun:}if $row.etime > 0{/yun}
+{yun:}if !$uid && !$usertype{/yun}
+<div class="zph_net_footer">
+    <div class="zph_net_footer_c">
+   <div class="zph_net_footer_bth">
+            <a href="javascript:void(0)" onclick="pleaselogin('您还未登录招聘者账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="wlzp_bm_bth ">企业报名</a>
+         </div>
+		 <div class="zph_net_footer_bth">
+		  <a href="javascript:void(0)" onclick="noresume()" class="wlzp_bm_bth wlzp_bm_qzzbth">求职者报名</a>
+		</div>
+    </div>
+</div>
+{yun:}elseif $usertype == '1' && $enum < 1{/yun} <div class="zph_net_footer">
+    <div class="zph_net_footer_c">
+        <div class="wlzp_show_footer_bm">
+            <a href="javascript:void(0)" onclick="noresume()" class="wlzp_bm_bth  wlzp_bm_qzzbth">求职者报名</a>
+        </div>
+    </div>
+    </div>
+    {yun:}/if{/yun}
+    {yun:}if $usertype == '2'{/yun}
+    <div class="zph_net_footer">
+        <div class="zph_net_footer_c">
+             <div class="zph_net_footer_bth">
+                <a href="javascript:void(0)" onclick="clickZphnet('{yun:}$row.id{/yun}')" class="wlzp_show_footer_bm_bth wlzp_show_footer_bm_bth_qy"><img src="{yun:}$wap_style{/yun}/images/baoming.png">企业报名</a>
+            </div>
+        </div>
+    </div>
+    {yun:}/if{/yun}
+    {yun:}/if{/yun}
+    <div id="yunvue">
+        <van-popup v-model="jobBox" position="bottom" round @close="reserveClose" closeable>
+            <div class="zph_xzjob ">
+                <div class="zph_xzjob_tit">选择参与网络招聘会的职位</div>
+                <div class="zph_xzjob_cont">
+                    <div id="error_zph" class="error_zph"></div>
+                    <input id="zid" value="{yun:}$row.id{/yun}" type="hidden" />
+                    <van-checkbox-group v-model="result" @change="changeResult" ref="jobcheckboxGroup">
+                        <van-cell-group>
+                            <van-cell clickable title="全选" @click="jobCheckAlltoggle">
+                                <template #right-icon>
+                                    <van-checkbox v-model="allresult" ref="jobCheckAll" shape="square"></van-checkbox>
+                                </template>
+                            </van-cell>
+                            <van-cell v-for="(item, index) in joblist" clickable :key="item.id" :title="`${item.name}`" @click="toggle(index)">
+                                <template #right-icon>
+                                    <van-checkbox :name="item" ref="jobChecks" shape="square" />
+                                </template>
+                            </van-cell>
+                        </van-cell-group>
+                    </van-checkbox-group>
+                </div>
+                <div class="zph_tck_jobpost_bth">
+                    <input type='button' value="确定" onclick="submitzphnet()" class="zph_tck_jobpost_bth_b" />
+                </div>
+            </div>
+        </van-popup>
+        <van-popup v-model="infoBox" position="right" :style="{ height: '100%',width:'100%',backgroundColor:'#f3f3f3'}">
+            <!-- 页面头部 -->            
+            <div class="headers" style="width: 100%;height: 1.28rem;">
+                <div class="header_fixed">
+                    <div class="header_bg">
+                        <div class="header_cont">
+                            <a class="header_back hd-lbtn " href="javascript:void(0)" @click="infoClose"></a>
+                            <div class="header_h1">
+
+                                <div class="header_words"> 招聘会简介</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 页面整体部分 -->
+            <div class="issue_post_body">
+                <div class="zph_net_nav_new_text" v-html="body">
+                </div>
+            </div>
+        </van-popup>
+    </div>
+    <input id="zphnet_group" type="hidden" value="1" />
+    <input id="zphnet_zw" type="hidden" value="{yun:}$smarty.get.zw{/yun}" />
+    </div>
+    <!-- 弹窗 -->
+    {yun:}if !$uid || ($usertype==1 && $enum==0){/yun}
+    <div class="interview" id="interview" style="display: none">
+        <div class="pop_up">
+            <img src="{yun:}$wap_style{/yun}/images/popui.png">
+            <div class="pop_up_title">
+                <h4>面试小贴士</h4>
+                <p>抢先报名，{yun:}$allnum.comnum{/yun}家知名企业 <a href="javascript:void(0)">主动邀您面试</a> </p>
+            </div>
+            <div class="pop_up_land">
+                {yun:}if !$uid{/yun}
+                <a href="{yun:}url m=wap c=register{/yun}" class="zph_signup">登记报名</a>
+                <p>已有账号，直接 <a href="{yun:}url m=wap c=login{/yun}">登录</a> </p>
+                {yun:}else{/yun}
+                    {yun:}if $usertype==1 && $enum==0{/yun}
+                    <a href="{yun:}$addresumeurl{/yun}" class="zph_signup">登记报名</a>
+                    {yun:}/if{/yun}
+                {yun:}/if{/yun}
+
+                
+            </div>
+            <img id="pop_up_click" src="{yun:}$wap_style{/yun}/images/gbtg54.png">
+        </div>
+    </div>
+    {yun:}/if{/yun}
+    {yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+    <script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <script src="{yun:}$wap_style{/yun}/js/zphnet.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <script src='{yun:}$wap_style{/yun}/chat/chat.js?v={yun:}$config.cachecode{/yun}' language="javascript"></script>
+    <script type="text/javascript">
+    marquee("2100", ".gdbq  ul");
+    marquee("2000", ".gdbq2  ul");
+    var usertype = "{yun:}$usertype{/yun}",wap_style='{yun:}$wap_style{/yun}',
+        sy_chat_name = "{yun:}$config.sy_chat_name{/yun}",
+        sy_chat_open = "{yun:}$config.sy_chat_open{/yun}",
+        sy_user_change = "{yun:}$config.sy_user_change{/yun}",
+        zphetime = "{yun:}$row.etime{/yun}",
+        searchKeyword = "{yun:}$smarty.get.keyword{/yun}",
+        page = 1,
+        comPageAll = "{yun:}$areaCom.total{/yun}",
+        isload = false;
+
+    var jobIds = [];
+    var infobody = '{yun:}$row.body{/yun}'
+    $(function() {
+        setTimeout(function() { 
+            {yun:}if $row.etime < 0 {/yun}
+                zphend();
+            {yun:}/if{/yun}
+        }, 1000);
+        var cheight = $("#com_content").height();
+        if (parseInt(cheight) > 42) {
+            $("#com_content").attr('style', 'width:100%;height:42px; overflow:hidden');
+            $(".zph_js_xq").show();
+        }
+        $("#zph_net_nav_czqy").click(function() {
+            $('.zph_net_number').show()
+            $('.zph_net_jobnav').show()
+        })
+        $("#zph_net_nav_qzdt").click(function() {
+            $('.zph_net_number').hide()
+            $('.zph_net_jobnav').hide()
+        })
+    })
+
+    function showcc() {
+        $("#com_content").attr('style', 'width:100%;height:auto; overflow:hidden');
+        $(".zph_js_xq").find('a').html('收起');
+        $(".zph_js_xq").find('a').attr('onclick', 'hidecc()');
+    }
+
+    function hidecc() {
+        $("#com_content").attr('style', 'width:100%;height:42px; overflow:hidden');
+        $(".zph_js_xq").find('a').html('查看详情');
+        $(".zph_js_xq").find('a').attr('onclick', 'showcc()');
+    }
+
+    function zboxclose() {
+        $("#zboxshow").hide();
+        $(".zbox_close").show();
+    }
+
+    function zboxshow() {
+        $("#zboxshow").show();
+        $(".zbox_close").hide();
+    }
+    function showBody(){
+       yunvue.$data.infoBox = true;
+       
+    }
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                jobBox: false,
+                joblist: [],
+                result: [],
+                allresult: false,
+                infoBox:false,
+                body:infobody
+            }
+        },
+        methods: {
+            toggle(index) {
+                var that = this;
+                that.$refs.jobChecks[index].toggle();
+
+            },
+            changeResult: function() {
+                var that = this;
+                jobIds = [];
+                that.result.forEach((v, i) => {
+                    if (v && v.id) {
+                        jobIds.push(v.id);
+                    }
+                }, this);
+                if (jobIds.length < that.joblist.length) {
+                    that.allresult = false;
+                } else {
+                    that.allresult = true;
+                }
+            },
+            jobCheckAlltoggle: function() {
+                var that = this;
+                that.allresult = !that.allresult;
+
+                that.$refs.jobcheckboxGroup.toggleAll(that.allresult);
+            },
+            reserveClose: function() {
+                var that = this;
+                that.allresult = false;
+                that.$refs.jobcheckboxGroup.toggleAll(false);
+            },
+            infoClose: function(){
+                var that = this;
+                that.infoBox = false;
+                
+            }
+        }
+    });
+    window.localStorage.removeItem("needRefresh");
+    window.addEventListener('pageshow', function() {
+        var storage = window.localStorage.getItem("needRefresh");
+        if (storage) {
+            window.location.reload();
+        }
+    })
+    </script>
+    <!-- 点击关闭弹出 -->
+    <script>
+    $(document).ready(function() {
+        $("#pop_up_click").click(function() {
+            $('.interview').hide();
+        });
+    });
+    </script>
+    </body>
+
+    </html>

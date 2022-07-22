@@ -1,0 +1,131 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue" class="none"> 
+<div class="money_body_bg"></div>
+<div class="money_body">
+<div class="money_body_card">
+            <div class="money_card_box">
+                <div class="card_box_name">我的钱包</div>
+                <div class="card_box_number">
+                    <i class="card_number_icon">￥</i> {{packfk}}</div>
+            </div>
+            <div class="money_card_hint"></div>
+            <div class="money_card_box">
+                <div class="card_box_name">冻结金额</div>
+                <div class="card_box_number">
+                    <i class="card_number_icon">￥</i> {{freeze}}</div>
+            </div>
+           
+        </div>
+
+<div class="money_body_btns">
+	
+	{yun:}if $config.sy_withdraw==1{/yun}<div class="money_btns_transform"> <a href="javascript:void(0)" @click="cashout" class="">立即提现</a></div> {yun:}/if{/yun}
+	<div class="money_btns_withdraw"> <a href="javascript:void(0)" @click="cashchange" style="color:#fff">转换{{pricename}}</a></div>
+	
+         
+        </div>
+
+    </div>
+
+
+
+
+	<div class="m_cardbox">
+		
+		<div class="m_cardbg" v-for="(item,rkey) in list" :key="rkey">
+			<div class="user_member_box">
+				<div class="com_member_hr_p1"><span class="member_c9">转发职位：</span>{{item.jobname}}</div>
+				<div class="com_member_hr_p1"><span class="member_c9">浏览时间：</span>{{item.time_n}}</div>
+				<div class="com_member_hr_p1"><span class="member_c9">获得金额：</span><span class="yun_reward_list_box_n">+{{item.packmoney}}</span> 元</div>
+			</div>
+		</div>
+		<div class="wap_member_nobg" v-if="count==0" style="margin-top: 0.266666rem;">  <div class="wap_member_no">暂无收益</div></div>
+		<div v-if="total>limit">
+	    <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+	    </div>
+	</div>
+
+</div>
+<script>  
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}');
+      	currentPage = currentPage ? currentPage : 1;
+    new Vue({
+        el: '#yunvue',
+        data: {
+          	list: [],
+          	limit:20,       
+          	total:0,          
+          	page: currentPage,
+			statis: [],
+			pricename: '',
+			withdraw: 0,
+			packfk: 0,
+			freeze: 0,
+        },
+        computed: {
+          count(){
+            if(this.total > this.limit){
+              return 2;
+            }else if(this.list.length==0){
+              return 0;
+            }else{
+                return 1;
+            }
+          }
+        },
+        created() {   
+         this.getLogList();
+        },
+        methods:{          
+          getLogList:function(){
+            showLoading();
+            var that = this;
+            var paramer = {};
+                paramer['page'] = that.page;
+                paramer['limit'] = that.limit;          
+            $.post('{yun:}url d=wxapp h=com m=finance c=logList{/yun}',paramer,function(data){
+                hideLoading();                      
+                if (data) {
+                	that.total=data.total;
+					let res = data.data;
+					that.statis = res.statis;
+					that.pricename = res.pricename;
+					that.withdraw = res.withdraw;
+					that.packfk = that.statis.packfk > 0 ? that.statis.packfk : 0;
+					that.freeze = that.statis.freeze > 0 ? that.statis.freeze : 0;
+					if (res.list.length > 0) {
+						that.list = res.list;
+						
+					} 
+				}
+                $("#yunvue").css('display', 'block');
+            },'json');
+          },
+          cashchange:function(){
+          	var that = this;
+			if (that.withdraw > 0) {
+				window.location.href="index.php?c=change";
+			} else {
+				showToast("暂无可转换金额");
+			}
+          },
+          cashout:function(){
+          	var that = this;
+			if (that.withdraw > 0) {
+				window.location.href="index.php?c=withdraw";
+			} else {
+				showToast("暂无可提现金额");
+			}
+          },
+           pageChange:function(e){
+          
+            location.href = 'index.php?c=loglist&page='+e;
+          },
+          pageTo:function(url){
+              window.location.href = url;
+          }
+        } 
+      });
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{yun:}if $config.sy_chat_open==1{/yun}
+	<script src="{yun:}$config.sy_weburl{/yun}/app/template/chat/yunliao/chat.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script>var spWait = '{yun:}$config.sy_spview_wait{/yun}';</script>
+	{yun:}if $smarty.get.c != 'chat'{/yun}
+		<script type="text/javascript">
+			var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+				weburl = "{yun:}$config.sy_weburl{/yun}",
+				toid = '',
+				mine = {id:'{yun:}$uid{/yun}',usertype: '{yun:}$usertype{/yun}'},
+				chat_name = '{yun:}$config.sy_chat_name{/yun}';
+				getUnread();
+				
+			function getUnread(){
+				if(typeof memberMsgnum === 'undefined'){
+					// 避免重复查询
+					$.get(weburl+"/index.php?m=ajax&c=msgNum",function(data){ 
+						var datas=eval("(" + data + ")");
+						if(datas.chatNum){
+							$('#memberNoChat').addClass('none');
+							$('#memberHaveChat').removeClass('none');
+							$('#memberChatNum').text(datas.chatNum);
+
+							if (typeof(newChatMsg) != "undefined") {
+								newChatMsg = true;
+							}
+						}else{
+							$('#memberNoChat').removeClass('none');
+							$('#memberHaveChat').addClass('none');
+							$('#memberChatNum').text('');
+							
+						}
+					})
+				}
+			}
+		</script>
+		{yun:}if $uid && $usertype{/yun}
+		<script src="{yun:}$config.sy_weburl{/yun}/app/template/chat/yunliao/websocket.js?v={yun:}$config.cachecode{/yun}"></script>
+		<div id="memberNoChat" class="chat_box" onclick="goChat()">
+			<div class="chat_box_c"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_chat_logo{/yun}"> <span>{yun:}$config.sy_chat_name{/yun}</span></div>
+		</div>
+        <div id="memberHaveChat" class="chat_box chat_box_news none" onclick="goChat()">
+            <div class="chat_box_c"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_chat_logo{/yun}"> <span> 有新消息<span id="memberChatNum" class="chat_n"></span></span></div>
+		</div>
+		<div id="zwf" class="none">【&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;】</div>
+		<style>
+		.chat_box{width:160px;height:50px; line-height:50px; position:fixed;right:0px;bottom:0px;border-radius: 2px;box-shadow: 1px 1px 50px rgba(0,0,0,.3); background:#fff ; cursor:pointer; z-index:100000000;}
+		.chat_box_c{padding-left:50px; position:relative}
+		.chat_box img{width:30px;height:30px; position:absolute;left:10px;top:10px; }
+		.chat_box_news img{animation: rotate 1s infinite; -moz-animation: rotate 1s infinite;; -ms-animation: rotate 1s infinite; -o-animation: rotate 1s infinite; -webkit-animation: rotate 1s ease-in  infinite ;}
+		@keyframes rotate {
+		0% { opacity:0 ;}
+		100% {opacity:1;}
+		}
+		.chat_n{font-size: 12px;background: red;color: #fff;border: none;border-radius: 15px;line-height: 16px;padding: 0 5px; margin-left:10px;}
+		.chat_box_news{ background:#fff;}
+		</style>
+		{yun:}/if{/yun}
+	{yun:}/if{/yun}
+{yun:}/if{/yun}

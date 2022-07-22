@@ -1,0 +1,156 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+	<div class="admin_mainbody">
+ 		{yun:}include file="$comstyle/left.htm"{/yun}
+    	
+    	<div class="com_tit"><span class="com_tit_span">网络招聘会视频面试记录</span></div>
+        
+        <div class='right_box'>
+        	<div class='admincont_box'>
+
+                <div class='com_body'>
+                	
+                	<div class="com_new_tip ">
+						<span class="com_new_tip_h">温馨小提示</span>若遇虚假简历,可在简历详细页举报给平台，平台会对违规简历进行严肃处理
+					</div>
+                    
+                    <div class="admin_textbox_04 mt20">
+                 		 
+          				<!-- 收到简历列表 -->
+                      	<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+
+                      	<form action='index.php?c=spview&act=delSub' target="supportiframe" method="post" id='myform' class='layui-form'>
+							<table class="com_received_resume" >
+								{yun:}if $rows{/yun}
+								<tr>
+									
+									<th>求职者基本信息</th>
+									<th>视频面试时长</th>
+									<th>开始时间</th>
+									<th>操作</th>
+								</tr>
+								{yun:}/if{/yun}
+								{yun:}foreach item=v from=$rows{/yun}
+								<tr>
+									
+									<td>
+										<div>
+											<a href="{yun:}url m=resume c=show uid=$v.uid{/yun}" target="_blank" class="com_received_username">{yun:}$v.runame{/yun}</a>
+										</div>
+										
+										<div class="com_received_userinfo">
+											{yun:}if $v.sex_n{/yun}{yun:}$v.sex_n{/yun}{yun:}else{/yun}保密{yun:}/if{/yun}
+											<span class="com_received_userinfo_line">|</span>{yun:}$v.age_n{/yun}岁
+											<span class="com_received_userinfo_line">|</span>{yun:}$v.exp_n{/yun}经验
+											<span class="com_received_userinfo_line">|</span>{yun:}$v.edu_n{/yun}学历
+										</div>
+									</td>
+									<td align="center">
+										
+										{yun:}$v.sptime_n{/yun}
+									</td>
+									
+									<td align="center">
+										<div>
+											<div class="com_received_tdtime">{yun:}$v.ctime_n{/yun}</div>
+										</div>
+									</td>
+									
+									<td width="153">
+										<div class="com_received_username_cz" style="text-align:center">
+										
+											
+												<span class="com_received_username_bj"><a href="javascript:;" onclick="remark('{yun:}$v.id{/yun}','{yun:}$v.remark{/yun}');">备注</a></span>
+										
+											
+											
+										</div>
+									</td>
+									
+								</tr>
+								
+								{yun:}/foreach{/yun}
+
+								{yun:}if $rows{/yun}
+								<tr>
+									<td colspan="5">
+										<div class="diggg">{yun:}$pagenav{/yun}</div>
+									</td>
+								</tr>
+                                {yun:}else{/yun}
+                                <tr>
+									<td colspan="7" class="table_end">
+										<div class="msg_no">
+											<p>亲爱的用户，目前您还没有进行网络招聘会视频面试。</p>
+											<a href="{yun:}url m=resume{/yun}" class="com_msg_no_bth com_submit">我要主动找人才</a>
+										</div>
+									</td>
+								</tr>
+								{yun:}/if{/yun}
+							</table>          
+	               		</form>
+
+						<div class="clear"></div>
+						<div class="infoboxp22" id="infobox" style="display:none; ">
+							<form action="index.php?c=spview&act=setSplogContent" method="post" id="formstatus" target="supportiframe">
+								<input name="id" value="0" type="hidden">
+								<div class="bz_textarea" >
+								  <textarea id="content"  name="content" class="bz_textarea_text"></textarea>
+								</div>
+								<div class="bz_textarea_bot" >
+								  <button type="submit" name='submit' value='1' class="com_pop_bth_qd" >确认</button>
+								  &nbsp;&nbsp;
+								  <button type="button" id='zxxCancelBtn'  class="com_pop_bth_qx">取消</button>
+								</div>
+							  </form>
+						</div>
+
+               		</div>
+           		</div>
+       		</div>
+   		</div>
+	</div>
+</div>
+
+<script>
+
+	layui.use(['form'], function(){
+	    var form = layui.form,
+			$ = layui.$; 
+	    
+		
+ 		form.on('select(sp_submit)', function(data){
+			$('#MyForm1').submit();
+ 		})
+
+ 	    form.on('checkbox(allcom)', function (data) {
+	        $("input[name='delid[]']").each(function () {
+	            this.checked = data.elem.checked;
+	        });
+	        form.render('checkbox');
+	 	});
+	});
+
+	function remark(id,content){
+		$("input[name=id]").val(id);
+		$("#content").val(content);
+		$.layer({
+			type : 1,
+			title :'备注', 
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['300px','200px'],
+			page : {dom :"#infobox"}
+		});
+	}
+	
+	$(document).ready(function(){ 
+		$('#zxxCancelBtn').click(function(){
+			layer.closeAll();
+		}); 
+	}); 
+		 
+</script>
+
+{yun:}include file="$comstyle/yqms.htm"{/yun}
+{yun:}include file="$comstyle/footer.htm"{/yun}

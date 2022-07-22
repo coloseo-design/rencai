@@ -1,0 +1,580 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody">
+        {yun:}include file="$comstyle/left.htm"{/yun}
+
+        <div class="com_tit"><span class="com_tit_span">账号设置</span>
+		<div class="com_topbth_box"><input class="com_topbth_input" id="createChildId"  type="button" value="添加账号"></div>
+		
+	 
+		
+		
+		</div>
+
+        <div class=right_box>
+            <div class=vip_boxshow>
+                <div class="vip_boxshow_c">
+                    <div class="report_uaer_list  ">
+                        <div class="report_uaer_list_h1">账号与绑定</div>
+                        <div class="report_uaer_list_p">能获得更多求职者的青睐</div>
+                        <ul>
+                            <li><a href="index.php?c=binding">认证与绑定</a></li>
+                            <li class="report_uaer_list_cur"><a href="index.php?c=child">团队管理</a></li>
+                            <li><a href="index.php?c=vs">密码修改</a></li>
+                            {yun:}if $config.sy_user_change==1{/yun}
+                            <li><a href="javascript:void(0)" onclick="changeutype();">切换身份</a></li>
+                            {yun:}/if{/yun}
+                            <li><a href="index.php?c=logout">账号注销</a></li>
+                        </ul>
+                    </div>
+                    <div class="vip_box_dq">子账户是附属于主账户的一种账户 , 开通子账户后需要您为子账户分配使用权限 ，现已创建 {yun:}$totalNum{/yun} 个子账号，
+                        剩余创建子账号：{yun:}$statis.sons_num{/yun} 个 ；被锁定的子账号需要您激活之后使用。
+                    </div>
+                    <div class="vip_box" style="padding: 15px;;">
+                        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                        <div class="newcom_tablebox ">
+                            <table class="com_received_resume  mt20">
+                                {yun:}if $rows{/yun}
+                                <tr>
+                                    <th>子账号ID</th>
+                                    <th>用户名</th>
+                                    <th>部门名称</th>
+                                    <th>添加日期</th>
+                                    <th width="230">操作</th>
+                                </tr>
+                                {yun:}/if{/yun}
+
+                                {yun:}foreach item=v from=$rows{/yun}
+                                <tr>
+                                    <td align="center">{yun:}$v.uid{/yun}</td>
+                                    <td align="center">
+                                        {yun:}$v.username{/yun}
+                                        {yun:}if $v.status == 2{/yun}[锁定]{yun:}/if{/yun}
+                                    </td>
+                                    <td align="center">{yun:}$v.name{/yun}</td>
+
+                                    <td align="center">{yun:}$v.ctime|date_format:'%Y-%m-%d'{/yun}</td>
+                                    <td align="center">
+                                        {yun:}if $v.status ==2 {/yun}
+                                        <a href="javascript:void(0)" onclick="activeSon('{yun:}$v.uid{/yun}');" class="com_bth cblue">激活</a>
+                                        {yun:}else{/yun}
+                                        <a href="javascript:;" class="com_bth cblue assignChildA" data-uid="{yun:}$v.uid{/yun}">分配套餐</a>
+                                        <a href="javascript:void(0)" data-uid="{yun:}$v.uid{/yun}" data-name="{yun:}$v.name{/yun}" data-username="{yun:}$v.username{/yun}" class="com_bth cblue editChildA">修改</a>
+                                        {yun:}/if{/yun}
+                                        <a href="javascript:;" class="com_bth cblue bindChildA" data-uid="{yun:}$v.uid{/yun}">删除</a>
+                                    </td>
+                                </tr>
+                                {yun:}foreachelse{/yun}
+                                <tr>
+                                    <td colspan="8" class="table_end">
+                                        <div class="com_msg_no">
+                                            <p>目前您还没有创建子账号</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {yun:}/foreach{/yun}
+                                <tr>
+                                    <td colspan="8" class="table_end">
+                                        <div class="diggg">{yun:}$pagenav{/yun}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='editchild_box' style="display:none;float:left">
+        <div class="subaccounts_add">
+            <form action="index.php?c=child&act=editSave" target="supportiframe" method="post" id="editchildForm"
+                  onsubmit="return check_editchildmsg();">
+                <dl>
+                    <dt>用户名：</dt>
+                    <dd>
+                        <input size='20' type="text" id='usernameId' name="username" value='请输入用户名' class="subaccounts_add_text" autocomplete="off" placeholder="请输入用户名">
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>密码：</dt>
+                    <dd><input size='20' type="password" id='pwdId' name="password" value='' placeholder="请输入密码" class="subaccounts_add_text" autocomplete="off"></dd>
+                </dl>
+                <dl>
+                    <dt>部门：</dt>
+                    <dd><input size='34' type="text" id='nameId' name="name" value='' placeholder="请输入部门" class="subaccounts_add_text" autocomplete="off"></dd>
+                </dl>
+                <dl id="resume_job" style="height:30px;">
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="hidden" name="cuid" id="childValId" value="0">
+                        <input type="submit" name='submit' value='确认' class="submit_btn"> &nbsp;&nbsp;
+                        <input type="button" onClick="layer.closeAll();" class="cancel_btn" value='取消'>
+                    </dd>
+                </dl>
+                <dl style="display: none;" id="editTipsId">
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <font color="#f00;">不修改密码请留空!</font>
+                    </dd>
+                </dl>
+            </form>
+        </div>
+    </div>
+
+    <div id='assignstatis_box' style="display:none;float:left">
+        <div class="resume_yqbox">
+            <form action="index.php?c=child&act=assignsave" target="supportiframe" method="post" id="assignChildForm" onsubmit="return check_assignchildmsg();">
+
+                <div class="distribution_setmeal_sm">
+                    <label>您当前是：</label>
+                    <span id="currentRateNameId"></span>/<span id="currentRateTypeId"></span>
+                    <span class="distribution_setmeal_sm_ml"><label>会员服务时间：</label><span id="vipTimeId"></span></span>
+                </div>
+
+                <div class="distribution_setmeal_fpsm">
+                    说明：
+                    1、分配数量请小于可分配的数量；否则无法成功分配。<br>
+                    <div id='tc_information' class="none" style="padding-left:40px;">
+                        2、时间会员，非职位推广套餐，数据总数不受限制（以下套餐数据表示每日上限操作，主账号和子账号共享）。<br>
+                        3、时间会员，职位推广套餐数量（置顶、推荐、紧急招聘）可进行分配，套餐单位：天。
+                    </div>
+                </div>
+
+                <div class="distribution_setmeal_box">
+
+                    <div class="distribution_setmeal_tit">
+                        <span class="distribution_setmeal_tit_l">主账号可分配套餐数量</span>
+                        <span class="distribution_setmeal_tit_r">当前子账号套餐数量</span>
+                        <span class="distribution_setmeal_tit_r">分配套餐数量</span>
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">发布职位：</span>
+                        <input type="text" id='fjob_numId' name="fjob_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='sjob_numId' name="sjob_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="job_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">刷新职位：</span>
+                        <input type="text" id='fbreakjob_numId' name="fbreakjob_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='sbreakjob_numId' name="sbreakjob_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="breakjob_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">下载简历：</span>
+                        <input type="text" id='fdown_resumeId' name="fdown_resume" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='sdown_resumeId' name="sdown_resume" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="down_resume" value='0' autocomplete="off" class="distribution_setmeal_text numCheck">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">邀请面试：</span>
+                        <input type="text" id='finvite_resumeId' name="finvite_resume" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='sinvite_resumeId' name="sinvite_resume" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="invite_resume" value='0' autocomplete="off" class="distribution_setmeal_text numCheck">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">招聘会报名：</span>
+                        <input type="text" id='fzph_numId' name="fzph_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='szph_numId' name="szph_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="zph_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">职位置顶：</span>
+                        <input type="text" id='ftop_numId' name="ftop_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='stop_numId' name="stop_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="top_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck tg_input">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">紧急招聘：</span>
+                        <input type="text" id='furgent_numId' name="furgent_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='surgent_numId' name="surgent_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="urgent_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck tg_input">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">职位推荐：</span>
+                        <input type="text" id='frec_numId' name="frec_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='srec_numId' name="srec_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="rec_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck tg_input">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">子账号：</span>
+                        <input type="text" id='fsons_numId' name="fsons_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='ssons_numId' name="ssons_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="sons_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck tg_input">
+                    </div>
+
+                    <div class="distribution_setmeal_list assignDiv">
+                        <span class="distribution_setmeal_listname">{yun:}$config.sy_chat_name{/yun}：</span>
+                        <input type="text" id='fchat_numId' name="fchat_num" value='' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_zjt"></i>
+                        <input type="text" id='schat_numId' name="schat_num" value='0' autocomplete="off" disabled class="distribution_setmeal_listnotext">
+                        <i class="distribution_setmeal_jt"></i>
+                        <input type="text" name="chat_num" value='0' autocomplete="off" class="distribution_setmeal_text numCheck tg_input">
+                    </div>
+
+                    <div class="distribution_setmeal_list">
+                        <span class="distribution_setmeal_listname">&nbsp;</span>
+                        <input type="hidden" name="cuid" id="assignChildValId" value="0">
+                        <input type="submit" name='submit' value='确认' class="distribution_setmeal_bth">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var assignField = ['job_num', 'breakjob_num', 'down_resume', 'invite_resume', 'zph_num', 'top_num', 'urgent_num', 'rec_num', 'sons_num', 'chat_num'];
+        var csflag = {yun:}if $smarty.get.cs == 'yes'{/yun}true{yun:}else{/yun}false{yun:}/if{/yun};
+
+        //名称获取焦点
+        $('#usernameId').on('focus', function () {
+            if ($(this).val() == '请输入用户名') {
+                $(this).val('');
+            }
+        });
+
+        //添加子账号
+        $('#createChildId').on('click', function () {
+
+            $('#childValId').val(0);
+            $('#usernameId').val('请输入用户名');
+            $('#usernameId').attr('disabled', false);
+            $('#editTipsId').hide();
+            $('#nameId').val('');
+
+            var i = loadlayer();
+
+            $.get("index.php?c=child&act=checkStatis", function (data) {
+                layer.closeAll();
+                var res = eval('(' + data + ')');
+                if (res.ecode == 9) {
+                    var layindex = $.layer({
+                        type: 1,
+                        title: '添加子账号',
+                        closeBtn: [0, true],
+                        border: [10, 0.3, '#000', true],
+                        area: ['410px', '280px'],
+                        page: {dom: "#editchild_box"}
+                    });
+                    $("#layindex").val(layindex);
+
+                } else if (res.ecode == 55) {
+
+                    if (res.data.paytype == undefined) {
+                        layer.msg(res.msg, 2, 8);
+                        return false;
+                    }
+
+                    server_single('createson');
+                    firstTab();
+                    var msglayer = layer.open({
+                        type: 1,
+                        title: '创建子账号',
+                        closeBtn: 1,
+                        border: [10, 0.3, '#000', true],
+                        area: ['810px', 'auto'],
+                        content: $("#tcmsg")
+                    });
+
+                } else {
+
+                    layer.msg(res.msg, 2, 8);
+                }
+                return false;
+            });
+        });
+
+        //创建子账号时购买数量
+        function buyCreateSon() {
+            $.layer({
+                type: 1,
+                title: "创建子账号",
+                closeBtn: [0, true],
+                border: [10, 0.3, '#000', true],
+                area: ['480px', '300px'],
+                page: {
+                    dom: "#createSonBuyId"
+                }
+            });
+        }
+
+        //修改子账号
+        $('.editChildA').off('click').on('click', function () {
+            var thisChildId = parseInt($(this).attr('data-uid'));
+            if (isNaN(thisChildId) || thisChildId < 1) {
+                layer.msg('子账号数据错误！', 2, 8);
+                return false;
+            }
+            $('#childValId').val(thisChildId);
+            $('#usernameId').val($(this).attr('data-username'));
+            $('#usernameId').attr('disabled', true);
+            $('#nameId').val($(this).attr('data-name'));
+            $('#editTipsId').show();
+            var layindex = $.layer({
+                type: 1,
+                title: '修改子账号',
+                closeBtn: [0, true],
+                border: [10, 0.3, '#000', true],
+                area: ['410px', '300px'],
+                page: {dom: "#editchild_box"}
+            });
+            $("#layindex").val(layindex);
+        });
+
+        //提交判断
+        function check_editchildmsg() {
+            var usernameStr = $.trim($("#usernameId").val());
+            if (usernameStr == "" || usernameStr == "请输入登录名称") {
+                layer.msg('登录名称不能为空！', 2, 8);
+                return false;
+            }
+            if ($('#childValId').val() == 0) {
+                if ($.trim($("#pwdId").val()) == "") {
+                    layer.msg('登录密码不能为空！', 2, 8);
+                    return false;
+                }
+            }
+            if ($.trim($("#nameId").val()) == "") {
+                layer.msg('账号名称不能为空！', 2, 8);
+                return false;
+            }
+        }
+
+        //删除子账号
+        $('.bindChildA').off('click').on('click', function () {
+
+            var thisChildId = parseInt($(this).attr('data-uid'));
+
+            if (isNaN(thisChildId) || thisChildId < 1) {
+                layer.msg('子账号数据错误！', 2, 8);
+                return false;
+            }
+
+            layer.confirm('删除会子账号将无法恢复', function () {
+
+                var i = loadlayer();
+
+                $.post("index.php?c=child&act=del", {uid: thisChildId}, function (data) {
+
+                    layer.closeAll();
+
+                    var res = eval('(' + data + ')');
+
+                    if (res.ecode == 9) {
+
+                        layer.msg(res.msg, 2, 9, function () {
+                            location.reload();
+                        });
+                    } else {
+
+                        layer.msg(res.msg, 2, 8);
+                    }
+                    return false;
+                });
+            });
+        });
+
+        //分配套餐输入数据格式化
+        $('.numCheck').on('keyup', function () {
+            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        });
+
+        //分配套餐弹出框，获取已经分配的套餐
+        $('.assignChildA').off('click').on('click', function () {
+
+            var thisChildId = parseInt($(this).attr('data-uid'));
+
+            if (isNaN(thisChildId) || thisChildId < 1) {
+                layer.msg('子账号数据错误！', 2, 8);
+                return false;
+            }
+
+            $('#assignChildValId').val(thisChildId);
+
+            var i = loadlayer();
+
+            $.post('index.php?c=child&act=getstatis', {uid: thisChildId}, function (data) {
+
+                layer.closeAll();
+
+                var res = eval('(' + data + ')');
+
+                if (res.ecode == 9) {
+
+                    if (res.data.fathers != undefined) {
+
+                        //设置主会员数据
+                        var fatherObj = res.data.fathers;
+                        var sonObj = res.data.sons;
+
+                        $('#currentRateNameId').text(fatherObj.rating_name);
+                        $('#currentRateTypeId').text(fatherObj.rating_type_name);
+                        $('#vipTimeId').text(fatherObj.vip_stime_str + ' - ' + fatherObj.vip_etime_str);
+
+                        //需要分配的字段数量
+                        for (i = 0; i < assignField.length; i++) {
+
+                            var tmpFie = assignField[i];
+
+                            if (fatherObj[assignField[i]] != undefined) {
+                                $('#f' + assignField[i] + 'Id').val(fatherObj[assignField[i]]);
+                            }
+
+                            if (sonObj[assignField[i]] != undefined) {
+                                $('#s' + assignField[i] + 'Id').val(sonObj[assignField[i]]);
+                            }
+                        }
+
+                        if (fatherObj.rating_type == '2') {
+                            $("#tc_information").show();
+                            $(".numCheck").attr("disabled", true);
+                            $(".tg_input").attr("disabled", false);
+                        } else {
+                            $("#tc_information").hide();
+                        }
+
+                        //显示弹出层
+                        var layindex = $.layer({
+                            type: 1,
+                            title: '分配套餐',
+                            closeBtn: [0, true],
+                            border: [10, 0.3, '#000', true],
+                            area: ['700px', '590px'],
+                            page: {dom: "#assignstatis_box"}
+                        });
+                        $("#layindex").val(layindex);
+                    }
+                } else {
+                    layer.msg(res.msg, 2, 8);
+                }
+                return false;
+            });
+        });
+
+        //分配套餐提交判断
+        function check_assignchildmsg() {
+
+            if ($('#assignChildValId').val() == 0) {
+
+                layer.msg('数据错误！', 2, 8);
+                return false;
+            }
+
+            //判断输入的分配数量
+            $.each($('.assignDiv'), function (ak, av) {
+
+                var itemStr = $(av).find('span').text();
+
+                var zhuVal = parseInt($($(av).find('input[type=text]')[0]).val());
+                var sonVal = parseInt($($(av).find('input[type=text]')[1]).val());
+                var fenVal = parseInt($($(av).find('input[type=text]')[2]).val());
+
+                if (fenVal > zhuVal) {
+                    layer.msg(itemStr + '分配的数量大于可分配的数量！', 2, 8);
+                    return false;
+                }
+            });
+        }
+
+        //追加点击
+        if (csflag) {
+            $("#createChildId").trigger("click");
+        }
+
+        /* 激活子账号 */
+        function activeSon(spid) {
+
+            var i = loadlayer();
+
+            $.get("index.php?c=child&act=checkStatis&spid=" + spid, function (data) {
+
+                layer.closeAll();
+
+                var res = eval('(' + data + ')');
+                if (res.ecode == 9) {
+
+                    layer.msg(res.msg, 2, 9, function () {
+                        location.reload();
+                    });
+
+                } else if (res.ecode == 55) {
+
+                    if (res.data.paytype == undefined) {
+                        layer.msg(res.msg, 2, 8);
+                        return false;
+                    }
+
+                    var html = $('#tc_son').html();
+                    $('.css_display').empty();
+                    $('#tc_son').html(html);
+                    $('#tc_son').show();
+
+                    if (res.data.paytype == 'integral') {
+
+                        var price = '{yun:}$config.integral_sons_num{/yun}';
+
+                        var pro = '{yun:}$config.integral_proportion{/yun}';
+
+                        var jifen = accMul(parseInt(price), parseInt(pro));
+
+                        var integral = '{yun:}$statis.integral{/yun}';
+
+
+                        if (parseInt(jifen) > parseInt(integral)) {
+
+                            $('#son_integral_buy').hide();
+                        } else {
+
+                            $('#pay_son_integral_buy').hide();
+                        }
+
+                    }
+                    server_single('createson');
+                    firstTab();
+                    var msglayer = layer.open({
+                        type: 1,
+                        title: '激活子账号',
+                        closeBtn: 1,
+                        border: [10, 0.3, '#000', true],
+                        area: ['810px', 'auto'],
+                        content: $("#tcmsg")
+                    });
+
+                } else {
+
+                    layer.msg(res.msg, 2, 8);
+                }
+                return false;
+            });
+        }
+
+    </script>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

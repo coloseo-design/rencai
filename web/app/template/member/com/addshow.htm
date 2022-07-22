@@ -1,0 +1,70 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<script>
+	var tplPath='{yun:}$config.sy_weburl{/yun}/';
+	var serverPath='index.php?c=show&act=save';
+	var returnUrl='index.php?c=show';
+	var fileNumLimit=50;
+</script>
+<link rel="stylesheet" type="text/css" href="{yun:}$config.sy_weburl{/yun}/js/webuploader/webuploader.css?v={yun:}$config.cachecode{/yun}" />
+<link rel="stylesheet" type="text/css" href="{yun:}$config.sy_weburl{/yun}/js/webuploader/style.css?v={yun:}$config.cachecode{/yun}" />
+<script charset="utf-8" src="{yun:}$config.sy_weburl{/yun}/js/webuploader/webuploader.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script charset="utf-8" src="{yun:}$config.sy_weburl{/yun}/js/webuploader/upload.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<div class="w1000">
+	<div class="admin_mainbody"> 
+		{yun:}include file="$comstyle/left.htm"{/yun}
+		
+		<div class="com_tit"><span class="com_tit_span">企业资料</span></div> 
+	    
+	<div class=right_box>
+				<div class=vip_boxshow>
+					<div class="vip_boxshow_c">
+	<div class="zllist ">
+					<div class="report_uaer_list_h1">编辑公司信息</div>
+					<div class="report_uaer_list_p">能获得更多求职者的青睐</div>
+					<ul>
+						<li><a href="index.php?c=info">基本信息</a></li>
+						<li><a href="index.php?c=info&act=side">补充信息</a></li>
+						<li class="zlcur"><a href="index.php?c=show"> 公司相册</a></li>
+						<li><a href="index.php?c=uppic"> 公司LOGO</a></li>
+						<li><a href="index.php?c=product">产品介绍</a></li>
+						<li><a href="index.php?c=news">公司资讯</a></li>
+						<li><a href="index.php?c=map">公司地图</a></li>
+						<li><a href="index.php?c=comtpl">个性化模板</a></li>
+						<li><a  href="index.php?c=binding&act=comcert" >资质认证</a></li>
+					</ul>
+				</div>
+				<div class="vip_box" style="margin-top: 0px;;">
+	    
+	        <div class="com_info_box">
+					<div class="com_banner_show_box">
+						<div class="index_photo_new fltL mt10">
+							<div class="com_add_show_box">
+								<div id="uploader">
+									<div class="queueList">
+										<div id="dndArea" class="placeholder">
+											<div id="filePicker"></div>
+											<p>或拖拽进选框内</p>
+										</div>
+									</div>
+									<div class="statusBar" style="display:none;">
+										<div class="progress">
+											<span class="text">0%</span>
+											<span class="percentage"></span>
+										</div>
+										<div class="info"></div>
+										<div class="btns">
+											<div id="filePicker2"></div>
+											<div class="uploadBtn">开始上传</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

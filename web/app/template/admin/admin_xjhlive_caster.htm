@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+		<style>
+			.yun_wxbd_box{ background:#fff; padding-bottom:20px;}
+			.yun_wxbd_img_c{ padding:40px  0 0 0;}
+			.yun_wxbd_img{ width:180px;height:180px; margin:0 auto;border:1px solid #ffb97f; text-align:center; background:#fff; padding:10px;}
+		</style>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tabs_info">
+				<ul>
+					<li class="curr">导播服务</li>
+					<li>
+						<a href="index.php?m=admin_xjhlive&c=material&id={yun:}$smarty.get.id{/yun}">导播素材</a>
+					</li>
+					<li>
+						<a href="index.php?m=admin_xjhlive&c=addMaterial&id={yun:}$smarty.get.id{/yun}">添加导播素材</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="dbboxtipbox">
+				<div class="dbboxtip">
+					说明：视频直播开通后，导播服务默认未启用。导播台在宣讲会开始前10分钟以后才可创建。<span style="color: red">导播台开启后，如三十分钟内没有直播，将自动关闭，可重新手动开启。人才网导播台和其他导播软件不可共用，导播软件可使用提供的推流地址</span><br>
+					可在导播素材管理页面，预先将需要的素材上传，单个导播台最多可上传8份素材。直播开始之后，可以选择素材插入到直播画面中进行宣传<br>
+					画面布局可选择一般布局和画中画两种。<span>推荐使用Google Chrome浏览器，浏览器直播延时较长，如需更快速的看到导播台效果，可扫码用小程序查看导播台</span>
+				</div>
+			</div>
+
+			<div style="width:950px; padding-bottom: 20px; float: left; padding-left:20px;">
+				{yun:}if $xjh.caster == 0{/yun}
+				<span onclick="livePush('{yun:}$xjh.id{/yun}')" class="zph_tj" style="background:#ff0097;cursor: pointer;">推流地址</span>
+				<span onclick="createCaster('{yun:}$smarty.get.id{/yun}')" class="zph_tj" style="cursor: pointer;margin-left: 10px;">创建导播台</span>
+				<span style="color: #f00; float: left; line-height: 40px; margin-left: 20px;"> 操作提示：如使用其他导播软件，请不要创建导播台。创建导播台之后，才能把上传的素材，插播到直播画面里面</span>
+				{yun:}else{/yun}
+					{yun:}if $xjh.caster == 2{/yun}
+					<span onclick="liveShow('{yun:}$xjh.id{/yun}')" class="zph_tj" style="background:#ff0097;cursor: pointer;">直播码</span>
+					<span onclick="liveCaster('{yun:}$smarty.get.id{/yun}')" class="zph_tj" style="background:#f60;cursor: pointer;margin-left: 10px">切回直播画面</span>
+					<span onclick="palyerReload()" class="zph_tj" style=" background:#f60;cursor: pointer;margin-left: 10px;">刷新播放器</span>
+					{yun:}elseif $xjh.caster == 1{/yun}
+					<span onclick="liveShow('{yun:}$xjh.id{/yun}')" class="zph_tj" style="background:#ff0097;cursor: pointer;">直播码</span>
+					<span onclick="openCaster('{yun:}$smarty.get.id{/yun}')" class="zph_tj" style="cursor: pointer;margin-left:10px">开启导播台</span>
+					{yun:}elseif $xjh.caster == 3{/yun}
+					<span onclick="openCaster('{yun:}$smarty.get.id{/yun}')" class="zph_tj" style="cursor: pointer;margin-left:10px">重新开启导播台</span>
+					{yun:}/if{/yun}
+				<span style="color: #f00; float: left; line-height: 40px; margin-left: 20px;"> 
+				导播台状态：{yun:}if $xjh.caster == 2{/yun}开启{yun:}elseif $xjh.caster == 1{/yun}关闭{yun:}elseif $xjh.caster == 3{/yun}因三十分钟无直播，已关闭{yun:}/if{/yun}
+				</span>
+				{yun:}/if{/yun}
+				<input type="hidden" id="casterState" value="{yun:}$xjh.caster{/yun}" />
+			</div>
+			<div class="clear"></div>
+			<div class="dbbox_c">
+				<div class="dbbox_left">
+					<div class="dbbox_tit">当前直播窗口显示：</div>
+					<div id="casterLive" class="dbbox">
+						{yun:}if $xjh.caster == 2{/yun}
+						<input type="hidden" id="pgmurl" value="{yun:}$pgmurl{/yun}" />
+						{yun:}/if{/yun}
+					</div>
+				</div>
+				<div class="dbbox_right">
+					<div class="dbbox_rtit">云导播素材选择：</div>
+					<ul id="material" class="dbbox_list">
+						{yun:}foreach from=$list item=v{/yun}
+						<li id="material_{yun:}$v.id{/yun}" class="{yun:}if $caster.mid == $v.id{/yun}dbbox_cur{yun:}/if{/yun}" onclick="layoutclick('{yun:}$v.xid{/yun}','{yun:}$v.syncid{/yun}',this)" onmouseover="showtips('{yun:}$v.name{/yun}','material_{yun:}$v.id{/yun}')">
+							<img src="{yun:}$v.url{/yun}" width="140" height="90" alt="{yun:}$v.name{/yun}"/>
+						</li>
+						{yun:}/foreach{/yun}
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="layout" class="dbbj_box" style="position:fixed;top:100px;left:100px;display: none;">
+			<div class="dbbj_tit">
+				提示：切换资源后需等待几秒后直播中才能生效
+			</div>
+			<div class="dbbj_tit">设置布局类型</div>
+			<div class="">
+				<ul class="dbbj">
+					<li class="dbbj_cur" data-layout="1"></li>
+					<li class="" data-layout="2"><i class="dbbj_other"></i></li>
+				</ul>
+			</div>
+		</div>
+	
+		<div id="liveDiv" style="display: none;">
+			<div class="yun_wxbd_box">
+				<div class="yun_wxbd_img_c">
+					<div class="yun_wxbd_img">
+						<img src="" width="180" height="180" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+		<input type="hidden" id="xid" value="{yun:}$xjh.id{/yun}">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/live/qiniu-web-player-1.2.3.js"></script>
+		<script language="javascript">
+			var layout = 1,
+				player = null;
+			$(function(){
+				var casterState = $("#casterState").val();
+				if(casterState == 2){
+					casterPlay();
+				}
+				getCasterState();
+			});
+			
+			function casterPlay() {
+				if($("#pgmurl").length > 0 && $("#pgmurl").val() != ''){
+					var url = $("#pgmurl").val();
+					// 实例化播放器
+					loadlayer();
+					setTimeout(function(){
+						parent.layer.closeAll();
+						player = new QPlayer({
+							url: url,
+							container: document.getElementById("casterLive"),
+							autoplay: true,
+							isLive: true,
+							loggerLevel: 0
+						});
+						player.on('error', function() {
+							parent.layer.alert('播放失败，请点击确定刷新播放器',5,'提示',function(){
+								parent.layer.closeAll();
+								palyerReload();
+							});
+						});
+					},5000);
+				}
+			}
+			function layoutclick(xid, mid, obj){
+				var casterState = $("#casterState").val();
+				if(casterState == 2){
+					layer.open({
+						id: 'layoutdiv',
+						title: '请选择布局',
+						content: $("#layout").html(),
+						area: ['450px', '360px'],
+						btn: ['确定', '取消'],
+						success: function(layero, index){
+							layout = 1;
+							$("#layoutdiv").find('li').on('click', function(){
+								$("#layoutdiv").find('li').removeClass('dbbj_cur');
+								$(this).attr('class','dbbj_cur');
+								layout = $(this).attr('data-layout');
+							})
+						},
+						yes: function(){
+							layer.closeAll();
+							loadlayer();
+							var pytoken = $('#pytoken').val();
+							$.post('index.php?m=admin_xjhlive&c=upMonitor', {xid: xid, mid: mid, layout: layout, pytoken: pytoken}, function(data){
+								parent.layer.closeAll();
+								if(data){
+									var res = JSON.parse(data);
+									parent.layer.msg(res.msg, 2,res.st);
+									var mli = $("#material").find('li');
+									mli.removeClass("dbbox_cur");
+									$(obj).addClass("dbbox_cur");
+								}
+							})
+						},
+						btn2: function(){
+							layer.closeAll();
+						}
+					})
+				}else{
+					parent.layer.msg('导播台未启用',2,8);
+				}
+			}
+			function createCaster(id) {
+				layer.confirm('创建导播台后，将无法再获取推流地址，确定创建？', function(){
+					layer.closeAll();
+					loadlayer();
+					var pytoken = $('#pytoken').val();
+					$.post('index.php?m=admin_xjhlive&c=createCaster', {
+						id: id,
+						pytoken: pytoken
+					}, function(data) {
+						parent.layer.closeAll();
+						if(data){
+							var res = JSON.parse(data);
+							parent.layer.msg(res.msg, 2,res.st, function(){
+								if(res.st == 9){
+									window.location.reload();
+								}
+							});
+						}
+					})
+				})
+			}
+			function openCaster(id) {
+				layer.confirm('导播台开启后，如三十分钟内没有直播，将会自动关闭导播台，确定开启？', function(){
+					layer.closeAll();
+					loadlayer();
+					var pytoken = $('#pytoken').val();
+					$.post('index.php?m=admin_xjhlive&c=openCaster', {
+						id: id,
+						pytoken: pytoken
+					}, function(data) {
+						parent.layer.closeAll();
+						if(data){
+							var res = JSON.parse(data);
+							parent.layer.msg(res.msg, 4,res.st, function(){
+								if(res.st == 9){
+									layer.load(0, {time: 10*1000});
+									setTimeout(function(){
+										window.location.reload();
+									},10000)
+								}
+							});
+						}
+					})
+				})
+			}
+			function liveCaster(xid) {
+				loadlayer();
+				var pytoken = $('#pytoken').val();
+				$.post('index.php?m=admin_xjhlive&c=liveCaster', {
+					xid: xid,
+					pytoken: pytoken
+				}, function(data) {
+					parent.layer.closeAll();
+					if(data){
+						var res = JSON.parse(data);
+						parent.layer.msg(res.msg, 2,res.st);
+					}
+				})
+			}
+			function palyerReload(){
+				player.destroy();
+				casterPlay();
+			}
+			function liveShow(id){
+				var pytoken = $("#pytoken").val();
+				loadlayer();
+				$.post('index.php?m=admin_xjhlive&c=getLive',{id:id,pytoken:pytoken}, function(data){
+					parent.layer.closeAll();
+					if(data){
+						var res = JSON.parse(data);
+						if(res.errcode == 9){
+							$("#liveDiv").find('img').attr('src', res.url);
+							layer.open({
+								type : 1,
+								title : '微信扫码开始直播',
+								closeBtn : 1,
+								border : [ 10, 0.3, '#000', true ],
+								area : [ '250px', '210px' ],
+								content : $("#liveDiv")
+							});
+						}else{
+							parent.layer.msg(res.msg, 2, 8)
+						}
+					}
+				})
+			}
+			function showtips(name, id){
+				layer.tips(name, '#'+id, {tips: [1]});
+			}
+			// 检查导播台状态
+			function getCasterState(){
+				var pytoken = $("#pytoken").val(),
+					xid = $("#xid").val();
+					
+				setInterval(function(){
+					$.post('index.php?m=admin_xjhlive&c=getCaster',{pytoken:pytoken, xid: xid}, function(data){
+						if(data){
+							var res = JSON.parse(data);
+							if(res.caster == 3){
+								parent.layer.closeAll();
+								window.location.reload();
+							}
+						}
+					})
+				}, 60*1000);
+			}
+			// 推流地址
+			function livePush(id){
+				var pytoken = $("#pytoken").val();
+				loadlayer();
+				$.post('index.php?m=admin_xjhlive&c=getPushurl',{id:id,pytoken:pytoken}, function(data){
+					parent.layer.closeAll();
+					if(data){
+						var res = JSON.parse(data);
+						if(res.errcode == 9){
+							layer.alert(res.live, {title: '推流地址'});
+						}else{
+							parent.layer.msg(res.msg, 2, 8)
+						}
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

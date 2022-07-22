@@ -1,0 +1,41 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+{yun:}include file="$trainstyle/left.htm"{/yun}
+<div class="right_column frt mt20">
+  <div class="right_column_border">
+    <div class="right_column_h1"><span class="right_column_h1_span flt">财务明细</span></div>
+    <div class="clear"></div>
+    {yun:}if !empty($rows){/yun}
+    <div class="Reservation_list">
+      <div class="Reservation_list_singup_finance Reservation_list_singup_bg">
+        <div class="Reservation_list_span paylog_w289">流水单号</div>
+        <div  class="Reservation_list_span paylog_w200">财务出入 </div>
+        <div  class="Reservation_list_span Reservation_list_cz">备注</div>
+        <div  class="Reservation_list_span Reservation_list_time">操作时间</div>
+      </div>
+    </div>
+    {yun:}/if{/yun}
+    <div class="Reservation_list">
+      {yun:}foreach from=$rows item=log{/yun}
+      {yun:}assign var="state" value=$log.pay_state{/yun}
+      <div class="Reservation_list_singup_finance">
+        <div  class="Reservation_list_span paylog_w289">{yun:}$log.order_id{/yun}</div>
+        <div class="Reservation_list_span paylog_w200">{yun:}$log.order_price{/yun}{yun:}if $log.type==2{/yun}元{yun:}else{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}{yun:}/if{/yun}</div>
+        <div  class="Reservation_list_span Reservation_list_cz">{yun:}$log.pay_remark{/yun}&nbsp;</div>
+        <div class="Reservation_list_span Reservation_list_time">{yun:}$log.pay_time{/yun}</div>
+      </div>
+      {yun:}foreachelse{/yun}
+      <div class="msg_no">暂无相关信息</div>
+      <div class="clear"></div>
+      {yun:}/foreach{/yun} </div>
+    <div class="pages"> {yun:}$pagenav{/yun}</div>
+    <div> </div>
+  </div>
+</div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

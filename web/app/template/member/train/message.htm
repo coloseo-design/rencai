@@ -1,0 +1,66 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+{yun:}include file="$trainstyle/left.htm"{/yun}
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<div class="right_column frt mt20">
+<div class="right_mycurriculum_h1">咨询留言</div>
+  <div class="right_nav_box">
+    <ul class="right_nav_box_list">
+      <li {yun:}if $smarty.get.status==""{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=message">全部</a></li>
+      <li {yun:}if $smarty.get.status=="1"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=message&status=1">未回复</a></li>
+      <li {yun:}if $smarty.get.status=="2"{/yun}class="right_nav_box_cur"{yun:}/if{/yun}><a href="index.php?c=message&status=2">已回复</a></li>
+    </ul>
+  </div>
+  <div class="right_column_border_alert">
+   
+    <div class="clear"></div>
+	{yun:}if $rows{/yun}
+        <div class="px_tit">
+    <div class="px_tit_n px_tit_w250"><span class="px_tit_pd">留言者</span></div>
+    <div class="px_tit_n px_tit_w250">手机号码</div>
+    <div class="px_tit_n px_tit_l150">留言日期</div>
+    <div class="px_tit_n px_tit_l150">状态</div>
+    <div class="px_tit_n px_tit_w100">操作</div>
+</div>
+	 {yun:}/if{/yun}
+    {yun:}foreach item=v from=$rows{/yun}
+    
+          <div class="px_list">
+    <div class="px_tit_n px_tit_w250"><span class="px_tit_pd">{yun:}$v.nickname{/yun}</span></div>
+    <div class="px_tit_n px_tit_w250">{yun:}$v.phone{/yun} </div>
+    <div class="px_tit_n px_tit_l150">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+    <div class="px_tit_n px_tit_l150"> <a href="javascript:void(0);" class="new_Leave_Unanswered">{yun:}if $v.status==1{/yun}未回复{yun:}else{/yun}已回复{yun:}/if{/yun}</a>
+                        {yun:}if $v.status=="1"{/yun}
+                       <a href="javascript:void(0)" onclick="$('#reply{yun:}$v.id{/yun}').toggle();" class="new_Leave_zt_fh">/ 回复</a>{yun:}/if{/yun}</div>
+    <div class="px_tit_n px_tit_w100"> <a href="javascript:void(0)" class=""  onclick="layer_del('确定删除该咨询留言？','index.php?c=message&act=del&del={yun:}$v.id{/yun}');">删除</a></div>
+         <div class="ly_nr">留言内容：{yun:}$v.content{/yun}</div>
+             {yun:}if $v.status=="1"{/yun}
+                    <div class="Courses_right_Advisory_box Courses_right_Advisory_box_690 ftl" id="reply{yun:}$v.id{/yun}" style="display: none;"><i class="Courses_right_Advisory_box_icon"></i>
+                        <form name="myform" method="post" target="supportiframe" action="index.php?c=message&act=reply&reply=1">
+                        <div class="goog-textarea_box">
+                            <textarea name="content" class="goog-textarea_ly" ></textarea>
+                        </div>
+                        <div class="goog-textarea_tj">
+                            <input type="hidden" name="id" value="{yun:}$v.id{/yun}" />
+                            <input type="submit" value="提交" class="goog-textarea_tj_bth">
+                        </div>
+                        </form>
+                    </div>
+                    {yun:}elseif $v.status=="2"{/yun}
+                        <div class="ly_hf  ">回复内容：{yun:}$v.reply{/yun}</div>
+                    {yun:}/if{/yun}
+    
+</div>
+                 
+     {yun:}foreachelse{/yun}
+            <div class="clear"></div>
+          <div class="msg_no">暂无相关信息</div>
+    {yun:}/foreach{/yun}  
+
+  </div>
+</div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

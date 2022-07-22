@@ -1,0 +1,115 @@
+<script>
+	$(document).ready(function() {
+		$(".mobliestatus").hover(function() {
+			$(".mobliestatustype").show();
+		}, function() {
+			$(".mobliestatustype").hide();
+		})
+		$(".emailstatus").hover(function() {
+			$(".emailstatustype").show();
+		}, function() {
+			$(".emailstatustype").hide();
+		})
+		$(".yyzzstatus").hover(function() {
+			$(".yyzzstatustype").show();
+		}, function() {
+			$(".yyzzstatustype").hide();
+		})
+	})
+</script>
+<link href="{yun:}$style{/yun}/style/tips.css?v={yun:}$config.cachecode{/yun}" type="text/css" rel="stylesheet"/>
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$style{/yun}/js/pay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="{yun:}$style{/yun}/js/comtc.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+
+<div class="m_top_box">
+	<div class="wrap">
+		<div class="m_top_box_l">客服热线：{yun:}$config.sy_freewebtel{/yun}<span style="padding-left:30px;">QQ：{yun:}$config.sy_qq{/yun}</span></div>
+		<div class="m_top_box_r">
+			<div class="m_header_right fr">
+				<div class="yun_topNav fr" onMouseOver="lt_head_nav('show')" onMouseOut="lt_head_nav('hide')" > <a class="yun_navMore png" href="javascript:void(0)">网站导航</a>
+					<div class="yun_webMoredown" style="display:none">
+						<ul class="yun_top_nav_box_l">
+							{yun:}navmap key=key item=maplist{/yun}
+							<li>
+								<a href="{yun:}$maplist.url{/yun}" {yun:}if $maplist.eject{/yun} target="_blank" {yun:}/if{/yun}>{yun:}$maplist.name{/yun}</a>
+							</li>
+							{yun:}/navmap{/yun}
+						</ul>
+						<ul class="yun_top_nav_box_wx">
+							{yun:}nav item=navlist_app hovclass=nav_list_hover nid=11{/yun}
+							<li> 
+								<a class="move_0{yun:}$navlist_app.sort{/yun}" {yun:}if $navlist_app.eject{/yun} target="_blank" {yun:}/if{/yun} href="{yun:}$config.sy_weburl{/yun}/{yun:}$navlist_app.url{/yun}">{yun:}$navlist_app.name{/yun}</a> 
+							</li>
+							{yun:}/nav{/yun}
+						</ul>
+					</div>
+				</div>
+
+				<div class="header_Remind fr header_Remind_hover" onMouseOver="tzmsgNumShow('show')" onMouseOut="tzmsgNumShow('hide')">
+					<em class="header_Remind_em">消息<i class="header_Remind_n" id="tzmsgNum" style="display:none"></i></em>
+					<div class="header_Remind_list" style="display:none;">
+						<div class="header_Remind_list_a">
+							<a href="index.php?c=yp_resume" class="fl">应聘简历</a>
+							<span class="header_Remind_list_r fr" id="userid_jobNum">(0)</span>
+						</div>
+						<div class="header_Remind_list_a">
+							<a href="index.php?c=entrust_resume" class="fl">委托简历</a>
+							<span class="header_Remind_list_r fr" id="entrustNum">(0)</span>
+						</div>
+
+						<div class="header_Remind_list_a">
+							<a href="index.php?c=sysnews" class="fl">系统消息</a>
+							<span class="header_Remind_list_r fr" id="sysmsgNum">(0)</span>
+						</div>
+						<div class="header_Remind_list_a">
+							<a href="index.php?c=zixun" class="fl">求职咨询</a>
+							<span class="header_Remind_list_r fr" id="commsgNum">(0)</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<span class="m_top_box_rhi">
+				您好
+				{yun:}if $user.realname{/yun}
+				{yun:}$user.realname{/yun}
+				{yun:}else{/yun}
+				{yun:}$username{/yun}
+				{yun:}/if{/yun}，欢迎来到{yun:}$config.sy_webname{/yun}！
+				<span class="m_top_box_rhtc">[<a href="javascript:void(0)" onClick="logout('index.php?act=logout')">退出</a>]</span>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="m_header">
+	<div class="wrap">
+		<div class="m_header_logo fl">
+			<a href="{yun:}$config.sy_weburl{/yun}"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_ltmember_logo{/yun}"></a>
+		</div>
+		<a href="javascript:void(0);" onclick="jobadd_url('{yun:}$addltjobnum{/yun}','{yun:}$config.integral_job{/yun}','lietou','{yun:}$config.com_integral_online{/yun}','{yun:}$config.integral_proportion{/yun}');" class="can_sign_btn">发布职位</a>
+		<div class="m_nav_dh">
+			<ul>
+				<li class="m_nav_first {yun:}if $isdef==5{/yun}m_nav_curre{yun:}/if{/yun}"><a href="index.php">首页</a></li>
+				<li class="{yun:}if $isdef==2{/yun}m_nav_curre{yun:}/if{/yun}">
+					<div class="meau_down">
+						<a href="index.php?c=job&s=1">职位管理</a>
+					</div>
+				</li>
+				<li class="{yun:}if $isdef==4{/yun}m_nav_curre{yun:}/if{/yun}">
+					<div class="meau_down"> <a href="index.php?c=yp_resume">简历管理</a></div>
+				</li>
+				<li class="{yun:}if $isdef==3{/yun}m_nav_curre{yun:}/if{/yun}">
+					<div class="meau_down"> <a href="index.php?c=paylog">财务管理</a></div>
+				</li>
+				<li class="{yun:}if $isdef==1{/yun}m_nav_curre{yun:}/if{/yun}">
+					<div class="meau_down"> <a href="index.php?c=info">账号管理</a></div>
+				</li>
+			
+				
+				<li style="background:none"><a href="{yun:}url m='lietou'{/yun}" target="_blank">猎头首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

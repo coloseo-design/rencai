@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+ 
+	<title>后台管理</title>
+	
+</head>
+
+<body class="body_ifm">
+
+	<div class="infoboxp">
+	
+		<div class="admin_add_box">
+		
+			<div class="admin_add_box_c">
+	
+				<form name="myform" {yun:}if $get_info.type==''{/yun}target="supportiframe"{yun:}/if{/yun}  action="index.php?m=crm_customer&c=add" onSubmit="return CheckMember();" method="post" class="layui-form">
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon">*</span> 客户账号</div>
+						<div class="admin_add_list_right">
+							<input type="text"  value="" id="username" name="username" class="input-text"  onblur="checkUsername();">		
+						</div>
+					</div>
+		
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon">*</span> 账号密码</div>
+						<div class="admin_add_list_right">
+							<input type="password" value="" name="password" class="input-text" />
+							<font color="gray"></font>
+						</div>
+					</div>
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon">*</span> 公司名称</div>
+						<div class="admin_add_list_right">
+							<input type="text" value="" name="name" class="layui-input" style='width:230px'>
+							<font color="gray"></font>
+						</div>
+					</div>
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span> 公司行业</div>
+						<div class="admin_add_list_right">
+							<div>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="hy" id="hy" lay-filter="hy" >
+											<option value="">请选择行业</option>
+ 											{yun:}foreach from=$cache.industry_index item=v{/yun}
+												<option  value="{yun:}$v{/yun}">{yun:}$cache.industry_name[$v]{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="admin_add_list">
+                        <div class="admin_add_list_name"><span class="admin_required_icon"></span> 所在城市</div>
+                        
+                        <div class="admin_add_list_right">
+                       		<div class="layui-input-block">
+                            	<div class="layui-input-inline">
+									<select name="provinceid" id="provinceid" lay-filter="citys">
+										<option value="">请选择</option>
+										{yun:}foreach from=$cache.city_index key=j item=v{/yun}
+											<option value="{yun:}$v{/yun}">{yun:}$cache.city_name[$v]{/yun}</option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+						
+								<div class="layui-input-inline">
+									<select name="cityid" id="cityid" lay-filter="citys">
+										<option value="">请选择</option>
+									</select>
+								</div>
+					  
+								<div class="layui-input-inline">
+									<select name="three_cityid" id="three_cityid" lay-filter="citys">
+										<option value="">请选择</option>
+									</select>
+								</div> 
+                        	</div>
+                      	</div>
+                    </div>
+                    
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span> 详细地址</div>
+						<div class="admin_add_list_right">
+							<input type="text" value="" name="address" class="layui-input" style="width:230px">
+							<font color="gray"></font>
+						</div>
+					</div>
+		
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon">*</span> 联 系 人 </div>
+						<div class="admin_add_list_right">
+							<input type="text"  value="" name="linkman" class="input-text" id="linkman">		
+						</div>
+					</div>
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon">*</span> 联系手机</div>
+						<div class="admin_add_list_right">
+							<input type="text" value="" id="moblie" name="moblie" class="input-text">
+							<font color="gray"></font>
+		 				</div>
+					</div>
+		
+					
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span>联系邮箱</div>
+						<div class="admin_add_list_right">
+							<input type="text" value="" name="email" class="input-text" >
+							<font color="gray"></font>
+						</div>
+					</div>
+		
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span> 公司座机</div>
+						<div class="admin_add_list_right">
+							<input type="text"  id="areacode" name="areacode" class="input-text" placeholder="如：0527" maxlength="7" style="width:70px;"/>
+							<input type="text"  placeholder="固定电话" id="telphone" class="input-text" name='telphone' maxlength="8"style="width:150px;"/>
+							<input type="text"  placeholder="分机号" id="exten" class="input-text" name='exten' maxlength="4"style="width:70px;"/>
+							<font color="gray"></font>
+						</div>
+					</div>
+					
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span> 客户状态</div>
+						<div class="admin_add_list_right">
+							<div>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="crm_status" id="crm_status" lay-filter="crm_status" >
+											<option value="">请选择</option>
+ 											{yun:}foreach from=$cache.crmdata.client_status item=v{/yun}
+												<option  value="{yun:}$v{/yun}" title='{yun:}$cache.crmclass_name[$v]{/yun}'>{yun:}$cache.crmclass_name[$v]{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+									
+									<div class="layui-input-inline rating" style='display:none;'>
+										<select name="rating_name" id="rating_name" lay-filter="rating_name" >
+											<option value="">请选择会员等级</option>
+											{yun:}foreach from=$rating_list item=v{/yun}
+												<option  value="{yun:}$v.id{/yun}" title='{yun:}$v.name{/yun}'>{yun:}$v.name{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="admin_add_list">
+						<div class="admin_add_list_name"><span class="admin_required_icon"></span> 为下次跟进创建任务</div>
+						<div class="admin_add_list_right">
+							<div class="layui-form-item">
+							    <div class="layui-input-block">
+							      	<input type="checkbox" name='is_task' lay-skin="switch" lay-filter="switchTask" lay-text="ON|OFF">
+							    </div>
+							</div>
+						</div>
+					</div>
+					
+					<div class='waitingTask' style='display:none;'>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 任务标题</div>
+							<div class="admin_add_list_right">
+								<input type="text"  value="" id="title" name="title" class="input-text">		
+							</div>
+						</div>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 跟进时间</div>
+							<div class="admin_add_list_right">
+								<div class="layui-form-item">
+									<div class="layui-inline">
+								      	<div class="layui-input-inline">
+								        	<input type="text" class="layui-input" id='stime' name='stime' placeholder="yyyy-MM-dd HH:mm:ss" style='width:230px;'>
+								      	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 任务说明</div>
+							
+							<div class="admin_add_list_right">
+								<textarea  id="content" name="task_content" cols="100" rows="8"  class="web_text_textarea"></textarea>
+							</div>
+						</div>
+						
+						<div class="admin_add_list">
+							<div class="admin_add_list_name"><span class="admin_required_icon"></span> 优先级</div>
+							<div class="admin_add_list_right">
+								<div>
+									<div class="layui-input-block">
+										<div class="layui-input-inline">
+											<select name="priority" id="priority" lay-filter="priority" >
+												<option value="">请选择</option>
+	 											{yun:}foreach from=$cache.crmdata.priority_level item=v{/yun}
+													<option  value="{yun:}$v{/yun}" title='{yun:}$cache.crmclass_name[$v]{/yun}'>{yun:}$cache.crmclass_name[$v]{/yun}</option>
+												{yun:}/foreach{/yun}
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+		
+					<div class="admin_add_list">
+						<input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;添 加&nbsp;" />
+						<input class="admin_save_sub_qx" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+					</div>
+					
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+		  		</form>
+		
+			</div>
+		</div>
+	</div>
+
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+	<script type="text/javascript">
+		
+		layui.use(['layer', 'form','laydate'], function(){
+			var form 	= layui.form,
+				laydate = layui.laydate,
+				$ 		= layui.$;
+			
+			laydate.render({
+				elem: '#stime'
+				,type: 'datetime'
+			});
+			
+ 			form.on('select(crm_status)', function(data){
+ 				if(data.value == '9'){/* 成交客户 */
+					$('.rating').show();
+ 				}else{
+ 					$('.rating').hide();
+ 				}
+ 			});
+ 			
+ 			form.on('switch(switchTask)', function(data){
+ 				if(this.checked){
+ 					$('.waitingTask').show();
+ 				}else{
+ 					$('.waitingTask').hide();
+ 				}
+			});
+			
+	  	});
+	
+	</script>
+
+	<script language="javascript">
+	
+		function CheckMember(){  
+		
+			var username=$("#username").val();
+			
+			if(username==''){
+				layer.msg('用户名不能为空！', 2, 8);return false;
+			} 
+			
+			if($("input[name='password']").val()==''){
+				layer.msg('密码不能为空！', 2, 8);return false;
+			}
+			
+			if($("input[name='name']").val()==''){
+				layer.msg('公司全称不能为空！', 2, 8);return false;
+			}
+			 
+			var linkman=$("#linkman").val();
+			if(linkman==''){
+				layer.msg('联系人不能为空！', 2, 8);return false;
+			}
+			
+			if($("#moblie").val() ==''){
+				layer.msg('联系手机不能为空！', 2, 8);return false;
+			}else{
+			   var obj = $("#moblie").val(); 
+			   if(isjsMobile(obj)==false&&isjsTell(obj)==false){
+			     layer.msg('手机格式错误！', 2, 8);return false;
+			   }
+			}
+			
+			var obj = $("input[name='email']").val();
+			var myreg = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			
+			if(obj!="" && !myreg.test(obj)){
+				layer.msg('联系邮箱格式错误！', 2, 8);return false;
+			}
+			
+			loadlayer();
+		}
+		
+		/* 用户名检查 */
+		function checkUsername(){
+			
+			var username	=	$.trim($("#username").val());
+ 			var pytoken		=	$.trim($("#pytoken").val());
+			
+			if(username){
+				$.post("index.php?m=crm_customer&c=check",{username:username , pytoken:pytoken},function(msg){
+					if(msg){
+		 				layer.tips(msg, "#username" , {guide: 1,style: ['background-color:#F26C4F; color:#fff;top:-7px', '#F26C4F']});
+		 				
+						$("#username").attr("vtype",'1');
+						
+					}else if($("#username").attr('vtype')=='1'){
+						layer.closeTips();
+						$("#username").attr("vtype",'0');
+					}
+				});
+			}
+		}
+		
+		/* 返回执行结果 */
+		function returnmessage2(frame_id){
+
+			if(frame_id == '' || frame_id == undefined){
+				
+				frame_id	= 	'supportiframe';
+				
+			}
+ 			
+			var index	=	parent.layer.getFrameIndex(window.name);
+			
+			var message = 	$(window.frames[frame_id].document).find("#layer_msg").val();
+			
+			if(message != null){
+				
+				var url			=	$(window.frames[frame_id].document).find("#layer_url").val();
+				var layer_time	=	$(window.frames[frame_id].document).find("#layer_time").val();
+				var layer_st	=	$(window.frames[frame_id].document).find("#layer_st").val();
+				 
+				parent.layer.msg(message, layer_time, Number(layer_st),function(){ 
+					
+					parent.layer.close(index);
+ 					
+				});
+				 
+			}
+		}
+		
+	</script> 
+	
+	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage2('supportiframe');" style="display:none"></iframe> 
+</body>
+</html>

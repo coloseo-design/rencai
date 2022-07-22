@@ -1,0 +1,182 @@
+{yun:}include file="$wapstyle/header_lt.htm"{/yun}
+<style type="text/css" media="screen">
+/*.none{display:none;}
+
+.yun_wapheader{ background:#3366cc; padding:10px 70px 10px 100px; position:relative}
+.yun_wapheader_city{ position:absolute;left:30px;top:18px; font-size:15px;color:#fff}
+.yun_wapheader_city_icon{width:15px;height:15px; background:url(../images/tsc_iconmap.png) no-repeat; background-size:100%; display:inline-block; position:absolute;left:6px; top:21px;}
+.yun_wapheader_citymore_icon{ display:inline-block; position:relative}
+.yun_wapheader_citymore_icon:after{content:"";position: absolute;top: 8px;right: -15px;width: 6px;height:6px;border: #fff solid;-webkit-transform: rotate(135deg);border-width: 2px 2px 0 0;color: #fff; margin-top:-4px;}
+.yun_wapheader_search_box{height:32px; background:#fff;border-radius:20px; padding:0px 20px; position:relative; overflow:hidden}
+.yun_wapheader_search{width:100%;height:28px;border:none; text-align:center;color:#d0d0d0; font-size:14px;}
+.yun_wapheader_search_box:after{width:16px;height:16px; background:url(../images/tcs_search_icon.png) no-repeat; background-size:100%;content:""; display:inline-block; position:absolute;left:15px; top:8px;}
+.yun_wapheader_login{ display:inline-block; padding-left:20px;color:#fff; position:absolute;right:8px;top:17px;color:#fff; font-size:15px}
+.yun_wapheader_login:after{width:18px;height:18px; display:inline-block;content:""; background:url(../images/headerlogin_icon.png) no-repeat; background-size:100%; position:absolute;left:0px;top:2px;}
+.yun_wapheader_search_box input{width: 100%;height: 32px; line-height:32px;border: none;text-align: left;color: #d0d0d0;font-size: 14px;border:none; margin-bottom:0px;}
+.header_h{width:100%;height:48px}
+.header{width:100%;height:48px; }
+.header_fixed{width:100%;height:48px; position:fixed;left:0px;top:0px; z-index:10000000}
+.header_bg{width:100%;height:48px;background:#3b7cff; position:relative; z-index:10;}
+.header_fx_search{width:70%; margin:0 auto}
+.header_userbg{width:100%;height:48px; position:relative; z-index:10;background:#fff}
+.logo{display: inline-block;position: absolute;top:8px;left: 10px;}
+.logo  img {height: auto;width:200px;}
+.index_headerlogo img {height: auto;max-width:220px;}
+.regorlogin {width: 100px;display: inline-block;position: absolute;right: 0px;top:8px;font-size:15px;color: #333;}
+.regorlogin a{padding:15px 5px 10px;color:#fff;}
+.header_top_l{width:40px;height:48px; line-height:47px;color:#333; position:absolute;left:15px;top:0; ;}
+.header_top_l:after{content: ' ';width: 12px;height: 12px;
+border: #fff solid;-webkit-transform: rotate(-135deg);border-width: 1px 1px 0 0;color: #828282;display: inline-block; position:absolute;left:0px;top:17px;}
+.header_h1{width:100%; text-align:center; font-size:18px;color:#fff; padding:9px 0}
+.header_top_r{color:#fff; position:absolute;right:10px;top:50%; font-size:25px; margin-top:-13px;z-index:100;}
+.header_l{ position:absolute;right:10px;top:50%; margin-top:-10px;color:#fff;}
+.header_l a{color:#fff; padding:0 5px;}
+.wap_title{height:45px; line-height:45px; position:relative; font-size:16px;color:#000}
+.wap_title span{ display:inline-block;color:#333}
+.wap_title:after{content: '';width: 15px;height:3px;background-color:#fff;position: absolute;left: 0;bottom:0;border-radius: 3px;}
+.wap_title_j{width:100%; padding:10px 0;position:relative}
+.wap_title_j span{ display:inline-block; font-size:16px; position:relative; padding-left:13px; z-index:10; background:#fff; padding-right:10px;color:#333}
+.wap_title_j span:before{width:6px;height:16px; background:#288ee0; position:absolute;left:0px;top:3px;content:'';}
+.more{ position:absolute;right:0px;top:0px;color:#39F; background:#fff; z-index:10; padding-left:10px;}
+.header_search{ position:absolute;right:15px;top:8px; z-index:100000}
+.header_search_fa{color:#fff; font-size:24px;}
+.loginlock{width:100%;height:50px; line-height:50px; background:rgba(38,139,219,0.9); font-size:20px; text-align:center;color:#fff}
+.header_p_z{height:30px; line-height:30px; overflow:hidden; margin:0 auto;text-overflow:ellipsis; white-space:nowrap; text-align:left; padding-left:40px }
+.header_navlist{ position:fixed;right:15px;top:14px; z-index:10000001}
+.header_navlist a{width:18px;height:30px; display:block}
+.naviconfont{width:14px;height:2px; background:#fff; display:inline-block; position:relative}
+
+.com_touch_tip{color:#36F}
+.naviconfont{width:20px;height:20px; background:url(../images/navicon.png) no-repeat; background-size:100%; display:inline-block;}
+
+.header_new_login{ position:absolute;right:15px;top:0px; line-height:48px;font-size:15px;}
+.header_new_login_line{ font-size:12px;color:#999; padding:0px 5px;}
+.header_new_login_a{ display:inline-block; padding-left:20px; position:relative;}
+
+.header_new_login a{color:#333}-*/
+</style>
+  
+<div class="lt_hunter_info_box">
+    <div class="lt_hunter_info">
+        <div class="lt_hunter_info_c">
+            <div class="lt_hunter_info_photo"><img src="{yun:}$info.photo_big{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_lt_icon{/yun}',2);" /></div>
+            <div class="lt_hunter_info_name">{yun:}$info.realname{/yun} {yun:}if $vip_pic{/yun}<img src="{yun:}$vip_pic{/yun}" width="14">{yun:}/if{/yun}
+
+            </div>
+            <div class="lt_hunter_info_hy">{yun:}$info.hy_n{/yun}</div>
+            
+            {yun:}if $usertype==1{/yun}
+            	<a href="javascript:void(0);" onclick="ltatn('{yun:}$info.uid{/yun}','3');" id="guanzhu{yun:}$info.uid{/yun}" class="lt_hunter_info_gz">{yun:}if is_array($atn){/yun}取消关注{yun:}else{/yun}+关注{yun:}/if{/yun}</a>
+            {yun:}else{/yun} 
+            
+           	 	{yun:}if $uid{/yun}
+					<a href="javascript:void(0)" {yun:}if $config.sy_user_change==1{/yun}onclick="showToast('请先申请个人账户');" {yun:}else{/yun}onclick="showToast('只有个人账户才能关注');" {yun:}/if{/yun} class="lt_hunter_info_gz">+关注</a>
+            	{yun:}else{/yun}
+            		<a href="javascript:void(0)" onclick="pleaselogin('您还未登录个人账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="lt_hunter_info_gz">+关注</a>
+            	{yun:}/if{/yun} 
+            {yun:}/if{/yun}
+        </div>
+        <div class="lt_hunter_info_n_b">
+            <div class="lt_hunter_info_sj"><span class="lt_hunter_info_n" id="atn{yun:}$info.uid{/yun}">{yun:}$info.ant_num{/yun}</span> 关注</div>
+            <div class="lt_hunter_info_sj"><span class="lt_hunter_info_n">{yun:}$info.exp_n{/yun}</span> 从业经验</div>
+            <div class="lt_hunter_info_sj lt_hunter_info_sj_end"><span class="lt_hunter_info_n">{yun:}if $user.login_date{/yun}{yun:}$user.login_date|date_format:"%Y-%m-%d "{/yun}{yun:}else{/yun}未登录{yun:}/if {/yun}</span> 上次登录</div>
+        </div>
+    </div>
+    <div class=""> {yun:}if $usertype==1{/yun}
+        <a href="javascript:void(0);" onclick="entrust('{yun:}$info.uid{/yun}','{yun:}$info.realname{/yun}');" class="lt_hunter_info_wt"> 委托简历</a>
+        {yun:}else{/yun} {yun:}if $uid{/yun}
+		<a href="javascript:void(0)" {yun:}if $config.sy_user_change==1{/yun}onclick="showToast('请先申请个人账户');" {yun:}else{/yun}onclick="showToast('只有个人账户才能委托简历');" {yun:}/if{/yun} class="lt_hunter_info_wt">委托简历</a>
+        {yun:}else{/yun}
+        <a href="javascript:void(0)" onclick="pleaselogin('您还未登录个人账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="lt_hunter_info_wt">委托简历</a>
+        {yun:}/if{/yun} {yun:}/if{/yun}
+    </div>
+</div>
+
+<div class="lt_hunter_info_box">
+    <div class="lt_hunter_info">
+        <div class="lt_hunter_tit">基本信息</div>
+        <div class="lt_hunter_info_p">
+            {yun:}if $info.rzid{/yun}
+            <div>认证ID号：{yun:}$info.rzid{/yun} </div>{yun:}/if{/yun}
+
+            <div>上次登录：{yun:}if $user.login_date{/yun}{yun:}$user.login_date|date_format:"%Y-%m-%d %H:%M:%S"{/yun}{yun:}else{/yun}尚未登录 {yun:}/if{/yun} </div>
+            <div>擅长行业：{yun:}$info.hy_n{/yun}</div>
+            <div>擅长职位：{yun:}$info.job_n{/yun}</div>
+        </div>
+    </div>
+
+</div>
+<div class="lt_hunter_info_box">
+    <div class="lt_hunter_info">
+        <div class="lt_hunter_tit">顾问介绍</div>
+        <div class="lt_hunter_info_p">
+            {yun:}$info.content{/yun}
+        </div>
+    </div>
+</div>
+<div class="lt_hunter_info_box">
+    <div class="lt_hunter_info">
+        <div class="lt_hunter_tit">正在运作的职位</div>
+        <div class="">
+            {yun:}if $jobnum>0{/yun} {yun:}ltjoblist uid='auto.uid' item=list{/yun}
+            <div class="itwap_job_ds_job_b">
+                <div class="itwap_job_b_nm">
+                    <a href="{yun:}url m=wap c=post a=jobshow id=$list.id{/yun}">{yun:}$list.job_name|mb_substr:0:12:'utf-8'{/yun}</a>
+                </div>
+                <div class="itwap_job_b_city">{yun:}$list.com_name|mb_substr:0:22:'utf-8'{/yun}<span class="lt_hunter_info_line">|</span> {yun:}$list.cityid_info{/yun}</div>
+                <div class="itwap_job_b_jy"><i>{yun:}if $list.salary_info{/yun}{yun:}$list.salary_info{/yun}{yun:}/if{/yun}</i></div>
+            </div>
+            {yun:}/ltjoblist{/yun} {yun:}else{/yun}
+            <div class="it_wap_notip"><i class="it_wap_notipiocn"></i>该顾问暂时没有运作的职位</div>
+            {yun:}/if{/yun}
+        </div>
+    </div>
+
+</div>
+
+<div class="lt_hunter_info_box">
+    <div class="lt_hunter_info">
+        <div class="lt_hunter_tit">合作过的客户</div>
+        <div class="lt_hunter_info_p">
+            {yun:}if $info.client|@count and $info.client{/yun}
+            <div class="itwap_job_ds_kh">
+                {yun:}foreach item=v from=$info.client{/yun}
+                <span class="itwap_job_ds_hzkh">{yun:}$v{/yun}</span> {yun:}/foreach{/yun}
+            </div>
+            {yun:}else{/yun}
+            <div class="it_wap_notip"><i class="it_wap_notipiocn"></i>暂时没有合作客户</div>
+            {yun:}/if{/yun}
+        </div>
+    </div>
+</div>
+
+<!--私信弹出框-->
+<div id="reply" style=" display:none; width:330px; margin: 0 auto; padding: 0;">
+    <div><textarea name="reply" id="content" rows="4" cols="30"></textarea></div>
+    <div><input type="submit" name="submit" value="发送 " class="lt_recuser_box_tj_list_sub" onclick="send_ltmsg();" />
+        <input class="" type="hidden" id="fid" name="id" value="" /></div>
+</div>
+<!--私信弹出框-->
+
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/lt.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}if $layer{/yun}
+    <script>
+        $(document).ready(function() {
+            showToast('{yun:}$layer.msg{/yun}');
+        });
+    </script>
+{yun:}/if{/yun}
+<script type="text/javascript">
+    function footernav(type){
+        var display =$("."+type).css('display');
+        $("#footerjob").hide(); 
+        if(display=='none'){ 
+            $("."+type).show();
+        }else{
+            $("."+type).hide();
+        }
+    }
+</script>
+</body>
+</html>

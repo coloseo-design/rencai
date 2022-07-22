@@ -1,0 +1,71 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    	<div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">我的培训</span> <i class="member_right_h1_icon user_bg"></i></div>
+	        <div id="gms_showclew"></div>
+	      
+	        <div class="job_list_tit"> 
+		        <ul class="">
+					<li {yun:}if $smarty.get.c=='baoming_subject'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=baoming_subject">报名课程</a></li>
+				 	<li {yun:}if $smarty.get.c=='fav_subject'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_subject">收藏课程</a>{yun:}if $msgnum{/yun}<i class="left_sidebar_leftmune_icon">{yun:}$msgnum{/yun}</i>{yun:}/if{/yun}</li>
+			      	<li {yun:}if $smarty.get.c=='atn_teacher'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=atn_teacher">关注讲师</a></li>
+			 		<li {yun:}if $smarty.get.c=='fav_agency'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_agency">关注机构</a></li>
+		     		<li {yun:}if $smarty.get.c=='subject_zixun'{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=subject_zixun">培训留言</a></li>
+		     	</ul> 
+	     	</div>
+            <div class="train_bm">
+            		{yun:}if $rows{/yun}
+            <div class="train_bm_tit">
+             <div class="train_bm_name train_bm_kcname"><span class="train_bm_kcname_pd">培训课程</span></div>    
+             <div class="train_bm_name train_bm_jgname">机构名称 </div>    
+             <div class="train_bm_name train_bm_jg">课程价格 </div>    
+             <div class="train_bm_name train_bm_sf">收费方式</div>      
+             <div class="train_bm_name train_bm_time">报名时间</div>    
+             <div class="train_bm_name train_bm_zt">支付状态</div>     
+             <div class="train_bm_name train_bm_cz">操作</div>   
+            </div>
+            
+            {yun:}foreach item=job from=$rows{/yun} 
+		     {yun:}assign var="state" value=$job.order_state{/yun}
+                   <div class="train_bm_list">
+             <div class="train_bm_name train_bm_kcname"><a href="{yun:}url m=train c=subshow id=$job.sid{/yun}" target="_blank" class="train_bm_list_a">{yun:}$job.subname{/yun}</a></div>    
+             <div class="train_bm_name train_bm_jgname"><a href="{yun:}url m=train c=agencyshow id=$job.s_uid{/yun}" target="_blank">{yun:}$job.trainname|strip_tags|mb_substr:0:7:utf8{/yun}</a>   </div>     
+              <div class="train_bm_name train_bm_jg"><i class="train_class_jg">￥{yun:}$job.price{/yun}</i> </div> 
+             <div class="train_bm_name train_bm_sf"> {yun:}$job.isprice_n{/yun} </div>      
+             <div class="train_bm_name train_bm_time">{yun:}$job.ctime|date_format:"%Y-%m-%d"{/yun} </div>    
+             <div class="train_bm_name train_bm_zt">{yun:}$arr_data.paystate.$state{/yun}</div>     
+             <div class="train_bm_name train_bm_cz">   {yun:}if $job.isprice==1{/yun}
+                  
+                
+						{yun:}if $job.order_state=='1'{/yun} 
+                        <a href="index.php?c=payment&id={yun:}$job.oid{/yun}" class="train_bm_cred">立即付款</a> <span class="jobnotice_cz_line">|</span>
+                        <a href="javascript:void(0)" onclick="layer_del('确定要取消？', 'index.php?c=baoming_subject&act=del&id={yun:}$job.id{/yun}');" class="cblue">取消报名</a>
+                        {yun:}/if{/yun}
+                
+                  {yun:}else{/yun}
+               到场支付<span class="jobnotice_cz_line">|</span>
+               <a href="javascript:void(0)" onclick="layer_del('确定要取消？', 'index.php?c=baoming_subject&act=del&id={yun:}$job.id{/yun}');" class="cblue">取消报名</a>
+     
+                  {yun:}/if{/yun}</div>   
+       
+                  
+                  
+              </div>   
+               
+               
+               
+           
+			    {yun:}/foreach{/yun} 
+   
+      {yun:}else{/yun}
+      <div class="msg_no">
+          <p>亲爱的用户，您还没有报名的培训课程，想要获得更多学习机会</p>
+          <p>立即搜索您感兴趣的课程并报名培训吧！</p>
+          <a href="{yun:}url m=train{/yun}" target="_blank" class="msg_no_sq uesr_submit">立即搜索我感兴趣的培训课程>></a> </div>
+            {yun:}/if{/yun}
+        </div>
+        <div class="diggg" style="float:right; margin-top:10px;">{yun:}$pagenav{/yun}</div>
+    </div>
+</div>  	</div>  
+{yun:}include file="$userstyle/footer.htm"{/yun}

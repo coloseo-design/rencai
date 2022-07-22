@@ -1,0 +1,32 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<section class="main_member_cot_box">
+
+	<ul class="yun_m_tit">
+		<li>
+			<a href="index.php?c=change">金额转换</a>
+		</li>	
+		<li class="yun_m_tit_cur">
+			<a href="index.php?c=changelist">转换明细</a>
+		</li>
+	</ul>
+
+	<div class="wap_member_post_list">
+		{yun:}foreach item=v from=$rows{/yun}
+			<div class="com_member_hr">
+				<div class="user_member_box">
+					<div class="com_member_hr_p1"><span class="member_c9">转换单号：</span>{yun:}$v.order_id{/yun}</div>
+					<div class="com_member_hr_p1"><span class="member_c9">转换{yun:}$config.integral_pricename{/yun}：</span>{yun:}$v.order_price|floatval{/yun}个</div>
+					<div class="com_member_hr_p1"><span class="member_c9">时间：</span>{yun:}$v.pay_time|date_format:'%Y-%m-%d'{/yun}</div>
+				</div>
+			</div>
+		{yun:}foreachelse{/yun}
+			<div class="wap_member_no">暂无相关信息</div>
+		{yun:}/foreach{/yun}
+	</div>
+</section>
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+</body>
+</html>

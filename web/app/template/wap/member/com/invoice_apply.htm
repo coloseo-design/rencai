@@ -1,0 +1,187 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<div class="m_taball">	<div class="m_taballbox">
+<ul>
+        <li>
+            <a href="index.php?c=invoice">我的发票</a>
+        </li>
+        <li class="m_taballactive">
+            <a href="index.php?c=sqinvoice">发票索取</a>
+        </li>
+        <li>
+            <a href="index.php?c=invoice_info">发票信息</a>
+        </li>
+    </ul>
+
+       </div>
+                    </div>
+
+<div id="yunvue">
+    <div class="wap_member_box none" v-bind:class="{show: islook}">
+        <div class="" v-if="total > 0">
+            <div v-if="!isapply">
+                <div class="wap_member_post_list" v-for="(item,sqk) in list" :key="sqk">
+                    <div class="paylog_tit"><span class="paylog_lx">{{item.type_n}}</span>
+                        <span class="paylog_tit_zt">{{item.dingdan_state_n}}</span>
+                    </div>
+                    <div class="user_member_box" style="padding-bottom:5px;">
+                        <div class="pay_mx_list"><span class="member_c9">充值单号：</span>{{item.order_id}}</div>
+
+                        <div class="pay_mx_list"><span class="member_c9">支付形式：</span>{{item.dingdan_type_n}}</div>
+                        <div class="pay_mx_list"><span class="member_c9">充值金额：</span>{{item.order_price}}</div>
+
+                        <div class="pay_mx_list"><span class="member_c9">订单时间：</span>{{item.dingdan_time_n}}</div>
+                        <div class="pay_mx_list" v-if="item.order_remark"><span class="member_c9">订单备注：</span>
+                            {{item.order_remark}}
+                        </div>
+                    </div>
+
+                    <div class="com_member_hr_cz">
+                        <a href="javascript:;" @click="addInvoiceInfo" :data-id="item.order_id"
+                           :data-price="item.order_price"
+                           class="invoice yun_member_hr_bth">申请发票</a>
+                    </div>
+                </div>
+				
+				
+                <div class="pages" v-if="total > limit">
+                    <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses
+                                    @change="pageChange"/>
+                </div>
+            </div>
+            <div class="none" v-bind:class="{show: isapply}">
+            <div class="sqfp_box">
+                <div class="admin_new_tip ">
+                    <div class="admin_new_tit">重要提示</div>
+                    <div class="admin_new_tip_list_cont">
+                        <div class="admin_new_tip_list">
+                            根据最新增值税管理办法要求，7月1日起如需为企业（包括公司、非公司制企业法人、企业分支机构、个人独资企业、合伙企业和其他企业）开具增值税发票，需提供纳税人识别号或统一社会信用代码，否则该发票无法作为税收凭证。请准确选择发票抬头类型，若企业发票请填写有效税号信息。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoice_sqbox_h1"><span class="invoice_sqbox_h1_s">确认发票信息</span>
+                    <a href="javascript:;" onclick="navigateTo('index.php?c=invoice_info')"
+                       class="invoice_sqbox_xg">修改</a>
+                </div>
+                <div class="invoice_sqbox">
+
+                    <div class="invoice_mumber"><span class="invoice_span">订单编号：</span>{{sqorderid}}</div>
+                    <div class="invoice_money"><span class="invoice_span">实付金额：</span>{{sqorderprice}}</div>
+
+                    <div>发票类型：
+                        <span>{{invoice.invoicetype==1?'企业普通发票':'增值税专用票'}}</span>
+                    </div>
+                    <div>发票抬头：<span>{{invoice.invoicetitle}}</span></div>
+
+                    <div class="invoice_bthbox">
+                        <input type="button" class="invoice_list_bth" value="提交申请" @click="applyinvoice">
+                        <input type="button" class="invoice_list_bth" value="暂不申请" @click="showlist">
+                    </div>
+                </div>
+            </div></div>
+        </div>
+        <div v-else>
+            <div class="wap_member_no">暂无可申请发票订单记录。</div>
+        </div>
+    </div>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                list: [],
+                invoice: [],
+                islook: false,
+                isapply: false,
+                sqorderid: '',
+                sqorderprice: '',
+                cache: {},
+
+                total: 0,
+                pageTotal: 0,
+                page: 1,
+                limit: 20,
+            };
+        },
+        created() {
+            this.getSqinvoice();
+        },
+        methods: {
+            getSqinvoice() {
+                var that = this;
+                var param = {
+                    page: that.page,
+                    limit: that.limit,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=sqinvoice{/yun}', param, function (data) {
+                    hideLoading();
+                    that.total = data.total;
+                    that.pageTotal = Math.ceil(that.total / that.limit);
+                    let res = data.data;
+                    that.invoice = res.invoice;
+                    that.cache = res.config;
+                    if (res.list.length > 0) {
+                        that.list = data.data.list;
+                    }
+                    that.islook = true
+                }, 'json')
+            },
+            addInvoiceInfo(e) {
+                var that = this;
+                if (that.invoice) {
+                    if (that.cache.sy_com_invoice == 1) {
+                        that.sqorderid = e.currentTarget.dataset.id;
+                        that.sqorderprice = e.currentTarget.dataset.price;
+                        that.isapply = true;
+                    } else {
+                        showModal('网站未开启发票申请，请联系管理员！');
+                    }
+                } else {
+                    showModal('您还没有发票信息，请先添加！', function () {
+                        navigateTo('index.php?c=invoice_info');
+                    });
+                }
+            },
+            applyinvoice() {
+                var that = this;
+                var param = {
+                    order_id: that.sqorderid,
+                    order_price: that.sqorderprice,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=savesqinvoice{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 10) {
+                        showModal(data.data, function () {
+                            navigateTo('index.php?c=invoice_info');
+                        });
+                    } else if (data.error == 11) {
+                        showModal(data.data);
+                    } else if (data.error == 12) {
+                        showModal(data.data, function () {
+                            navigateTo('index.php?c=sqinvoice');
+                        });
+                    } else if (data.error == 1) {
+                        showToast('申请成功', 2, function () {
+                            navigateTo('index.php?c=invoice');
+                        });
+                    }
+                }, 'json')
+            },
+            showlist: function (e) {
+                this.isapply = false;
+            },
+            pageChange: function (page) {
+                this.page = page;
+                this.getSqinvoice();
+            },
+        }
+    });
+</script>
+</body>
+</html>

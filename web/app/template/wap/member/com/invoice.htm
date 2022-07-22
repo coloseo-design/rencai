@@ -1,0 +1,114 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div class="m_taball">	<div class="m_taballbox">
+<ul>
+    <li class="m_taballactive">
+        <a href="index.php?c=invoice">我的发票</a>
+    </li>
+    <li>
+        <a href="index.php?c=sqinvoice">发票索取</a>
+    </li>
+    <li>
+        <a href="index.php?c=invoice_info">发票信息</a>
+    </li>
+</ul>
+        </div>
+        </div>
+
+<div id="yunvue">
+    <div class="none" v-bind:class="{show: islook}">
+        <div v-if="total > 0" class="m_cardbox">
+            <div class="invoice_box" v-for="(item,fpk) in list" :key="fpk">
+                <div class="pay_mx_list"><span class="member_c9">申请时间</span>{{item.addtime_n}}</div>
+                <div class="pay_mx_list"><span class="member_c9">发票抬头</span>{{item.title}}</div>
+                <div class="pay_mx_list"><span class="member_c9">发票总额</span>￥{{item.price}}</div>
+              <div class="pay_mx_list"><span class="member_c9">开票性质</span>{{item.style!=2?'纸质（快递）':'电子（邮箱）'}}</div>
+            <div class="pay_mx_list"><span class="member_c9">收件人名</span>{{item.link_man}}</div>
+
+                <div v-if="item.status==0"class="pay_mx_list"><span class="member_c9">发票状态</span>未审核</div>
+                <div v-else-if="item.status==2"class="pay_mx_list"><span class="member_c9">发票状态</span>未通过</div>
+                <div v-else-if="item.status==3"class="pay_mx_list"><span class="member_c9">发票状态</span>已打印</div>
+                <div v-else-if="item.status==4"class="pay_mx_list"><span class="member_c9">发票状态</span>已邮寄</div>
+                <div v-if="item.status<3&&item.statusbody"class="pay_mx_list"><span class="member_c9">审核说明：</span>{{item.statusbody}}</div>
+            </div>
+            <div v-if="total > limit">
+                <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses
+                                @change="pageChange"/>
+            </div>
+        </div>
+
+        <div v-else>
+            <div class="wap_member_no">暂无发票申请</div>
+        </div>
+    </div>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                list: [],
+                islook: false,
+
+                total: 0,
+                pageTotal: 0,
+                page: 1,
+                limit: 20,
+            };
+        },
+        created() {
+            this.getInvoice();
+        },
+        methods: {
+            getInvoice: function () {
+                var that = this;
+                var param = {
+                    page: that.page,
+                    limit: that.limit,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=invoicelist{/yun}', param, function (data) {
+                    hideLoading();
+                    that.total = data.total;
+                    that.pageTotal = Math.ceil(that.total / that.limit);
+                    let res = data.data;
+                    if (res.length > 0) {
+                        that.list = data.data;
+                    }
+                    that.islook = true
+                }, 'json')
+            },
+            del: function (e) {
+                let that = this,
+                    param = {
+                        id: e.currentTarget.dataset.id,
+                    };
+                var key = e.currentTarget.dataset.key;
+                showConfirm('确定删除？', function () {
+                    showLoading('删除中');
+                    $.post('{yun:}url d=wxapp h=com m=finance c=delinvoice{/yun}', param, function (data) {
+                        hideLoading();
+                        if (data.error == 1) {
+                            showToast('删除成功', 2, function () {
+                                that.info.splice(key, 1);
+                                if (that.info.length == 0) { // 无数据时重新加载页面
+                                    that.page = that.page > 1 ? (that.page - 1) : 1;
+                                    that.getInvoice();
+                                }
+                            });
+                        } else {
+                            showModal(data.msg);
+                        }
+                    }, 'json')
+                })
+            },
+            pageChange: function (page) {
+                this.page = page;
+                this.getInvoice();
+            },
+        }
+    });
+</script>
+
+</body>
+</html>

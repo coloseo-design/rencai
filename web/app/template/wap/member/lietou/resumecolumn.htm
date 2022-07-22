@@ -1,0 +1,18 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<ul class="yunset mt15">
+    <li><a href="index.php?c=yp_resume" class="">应聘来的简历<span class="yun_mnav_tip">有{yun:}$yp_resume{/yun}条</span></a></li>
+    <li><a href="index.php?c=entrust_resume" class="">委托来的简历<span class="yunset_list_newmsg">{yun:}if $entrust_resumeno{/yun}{yun:}$entrust_resumeno{/yun}{yun:}/if{/yun}</span><span class="yun_mnav_tip">有{yun:}$entrust_resume{/yun}条</a></li>
+    <li><a href="index.php?c=down_resume" class="">已下载的简历<span class="yun_mnav_tip">有{yun:}$down_resume{/yun}条</a></li>
+    <li><a href="index.php?c=look_resume" class="">浏览过的简历<span class="yun_mnav_tip">有{yun:}$look_resume{/yun}条</a></li>
+    </ul>
+<ul class="yunset mt15">
+    <li><a href="index.php?c=talent" class="">简历库<span class="yun_mnav_tip">有{yun:}$talent{/yun}条</a></li>
+</ul>
+<ul class="yunset mt15">
+    <li><a href="{yun:}url m=wap c=resume{/yun}" >人才库<span class="yun_mnav_tip">去搜索人才</span></a></li>
+    </ul>
+<ul class="yunset mt15">
+    <li><a href="index.php?c=my_rebates" class="">我推荐的悬赏<span class="yunset_list_newmsg">{yun:}if $my_rebatesno{/yun}{yun:}$my_rebatesno{/yun}{yun:}/if{/yun}</span><span class="yun_mnav_tip">有{yun:}$my_rebates{/yun}条</a></li>
+    <li><a href="index.php?c=give_rebates" class="">推荐给我的人才<span class="yunset_list_newmsg">{yun:}if $give_rebatesno{/yun}{yun:}$give_rebatesno{/yun}{yun:}/if{/yun}</span><span class="yun_mnav_tip">有{yun:}$give_rebates{/yun}条</span></a></li>
+</ul>
+</body></html>

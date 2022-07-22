@@ -1,0 +1,556 @@
+{yun:}include file="$wapstyle/header.htm"{/yun}
+
+<link href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"/>
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="" id="app">
+    
+    <!-- 页面头部部分 -->
+
+    <!--隐藏简历提示-->
+    {yun:}if $uid && $expect.status=='2'{/yun}
+    <div id="privacyCtrl" class="hide_tip">
+        <div class="resume_hint_eye_n">
+            <img src="{yun:}$wap_style{/yun}/images/conceal_1.png" alt="" width="100%" height="100%">
+        </div>
+        <i class="resume_hint_word_color"> 简历已隐藏，</i>
+       <i class="resume_hint_word_black"> 企业无法主动发现你</i>
+        <a href="javascript:void(0);" onclick="privacy();" class="hide_tip_qx">取消隐藏</a>
+        <i class="hide_tip_gb"></i>
+    </div>
+    {yun:}/if{/yun}
+
+    <div class="clear"></div>
+
+    <div class="yunTop">
+        <div class="yunlogobox">
+            {yun:}if $tplmoblie.logo==2{/yun}
+                <div class="header_p_z"> {yun:}$config.sy_webname{/yun}</div>
+            {yun:}else{/yun}
+                <img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wap_logo{/yun}" alt=" " title=" " class="yunlogo">
+            {yun:}/if{/yun}
+			<!--
+            {yun:}if !$username && $smarty.get.c==''{/yun}
+                <a href="{yun:}url m=wap c=login{/yun}" class="yunTopUp_right"> 发布简历</a>
+            {yun:}else{/yun}
+                <a href="{yun:}url m=wap{/yun}member" id="memberclick" class="yunTopUp_right">用户中心</a>
+            {yun:}/if{/yun}-->
+        </div>
+
+        <div class="index_newedition_search_box">
+            <div class="index_newedition_searchbg">
+                <div class="index_newedition_search_c">
+
+                    {yun:}if $config.sy_web_site=='1'{/yun}
+                    <a href="{yun:}url m=wap c=site{/yun}" class="index_newedition_search_city">{yun:}if $config.cityname{/yun}{yun:}$config.cityname{/yun}{yun:}else{/yun}{yun:}$config.sy_indexcity{/yun}{yun:}/if{/yun}</a>
+                    {yun:}/if{/yun}
+
+                    <span class="index_newedition_search_p searchnew" style="{yun:}if $config.sy_web_site=='1'{/yun}width:75%{yun:}else{/yun}width:95%{yun:}/if{/yun}">搜职位/公司</span>
+                    <span class="index_newedition_searchbth"> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <!-- 页面主体部分 -->
+    <div class="index_body">
+        <!-- 轮播图部分 -->
+        <div class="banner">
+            <!-- 轮播图 -->
+            <div class="roll">
+                <div class="swiper-container" id="imgswiper" style="transform:translate3d(0,0,0);overflow:hidden;">
+                    <div class="swiper-wrapper" >
+                        {yun:}adlist classid=50 item="lunbo" key=key{/yun}
+                        <div class="swiper-slide" style="transform:translate3d(0,0,0);">
+                            <a href="{yun:}$lunbo.src{/yun}">
+                                <img src="{yun:}$lunbo.pic{/yun}" width='100%' height="120" style="border-radius: 6px;"/>
+                            </a>
+                        </div>
+                        {yun:}/adlist{/yun}
+                    </div>
+                </div>
+            </div>
+
+            <div class="job">
+                <!--金刚位 -->
+                <div class="swiper-container navbox_jgw" id="navswiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            {yun:}foreach from=$navlist key=key item=v{/yun}
+                            {yun:}if $key>0 && $key%4 == 0{/yun}
+                        </div>
+                        <div class="swiper-slide">
+                            {yun:}/if{/yun}
+                            <a href="{yun:}$v.url_n{/yun}">
+                                <div class="full-time">
+                                    <div class="full-time-logo">
+                                        <img src="{yun:}$v.pic_n{/yun}" alt="" style="width: 100%;">
+                                    </div>
+                                    <div class="full-time-word">{yun:}$v.name{/yun}</div>
+                                </div>
+                            </a>
+                            {yun:}/foreach{/yun}
+                        </div>
+                    </div>
+                    <div class="swiper-pagination navbox_fyq"></div>
+                </div>
+            </div>
+            {yun:}if $annum{/yun}
+            <div class="inform">
+                <div class="inform-trumpet">
+                    <a href="{yun:}url m=wap c=announcement{/yun}"><img src="{yun:}$wap_style{/yun}/images/home_icon_notice.png" alt="" style="width: 100%;"></a>
+                </div>
+                <div class="swiper-container " id="ggswiper" style="margin-top:0.08rem">
+                    <div class="swiper-wrapper">
+                        {yun:}announcement limit=10 item=alist t_len=40{/yun}
+                        <div class="swiper-slide">
+                            <a href="{yun:}url m=wap c=announcement id=$alist.id{/yun}" style="color:#666;height:0.64rem;"><i class="inform-word conceal_word" >{yun:}$alist.title_n{/yun}</i></a>
+                        </div>
+                        {yun:}/announcement{/yun}
+                    </div>
+                </div>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+
+        <!-- 直播招聘部分-->
+        {yun:}if $xjh{/yun}
+        <div class="recruit">
+            <i class="hint">直播招聘</i>
+            <div class="prompt-content">
+                <div class="img">
+                    <img src="{yun:}$xjh.pic{/yun}" alt="" style="width: 100%; height: 100%; border-radius:.16rem;">
+                </div>
+                <div class="words" onclick="location.href='{yun:}url m=wap c=xjhlive a=show id=$xjh.id{/yun}'">
+                    <div class="wordage">{yun:}$xjh.name|mb_substr:0:26:'utf-8'{/yun}</div>
+                   <div class="home_live_box">
+                    <span class="remind">直播时间 {yun:}$xjh.stime_n{/yun}</span>
+                    <button class="btn" >直播详情</button>
+                   </div>
+                </div>
+            </div>
+        </div>
+        {yun:}/if{/yun}
+
+        <!-- 简历优化提示 -->
+        {yun:}if $resume_yhnum>0{/yun}
+        <div id="resume_yh" class="optimize_tip_box none">
+            <div class="optimize_tip">
+                <i class="optimize_tipicon"></i>
+                <i class="optimize_tipgbicon" onclick="resume_yhhide();"></i>
+                <div class="optimize_name">您的简历有{yun:}$resume_yhnum{/yun}个优化项</div>
+                <div class="optimize_p">处理后可大幅提升求职成功率</div>
+                <a class="optimize_tip_bth" href="{yun:}url m=wap{/yun}member/index.php?c=resume&eid={yun:}$expect.id{/yun}">去处理</a>
+            </div>
+        </div>
+        {yun:}/if{/yun}
+          <!-- 登陆注册 -->
+		  {yun:}if !$username && $smarty.get.c==''{/yun}
+		   <div class="indexlogin_bth">
+			   
+			   <div class="indexlogin_bth_c">
+		   <div class="indexlogin_list">
+			     <a href="{yun:}url m=wap c=login{/yun}"  class="indexlogin_listc indexlogin_listcr">
+			   <i class="indexlogin_icon"></i>
+			   <div class="indexlogin_name">发布简历	  </div>
+			   <div class="indexlogin_p">找喜欢的工作	  </div>
+		  </a>
+		  </div>
+		     <div class="indexlogin_list">
+				    <a href="{yun:}url m=wap c=login{/yun}" class="indexlogin_listc indexlogin_listcl">
+				   <i class="indexlogin_icon indexlogin_icon2"></i>
+		  <div class="indexlogin_name">发布职位	  </div>
+		  <div class="indexlogin_p">招优秀人才	  </div>  </a> </div>
+		 
+		   </div>
+		   </div>
+
+              
+            {yun:}else{/yun}
+             
+            {yun:}/if{/yun}
+        <!-- 名企招聘 -->
+        <div class="new_mq">
+            <i class="new_mq_name">名企招聘</i>
+            <a class="new_mq_more" href="{yun:}url m=wap c=company rec=1{/yun}">更多 ></a>
+            <div class="">
+                <div id="hotjob" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        {yun:}hotjob item=hotjoblist limit=10{/yun}
+                        <div class="swiper-slide">
+                            <div class="new_mq_box">
+                                <a href="{yun:}url m=wap c=company a=show id=$hotjoblist.uid{/yun}">
+                                    <div class="new_mq_list">
+                                        <div class="new_mq_c">
+                                            <div class="new_mq_logo">
+                                                <img src="{yun:}$hotjoblist.hot_pic{/yun}" alt="" style="width: 100%;">
+                                            </div>
+                                            <div class="new_mq_comname">
+                                                {yun:}$hotjoblist.username|mb_substr:0:12:'utf-8'{/yun}
+                                            </div>
+                                        </div>
+                                        <div class="new_mq_bth">
+                                            {yun:}$hotjoblist.num{/yun}个岗位
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {yun:}/hotjob{/yun}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 广告 随机取一条 -->
+        {yun:}adlist classid=503 item="lunbo" key=key random=1{/yun}
+        <div class="zd_banner">{yun:}$lunbo.html{/yun}</div>
+        {yun:}/adlist{/yun}
+        <!-- tab栏切换部分 -->
+        <div id="yunvue" class="tab none">
+            <van-tabs color="#2778F8" @click="chooseTab">
+                <van-tab title="最新">
+                    {yun:}joblist limit=15 key=njk item=newjob{/yun}
+                    <a href="{yun:}url m=wap c=job a=comapply id=$newjob.id{/yun}" title="{yun:}$newjob.name{/yun}">
+
+                        <div class="table-card" style="{yun:}if $njk == 0{/yun}margin-top: .3rem;{yun:}/if{/yun}">
+                            <div class="card_post">
+                                <i class="table-card-word">{yun:}$newjob.name{/yun}</i>
+                                <i class="table-card-salary">{yun:}$newjob.job_salary{/yun}</i>
+                            </div>
+                            <div class="table-card-require">
+                                <i class="requir-area">{yun:}$newjob.job_city_one{/yun}-{yun:}$newjob.job_city_two{/yun}</i>
+                                <i class="requir_area_parting_line"></i>
+                                {yun:}if $newjob.job_edu{/yun}<i class="requir-area">{yun:}$newjob.job_edu{/yun}学历</i>{yun:}/if{/yun}
+                                {yun:}if $newjob.job_exp{/yun} <i class="requir_area_parting_line"></i><i class="requir-area">{yun:}$newjob.job_exp{/yun}经验</i>{yun:}/if{/yun}
+                            </div>
+                            {yun:}if $newjob.welfarename{/yun}
+                            <div class="welfare">
+                                {yun:}foreach from=$newjob.welfarename item=v{/yun}
+                                <span class="welfare_n">{yun:}$v{/yun}</span>
+                                {yun:}/foreach{/yun}
+                            </div>
+                            {yun:}/if{/yun}
+                            <div class="index_company">
+                                <i class="index_company-logo">
+                                    <img src="{yun:}$newjob.logo{/yun}" alt="" style="width: 100%;">
+                                </i>
+                                <i class="index_company-name">{yun:}$newjob.com_name|strip_tags|mb_substr:0:20:"utf-8"{/yun}</i>
+                                <i class="index_company-status">{yun:}$newjob.time{/yun}</i>
+                            </div>
+                        </div>
+                    </a>
+                    {yun:}/joblist{/yun}
+                </van-tab>
+
+                <van-tab title="紧急">
+                    {yun:}joblist limit=15 key=ujk item=urgjob urgent=1{/yun}
+                    <a href="{yun:}url m=wap c=job a=comapply id=$urgjob.id{/yun}" title="{yun:}$urgjob.name{/yun}">
+
+                        <div class="table-card" style="{yun:}if $ujk == 0{/yun}margin-top: .3rem;{yun:}/if{/yun}">
+                            <div class="card_post">
+                                <i class="table-card-word">{yun:}$urgjob.name{/yun}</i>
+                                <i class="table-card-salary">{yun:}$urgjob.job_salary{/yun}</i>
+                            </div>
+                            <div class="table-card-require">
+                                <i class="requir-area">{yun:}$urgjob.job_city_one{/yun}-{yun:}$urgjob.job_city_two{/yun}</i>
+                                <i class="requir_area_parting_line"></i>
+                                {yun:}if $urgjob.job_edu{/yun}<i class="requir-area">{yun:}$urgjob.job_edu{/yun}学历</i>{yun:}/if{/yun}
+                                {yun:}if $urgjob.job_exp{/yun}  <i class="requir_area_parting_line"></i><i class="requir-area">{yun:}$urgjob.job_exp{/yun}经验</i>{yun:}/if{/yun}
+                            </div>
+                            {yun:}if $urgjob.welfarename{/yun}
+                            <div class="welfare">
+                                {yun:}foreach from=$urgjob.welfarename item=v{/yun}
+                                <span class="welfare_n">{yun:}$v{/yun}</span>
+                                {yun:}/foreach{/yun}
+                            </div>
+                            {yun:}/if{/yun}
+                            <div class="index_company">
+                                <i class="index_company-logo">
+                                    <img src="{yun:}$urgjob.logo{/yun}" alt="" style="width: 100%;">
+                                </i>
+                                <i class="index_company-name">{yun:}$urgjob.com_name|strip_tags|mb_substr:0:20:"utf-8"{/yun}</i>
+                                <i class="index_company-status">
+                                    {yun:}$urgjob.time{/yun}
+                                </i>
+                            </div>
+                        </div>
+                    </a>
+                    {yun:}/joblist{/yun}
+                </van-tab>
+
+                <van-tab title="推荐">
+                    {yun:}joblist limit=15 key=rjk item=recjob rec=1{/yun}
+                    <a href="{yun:}url m=wap c=job a=comapply id=$recjob.id{/yun}" title="{yun:}$recjob.name{/yun}">
+
+                        <div class="table-card" style="{yun:}if $rjk == 0{/yun}margin-top: .3rem;{yun:}/if{/yun}">
+                            <div class="card_post">
+                                <i class="table-card-word">{yun:}$recjob.name{/yun}</i>
+                                <i class="table-card-salary">{yun:}$recjob.job_salary{/yun}</i>
+                            </div>
+                            <div class="table-card-require">
+                                <i class="requir-area">{yun:}$recjob.job_city_one{/yun}-{yun:}$recjob.job_city_two{/yun}</i>
+                                <i class="requir_area_parting_line"></i>
+                                {yun:}if $recjob.job_edu{/yun}<i class="requir-area">{yun:}$recjob.job_edu{/yun}学历</i>{yun:}/if{/yun}
+                                {yun:}if $recjob.job_exp{/yun}  <i class="requir_area_parting_line"></i><i class="requir-area">{yun:}$recjob.job_exp{/yun}经验</i>{yun:}/if{/yun}
+                            </div>
+                            {yun:}if $recjob.welfarename{/yun}
+                            <div class="welfare">
+                                {yun:}foreach from=$recjob.welfarename item=v{/yun}
+                                <span class="welfare_n">{yun:}$v{/yun}</span>
+                                {yun:}/foreach{/yun}
+                            </div>
+                            {yun:}/if{/yun}
+                            <div class="index_company">
+                                <i class="index_company-logo">
+                                    <img src="{yun:}$recjob.logo{/yun}" alt="" style="width: 100%;">
+                                </i>
+                                <i class="index_company-name">{yun:}$recjob.com_name|strip_tags|mb_substr:0:20:"utf-8"{/yun}</i>
+                                <i class="index_company-status">
+                                    {yun:}$recjob.time{/yun}
+                                </i>
+                            </div>
+                        </div>
+                    </a>
+                    {yun:}/joblist{/yun}
+                </van-tab>
+                
+                <van-tab title="附近">
+                    <div v-if="skeletonLoading">
+                        <div class="map_job_list" v-for="(item,skeletonKey) in skeletonLen" :key="skeletonKey">
+                            <div class="map_job_list_box">
+                                <van-skeleton :row-width="['100%', '50%', '100%']" :row="3"></van-skeleton>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div v-if="nearbyJob">
+                            <div v-for="(item,nkey) in nearbyJobList" :key="nkey" class="map_job_list">
+                                <div class="map_job_list_box">
+                                    <div class="map_job_top">
+                                        <div class="neighbouring_top">
+                                            <div class="map_job_topname">
+                                                <a :href="item.joburl">{{item.name}}</a>
+                                            </div>
+                                            <span class="map_job_xz">{{item.salary_n}}</span>
+                                        </div>
+                                        <div class="map_job_list_welfare">
+                                            <ul>
+                                                <li>{{item.job_city_one}}-{{item.job_city_two}}</li>
+                                                <i class="requir_area_parting_line"></i>
+                                                <li v-if="item.job_edu">{{item.job_edu}}学历</li>
+                                                <i class="requir_area_parting_line"></i>
+                                                <li v-if="item.job_exp">{{item.job_exp}}经验</li>
+                                            </ul>
+                                        </div>
+                                        <div v-if="item.welfare" class="welfare">
+                                        <span v-for="(witem,wkey) in item.welfare" :key="wkey" class="welfare_n">
+                                            {{witem}}
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="com_map">
+                                        <div class="map_job_com">
+                                            <a :href="item.comurl">
+                                                <div class="map_job_com_logo">
+                                                    <img :src="item.logo" alt="" width="100%" height="100%">
+                                                </div>
+                                                <div class="map_job_com_name">{{item.com_name}}</div>
+                                            </a>
+                                        </div>
+                                        <div class="com_map_name">
+                                            <a :href="item.addressurl">
+                                                <div class="com_map_name_address">{{item.address}}</div>
+                                                <div class="com_map_distance">{{item.dis}}</div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else class="no_data">
+                            <div class="no_data_img">
+                                <img src="{yun:}$wap_style{/yun}/images/home_emptygraph.png" alt=""style="width: 100%;">
+                            </div>
+                            <i class="no_data_word">当前没有职位数据哦~</i>
+                        </div>
+                    </div>
+                </van-tab>
+            </van-tabs>
+			<!--弹窗广告-->
+            <van-popup v-model="adBanner" position="center" :style="{ width:'90%',background:'none'}" closeable>
+				{yun:}adlist classid=502 item="lunbo" key=key random=1{/yun}
+				<div class="zd_userbanner">{yun:}$lunbo.html{/yun}</div>
+				{yun:}/adlist{/yun}
+            </van-popup>
+			<!--弹窗广告-->
+        </div>
+    </div>
+    <div class="yun_newedition_jobmore"><a href="{yun:}url m=wap c=job{/yun}">查看更多</a></div>
+
+    <div class="yun_newedition_footer">
+        <div class="">
+            <a href="{yun:}url m=wap c=contact{/yun}">联系我们</a>
+            <span class="yun_newedition_footer_line">|</span>
+            {yun:}if $config.sy_app_open == 1{/yun}
+            <a href="{yun:}url m=wap c=appdown{/yun}">下载APP</a>
+            <span class="yun_newedition_footer_line">|</span>
+            {yun:}/if{/yun}
+            <a href="{yun:}url m=wap c='advice'{/yun}">意见反馈</a>
+            <span class="yun_newedition_footer_line">|</span>
+            <a href="{yun:}url m=wap c=about{/yun}">关于我们</a>
+        </div>
+    </div>
+	{yun:}if !empty($kfurl) && $isweixin{/yun}
+	<!--企业微信浮动客服-->
+    <a href="{yun:}$kfurl{/yun}" class="zxkf"> </a>
+    {yun:}/if{/yun}
+</div>
+
+<style>
+    .van-tabs__nav {
+        background-color: #f4f4f4;
+        font-size: 0.8rem;
+    }
+
+    .van-tab__text {
+        font-size: 0.426666rem;
+    }
+
+    .van-tab--active {
+        font-weight: bold;
+    }
+
+    .van-skeleton__row:not(:first-child) {
+        margin-top: 22px;
+    }
+</style>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script>
+<script>
+    // 轮播图
+    new Swiper('#imgswiper', {
+        direction: 'horizontal',
+        autoplay: {
+            disableOnInteraction: false
+        },
+        loop: true
+    });
+    // 金刚位
+    new Swiper('#navswiper', {
+        direction: 'horizontal',
+        pagination: {
+            el: '.swiper-pagination'
+        }
+    });
+    // 公告
+    new Swiper('#ggswiper', {
+        direction: 'vertical',
+        autoplay: {
+            disableOnInteraction: false
+        },
+        loop: true,
+		height: 40,
+        autoHeight: true
+    });
+    // 名企
+    new Swiper('#hotjob', {
+        slidesPerView: 2.25,
+        spaceBetween: 1,
+        autoplay: {
+            disableOnInteraction: false
+        },
+        loop: true
+    });
+
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                skeletonLoading: true,
+                skeletonLen: new Array(15).fill(''),
+                nearbyJob: false,
+                nearbyJobList: [],
+                x: '',
+                y: '',
+                adBanner:false,
+            };
+        },
+        created() {
+			$('#yunvue').css('display','block');
+            this.adShow();
+        },
+        methods: {
+
+            chooseTab: function(name, title){
+                let that = this;
+                if (name==3 && title=='附近'){
+
+                    setTimeout(() => {
+                        that.getCurrentLoaction();
+                    }, 1000)
+                }
+            },
+            getCurrentLoaction: function () {
+                let that = this;
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function (r) {
+                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                        that.x = r.point.lng;
+                        that.y = r.point.lat;
+                        $.post(wapurl + 'index.php?c=job&a=distance', {
+                            x: r.point.lng,
+                            y: r.point.lat
+                        }, function (data) {
+                            that.getNearbyJob();
+                        })
+                    } else {
+                        console.log('获取定位异常' + this.getStatus())
+                        that.getNearbyJob();
+                    }
+                }, {
+                    enableHighAccuracy: true
+                });
+            },
+            getNearbyJob: function () {
+                let that = this;
+                let paramer = {
+                    x: that.x,
+                    y: that.y,
+                    limit: 15
+                }
+                $.post('index.php?c=map&a=joblist', paramer, function (data) {
+                    if (data.list.length > 0) {
+                        that.nearbyJobList = data.list
+                        that.nearbyJob = true;
+                    }
+                    that.skeletonLoading = false;
+                }, 'json');
+            },
+            adShow: function () { // 首页弹出广告
+				if($('.zd_userbanner').length > 0){
+					var bannerFlag = "{yun:}$bannerFlag{/yun}";
+					if (bannerFlag) {
+						this.adBanner = false;
+					} else{
+						this.adBanner = true;
+					}
+				}
+            },
+        }
+    });
+    function privacy(){
+        var paramer = {                   
+            status: 1,
+        };
+        showLoading('设置中...');
+        $.post('{yun:}url d=wxapp h=user m=privacy c=up{/yun}', paramer, function(data){
+            hideLoading();
+            location.reload();
+        },'json');
+        
+    }
+</script>
+{yun:}include file="$wapstyle/publichtm/search.htm"{/yun}
+{yun:}include file="$wapstyle/footer.htm"{/yun}

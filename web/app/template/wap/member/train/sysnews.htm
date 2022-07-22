@@ -1,0 +1,61 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<!--消息列表-->
+<!-- 私信部分 -->
+<div class="synews_box mt10">
+    {yun:}if $sxrowsnum{/yun}
+    <a href="index.php?c=sxnews">
+        <i class="synews_box_icon synews_box_icon_sx"></i>
+        <div class="synews_box_h1">私信</div>
+        <div class="synews_box_p">内容：{yun:}$sxrows.content{/yun}</div>
+        <span class="synews_box_time">{yun:}$sxrows.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</span> 
+        <i class="synews_box_n">{yun:}$sxrowsnum{/yun}</i>
+    </a>
+    {yun:}else{/yun}
+    <a href="index.php?c=sxnews">
+        <i class="synews_box_icon synews_box_icon_sx"></i>
+        <div class="synews_box_h1">私信</div>
+        <div class="synews_box_p">暂无消息 !</div>
+    </a>
+    {yun:}/if{/yun}
+</div>
+<!-- 课程预约部分 -->
+<div class="synews_box mt10">
+    {yun:}if $wlnum{/yun}
+    <a href="index.php?c=signup">
+        <i class="synews_box_icon "></i>
+        <div class="synews_box_h1">课程预约</div>
+        <div class="synews_box_p">用户{yun:}$baoming.name{/yun}预约了{yun:}$subject.name{/yun}课程</div>
+        <span class="synews_box_time">{yun:}$baoming.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</span> 
+        <i class="synews_box_n">{yun:}$wlnum{/yun}</i>
+    </a>
+    {yun:}else{/yun}
+    <a href="index.php?c=signup">
+        <i class="synews_box_icon "></i>
+        <div class="synews_box_h1">课程预约</div>
+        <div class="synews_box_p">暂无新的课程预约 !</div>
+    </a>
+    {yun:}/if{/yun}
+</div>
+
+<!-- 咨询留言部分 -->
+<div class="synews_box mt10">
+    {yun:}if $zxnum{/yun}
+    <a href="index.php?c=message">
+        <i class="synews_box_icon synews_box_icon_pl"></i>
+        <div class="synews_box_h1">咨询留言</div>
+        <div class="synews_box_p">用户{yun:}$zxrows.username {/yun}咨询了{yun:}$zxrows.content {/yun}</div>
+        <span class="synews_box_time">{yun:}$zxrows.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</span> 
+        <i class="synews_box_n">{yun:}$zxnum{/yun}</i>
+    </a>
+    {yun:}else{/yun}
+    <a href="index.php?c=message">
+        <i class="synews_box_icon synews_box_icon_pl"></i>
+        <div class="synews_box_h1">咨询留言</div>
+        <div class="synews_box_p">暂无新的用户咨询 !</div>
+    </a>
+    {yun:}/if{/yun}
+</div>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

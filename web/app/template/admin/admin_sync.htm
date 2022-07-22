@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="admin_new_tip">
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">该页面可进行与云平台同步相关操作。</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="main_tag">
+				<div class="clear"></div>
+				<div class="admin_table_border">
+					<table width="100%" class="table_form">
+						<tr>
+							<th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">同步设置</span></th>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="220">云平台帐号：</th>
+							<td><input class="input_text_w150" type="text" name="yptuser" id="yptuser" value="{yun:}$config.yptuser{/yun}" size="10" maxlength="255" /> <span class="admin_web_tip">提示：云平台站长帐号用户名</span></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="220">云平台密钥（KEY）：</th>
+							<td><input class="input_text_w150" type="text" name="yptkey" id="yptkey" value="{yun:}$config.yptkey{/yun}" size="10" maxlength="255" /> <span class="admin_web_tip">提示：此密钥并非登录密码，而是由平台审核后下发的26位验证KEY，请在站长管理中心查看</span></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="border-bottom:none;">
+								<input class="layui-btn layui-btn-normal" id="config" type="button" name="config" value="提交" />&nbsp;&nbsp;
+								<input class="layui-btn layui-btn-normal" type="reset" value="重置" />
+							</td>
+						</tr>
+					</table>
+
+					<table width="100%" class="table_form">
+						<tr>
+							<th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">简历同步</span></th>
+						</tr>
+						<tr>
+							<th width="160">可同步有效简历数：</th>
+							<td>
+								<div class="yun_admin_divh">{yun:}$resCount{/yun}</div>
+							</td>
+							<input type="hidden" id="resCount" value="{yun:}$resCount{/yun}">
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="160">同步基数：</th>
+							<td><input class="input-text tips_class" type="text" id="resumelimit" value="10" size="40" maxlength="255" />
+								<span class="admin_web_tip">提示：每次同步简历数量，建议设置为500以内，不宜过大</span>
+							</td>
+
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="border-bottom:none;">
+								<input class="admin_button" id="resumesync" type="button" name="resumesync" value="开始同步" />&nbsp;&nbsp;
+								<input class="admin_button" type="reset" value="重置" /></td>
+							</td>
+						</tr>
+					</table>
+					
+					<table width="100%" class="table_form">
+						<tr>
+							<th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">职位同步</span></th>
+						</tr>
+						<tr>
+							<th width="160">可同步有效职位数：</th>
+							<td>
+								<div class="yun_admin_divh">{yun:}$jobCount{/yun}</div>
+							</td>
+							<input type="hidden" id="jobCount" value="{yun:}$jobCount{/yun}">
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="160">同步基数：</th>
+							<td><input class="input-text tips_class" type="text" id="joblimit" value="10" size="40" maxlength="255" />
+								<span class="admin_web_tip">提示：每次同步职位数量，建议设置为500以内，不宜过大</span>
+							</td>
+
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="border-bottom:none;">
+								<input class="admin_button" id="jobsync" type="button" name="jobsync" value="开始同步" />&nbsp;&nbsp;
+								<input class="admin_button" type="reset" value="重置" /></td>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id='pytoken' value="{yun:}$pytoken{/yun}">
+		<input type="hidden" id='syncsign' value="{yun:}$syncsign{/yun}">
+		<script>
+			$(function() {
+				$("#config").click(function() {
+					loadlayer();
+					$.post("index.php?m=admin_sync&c=save", {
+						config: $("#config").val(),
+						yptkey: $("#yptkey").val(),
+						yptuser: $("#yptuser").val(),
+						pytoken: $("#pytoken").val()
+					}, function(data, textStatus) {
+						parent.layer.closeAll('loading');
+						config_msg(data);
+					});
+				});
+				$("#resumesync").click(function() {
+					var ii = parent.layer.msg('数据传输中,请不要关闭或刷新页面！',30,16);
+					var count = $('#resCount').val();
+					var limit = $('#resumelimit').val();
+					postcrm(ii, count, limit, "index.php?m=admin_sync&c=resume",0);
+				});
+				$("#jobsync").click(function() {
+					var ii = parent.layer.msg('数据传输中,请不要关闭或刷新页面！',30,16);
+					var count = $('#jobCount').val();
+					var limit = $('#joblimit').val();
+					postcrm(ii, count, limit, "index.php?m=admin_sync&c=job",0);
+				});
+			})
+
+			function postcrm(ii, count, limit, syncurl, page) {
+				loadlayer();
+				$.post(syncurl, {
+					count: count,
+					limit: limit,
+					page: page,
+					pytoken: $("#pytoken").val(),
+					syncsign: $("#syncsign").val()
+				}, function(data) {
+					parent.layer.closeAll('loading');
+					var info = eval('(' + data + ')');
+					parent.layer.close(ii);
+					if(info.error==0){
+						if(info.msg) {
+							parent.layer.msg(info.msg, 3, 5);
+						} else {
+							parent.layer.msg('数据同步失败', 2, 5);
+						}
+						window.location.href = 'index.php?m=admin_sync';
+					}else if (info.error==2){
+						parent.layer.msg('数据同步成功', 2, 6);
+						window.location.href = 'index.php?m=admin_sync';
+					}else if (info.error==1){
+						var allcount = $('#resCount').val();
+						//var hascount = parseInt(allcount)-parseInt(info['count']);
+						var ii = parent.layer.msg('数据已传输 ' + info.count + '条，请耐心等待！<br> 本次同步 重复 ' + info.readynum,30,16);
+						//postcrm(ii, allcount, limit, syncurl, info.page);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

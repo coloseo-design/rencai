@@ -1,0 +1,68 @@
+
+<script src="{yun:}$wap_style{/yun}/js/list_bottom.js?v={yun:}$config.cachecode{/yun}"></script>
+<div id="company_wx_vue" class="none">
+    
+    <div class="com_list_box" v-for="item in comlist" :key="item.name">
+        <a v-bind:href="item.wapurl" class="job_list">
+            <div class="com_list_t_box">
+                <div class="com_list_logo_box"><img v-bind:src="item.logo"
+                     onerror="if($(this).attr('load')!='1'){$(this).attr('load',1);this.src='{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_unit_icon{/yun}';}"></div>
+                <div class="com_list_box_c">
+                    <h3>{{item.name}}
+                       
+                    </h3>
+                    <img v-if="item.rating_logo" v-bind:src="item.rating_logo" width="12" height="12" />
+                    <img v-if="item.hotlogo" src="{yun:}$style{/yun}/images/firm_icon.png" />
+                    <i v-if="item.yyzz_status" class="job_qy_rz_icon"></i>
+                </div>
+                <div class="com_list_box_js">
+                  <span class="com_list_box_js_n">  {{item.job_city_one?item.job_city_one:''}}-{{item.job_city_two?item.job_city_two:''}}</span>
+                  <span class="com_list_box_js_n">  50-200</span>
+                 <span class="com_list_box_js_n">   {{item.pr_n?item.pr_n:''}}</span>
+                </div>
+            </div>
+           <!-- <div class="com_list_t_box_bq" v-if="item.jobname">
+                
+                <span class="com_list_box_joblist_a"  v-for="(job,index) in item.jobname" :key="index">{{job}}</span>
+                
+            </div>-->
+        </a>
+        
+        <a v-if="item.jobnum>0" v-bind:href="item.wapurl_showjob">
+            <div class="com_list_box_joblist">
+                <span class="com_list_box_jobzs"><em class="com_list_box_jobncor">{{item.jobnum}}</em>个在招职位</span>
+                <i class="com_list_box_jobzs_more"></i>
+            </div>
+        </a>
+        
+    </div>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+      el: '#company_wx_vue',
+      data: {
+        comlist:[]
+      }
+    });
+
+    var compage = 1;
+    function fetchData_list() {
+        compage++;
+        var searchurl = document.getElementById('searchurl').value;
+        $.post(wapurl + 'index.php?c=company&a=ajaxLoad', {searchurl: searchurl,page: compage}, function(res){
+			document.getElementById('pageLoading').classList.add('none');
+            if(res){
+                var data = eval('(' + res + ')');
+
+                if(data.length > 0){
+                    app.$data.comlist = data;
+					app.$nextTick(function(){
+					    document.getElementById('listdiv').insertAdjacentHTML('beforeend',$("#company_wx_vue").html());
+					})
+                }else{
+					document.getElementById('pageNoMore').classList.remove('none');
+				}
+            }
+        });
+    }
+</script>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<title>后台管理-图表分析</title>
+
+	<style>
+		.layui-form-item{
+			margin-top: 10px;
+			/*margin-left: 10px;*/
+		}
+
+		.layui-form-label{
+			width: auto;
+		}
+
+		.sub-radio{
+			margin-left:100px;
+			border:1px dashed #c2c2c2;
+			display:inline-block
+		}
+
+		.layui-btn{
+			/*margin-left: 15px !important;*/
+		}
+
+		.layui-form{
+			margin-left: 25px;
+		}
+
+		.layui-form-label{
+			padding-left: 0px !important;
+		}
+
+		.layui-table{
+			margin-left: 25px;
+			width:95%;
+		}
+	  
+		.page-nav{
+			margin:10px 10px 10px 25px;
+		}
+	</style>
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp">
+	<div class="tty-tishi_top">
+	<div class="tabs_info" style="height:36px;">
+		<ul>
+			<li><a href="index.php?m=crm_my_performance_depart">客户数量</a></li>
+			<li  class="curr"><a href="index.php?m=crm_my_performance_depart&c=concern">跟进记录</a></li>
+			<li><a href="index.php?m=crm_my_performance_depart&c=amount">成交金额</a></li>
+		</ul>
+	</div>
+	
+	<div class="crm_searctime">
+		<ul>
+			<li {yun:}if $smarty.get.time=='' && !$smarty.get.stime && !$smarty.get.etime{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_my_performance_depart&c=concern">全部</a></li>
+			<li {yun:}if $smarty.get.time==-1{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_my_performance_depart&c=concern&time=-1">今天</a></li>
+			<li {yun:}if $smarty.get.time==1{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_my_performance_depart&c=concern&time=1">昨天</a></li>
+			<li {yun:}if $smarty.get.time==7{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_my_performance_depart&c=concern&time=7">7天内</a></li>
+			<li {yun:}if $smarty.get.time==30{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_my_performanc_departe&c=concern&time=30">30天内</a></li>
+			<li {yun:}if $smarty.get.time==90{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_my_performance_depart&c=concern&time=90">90天内</a></li>
+			<li {yun:}if $smarty.get.stime || $smarty.get.etime {/yun}class='curr'{yun:}/if{/yun}><a href="javascript:void(0);" onclick='searchForm();'>自定义</a></li>
+			
+		</ul>
+	
+		<div class="crm_time_choice_list" style="top:6px;"><a href="javascript:void(0)"  class="crm_time_choice_list_a " onclick="return showDetail(this);">列表模式</a></div>
+	</div>
+	{yun:}if $adminUserList{/yun}
+ 	<form  class='layui-form' style="margin:0px;">
+	 	<div style="width:150px; margin-top:10px;" >
+			<div class="layui-input-inline">
+				<select name="crmmanager" id="crmmanager" lay-filter="crmmanager">
+					<option value="">请选择客户经理</option> 
+					{yun:}foreach from = $adminUserList key=key item = v{/yun}
+						<option value="{yun:}$v.uid{/yun}" {yun:}if $smarty.get.crmmanager==$v.uid{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv={yun:}$v.uid{/yun} adt='crmmanager' untype='crmmanager'{/yun}">{yun:}$v.name{/yun}</option>
+					{yun:}/foreach{/yun}
+				</select>
+			</div>
+		</div> 
+	</form>
+	{yun:}/if{/yun}
+	</div>
+    <div style="background:#fff; margin-top:10px; padding:30px 0;">
+		<div class="admin_atatic_chart" id="chart" style="width:1200px; height:500px; margin-left:25px;"></div>
+  	</div>
+  	
+    <div style="display: none;" id="detail">
+		<table class="layui-table" lay-skin="nob" style="margin:0; margin-top:10px; width:100%;">
+			<thead>
+				<tr id="detail_thead">
+					<th>跟进方式</th>
+					<th>跟进客户（人次）</th>
+				</tr> 
+			</thead>
+	
+			<tbody id="detail_tbody">
+				{yun:}foreach from=$values item=r{/yun}
+					<tr>
+						<td>{yun:}$crmclass_name[$r['name']]{/yun}</td>
+						<td>{yun:}$r['value']{/yun}</td>
+					</tr>
+				{yun:}/foreach{/yun}
+				<tr>
+					<td>总计</td>
+					<td>{yun:}$total{/yun}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<form action='index.php' method='get' class='layui-form' style='display:none;' id="search_form"  autocomplete='off'>
+			
+	<input type="hidden" name="m" value="crm_my_performance_depart" />
+	<input type="hidden" name="c" value="concern" />
+	<div class="crm_record_list">
+		<div class="crm_record_name"><span class="admin_required_icon"></span>起始日期：</div>
+		<div class="crm_record_textbox">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<input type="text" id="stime" name="stime"  class="layui-input" style="width:300px">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="crm_record_list">
+		<div class="crm_record_name"><span class="admin_required_icon"></span>结束日期：</div>
+		<div class="crm_record_textbox">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<input type="text" id="etime" name="etime"  class="layui-input" style="width:300px">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="crm_record_list" >
+		<span class="crm_record_name">&nbsp;</span>
+		<div class="crm_record_textbox">
+			<input type="submit"  value='确认' class="admin_examine_bth">
+			<input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;">
+		</div> 	
+	</div>
+	
+</form>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/echarts_plain.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script>
+    
+    
+    layui.use(['form', 'laydate'], function(){
+		var laydate = layui.laydate
+			,form = layui.form
+			,$ = layui.$;
+		
+		form.on('select(crmmanager)', function(data){
+			var url=$('#crmmanager option:selected').attr('data-url');
+			if(url){
+				location.href=url;
+			}
+		});
+		
+		laydate.render({
+			elem : '#stime' //指定元素
+			,type : 'date'
+		});
+		laydate.render({
+			elem : '#etime' //指定元素
+			,type : 'date'
+		});
+		var title = '{yun:}$title{/yun}';
+		var names = [
+			{yun:}foreach from=$names item=v{/yun}
+			'{yun:}$crmclass_name[$v]{/yun}',
+			{yun:}/foreach{/yun}
+			];
+
+		var values = [
+			{yun:}foreach from=$values item=v{/yun}
+			{
+            value : parseFloat('{yun:}$v["value"]{/yun}'),
+            name : '{yun:}$crmclass_name[$v["name"]]{/yun}'
+			},
+			{yun:}/foreach{/yun}
+			];
+
+		var valuesBar = [
+			{yun:}foreach from=$values item=v{/yun}
+				parseFloat('{yun:}$v["value"]{/yun}'),
+			{yun:}/foreach{/yun}
+			];
+ 
+		refreshPieChart(title, names, values, valuesBar);
+	});//end layui.use()
+
+    Array.prototype.sum = function (){
+		return this.reduce(function (partial, value){
+			return partial + value;
+		})
+    };
+    
+    function refreshPieChart(title, names, values, valuesBar) {
+    	var total = 0;
+    	if(valuesBar.length > 0){
+    		total = valuesBar.sum().toFixed(0);     
+    	}
+		option = {
+			title : {
+				text: title,
+				subtext: '{yun:}$config.sy_webname{/yun}'
+			},
+
+			tooltip : {
+				trigger: 'item',
+				formatter: '{b} : {c} '
+			},
+			
+			legend: {
+				x : 'center',
+				y : 'bottom',
+				data: names
+			},
+			
+			grid: [
+			  {x: '50%', y: '7%', width: '45%', height: '80%'},
+			],
+
+			yAxis: [{
+				type: 'value'
+			}],
+
+			xAxis: [{
+				type: 'category',
+				boundaryGap: true,
+				
+				axisTick: {
+					show: true
+				},
+				
+				axisLabel: {
+					interval: null
+				},
+				
+				data: names,
+				
+				splitLine: {
+					show: false
+				}
+			}],
+
+			series : [
+				{
+					name: '跟进记录统计',
+					type: 'pie',
+					radius : '30%',
+					center: ['22%', '40%'],
+					data:
+					  values,
+					labelLine:{normal:{show:false}},
+					itemStyle: {
+						normal: {
+							label:{
+								show: true,  
+								formatter: '{b}: {c} ({d}%)',
+								textStyle:{fontSize:"10"}
+							} 
+						}
+					},
+				},
+				{
+					name: '跟进记录统计',
+					type: 'bar',
+					barWidth: '15',
+					label: {
+						normal: {
+							show: true,
+							position: 'right',
+							formatter : '{c}/' + total
+						}
+					},
+					data: valuesBar,
+					markPoint : {
+			        	data : [
+			            	{type : 'max', name: '最大值'},
+			            	{type : 'min', name: '最小值'}
+			          	]
+			       	}
+				}
+			]
+		};//end option
+
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('chart'));
+
+		// 使用刚指定的配置项和数据显示图表。
+		myChart.setOption(option);
+    }//end function refreshPieChart
+ 
+     
+    
+    function query() {
+		window.location = 'index.php?m=crm_my_performance_depart&c=concern&time=' + $("#time").val();
+		return false;
+    }//end function query
+
+var flag = true;
+function showDetail(o){
+	if(flag){
+		$("#chart").hide();
+		$("#detail").show();
+		flag = false;
+		$(o).html('图表模式');
+	}else{
+		$("#detail").hide();
+		$("#chart").show();
+		flag = true;
+		$(o).html('列表模式');
+	}
+	return false;
+}
+function searchForm(){
+	layer.open({
+		type: 1, 
+		anim: 5,
+		title: '自定义搜索',
+		content: $('#search_form'),  
+		area:["450px", "280"],
+		offset: ['20px', ''],
+	});
+}
+	</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+
+			<div class="tty-tishi_top">
+				<div class="admin_new_search_box">
+					<form action="index.php" name="myform" method="get">
+						<input name="m" value="traincert" type="hidden" />
+						<div class="admin_new_search_name">搜索类型：</div>
+
+						<input type="text" placeholder="输入你要搜索的关键字" value="{yun:}$smarty.get.keyword{/yun}" name='keyword' class="admin_Filter_search">
+						<input type="submit" value="搜索" class="admin_Filter_bth">
+						<a href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();" class="admin_new_search_gj">高级搜索</a>
+					</form>
+
+					{yun:}include file="admin/admin_search.htm"{/yun}
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="tty_table-bom">
+				<div class="admin_statistics">
+					<span class="tty_sjtj_color">数据统计：</span>
+					<em class="admin_statistics_s">总数：<a href="index.php?m=traincert" class="ajaxcertall">0</a></em>
+					<em class="admin_statistics_s">未审核：<a href="index.php?m=traincert&status=3" class="certStatusNum1">0</a></em>
+					<em class="admin_statistics_s">未通过：<a href="index.php?m=traincert&status=2" class="certStatusNum2">0</a></em>
+					搜索结果：<span>{yun:}$total{/yun}</span>；
+				</div>
+
+				<div class="table-list">
+					<div class="admin_table_border">
+						<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form action="index.php?m={yun:}$smarty.get.m{/yun}&c=del" name="myform" method="post" target="supportiframe" id='myform'>
+							<table width="100%">
+								<thead>
+									<tr class="admin_table_top">
+										<th style="width:20px;"><label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+										<th> {yun:}if $smarty.get.t=="uid" && $smarty.get.order=="asc"{/yun}
+											<a href="{yun:}searchurl order=desc t=uid m=traincert untype='order,t'{/yun}">用户ID<img src="images/sanj.jpg" /></a>
+											{yun:}else{/yun}
+											<a href="{yun:}searchurl order=asc t=uid m=traincert untype='order,t'{/yun}">用户ID<img src="images/sanj2.jpg" /></a>
+											{yun:}/if{/yun} </th>
+										<th align="left">认证机构</th>
+										<th>查看</th>
+										<th> {yun:}if $smarty.get.t=="ctime" && $smarty.get.order=="asc"{/yun}
+											<a href="{yun:}searchurl order=desc t=ctime m=traincert untype='order,t'{/yun}">申请时间<img src="images/sanj.jpg" /></a>
+											{yun:}else{/yun}
+											<a href="{yun:}searchurl order=asc t=ctime m=traincert untype='order,t'{/yun}">申请时间<img src="images/sanj2.jpg" /></a>
+											{yun:}/if{/yun} </th>
+										<th>状态</th>
+										<th width="120">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									{yun:}foreach item=v key=key from=$rows{/yun}
+									<tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg" {yun:}/if{/yun} id="list{yun:}$v.uid{/yun}">
+										<td><input type="checkbox" value="{yun:}$v.uid{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+										<td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.uid{/yun}</span></td>
+										<td align="left">{yun:}$v.name{/yun}</td>
+										<td class="gd" width="100">
+											<a href="javascript:;" onClick="preview('{yun:}$v.check{/yun}','{yun:}$v.uid{/yun}','{yun:}$v.status{/yun}','{yun:}$v.id{/yun}')"
+											 class="admin_cz_sc admin_n_img"></a>
+										</td>
+										<td class="td" width="120">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+										<td>{yun:}if $v.status==1{/yun}<span class="admin_com_Audited">已审核</span>{yun:}elseif $v.status==0{/yun}<span
+											 class="admin_com_noAudited">未审核</span>{yun:}elseif $v.status==2{/yun}<span class="admin_com_tg">未通过</span>{yun:}/if{/yun}</td>
+										<td>
+											<a href="javascript:;" uid="{yun:}$v.uid{/yun}" pid="{yun:}$v.id{/yun}" url="{yun:}$v.check{/yun}" status="{yun:}$v.status{/yun}"
+											 class="status admin_new_c_bth admin_new_c_bthsh">审核</a>
+											<a href="javascript:;" onClick="layer_del('确定要删除？','index.php?m=traincert&c=del&id={yun:}$v.id{/yun}&uid={yun:}$v.uid{/yun}');"
+											 class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+										</td>
+									</tr>
+									{yun:}/foreach{/yun}
+									<tr>
+										<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+										<td colspan="8">
+											<label for="chkAll2">全选</label>
+											<input class="admin_button" type="button" name="delsub" value="删除所选" onClick="return really('del[]')" /></td>
+									</tr>
+									{yun:}if $total > $config.sy_listnum {/yun}
+									<tr>
+										{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+										{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun} <td colspan="3"> 从 {yun:}($pagenum-1) *
+											$config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+											{yun:}else if $pagenum == $pages{/yun}
+											<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共
+												{yun:}$total{/yun} 条</td>
+											{yun:}/if{/yun}
+											<td colspan="6" class="digg">{yun:}$pagenav{/yun}</td>
+									</tr>
+									{yun:}/if{/yun}
+								</tbody>
+							</table>
+							<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="preview" style="display:none;width:380px ">
+			<div style="overflow:auto;width:380px;">
+				<form class="layui-form" action="index.php?m=traincert&c=status" target="supportiframe" method="post" onsubmit="return htStatus()">
+					<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+					<table cellspacing='1' cellpadding='1' class="admin_examine_table" style="border-collapse: separate;border-spacing: 5px 8px;">
+						<tr>
+							<th width="80" class="t_fr">认证图片：</th>
+							<td align="left">
+								<div class="job_box_div" style="float:left;border:1px solid #eee;"></div>
+								<a target="_blank" href="" id='preview_url' style="line-height:70px; padding-left:10px;">查看原图</a>
+							</td>
+						</tr>
+						<tr>
+							<th width="80">审核操作：</th>
+							<td align="left">
+								<div class="layui-input-block">
+									<input name="status" id="status1" value="1" title="正常" type="radio" />
+									<input name="status" id="status2" value="2" title="未通过" type="radio" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="80" class="t_fr">审核说明：</th>
+							<td align="left"> <textarea id="alertcontent" name="statusbody" class="admin_explain_textarea"></textarea></td>
+						</tr>
+						<tr>
+							<td colspan='2' align="center">
+								<div>
+									<input type="submit" value='确认' class="admin_examine_bth">
+									<input type="button" onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<input name="pid" value="0" type="hidden">
+					<input name="uid" value="0" type="hidden">
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript">
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+
+			$(function() {
+				$(".status").click(function() {
+					var pid = $(this).attr("pid");
+					var status = $(this).attr("status");
+					var uid = $(this).attr("uid");
+					$("input[name=pid]").val(pid);
+					var pytoken = $("#pytoken").val();
+					var url = $(this).attr("url");
+					$("#status" + status).attr("checked", true);
+					layui.use(['form'], function() {
+						var form = layui.form;
+						form.render();
+					});
+					$("input[name=uid]").val(uid);
+					if (url) {
+						preview(url, uid, status, pid);
+					} else {
+						$.post("index.php?m=traincert&c=sbody", {
+							pid: pid,
+							pytoken: pytoken
+						}, function(msg) {
+							$("#alertcontent").val(msg);
+						});
+					}
+				});
+				$.get("index.php?m=traincert&c=pxcertNum", function(data) {
+					var datas = eval('(' + data + ')');
+					if (datas.certAllNum) {
+						$('.ajaxcertall').html(datas.certAllNum);
+					}
+					if (datas.certStatusNum1) {
+						$('.certStatusNum1').html(datas.certStatusNum1);
+					}
+					if (datas.certStatusNum2) {
+						$('.certStatusNum2').html(datas.certStatusNum2);
+					}
+				});
+			});
+
+			function preview(url, uid, status, id) {
+				$(".job_box_div").html("<img src='" + url + "' style='width:180px;height:70px' />");
+				$("#preview_url").attr("href", url);
+				var pytoken = $('#pytoken').val();
+				$("#status" + status).attr("checked", true);
+				$("input[name=uid]").val(uid);
+				$("input[name=pid]").val(id);
+				$.post("index.php?m=traincert&c=sbody", {
+					pid: id,
+					pytoken: pytoken
+				}, function(msg) {
+					$("#alertcontent").val(msg);
+				});
+				$.layer({
+					type: 1,
+					title: '查看图片',
+					closeBtn: [0, true],
+					offset: ['20%', '30%'],
+					border: [10, 0.3, '#000', true],
+					area: ['380px', 'auto'],
+					page: {
+						dom: '#preview'
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

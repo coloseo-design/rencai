@@ -1,0 +1,396 @@
+{yun:}include file="$wapstyle/header_lt.htm"{/yun}
+
+<div id="app">
+	<div class="lt_recuser_box">
+		<div class="">赏金：<span class="lt_recuser_box_money">{yun:}$jobinfo.rebates{/yun}{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}</span></div>
+		<div class="">推荐职位：
+			<a href="{yun:}url m=wap c=post a=jobshow id=$jobinfo.id{/yun}">{yun:}$jobinfo.job_name|mb_substr:0:18:'utf-8'{/yun}</a>
+		</div>
+		<div class="">年薪：{yun:}if $jobinfo.maxsalary>0{/yun}￥{yun:}$jobinfo.minsalary|floatval{/yun}-{yun:}$jobinfo.maxsalary|floatval{/yun}万{yun:}elseif $jobinfo.minsalary>0{/yun}￥{yun:}$jobinfo.minsalary|floatval{/yun}万以上{yun:}else{/yun}面议{yun:}/if{/yun}</div>
+	</div>
+	<div class="ltjobrec_show_job_box">
+		<div class="ltjobrec_show_jobinfo">
+			<div class="lt_hunter_tit">职位要求</div>
+			<div class="lt_recuser_box_js_p">
+				<div class="">招聘企业： {yun:}$jobinfo.com_name{/yun}</div>
+				<div class="">学历要求： {yun:}$jobinfo.edu_n{/yun} </div>
+				<div class="">工作地点： {yun:}$jobinfo.provinceid_n{/yun} {yun:}$jobinfo.cityid_n{/yun} {yun:}$jobinfo.three_cityid_n{/yun}</div>
+
+				<div class="">{yun:}$jobinfo.job_desc{/yun}</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="ltjobrec_show_job_box">
+		<div class="ltjobrec_show_jobinfo">
+			<div class="lt_hunter_tit" style="border:none;">推荐人才</div>
+
+			<input type="hidden" id="uid" value="{yun:}$uid{/yun}" />
+			<input type="hidden" name="job_uid" id="job_uid" value="{yun:}$jobinfo.uid{/yun}" />
+			<input type="hidden" name="job_id" id="job_id" value="{yun:}$jobinfo.id{/yun}" />
+
+			<ul class="yun_newwap_box">
+				<li class="yun_newwap_text"><span class="yun_newwap_text_name">姓名</span>
+					<div class="yun_newwap_text_box">
+						<input type="text" id="name" name="name" placeholder="请输入姓名" style="border:none; margin:0; padding:0;;height:30px; line-height:30px;">
+					</div>
+				</li>
+				<li class="yun_newwap_text"><span class="yun_newwap_text_name">联系手机</span>
+					<span class="yun_newwap_text_box">
+				  <input type="number"  id="phone"   name="phone"  placeholder="请输入联系手机" style="border:none; margin:0; padding:0;;height:30px; line-height:30px;"> 
+
+					</span>
+				</li>
+				<li class="yun_newwap_text"><span class="yun_newwap_text_name">联系邮箱</span>
+					<span class="yun_newwap_text_box">
+					<input type="text" id="email" name="email" placeholder="请输入联系邮箱" style="border:none; margin:0; padding:0;;height:30px; line-height:30px;"> 
+
+					</span>
+				</li>
+			</ul>
+
+			<ul class="yun_newwap_box">
+				<li class=""><span class="yun_newwap_text_name">性别</span>
+					<span class="yun_newwap_text_box" @click="sexShow = true">
+					<input type="text" v-bind:value="sexTex"  placeholder="请选择性别">
+					<input type="hidden" id="sex" v-bind:value="sex">
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">出生年月</span>
+					<span class="yun_newwap_text_box" @click="birthdayShow = true">
+					<input type="text" id="birthday" name="birthday" v-bind:value="birthdayTime" placeholder="请选择出生年月">
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">最高学历</span>
+					<span class="yun_newwap_text_box" @click="eduShow = true">
+					<input type="text" v-bind:value="eduTex" placeholder="请选择最高学历">
+					<input type="hidden" id="edu" name="edu" v-bind:value="eduValue">
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">工作经验</span>
+					<span class="yun_newwap_text_box" @click="expShow = true">
+					<input type="text"  v-bind:value="expTex" placeholder="请选择工作经验">
+					<input type="hidden" id="exp" v-bind:value="expValue">
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">从事行业</span>
+					<span class="yun_newwap_text_box" @click="hyShow = true">
+					<input type="text" v-bind:value="hyTex" placeholder="请选择从事行业">
+					<input type="hidden" id="hy" v-bind:value="hyValue">
+
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">期望职位</span>
+					<span class="yun_newwap_text_box" @click="jobsshow = true">
+					<input type="text" v-bind:value="jobValue"  placeholder="请选择期望职位">
+
+					<input type="hidden" id="job1" name="job1" v-bind:value="job1">
+					<input type="hidden" id="job1_son" name="job1_son" v-bind:value="job1_son">
+					<input type="hidden" id="job_post" name="job_post" v-bind:value="job_post">
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">期望城市</span>
+					<span class="yun_newwap_text_box" @click="areaShow=true">
+					<input type="text" v-bind:value="city"  placeholder="请选择期望城市">
+					<input type="hidden" id="provinceid" name="provinceid"v-bind:value="provinceid">
+					<input type="hidden" id="cityid" name="cityid" v-bind:value="cityid">
+					<input type="hidden" id="three_cityid" name="three_cityid" v-bind:value="three_cityid">
+					</span>
+				</li>
+				<li><span class="yun_newwap_text_name">期望薪资</span>
+				   <!--  <div class="" id="salaryshow" style="text-align: right;height:30px; line-height:30px;"> 请填写期望薪资</div> -->
+					<span class="yun_newwap_text_box" @click="salaryShow=true">
+					<input type="text" v-bind:value="salaryTex" placeholder="请填写期望薪资">
+					</span>
+				</li>
+
+				<li class=""><span class="yun_newwap_text_name">工作性质</span>
+					<span class="yun_newwap_text_box" @click="typeShow=true">
+					<input type="text" v-bind:value="typeTex" placeholder="请选择工作性质">
+					<input type="hidden" id="type" v-bind:value="typeValue">
+					</span>
+				</li>
+				<li class=""><span class="yun_newwap_text_name">到岗时间</span>
+					<span class="yun_newwap_text_box" @click="reportShow=true">
+					<input type="text" v-bind:value="reportTex" placeholder="请选择到岗时间">
+					<input type="hidden" id="report" v-bind:value="reportValue">
+					</span>
+				</li>
+			</ul>
+
+			<ul class="yun_newwap_box mt15">
+				<li class="yun_newwap_text advice_list"><span class="yun_newwap_text_name">推荐理由</span>
+					<span class="yun_newwap_text_box">
+						<textarea class="lt_recuser_box_tj_list_textarea"  type="text" id="content" name="content" placeholder="请填写推荐理由"></textarea>
+					</span>
+				</li>
+			</ul>
+
+			<div class="yun_newwap_bth">
+				<button type="button" class="" onclick="ltrecuser();">立即推荐</button>
+			</div>
+		</div>
+	</div>
+	<div class="lt_recuser_box_tj_p">
+		为避免纠纷，请确认您所输入的好友信息是准确的：<br> 1.姓名请不要用先生女士等称谓代替；
+		<br> 2.手机号码请尽量准确，以免联系不上；
+		<br> 3.企业面试候选人之前不会透露个人信息给客户，防止骚扰。
+		<br>
+	</div>
+    <van-popup  v-model="salaryShow"  position="right" :style="{ height: '100%',width:'100%'}">
+		<div class="ltjobrec_show_job_box">
+			<div class="ltjobrec_show_jobinfo">
+				<div class="lt_hunter_tit" >填写薪资待遇</div>
+				<ul class="yun_newwap_box">
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">最低薪资</span>
+						<div class="yun_newwap_text_box" style=" padding-right:50px; position:relative">
+							<input type="text" v-model="minsalary" id="minsalary" name="minsalary" size="5" {yun:}if $row.minsalary{/yun} value="{yun:}$row.minsalary{/yun}" {yun:}/if{/yun} onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="请输入最低薪资" class="yun_wap_addresume_xz" style="border:none; margin:0; padding:0;;height:30px; line-height:30px;"> <span style="position:absolute;right:0px;top:0px; line-height:30px;">万元/年</span>
+						</div>
+					</li>
+					<li class="yun_newwap_text"><span class="yun_newwap_text_name">最高薪资</span>
+						<div class="yun_newwap_text_box" style=" padding-right:50px; position:relative">
+							<input type="text" v-model="maxsalary" id="maxsalary" name="maxsalary" size="5" {yun:}if $row.maxsalary{/yun} value="{yun:}$row.maxsalary{/yun}" {yun:}/if{/yun} onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="请输入最高薪资" style="border:none; margin:0; padding:0;;height:30px; line-height:30px;"> <span style="position:absolute;right:0px;top:0px; line-height:30px;">万元/年</span>
+
+						</div>
+					</li>
+
+				</ul>
+			</div> 
+			<div class="yun_newwap_bth">
+				<button type="button" class="" @click="salaryConfirm">确定</button>
+			</div>
+		</div>
+	</van-popup>
+
+    <van-popup v-model="sexShow" position="bottom">
+        <van-picker show-toolbar :columns="sexData" @confirm="sexConfirm" @cancel="sexShow=false"></van-picker>
+    </van-popup>
+    <van-popup v-model="birthdayShow" position="bottom">
+        <van-datetime-picker v-model="currentDate" type="date" @confirm="birthdayConfirm" @cancel="birthdayShow=false" :min-date="minDate"
+  :max-date="maxDate">
+        </van-datetime-picker>
+    </van-popup>
+
+    <van-popup v-model="eduShow" position="bottom">
+        <van-picker show-toolbar :columns="eduData" @confirm="eduConfirm" @cancel="eduShow=false"></van-picker>
+    </van-popup>
+    <van-popup v-model="expShow" position="bottom">
+        <van-picker show-toolbar :columns="expData" @confirm="expConfirm" @cancel="expShow=false"></van-picker>
+    </van-popup>
+    <van-popup v-model="hyShow" position="bottom">
+        <van-picker show-toolbar :columns="hyData" @confirm="hyConfirm" @cancel="hyShow=false"></van-picker>
+    </van-popup>
+    <van-popup v-model="jobsshow" position="bottom">
+      <van-cascader
+        v-model="jobValue"
+        :options="jobOptions"
+        @close="jobsshow = false"
+        @finish="jobConfirm"
+      ></van-cascader>
+    </van-popup>
+    <van-popup v-model="areaShow" round position="bottom">
+       <van-cascader
+        v-model="areaValue"
+        :options="areaList"
+        @close="areaShow = false"
+        @finish="areaConfirm"
+       />
+    </van-popup>
+    <van-popup v-model="typeShow" position="bottom">
+        <van-picker show-toolbar :columns="typeData" @confirm="typeConfirm" @cancel="typeShow=false"></van-picker>
+    </van-popup>
+    <van-popup v-model="reportShow" position="bottom">
+        <van-picker show-toolbar :columns="reportData" @confirm="reportConfirm" @cancel="reportShow=false"></van-picker>
+    </van-popup>
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/lt.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+    var sexData = [];
+    '{yun:}foreach from=$user_sex key=j item=v{/yun}'
+    sexData.push({
+        value: '{yun:}$j{/yun}',
+        text: '{yun:}$v{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var eduData = [];
+    '{yun:}foreach from=$userdata.user_edu key=j item=v{/yun}'
+    eduData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var expData = [];
+    '{yun:}foreach from=$userdata.user_word key=j item=v{/yun}'
+    expData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var hyData = [];
+    '{yun:}foreach from=$industry_index item=v{/yun}'
+    hyData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$industry_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var typeData = [];
+    '{yun:}foreach from=$userdata.user_type item=v{/yun}'
+    typeData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var reportData = [];
+    '{yun:}foreach from=$userdata.user_report item=v{/yun}'
+    reportData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$userclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+
+    var cityParam={
+            sy_web_city_one:'{yun:}$config.sy_web_city_one{/yun}',
+            sy_web_city_two:'{yun:}$config.sy_web_city_two{/yun}',
+        };
+    var cityData    =   cityCategory(cityParam);
+    var jobData     =   jobCategory();
+</script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            sexShow:false,
+            sexData:sexData,
+            sexTex:'',
+            sex:'',
+            birthdayShow:false,
+            birthdayTime:'',
+            minDate: new Date(new Date().getFullYear()-50, 0,1 ),
+            maxDate: new Date(new Date().getFullYear()+10, 0,1 ),
+            currentDate: new Date(),
+            eduShow:false,
+            eduData:eduData,
+            eduTex:'',
+            eduValue:'',
+            expShow:false,
+            expData:expData,
+            expTex:'',
+            expValue:'',
+            hyShow:false,
+            hyData:hyData,
+            hyTex:'',
+            hyValue:'',
+            jobsshow:false,
+            jobValue:'',
+            jobOptions:jobData,
+            job1:'',
+            job1_son:'',
+            job_post:'',
+            areaShow: false,
+            areaValue:'',
+            city:'',
+            areaList: cityData,
+            provinceid:'',
+            cityid:'',
+            three_cityid:'',
+            salaryShow:false,
+            salaryTex:'',
+            minsalary:'',
+            maxsalary:'',
+            typeShow:false,
+            typeData:typeData,
+            typeTex:'',
+            typeValue:'',
+            reportShow:false,
+            reportData:reportData,
+            reportTex:'',
+            reportValue:'',
+        },
+        methods: {
+            sexConfirm(value, index) {
+                this.sexTex = value.text;
+                this.sex = value.value;
+                this.sexShow = false;
+            },
+            birthdayConfirm(date) {
+                this.birthdayTime = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                this.birthdayShow = false;
+            },
+            eduConfirm(value, index) {
+                this.eduTex = value.text;
+                this.eduValue = value.value;
+                this.eduShow = false;
+            },
+            expConfirm(value, index) {
+                this.expTex = value.text;
+                this.expValue = value.value;
+                this.expShow = false;
+            },
+            hyConfirm(value, index) {
+                this.hyTex = value.text;
+                this.hyValue = value.value;
+                this.hyShow = false;
+            },
+            areaConfirm({ selectedOptions }) {
+                this.city = selectedOptions.map((option) => option.text).join(' ');
+
+                if(selectedOptions[0] && selectedOptions[0].value>0){
+                    this.provinceid = selectedOptions[0].value;
+                }
+                if(selectedOptions[1] && selectedOptions[1].value>0){
+                    this.cityid = selectedOptions[1].value;
+                }
+                if(selectedOptions[2] && selectedOptions[2].value>0){
+                    this.three_cityid = selectedOptions[2].value;
+                }
+                this.areaShow = false;
+            },
+            jobConfirm({selectedOptions}) {
+                if(selectedOptions[0] && selectedOptions[0].value>0){
+                    this.job1 = selectedOptions[0].value;
+                    this.jobValue = selectedOptions[0].text;
+                }
+                if(selectedOptions[1] && selectedOptions[1].value>0){
+                    this.job1_son = selectedOptions[1].value;
+                    this.jobValue = selectedOptions[1].text;
+
+                }
+                if(selectedOptions[2] && selectedOptions[2].value>0){
+                    this.job_post = selectedOptions[2].value;
+                    this.jobValue = selectedOptions[2].text;
+
+                }
+                this.jobsshow = false;
+            },
+            salaryConfirm() {
+                if(this.minsalary && this.maxsalary) {
+                    if(parseInt(this.maxsalary) < parseInt(this.minsalary)) {
+                        showToast('最低薪资不能比最高薪资高，请重新填写');return false;
+                    }
+                    this.salaryTex = this.minsalary + '-' + this.maxsalary+'万元/年';
+                } else if(!this.minsalary && this.maxsalary || this.minsalary && !this.maxsalary){
+                    this.salaryTex = this.minsalary + this.maxsalary+'万元/年以上';
+                }
+                this.salaryShow = false;
+            },
+            typeConfirm(value, index) {
+                this.typeTex = value.text;
+                this.typeValue = value.value;
+                this.typeShow = false;
+            },
+            reportConfirm(value, index) {
+                this.reportTex = value.text;
+                this.reportValue = value.value;
+                this.reportShow = false;
+            },
+        }
+    });
+</script>
+<!-- <script src="{yun:}$wap_style{/yun}/js/publicselect.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> -->
+
+</body>
+</html>

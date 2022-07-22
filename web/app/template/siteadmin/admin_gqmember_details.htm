@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+		<title>后台管理</title>
+		<style>
+			* {margin: 0;padding: 0;}
+			body, div {margin: 0;padding: 0;}
+		</style>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">该页面展示了网站供求会员信息。</div>
+				</div>
+			</div>
+
+			<div class="main_tag mt10">
+				<div class="tag_box">
+				
+						<table width="100%" class="table_form table_form_thr" style="background:#fff;">
+							<tr>
+								<td colspan="4" bgcolor="#f0f6fb">
+									<div class="admin_bold">账号信息</div>
+								</td>
+							</tr>
+							<trstyle="height: 30px;">
+								<th>姓名：</th>
+								<td>{yun:}$row.name{/yun}</td>
+							</tr>
+							<tr style="height: 30px;">
+								<th>性别：</th>
+								<td>{yun:}$user_sex[$row.sex]{/yun}
+									
+								</td>
+							</tr>
+              	        	<tr class="admin_table_trbg" style="height: 50px;">
+		          			<th>所在地区：</th>
+		          			<td>
+							{yun:}$cache.city_name[$row.provinceid]{/yun}-{yun:}$cache.city_name[$row.cityid]{/yun}{yun:}if $cache.city_name[$row.three_cityid]{/yun}-{yun:}$cache.city_name[$row.three_cityid]{/yun}{yun:}/if{/yun}
+					
+		            	</td>
+		        	</tr>
+              			<tr class="admin_table_trbg" style="height: 100px;">
+								<th>提供服务：</th>
+								<td colspan="3">{yun:}$row.services{/yun}</td>
+							</tr>
+							<tr style="height: 30px;">
+								<th>技能特长：</th>
+								<td>{yun:}$row.speciality{/yun}</td>
+							</tr>
+							
+							<tr style="height: 30px;">
+								<th>薪资待遇：</th>
+								<td>{yun:}$row.salary{/yun}</td>
+							</tr>
+							
+							<tr class="admin_table_trbg" style="height: 40px;">
+								<th width="160">头像：</th>
+								<td colspan="4">
+									<img src="{yun:}if $row.photo_n{/yun}{yun:}$row.photo_n{/yun}{yun:}else{/yun}{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun} {yun:}/if{/yun}"style="width:50px;height: 50px;" >	
+								</td> 
+							</tr> 
+              					<tr class="admin_table_trbg" style="height: 100px;">
+								<th>联系手机：</th>
+								<td>{yun:}$row.moblie{/yun}
+								</td>
+							</tr>
+							<tr class="admin_table_trbg" style="height: 100px;">
+								<th>个人简介：</th>
+								<td colspan="3">{yun:}$row.content{/yun}</td>
+							</tr>
+						
+				</div>
+			</div>
+		</div>
+		
+    	<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+	</body>
+</html>

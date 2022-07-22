@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script language="javascript">
+			var weburl = "{yun:}$config.sy_weburl{/yun}";
+		</script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			body,
+			div {
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+
+			<div class="admin_table_border">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form class="layui-form" action="index.php?m=admin_school_academy&c=saveacademy" target="supportiframe" method="post"
+				 enctype="multipart/form-data" onSubmit="return check_school()">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<tr>
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">院校详情</div>
+							</th>
+						</tr>
+						{yun:}if $show.id{/yun}
+						<tr>
+							<th>院校编号：</th>
+							<td>
+								<div class="yun_admin_divh">{yun:}$show.id{/yun}</div>
+							</td>
+						</tr>
+						{yun:}/if{/yun}
+						<tr class="admin_table_trbg">
+							<th>院校名称：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.schoolname{/yun}
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>所在城市：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.provinceid_n{/yun}-{yun:}$show.cityid_n{/yun}
+								</div>
+							</td>
+
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">学科类别：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.school_categty_n{/yun}
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="120">主管部门：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.school_department_n{/yun}
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">办学层次：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.school_level_n{/yun}
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">标签：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.schooltag_n{/yun}
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>联系电话：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.school_phone{/yun}
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>地址：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.address{/yun}
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>邮箱：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.schoolemail{/yun}
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>官网：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.schoolinternet{/yun}
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>添加时间：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.downtime|date_format:"%Y-%m-%d"{/yun}
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>更新时间：</th>
+							<td>
+								<div class="yun_admin_divh">
+									{yun:}$show.lastupdate|date_format:"%Y-%m-%d"{/yun}
+								</div>
+
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th>LOGO：</th>
+							<td align="left" colspan="4">
+								{yun:}if $show.photo{/yun}<img src="{yun:}$show.photo{/yun}" width="75" height="75">{yun:}/if{/yun}
+							</td>
+						</tr>
+
+					</table>
+				</form>
+			</div>
+		</div>
+
+	</body>
+</html>

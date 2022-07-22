@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<title>{yun:}$title{/yun}</title>
+		<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<script src="{yun:}$wap_style{/yun}/js/flexible.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$wap_style{/yun}/css/base.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" >
+		<link href="{yun:}$wap_style{/yun}/chat/css/chat.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" >
+		<link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+
+	</head>
+	<body>
+		<span id="chatbody" class="none">
+			<!--聊天界面-->
+			<div id="chatbox">
+				<!-- 页面头部 -->
+				<div id="chat_head" class="chat_send_header" style="{yun:}if isset($adminChat){/yun}height:1.2rem{yun:}/if{/yun}">
+					<div class="chat_send_header_nav">
+						<div class="chat_send_header_nav_return" onclick="back()">
+							<img src="{yun:}$wap_style{/yun}/chat/images/return.png" width="100%" height="100%">
+						</div>
+						<div class="chat_send_header_nav_recruiter">
+							<div class="recruiter_name">{yun:}$receive.linkman{/yun}</div>
+							<div class="recruiter_job">{yun:}$receive.identity{/yun}</div>
+						</div>
+						<!--div class="chat_send_header_nav_fall">
+							<img src="{yun:}$wap_style{/yun}/chat/images/add@2x.png" width="100%" height="100%">
+						</div-->
+					</div>
+					{yun:}if !isset($adminChat){/yun}
+					<div class="chat_send_header_function">
+						<ul>
+							<!--按钮1 -->
+							{yun:}if $receive.usertype == 1{/yun}
+							<!--企业查看个人简历-->
+							<li @click="lookResume()">
+								<div class="function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/Please_resume.png" width="100%" height="100%">
+								</div>
+								<i class="function_word">看简历</i>
+							</li>
+							{yun:}else{/yun}
+							<!--个人查看企业主页-->
+							<li id="toCompany">
+								<div class="function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/qy.png" width="100%" height="100%">
+								</div>
+								<i class="function_word">企业主页</i>
+							</li>
+							{yun:}/if{/yun}
+							<!--按钮1 end-->
+							<!--按钮2 -->
+							{yun:}if !$config.sy_chat_exphone || $config.sy_chat_exphone == 2{/yun}
+							<!--后台设置换电话、微信开放-->
+							<li id="exchange_iphone">
+								<div class="function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/Switched_telephone.png" width="100%" height="100%">
+								</div>
+								<i class="function_word">换电话/微信</i>
+							</li>
+							{yun:}else{/yun}
+							<!--后台设置换电话、微信未开放-->
+							<li id="sendJob">
+								<div class="function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/Switched_telephone.png" width="100%" height="100%">
+								</div>
+								<i class="function_word">选职位</i>
+							</li>
+							{yun:}/if{/yun}
+							<!--按钮2 end-->
+							<!--按钮3 -->
+							{yun:}if $receive.usertype == 1 && $usertype == 2{/yun}
+							<!--企业约面试-->
+							<li id="invite">
+								<a href="javascript: void(0)">
+									<div class="function_icon">
+										<img src="{yun:}$wap_style{/yun}/chat/images/About_the_interview.png" width="100%" height="100%">
+									</div>
+								</a>
+								<i class="function_word">{yun:}if $inviteNum>0{/yun}已邀请{yun:}else{/yun}约面试{yun:}/if{/yun}</i>
+							</li>
+							{yun:}/if{/yun}
+							{yun:}if $receive.usertype != 1{/yun}
+							<!--个人-->
+							<li id="sendExpcet">
+								<a href="javascript: void(0)">
+									<div class="function_icon">
+										<img src="{yun:}$wap_style{/yun}/chat/images/fjl.png" width="100%" height="100%">
+									</div>
+								</a>
+								<i class="function_word">发简历</i>
+							</li>
+							{yun:}/if{/yun}
+							<!--按钮3 end-->
+							<li @click="moreShow = true">
+								<div class="function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/lose_interest_in.png" width="100%" height="100%">
+								</div>
+								<i class="function_word">更多</i>
+							</li>
+							
+						</ul>
+					</div>
+					{yun:}/if{/yun}
+				</div>
+				<!-- 页面整体部分 -->
+				<div class="chat_send_min_body" id="chat_content" style="display: none;">
+					<!-- 聊天对话框部分 -->
+					<div class="Chat_dialog_box">
+						<span v-for="(item, ck) in chat" :key="ck">
+							<!-- 时间线 -->
+							<div class="Chat_dialog_box_time_line" v-if="item.time">{{item.time}}</div>
+							<span v-if="item.msgtype == 'char' || item.msgtype == 'voice' || item.msgtype == 'spview' || item.msgtype == 'map'">
+								<!--我发送的-->
+								<div v-if="item.mine" class="dialog_recruiters">
+									<div class="dialog_recruiters_logo">
+										<img :src="item.avatar" width="100%" height="100%">
+									</div>
+									<div class="dialog_recruiters_word_status">
+										<!--我发送面试邀请-->
+										<div v-if="item.inviteid" class="dialog_recruiters_word_and_icon" @click="inviteShow(item.inviteid)">
+											发送了面试邀请
+											<div class="dialog_recruiters_word_icon">
+												<img src="{yun:}$wap_style{/yun}/chat/images/lucency_interview.png" width="100%" height="100%">
+											</div>
+										</div>
+										<!--我发送的图片-->
+										<div v-else-if="item.image" class="dialog_recruiters_word_status">
+											<div class="dialog_recruiters_imgbox" style="background:none;">
+												<div class="dialog_recruiters_imgbox_img dialog_recruiters_imgbox_img_r">
+													<img :src="item.image" >
+												</div>
+											</div>
+										</div>
+										<!--我发送的视频面试消息-->
+										<div v-else-if="item.msgtype == 'spview'" class="dialog_recruiters_word_and_icon">
+											<span v-if="item.content == 'closesp'">{{item.fusertype == mine.usertype ? '对方' : ''}}已取消</span>
+											<span v-else-if="item.content == 'refused'">{{item.fusertype == mine.usertype ? '对方' : ''}}已拒绝</span>
+											<span v-else>{{item.content}}</span>
+											<div class="dialog_recruiters_word_icon">
+												<img src="{yun:}$wap_style{/yun}/chat/images/sp_r.png" width="100%" height="100%">
+											</div>
+										</div>
+										<!--我发送的语音-->
+										<div v-else-if="item.msgtype == 'voice'" class="dialog_recruiters_word_and_icon dialog_recruiters_yuy">
+											<div @click="playAudit(item.chatid, ck)">
+												<audio :src="item.voice" :id="'voice_' + item.chatid" preload></audio>
+                                                {{item.vl}}
+                                                <div class="dialog_recruiters_word_icon">
+													<!--播放中的语音-->
+													<img v-if="playMsgid == item.chatid" src="{yun:}$wap_style{/yun}/chat/images/tyyr.gif" width="100%" height="100%">
+													<!--未播放的语音-->
+													<img v-else src="{yun:}$wap_style{/yun}/chat/images/t_r.png" width="100%" height="100%">
+												</div>
+											</div>
+										</div>
+										<div v-else-if="item.msgtype == 'map'" class="dialog_recruiters_word_status" @click="toMap(item)">
+											<div class="dialog_recruiters_location">
+												<div class="dialog_recruiters_location_img">
+													<img :src="item.url" width="100%" height="100%">
+												</div>
+												<div class="dialog_recruiters_location_place">
+													<div class="location_place_top">{{item.name}}</div>
+												</div>
+											</div>
+										</div>
+										<!--我发送消息（表情和文字消息）-->
+										<div v-else class="dialog_recruiters_word">
+											<span v-for="(cn, cnk) in item.content" :key="cnk">
+												<!--表情-->
+												<span v-if="cn.t == 'image'" class="bq_img">
+													<img :src="cn.n" width="100%" height="100%">
+												</span>
+												<!--文字-->
+												<span v-else-if="cn.t == 'char'">
+													<em>{{cn.n}}</em>
+												</span>
+											</span>
+										</div>
+										<div v-if="item.read" class="dialog_recruiters_status">已读</div>
+									</div>
+								</div>
+								<!--我收到的-->
+								<div v-else class="dialog_job_seeker">
+									<div class="dialog_job_seeker_logo">
+										<img :src="item.avatar" width="100%" height="100%">
+									</div>
+									<!--我收到的面试邀请-->
+									<div v-if="item.inviteid" class="dialog_recruiters_word_and_icon" @click="inviteShow(item.inviteid)">
+										发送了面试邀请
+										<div class="dialog_recruiters_word_icon">
+											<img src="{yun:}$wap_style{/yun}/chat/images/lucency_interview.png" width="100%" height="100%">
+										</div>
+									</div>
+									<!--我收到的图片-->
+									<div v-else-if="item.image" class="dialog_recruiters_word_status">
+										<div class="dialog_recruiters_imgbox" style="background:none;">
+											<div class="dialog_recruiters_imgbox_img">
+												<img :src="item.image">
+											</div>
+										</div>
+									</div>
+									<!--我收到的视频面试消息-->
+									<div v-else-if="item.msgtype == 'spview'" class="dialog_job_seeker_word_icon_text">
+										<div class="dialog_job_seeker_word_icon">
+											<img src="{yun:}$wap_style{/yun}/chat/images/sp_L.png" width="100%" height="100%">
+										</div>
+										<div class="dialog_job_seeker_word_text" v-if="item.content == 'closesp'">
+											{{item.fusertype != mine.usertype ? '对方' : ''}}已取消
+										</div>
+										<div class="dialog_job_seeker_word_text" v-else-if="item.content == 'refused'">
+											{{item.fusertype != mine.usertype ? '对方' : ''}}已拒绝
+										</div>
+										<div class="dialog_job_seeker_word_text" v-else>
+											{{item.content}}
+										</div>
+									</div>
+									<!--我收到的语音-->
+									<div v-else-if="item.msgtype == 'voice'" class="dialog_job_seeker_word_icon_text" :style="'width:' + item.vw + 'px'">
+										<div @click="playAudit(item.chatid, ck)" >
+											<div class="dialog_job_seeker_word_icon">
+												<!--播放中的语音-->
+												<img v-if="playMsgid == item.chatid" src="{yun:}$wap_style{/yun}/chat/images/tyy.gif" width="100%" height="100%">
+												<!--未播放的语音-->
+												<img v-else src="{yun:}$wap_style{/yun}/chat/images/t_l.png" width="100%" height="100%">
+											</div>
+											<audio :src="item.voice" :id="'voice_' + item.chatid" preload></audio>
+											{{item.vl}}
+										</div>
+										<i v-if="item.voicestatus != 1" class="yuyiconl"></i>
+									</div>
+									<div v-else-if="item.msgtype == 'map'" class="dialog_recruiters_word_status" @click="toMap(item)">
+										<div class="dialog_recruiters_location">
+											<div class="dialog_recruiters_location_img">
+												<img :src="item.url" width="100%" height="100%">
+											</div>
+											<div class="dialog_recruiters_location_place">
+												<div class="location_place_top">{{item.name}}</div>
+											</div>
+											
+										</div>
+									</div>
+									<!--我收到的消息（表情和文字消息）-->
+									<div v-else class="dialog_job_seeker_word">
+										<span v-for="(cn, cnk) in item.content" :key="cnk">
+											<!--表情-->
+											<span v-if="cn.t == 'image'" class="bq_img">
+												<img :src="cn.n" width="100%" height="100%">
+											</span>
+											<!--文字-->
+											<span v-else-if="cn.t == 'char'">
+												<em>{{cn.n}}</em>
+											</span>
+										</span>
+									</div>
+								</div>
+							</span>
+							<!--换微信、电话请求框-->
+							<span v-else-if="item.msgtype == 'ask'">
+								<span v-if="item.mine">
+									<div class="Chat_dialog_box_time_line">{{item.asktext}}</div>
+								</span>
+								<span v-else>
+									<div class="dialog_job_seeker">
+										<div class="on_line_resume">
+											<div class="on_line_resume_top">
+											  <div class="on_line_resume_top_icon">
+												 <i :class="item.asktype == 'tel' ? 'chat_hhyq_icon' : 'chat_hhwx_icon'"></i>
+												</div>
+												  <div class="on_line_resume_top_word">
+													  <div class="on_line_resume_top_word_iphone">{{item.asktext}}</div>
+												  </div>
+											</div>
+											<div class="on_line_resume_bom" v-if="item.askstatus == 1">已同意</div>
+											<div class="on_line_resume_bom" v-else-if="item.askstatus == 2">已拒绝</div>
+											<div class="on_line_resume_bom" v-else-if="item.askstatus == 3">
+												<ul>
+													<li @click="confirmAsk(item.asktype, item.chatid)">同意</li>
+													<li @click="refuseAsk(item.asktype, item.chatid)">拒绝</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</span>
+							</span>
+							<!--同意换微信、电话-->
+							<span v-else-if="item.msgtype == 'confirm' && item.askvalue">
+								<div class="Chat_dialog_box_time_line">已同意互换{{item.confirmtype=='tel' ? '电话' : '微信'}}</div>
+								<div class="dialog_job_seeker">
+									<div class="on_line_resume">
+										<div class="on_line_resume_top">
+											<div class="on_line_resume_top_icon">
+												<img v-if="item.confirmtype=='tel'" src="{yun:}$wap_style{/yun}/chat/images/iphone@2x.png" width="100%" height="100%">
+												<img v-else src="{yun:}$wap_style{/yun}/chat/images/weixin@2x.png" width="100%" height="100%">
+											</div>
+											<div class="on_line_resume_top_word">
+												<div class="on_line_resume_top_word_iphone">{{item.askmsg}}</div>
+												<div class="on_line_resume_top_word_number">{{item.askvalue}}</div>
+											</div>
+										</div>
+										<div class="on_line_resume_bom" v-if="item.confirmtype=='tel'">
+											<input :id="'ask' + item.chatid" :value="item.askvalue" style="opacity: 0;position: absolute;width:1px;height:1px;" type="text">
+											<ul>
+												<li @click="dial(item.askvalue)">拨号</li>
+												<li @click="copyMsg(item.chatid)">复制</li>
+											</ul>
+										</div>
+										<div class="on_line_resume_bom" v-else>
+											<input :id="'ask' + item.chatid" :value="item.askvalue"  style="opacity: 0;position: absolute;width:1px;height:1px;" type="text">
+											<div class="on_line_resume_bom" @click="copyMsg(item.chatid)">复制微信号</div>
+										</div>
+									</div>
+								</div>
+							</span>
+							<!--拒绝互换微信、电话-->
+							<span v-else-if="item.msgtype == 'refuse' && item.refusetext">
+								<div class="Chat_dialog_box_time_line">{{item.refusetext}}</div>
+							</span>
+                            <!-- 职位信息 -->
+                            <span v-else-if="(item.msgtype == 'job' || item.msgtype == 'adminjob') && item.job">
+                                <div class="chat_send_card" @click="lookJob(item.job.wapurl)">
+									<div class="company_jobandcompensation">
+										<div class="company_job">{{item.job.name}}</div>
+										<div class="company_scompensation">{{item.job.job_salary}}</div>
+									</div>
+									<div class="company_nameandstate">
+										<div class="company_name">{{item.job.com_name}}</div>
+									</div>
+									<div class="company_siteandyear">
+										<ul>
+											<li>{{item.job.citystr}}</li>
+											<li v-if="item.job.job_exp">{{item.job.job_exp + '经验'}}</li>
+											<li v-if="item.job.job_edu">{{item.job.job_edu + '学历'}}</li>
+										</ul>
+									</div>
+									
+									<div class="company_first_communicate">{{item.ctime}}发起的沟通</div>
+								</div>
+                            </span>
+							<span v-else-if="item.msgtype == 'resume'">
+								<!-- 求职者基本资料 -->
+								<div class="chat_send_card" @click="lookResume()">
+									<div class="chat_send_card_datum">
+										<div class="datum_logo">
+											<img :src="expect.photo" width="100%" height="100%">
+										</div>
+										<div class="card_datum_details">
+											<div class="card_datum_details_top">
+												<div class="card_datum_details_top_name">{{expect.uname}}</div>
+												<div class="card_datum_details_top_pay">{{expect.salary}}</div>
+											</div>
+											<div class="card_datum_details_bom">
+												<div class="card_datum_details_bom_direction">求职期望</div>
+												<div class="card_datum_details_bom_job">{{expect.name}}</div>
+											</div>
+										</div>
+									</div>
+									<div class="chat_send_card_state">
+										<div>{{expect.exp_n}}·{{expect.edu_n}}·{{expect.age}}岁</div>
+										<div class="chat_send_card_state_1">{{expect.report_n}}</div>
+									</div>
+									<div class="chat_send_card_advantage">{{expect.description}}</div>
+									<ul v-if="expect.works" class="chat_send_card_experience">
+										<li class="chat_send_card_experience_top" v-for="(w, wk) in expect.works" :key="wk">
+											<div class="chat_send_card_experience_top_company">
+												<div class="chat_send_card_experience_top_company_dot">
+													<img src="{yun:}$wap_style{/yun}/chat/images/Moment_circle.png" width="100%" height="100%">
+												</div>
+												<div class="chat_send_card_experience_top_company_name">{{w.name}}</div>
+											</div>
+											<div class="chat_send_card_experience_top_limit">
+												<div class="chat_send_card_experience_top_limit_job">{{w.title}}</div>
+												<div class="chat_send_card_experience_top_limit_time">{{w.date_n}}</div>
+											</div>
+										</li>
+									</ul>
+									
+								</div>
+							</span>
+						</span>
+					</div>
+				</div>
+				<!-- 固定的手机尾部 -->
+				<div id="chat_bottom" class="Fixed_bottom">
+					<div class="Fixed_bottom_input_field">
+						<div class="input_field_left" id="useful_expressions">常用语</div>
+						<div class="input_field_center">
+							<textarea id="send_content" oninput="checkSend()" value="" placeholder="和他聊一聊"></textarea>
+						</div>
+						<div class="input_field_right">
+							<div id="face" class="sendbq">
+								<img src="{yun:}$wap_style{/yun}/chat/images/face.png" width="100%" height="100%">
+							</div>
+						
+							<div id="more">
+								<img src="{yun:}$wap_style{/yun}/chat/images/add.png" width="100%" height="100%">
+							</div>
+							<div id="send" class="none">
+								<img src="{yun:}$wap_style{/yun}/chat/images/fs.png" width="100%" height="100%">
+							</div>
+						</div>	
+						<div id="commonly" class="showbq"></div>
+					</div>
+					<div id="chatfooter" class="Fixed_bottom_function none">
+						<ul>
+							<li style="position:relative">
+								<div class="Fixed_bottom_function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/photograph.png" width="100%" height="100%">
+									<!--图片上传用-->
+									
+								</div>
+								<i class="Fixed_bottom_function_word">照片</i>
+								<input type="file" name="file" accept="image/*" onchange="upImage(this)" class="sc_bth">
+								<input type="hidden" id="chatpic" value="">
+							</li>
+							{yun:}if !$config.sy_chat_exphone || $config.sy_chat_exphone == 2{/yun}
+							<li id="sendJob">
+								<div class="Fixed_bottom_function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/Choose_jobs.png" width="100%" height="100%">
+								</div>
+								<i class="Fixed_bottom_function_word">选职位</i>
+							</li>
+							{yun:}/if{/yun}
+							{yun:}if $config.sy_spview_web == 1 && $usertype == 2{/yun}
+							<li id="spview">
+								<div class="Fixed_bottom_function_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/video_call.png" width="100%" height="100%">
+								</div>
+								<i class="Fixed_bottom_function_word">视频面试</i>
+							</li>
+							{yun:}/if{/yun}
+						</ul>
+					</div>
+				</div>
+				<!-- 换电话微信遮罩层 -->
+				<div id="iphone_weixin">
+					<div class="iphone_weixin_box" id="phone_weixin_box">
+						<div class="swap_box">
+							<div class="iphone" id="phone">
+								<div class="iphone_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/iphone.png" width="100%" height="100%">
+								</div>
+								<div class="iphone_word">请求换手机</div>
+							</div>
+							<div class="weixin" id="weixing">
+								<div class="iphone_icon">
+									<img src="{yun:}$wap_style{/yun}/chat/images/weixin_new.png" width="100%" height="100%">
+								</div>
+								<div class="iphone_word">请求换微信</div>
+							</div>
+						</div>
+						<div class="call_off" id="abrogate">取消</div>
+					</div>
+					<div class="swop_iphone" id="swopiphone">
+						<div class="mask_box_word">确定与对方交换手机吗？</div>
+						<div class="mask_box_decision">
+							<div class="mask_box_decision_cancel" id="iphone_cancel">取消</div>
+							<div class="mask_box_decision_confirm" id="iphone_confirm">确定</div>
+						</div>
+					</div>
+					<div class="swop_weixin" id="swopweixin">
+						<div class="mask_box_word">确定与对方交换微信吗？</div>
+						<div class="mask_box_decision">
+							<div class="mask_box_decision_cancel" id="weixin_cancel">取消</div>
+							<div class="mask_box_decision_confirm" id="weixin_confirm">确定</div>
+						</div>
+					</div>
+				</div>
+				<!--弹出职位-->
+				<div id="joblist" class="none">
+					<div class="chat_bg"></div>
+					<div class="chatjob_box">
+						<div class="chatjob_box_tit"><span class="chatjob_box_tit_name">选职位</span><span id="closeJob" class="chatjob_box_tit_close"></span></div>
+						<div class="chatjob_box_c">
+							<div id="chatjob_list" class="chatjob_box_job">
+								<div class="chatjob_list" v-for="(item, jk) in joblist" :key="jk">
+									<div class="chatjob_name">{{item.name}}</div>
+									<div class="chatjob_xz">{{item.job_salary}}</div>
+									<div class="chatjob_info">{{item.citystr}}
+										<span v-if="item.job_edu">
+											<span class="chatjob_info_line">|</span>{{item.job_edu}}学历
+										</span>
+										<span v-if="item.job_exp">
+											<span class="chatjob_info_line">|</span>{{item.job_exp}}经验
+										</span>
+									</div>
+									<span class="chatjob_bth" @click="jobShow(item.id)">发送</span>
+								</div>
+								<span v-if="joblist.length == 0">
+									<div class="chat_nojob">~ 亲 , 暂无招聘中职位哦！</div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--填写微信号/手机号-->
+				<div id="hhshow" class="none">
+					<div class="chat_bg"></div>
+					<div  class="wx_tck_box">
+						<div class="wx_tck_boxall">
+						<div id="wxdiv" class="">
+							<div class="wx_tck_boxtit">互换微信</div>
+							<div class="wx_tck_boxall_text">
+								<input id="wxinput" type="text" value="" placeholder="请输入微信号" class="wx_tck_boxall_input">
+							</div>
+						</div>
+						<div id="teldiv" class="none">
+							<div class="wx_tck_boxtit">互换电话</div>
+							<div class="wx_tck_boxall_text">
+								<input id="telinput" type="text" value="" placeholder="请输入手机号" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="wx_tck_boxall_input">
+							</div>
+						</div>
+						<input id="sendtype" type="hidden" value="">
+						<input id="hhtype" type="hidden" value="">
+						<input id="chatid" type="hidden" value="">
+						<div class="wx_tck_boxall_bth">
+							<a href="javascript:void(0)" onclick="savehh();" class="wx_tck_boxall_bth_a">确认</a>
+							<a href="javascript:void(0)" onclick="$('#hhshow').hide();" class="wx_tck_boxall_no">聊聊再说~</a>
+						</div>
+						</div>
+					</div>
+				</div>
+				<!-- 不感兴趣遮罩层 -->
+				<div id="lose_interest_ing">
+					<div class="lose_interest_ing_box">
+						<div class="mask_box_word">设定不感兴趣将会删除与TA的{yun:}$config.sy_chat_name{/yun}记录</div>
+						<div class="mask_box_decision">
+							<div class="mask_box_decision_cancel" id="lose_interest_ing_cancel">取消</div>
+							<div class="mask_box_decision_confirm" onclick="nochat()">确定</div>
+						</div>
+					</div>
+				</div>
+				<!-- 常用语遮罩层 -->
+				<div id="Common_language">
+					<div id="Common_language_box">
+						<div class="Common_language_box_header">
+							<div class="Common_language_box_header_left" onclick="usefulClose()">
+								<img src="{yun:}$wap_style{/yun}/chat/images/opacitas_close.png" width="100%" height="100%">
+							</div>
+							<div class="Common_language_box_header_center">常用语</div>
+							<div class="Common_language_box_header_right">
+								<a onclick="usefulSet()" href="javascript:void(0)">
+									<img src="{yun:}$wap_style{/yun}/chat/images/opacitas_set.png" width="100%" height="100%">
+								</a>
+							</div>
+						</div>
+						<div class="cyy_box">
+						<span v-for="(item, uk) in useful" :key="uk">
+							<div class="Common_language_box_header_text" @click="sendUseful(uk)">{{item.content}}</div>
+						</span>
+						</div>
+						<div v-if="useful.length == 0" class="chatno_tip">
+						  	目前没有添加常用语
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--设置常用语-->
+			<van-popup v-model="usefulBox" position="right" :overlay="false" :style="{ height: '100%',width:'100%',backgroundColor:'#f2f3f3'}">
+				<!-- 页面头部导航栏 -->
+				<div class="useful_expressions_header">
+					<div class="useful_expressions_header_icon">
+					   <a onclick="usefulBack()" href="javascript: void(0)"> <img src="{yun:}$wap_style{/yun}/chat/images/return.png" width="100%" height="100%"></a>
+					</div>
+					<div class="useful_expressions_header_word">设置常用语</div>
+				</div>
+				 <!-- 页面整体部分 -->
+				 <div class="useful_expressions_body">
+					  <div class="useful_expressions_body_word">  <div class="useful_expressions_body_ps">
+						  <ul>
+							  <li v-for="(item, luk) in useful" :key="luk">
+								  <div class="body_word_text">{{item.content}}</div>
+								  <div class="body_word_icon" v-if="item.uid && item.uid>0">
+									  <div>
+										 <a @click="editUseful(luk)" href="javascript:void(0)">
+											<img src="{yun:}$wap_style{/yun}/chat/images/redact.png"  width="100%" height="100%">
+										 </a>
+									  </div>
+									  <div @click="delConfirm(luk)">
+										<img src="{yun:}$wap_style{/yun}/chat/images/delete.png"  width="100%" height="100%">
+									  </div>
+								  </div>
+							  </li>
+						  </ul>
+					  </div></div>
+						<div v-if="useful.length == 0" class="chatno_tip">
+					  	目前没有添加常用语
+					  </div>
+				 </div>
+				 
+				  <!-- 底部添加按钮 -->
+				  <div class="useful_expressions_add">
+					 <a onclick="usefulAdd()" href="javascript:void(0)"> <div class="expressions_add_btn">添加常用语</div></a>
+				  </div>
+				  <!-- 遮罩层 -->
+				  <div id="useful_expressions_mask">
+				  	<div class="mask_box">
+				  		<div class="mask_box_word">删除本条常用语吗？</div>
+				  		<div class="mask_box_decision">
+				  			<div class="mask_box_decision_cancel" onclick="usefulCancel()">取消</div>
+				  			<div class="mask_box_decision_confirm_del" onclick="delUseful()">删除</div>
+				  		</div>
+				  	</div>
+					<input type="hidden" id="usefulkey" value="" />
+				  </div>
+			</van-popup>
+			<!--添加常用语-->
+			<van-popup v-model="usefulAdd" position="right" :overlay="false" :style="{ height: '101%',width:'100%'}">
+				<!-- 页面头部导航栏 -->
+				<div class="add_header">
+					<div class="add_header_left">
+					  <a onclick="usefulAddBack()" href="javascript:void(0)">
+						<div class="add_header_left_nav">
+							<img src="{yun:}$wap_style{/yun}/chat/images/return.png"  width="100%" height="100%">
+						</div>
+					  </a>
+					</div>
+					<div class="add_header_center">添加常用语</div>
+					<div onclick="usefulSave()" class="add_header_right">完成</div>
+				</div>
+				<!-- 常用语主体部分 -->
+				<div class="add_min_body">
+					<div class="add_expressions">
+					   <textarea id="description" class="add_expressions_text" placeholder="输入您的常用回复。请不要填写微信、手机号等联系方式，或者广告信息。如有违反，系统将对您的账号做封禁处理！" maxlength="200"></textarea>
+					   <div class="add_expressions_bom">
+						   <i id="usefulWords" class="add_expressions_bom_new">0</i>
+						   <i class="add_expressions_bom_sum">/ 200</i>
+					   </div>
+					</div>
+					<input type="hidden" id="ufid" value="" />
+				</div>
+			</van-popup>
+			<!--举报聊天-->
+			<van-popup v-model="reportAdd" position="right" :overlay="false" :style="{ height: '101%',width:'100%'}">
+				<!-- 页面头部导航栏 -->
+				<div class="add_header">
+					<div class="add_header_left">
+					  <a onclick="reportAddBack()" href="javascript:void(0)">
+						<div class="add_header_left_nav">
+							<img src="{yun:}$wap_style{/yun}/chat/images/return.png"  width="100%" height="100%">
+						</div>
+					  </a>
+					</div>
+					<div class="add_header_center">举报</div>
+					<div onclick="reportSave()" class="add_header_right">完成</div>
+				</div>
+				<!-- 举报主体部分 -->
+				<div class="add_min_body">
+					<div class="add_expressions">
+					   <textarea id="report_description" class="add_expressions_text" placeholder="输入您的举报内容" maxlength="200"></textarea>
+					   
+					</div>
+				</div>
+			</van-popup>
+			<van-action-sheet v-model="moreShow" :actions="actionsList" @select="onSelect" cancel-text="取消" />
+		</span>
+		<!--邀请视频面试   start-->
+		<div id="spviewModal" class="none">
+			<div class="wapspms_bg"></div>
+			<div class="wapspms_show">
+				<div class="wapspms_com">
+					<div class="wapspms_comlogo"><img id="modalLogo" src=""></div>
+					<div class="wapspms_comname" id="modalName"></div>
+					<div>邀请你进行视频面试</div>
+				</div>
+				<div class="wapspms_cz">
+					<a href="javascript:void(0);" onclick="closeSp()" class="wapspms_cz_a"><i class="wapspms_cz_icon"></i><div class="wapspms_cz_p">拒绝</div></a>
+					<a href="javascript:void(0);" onclick="allowSp()" class="wapspms_cz_a wapspms_cz_aml"><i class="wapspms_cz_icon wapspms_cz_icon_js"></i><div class="wapspms_cz_p">接受</div></a>
+				</div>
+			</div>
+		</div>
+		<!--邀请视频面试   end-->
+	</body>
+	<script>
+		var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+			wapurl = "{yun:}url m=wap{/yun}",
+			weburl = "{yun:}$config.sy_weburl{/yun}",
+			jid = '{yun:}$smarty.get.jid{/yun}',
+			eid = '{yun:}$smarty.get.eid{/yun}',
+			// 手机号、微信号从身份表(resume等)中获取
+			tel = "",
+			wxid = "",
+			totel = "",
+			towx  = "",
+			cantel = '{yun:}$cantel{/yun}',
+			canwx = '{yun:}$canwx{/yun}',
+			linkman = '{yun:}$receive.linkman{/yun}',
+	
+			toid = '{yun:}$receive.id{/yun}',
+			totype = '{yun:}$receive.usertype{/yun}',
+			inviteid = '{yun:}$smarty.get.invite{/yun}',
+			chat_single = true,
+			mine = {id: '{yun:}$uid{/yun}',usertype: '{yun:}$usertype{/yun}'},
+			chat_name = '{yun:}$config.sy_chat_name{/yun}',
+			greeting = '{yun:}$greeting{/yun}',
+			inviteNum = parseInt('{yun:}$inviteNum{/yun}');
+			
+		window.sessionStorage.setItem("needRefresh", true);
+	</script>
+	<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+	<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+	<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script> 
+	<script src="{yun:}$wap_style{/yun}/chat/yunliao/socket.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <script src="{yun:}$wap_style{/yun}/chat/yunliao/textarea.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/chat/yunliao/html5media.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$wap_style{/yun}/js/exif.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script>
+		var app = new Vue({
+			el: '#chatbody',
+			data: {
+				chat: [],
+				joblist: [],
+				expect: {},
+				company: {},
+				useful: [],
+				playMsgid: '',
+				usefulBox: false,
+				usefulAdd: false,
+				reportAdd: false,
+				moreShow: false,
+				actionsList: [
+					{name: '不感兴趣'},
+					{name: '举报'}
+				]
+			},
+			created() {
+				$("#chatbody").removeClass('none');
+			},
+			methods:{
+				onSelect: function(e){
+					this.moreShow = false;
+					if(e.name == '不感兴趣'){
+						$('#lose_interest_ing').css('display','block');
+						document.body.style.overflow = "hidden";
+					}else if (e.name == '举报'){
+						this.reportAdd = true;
+						$('#chatbox').addClass('none');
+						$("#report_description").val('');
+						$("#reportWords").text(0);
+					}
+				}
+			}
+	    });
+		var text = document.getElementById("send_content");
+		autoTextarea(text);// 调用
+		$(function(){
+			$('#description').on("input propertychange", function() {
+				var length = $(this).val().length;
+				$("#usefulWords").text(length);
+			});
+			$('#report_description').on("input propertychange", function() {
+				var length = $(this).val().length;
+				$("#reportWords").text(length);
+			});
+			// 顶部导航换电话、微信
+			$('#exchange_iphone').on('click', function(){
+				$('#iphone_weixin').css('display','block');
+				$('#phone_weixin_box').css('display','block');
+				document.body.style.overflow = "hidden";
+			});
+			// ActionSheet取消
+			$('#abrogate').on('click', function(){
+				$('#iphone_weixin').css('display','none');
+				$('#phone_weixin_box').css('display','none');
+				document.body.style.overflow = "auto";
+			});
+			// ActionSheet选择换电话
+			$('#phone').on('click', function(){
+				$('#swopiphone').css('display','block');
+				$('#phone_weixin_box').css('display','none');
+			});
+			// ActionSheet选择换微信
+			$('#weixing').on('click', function(){
+				$('#swopweixin').css('display','block');
+				$('#phone_weixin_box').css('display','none');
+			});
+			// 换电话取消
+			$('#iphone_cancel').on('click', function(){
+				$('#swopiphone').css('display','none');
+				$('#iphone_weixin').css('display','none');
+				document.body.style.overflow = "auto";
+			});
+			// 确认换电话
+			$('#iphone_confirm').on('click', function(){
+				$('#swopiphone').css('display','none');
+				$('#iphone_weixin').css('display','none');
+				document.body.style.overflow = "auto";
+				sendAsk('tel');
+			});
+			// 换微信取消
+			$('#weixin_cancel').on('click', function(){
+				$('#swopweixin').css('display','none');
+				$('#iphone_weixin').css('display','none');
+				document.body.style.overflow = "auto";
+			});
+			// 确认换微信
+			$('#weixin_confirm').on('click', function(){
+				$('#swopweixin').css('display','none');
+				$('#iphone_weixin').css('display','none');
+				document.body.style.overflow = "auto";
+				sendAsk('wx');
+			});
+			// 不感兴趣取消按钮
+			$('#lose_interest_ing_cancel').on('click', function(){
+				$('#lose_interest_ing').css('display','none');
+				document.body.style.overflow = "auto";
+			});
+			// 输入框边上常用语按钮
+			$('#useful_expressions').on('click', function(){
+				usefulShow = true;
+				$('#Common_language').css('display','block');
+				document.body.style.overflow = "hidden";
+			});
+		});
+	</script>
+
+</html>

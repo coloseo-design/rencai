@@ -1,0 +1,206 @@
+{yun:}include file="$wapstyle/header_school.htm"{/yun}
+<div class="searchOptions clearfix">
+    <ul class="searchOptions_list">
+     
+			{yun:}if $config.three_cityid&&$config.sy_web_site=='1'{/yun}
+				<li class="Substation popup" data-pop="Substation">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}$city_name[$config.three_cityid]{/yun}</span>
+						<i class="searchOptions_icon"></i>
+					</a>
+				</li>
+			{yun:}else if $config.cityid&&$config.sy_web_site=='1'{/yun}
+				<li class="Substation popup" data-pop="Substation">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">{yun:}$city_name[$config.cityid]{/yun}</span>
+						<i class="searchOptions_icon"></i>
+					</a>
+				</li>
+			{yun:}else{/yun}  
+				<li class="grade popup" data-pop="grade">
+					<a href="javascript:void(0);" class="searchOptions_list_a">
+						<span class="job_ov">
+							{yun:}if $city_name[$smarty.get.cityid] || $city_name[$smarty.get.provinceid]{/yun}
+								{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}$city_name[$smarty.get.provinceid]{/yun}
+							{yun:}elseif $city_name[$smarty.get.three_cityid]{/yun}
+								{yun:}$city_name[$smarty.get.three_cityid]{/yun}
+							{yun:}else{/yun}
+								地区
+							{yun:}/if{/yun}
+						</span>
+						<i class="searchOptions_icon"></i>
+					</a>
+				</li>
+			{yun:}/if{/yun}
+	  
+	  <li class="Schoollevel popup" data-pop="Schoollevel"><a href="javascript:void(0);" class="searchOptions_list_a"><span class="job_ov">{yun:}if $schoolclass_name[$smarty.get.level]{/yun}{yun:}$schoolclass_name[$smarty.get.level]{/yun}{yun:}else{/yun}院校层次{yun:}/if{/yun}</span><i class="searchOptions_icon  "></i></a></li>
+      <li class="Sortadtime popup" data-pop="Sortadtime"><a href="javascript:void(0);" class="searchOptions_list_a"><span class="job_ov">{yun:}if $adtime[$smarty.get.adtime]{/yun}{yun:}$adtime[$smarty.get.adtime]{/yun}{yun:}else{/yun}举办时间{yun:}/if{/yun}</span><i class="searchOptions_icon"></i></a></li>
+    </ul>
+	</div>
+    <input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}" />
+    <div class="clear"></div>
+<section>
+<div class="warp_content clear">
+  <div class="school_xjh_box">
+  {yun:}xjh item=xjhlist ispage=1 limit=10 provinceid='auto.provinceid' cityid='auto.cityid' three_cityid='auto.three_cityid' level='auto.level' adtime='auto.adtime' keyword='auto.keyword' islt=4 {/yun}
+    <div class="school_xjh_list">
+    <div><a href="{yun:}url m=wap c=company a=show id=$xjhlist.uid{/yun}" class="yun_school_xjh_a"> {yun:}$xjhlist.com_name{/yun}</a></div>
+  <div>时间：{yun:}$xjhlist.xjh_date{/yun} {yun:}$xjhlist.xjh_shour{/yun}-{yun:}$xjhlist.xjh_ehour{/yun}</div>
+  
+  <div>城市：{yun:}$xjhlist.city_two{/yun}</div>
+  <div>高校：<a href="{yun:}url m=wap c=school a=schoolacademyshow id=$xjhlist.schoolid{/yun}" class="yun_school_xjh_xy">{yun:}$xjhlist.sch_name{/yun}</a></div>
+  <div>地址：{yun:}$xjhlist.address{/yun}</div>
+
+  {yun:}if $xjhlist.stime lt time()&& $xjhlist.etime gt time(){/yun}<font color="green">举办中</font>
+  {yun:}elseif $xjhlist.etime lt time(){/yun}<font color="red">已举办</font>
+  {yun:}elseif $xjhlist.stime gt time(){/yun}
+  	{yun:}if !$uid{/yun}
+    <a href="{yun:}url m=wap c=login{/yun}" class="school_xjh_box_gz">关注</a>
+    {yun:}else{/yun} 
+        {yun:}if $xjhlist.atnid{/yun}
+             <a href="javascript:void(0);" onclick="atnxjhdel('{yun:}$xjhlist.atnid{/yun}','{yun:}$xjhlist.uid{/yun}')" class="school_listxjh_gz school_listxjh_gz_qx">取消关注</a>
+           {yun:}else{/yun}
+                {yun:}if $usertype==1{/yun}
+                    <a href="javascript:;" onclick="atnxjh('{yun:}$xjhlist.id{/yun}','{yun:}$xjhlist.uid{/yun}')" class="school_listxjh_gz">关注</a>
+                {yun:}else{/yun}
+                  <a href="javascript:void(0);" onclick="showToast('只有个人用户才能关注', 2)" class="school_listxjh_gz">关注</a> 
+                {yun:}/if{/yun}
+        {yun:}/if{/yun}
+    {yun:}/if{/yun}
+  {yun:}/if{/yun}
+
+  {yun:}if !$uid{/yun}
+  <a href="{yun:}url m=wap c=login{/yun}" class="school_xjh_bc">我要报错</a>
+  {yun:}else{/yun}
+     <a href="javascript:;" onclick="reportxjh('{yun:}$xjhlist.id{/yun}','{yun:}$xjhlist.uid{/yun}','{yun:}$xjhlist.com_name{/yun}')"class="school_xjh_bc">我要报错</a>
+  {yun:}/if{/yun}
+
+  </div>
+  {yun:}/xjh{/yun}
+  </div>
+</div>
+</section> 
+{yun:}if $total<=0{/yun}
+<div class="wap_member_no">暂无校招宣讲会<div><a class="wap_mb_no_sr" href="{yun:}url m=wap c='school' a=xjh{/yun}">重新搜索</a></div></div>
+{yun:}else{/yun}
+<div class="pages">{yun:}$pagenav{/yun}</div>
+{yun:}/if{/yun}
+
+  <div id="app">
+<van-popup v-model="jobBox" position="center" round :style="{ height: '70%' , width:'90%'}">
+<div style=" background:#fff;border-radius:3px;" id="xjhreport">
+	<div class="report_box_h1"><span class="report_box_h1_s">我要报错</span>
+	  	<span class="report_box_h1_qx" style="top:10px;right:10px;">
+	  		<input class="" type="button" value="取消"  onclick="reportqx();"/>
+	  	</span>
+	</div>
+	<div class="report_box">
+		<div class="report_job_ly_tip">错误宣讲会信息：</div>
+		<div class="report_job_textarea_box">
+			<textarea class="report_job_textarea"  id="e_reason"></textarea>
+		</div>
+		<div class="report_job_ly_tip">正确的宣讲会信息：</div>
+		<div class="report_job_textarea_box">
+			<textarea class="report_job_textarea" id="r_reason"></textarea>
+		</div>
+		<div class="report_box_yzn mt10">
+			<span class="report_box_yz_name">验证码： </span> 
+			<input type="text" class="report_box_text" id="authcode" maxlength="6">
+			<img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" class="report_box_yz_img"/> 
+			<a onclick="checkCode('vcode_img');">看不清?</a>
+		</div>
+		<div class="report_box_bth">
+			<input id="x_uid" :value="x_uid" type="hidden"/>
+			<input id="id" :value="id" type="hidden"/>
+			<input id="c_name" :value="c_name" type="hidden"/>
+			<input class="login_button_jb" type="button" value="提交"  onclick="xjhSub('vcode_img');"/>
+		</div>
+	</div>
+</div>
+</van-popup>
+</div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+
+<script>
+var yunvue = new Vue({
+		el: '#app',
+		data(){
+			return {
+				jobBox: false,
+				id:'',
+				x_uid:'',
+				c_name:'',
+			}
+		},
+		methods:{}
+	});
+var wapurl="{yun:}url m=wap{/yun}";
+function atnxjh(id,comid){
+	showLoading()
+	$.post(wapurl+'/?c=school&a=atnxjh',{id:id,comid:comid},function(data){
+		hideLoading();
+		var data=eval('('+data+')');
+		if(data.status==9){
+			showToast(data.msg,2,function(){window.location.reload(true);});return false;
+		}else{
+			showToast(data.msg);return false;
+		}
+	});
+} 
+function atnxjhdel(id,comid){
+	showLoading()
+	$.post(wapurl+'/?c=school&a=atnxjhdel',{id:id,comid:comid},function(data){
+		hideLoading();
+		var data=eval('('+data+')');
+		if(data.errcode==9){
+			showToast(data.msg,2,function(){window.location.reload(true);});return false;
+		}else{
+			showToast(data.msg);return false;
+		}
+	});
+}
+function reportxjh(id,uid,name){
+	yunvue.$data.id = id;
+	yunvue.$data.x_uid = uid;
+	yunvue.$data.name = name;  
+	yunvue.$data.jobBox = true;
+}
+function reportqx(){
+	yunvue.$data.jobBox = false;
+}
+function xjhSub(img){
+	var authcode=$("#authcode").val();
+	var e_reason=$("#e_reason").val();
+	var r_reason=$("#r_reason").val();
+	var x_uid=$("#x_uid").val();
+	var id=$("#id").val();
+	var c_name=$("#c_name").val();
+	if($.trim(e_reason)==""){
+		showToast('请填写错误宣讲会信息！');return false;
+	}
+	if($.trim(r_reason)==""){
+		showToast('请填写正确的宣讲会信息！');return false;
+	}
+	if($.trim(authcode)==""){
+		showLoading('请填写验证码！');return false;
+	}
+	showLoading()
+	$.post(wapurl+"/index.php?c=school&a=report",{authcode:authcode,e_reason:e_reason,r_reason:r_reason,id:id,c_name:c_name,x_uid:x_uid},function(data){
+		hideLoading();
+		var data=eval('('+data+')');
+		if(data.url){
+			showToast(data.msg,2,function(){location.href = data.url;});	
+		}else{ 
+			showToast(data.msg,2,function(){location.reload(true);});	
+		}
+	})
+}
+
+</script>
+{yun:}include file="$wapstyle/publictwo.htm"{/yun}
+</body>
+</html>

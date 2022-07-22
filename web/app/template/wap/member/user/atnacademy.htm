@@ -1,0 +1,42 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<div class="main_member_cot_box">
+	<ul class="yun_m_tit_four">
+
+		<li> <a href="index.php?c=atncom">企业</a></li>
+		<li><a href="index.php?c=atnlt">猎头</a></li>
+		<li class="yun_m_tit_cur"><a href="index.php?c=atnacademy">院校</a></li>
+		<li><a href="index.php?c=atnxjh">宣讲会</a></li>
+	</ul>
+	<div class="wap_member_post_list">
+		{yun:}foreach item=v from=$rows{/yun}
+
+		
+		<div class="com_member_hrlist">
+			<div class="com_member_hrlist_top">
+				<div class="com_member_hrlist_logo" style="border-radius: 50%;overflow: hidden;"> <img src="{yun:}$v.photo_n{/yun}"></div>
+				<div class="com_member_hrlist_gsname">
+					<a href="{yun:}url m=wap c=school a=schoolacademyshow id=$v.sc_uid{/yun}" class=" ">{yun:}$v.schoolname_n{/yun}</a>
+				</div>
+				<div class="com_member_hrlist_m" style="font-size: 14px;">
+					所在城市：{yun:}$v.provinceid_n{/yun}-{yun:}$v.cityid_n{/yun}
+				</div>
+			</div>
+			<div class="com_member_cz"><span class="com_member_hrlist_time">{yun:}$v.time|date_format:"%Y-%m-%d"{/yun}</span>
+				<a href="javascript:void(0)" onclick="layer_del('是否取消关注？','index.php?c=atnacademy&id={yun:}$v.id{/yun}&uid={yun:}$v.sc_uid{/yun}')" class="yun_member_hr_bth">取消关注</a>
+			</div>
+		</div>
+		
+		
+
+		{yun:}foreachelse{/yun}
+		<div class="wap_member_no">
+			暂无关注的院校<div><a class="wap_member_no_search" href="{yun:}url m=wap c=school a=schoolacademy{/yun}">去搜索我感兴趣的院校</a></div>
+		</div>
+		{yun:}/foreach{/yun}
+	</div>
+
+	<div class="pages"> {yun:}$pagenav{/yun}</div>
+</div>
+</div>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,130 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<section class="wap_member">
+<div class="wap_member_comp_h1"><span>推荐给我的人才</span></div>
+</section>
+<section>
+<div class="wap_member_job_show">
+
+{yun:}if !empty($rows){/yun}
+{yun:}foreach item=v from=$rows{/yun}
+<div class="com_member_hr ">
+<div class="com_member_hr_name"><span class="yun_m_job_date_n">&nbsp;
+ <a class="job_list_jobname com_member_hr_cblue"  href="index.php?c=rebateshow&id={yun:}$v.id{/yun}">{yun:}$v.name{/yun}</a> 
+</span>
+<a  class="wap_member_com_lokr">{yun:}if $v.status=="0"{/yun}未查看{yun:}elseif $v.status=="1"{/yun}已查看{yun:}elseif $v.status=="2"{/yun}已试用{yun:}elseif $v.status=="3"{/yun}未通过{yun:}elseif $v.status=="4"{/yun}已返利{yun:}/if{/yun}</a>
+</div>
+<div class="com_member_user_box">
+<div class="com_member_hr_p1"><span class="member_c9">推荐人：</span>{yun:}$v.username{/yun}</div>
+<div class="com_member_hr_p1"><span class="member_c9">人才手机：</span>{yun:}$v.phone{/yun}</div>
+{yun:}if $v.email{/yun}
+<div class="com_member_hr_p1"><span class="member_c9">人才邮箱：</span><span class="">{yun:}$v.email{/yun}</span></div>
+{yun:}/if{/yun}
+<div class="com_member_hr_p1"><span class="member_c9">时间：</span>{yun:}$v.datetime|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+{yun:}if $v.reply{/yun}
+     <div class="com_member_hr_p1"><span class="member_c9">我的回复：</span><i class="rerate_c_color">{yun:}$v.reply{/yun}</i></div>
+    <div class="com_member_hr_p1"><span class="member_c9">回复时间：</span><i class="rerate_c_color">{yun:}$v.reply_time|date_format:'%Y-%m-%d %H:%M'{/yun}</i></div>
+{yun:}else{/yun}
+	 <div class="com_member_hr_p1"><span class="member_c9">回复状态：</span><i class="rerate_c_color">未回复</i></div>
+{yun:}/if{/yun}
+<div class="com_member_hr_cz">
+
+{yun:}if $v.status!="4"{/yun} <a class="rebatesstatusPicker"  data-id="{yun:}$v.id{/yun}" class="">设置状态</a> {yun:}/if{/yun}
+{yun:}if $v.reply==""{/yun}<a href="javascript:void(0)" onclick="showreply('{yun:}$v.id{/yun}');" class="rerate_c_gr">我要回复</a>{yun:}/if{/yun}
+
+<a href="index.php?c=rebateshow&id={yun:}$v.id{/yun}" class="">查看</a>
+<a href="javascript:vant_del('确定要删除推荐给我的人才吗？','index.php?c=delrebate&type=1&id={yun:}$v.id{/yun}');">删除</a>
+     </span>
+     </div>  
+     
+        
+<div class="m_cont_chakan " id="reply{yun:}$v.id{/yun}" style="display:none;">
+ <div class="give_rebates_hf_box">
+    <div class="give_rebates_textarea"><textarea class="" id="content{yun:}$v.id{/yun}" placeholder="请输入要回复的内容"></textarea></div>
+    <div class="give_rebates_hf_bth"><input class="" value="提交" type="button" onclick="replycheck('{yun:}$v.id{/yun}')"></div>
+   
+</div>
+</div>
+</div></div>
+{yun:}/foreach{/yun}
+{yun:}else{/yun}
+<div class="wap_member_no">还没有人推荐人才给我，自己找人才吧<br><a href="{yun:}url m=wap c=resume{/yun}" class="wap_member_no_submit">我要找人才</a></div>
+{yun:}/if{/yun}
+
+<div class="pages"> {yun:}$pagenav{/yun}</div>
+</section>
+</div>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+var rebatesstatusData = [];
+rebatesstatusData.push(
+	{
+		value: '0',
+		text: '未查看'
+	},
+	{
+		value: '1',
+		text: '已查看'
+	},
+	{
+		value: '2',
+		text: '已试用'
+	},
+	{
+		value: '3',
+		text: '未通过'
+	},
+	{
+		value: '4',
+		text: '已返利'
+	}
+)
+mui.init();
+
+function click_status(status,name,id){
+	
+}
+function show_div(id){
+	$("#statuslist"+id).toggle();
+}
+function showreply(id){
+	replyhtml=$("#reply"+id).html();
+	$("#reply"+id).html('');
+	layer.open({
+		type:1,
+		title :'我要回复',
+		closeBtn : [0 , true],
+		area : ['300px','auto'],
+		content:replyhtml,
+		end:function(){$("#reply"+id).html(replyhtml);}
+	});
+}
+function replycheck(id){
+	var reply=$.trim($("#content"+id).val());
+	if(reply==""){
+		showToast("回复内容不能为空！");return false;
+	}
+	showLoading()
+	$.post("index.php?c=save_give_rebates",{id:id,reply:reply},function(data){
+		hideLoading(); 
+		showToast("回复成功！",2,function(){location.reload(true);});
+	})
+}
+$(".rebatesstatusPicker").each(function(i,arr){
+	var id=arr.dataset.id;
+	var rebatesstatusPicker = new mui.PopPicker();
+	rebatesstatusPicker.setData(rebatesstatusData);
+	arr.addEventListener('tap', function(event) {
+		rebatesstatusPicker.show(function(items) {
+			showLoading()
+			$.post("index.php?c=rebates_set",{id:id,status:items[0].value},function(data){
+				hideLoading(); 
+				showToast("设置成功！", 2,function(){location.reload(true);});
+			})
+		});
+	}, false);
+});
+</script> 
+</body></html> 

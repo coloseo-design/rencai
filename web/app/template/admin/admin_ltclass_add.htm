@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link href="./images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="./images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="./images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <title></title>
+    </head>
+
+    <body class="body_ifm">
+        
+		<script>
+            function checkform() {
+                if($("#name").val() == "") {
+                    parent.layer.msg('类别名称不能为空！', 2, 8);
+                    return false;
+                }
+                $("#ltform").submit();
+            }
+        </script>
+
+        <div class="infoboxp">
+			<div class="tty-tishi_top">
+            <div class="tabs_info">
+                <ul>
+                    <li class="curr">
+                        <a href="index.php?m=admin_lt_rating">等级设置</a>
+                    </li>
+                    <li>
+                        <a href="index.php?m=admin_lt_rating&c=server" class="report_uaer_list_on">增值服务</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="admin_new_tip">
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+                    <div class="admin_new_tip_list">运营者可以添加猎头会员等级，每个会员等级可以实现：“个性化”如（下载简历数、发布职位数、优惠活动设置、打折和送优惠劵等功能）进行配置。</div>
+                </div>
+            </div>
+
+                    <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                    <form id="ltform" class="layui-form" name="myform" target="supportiframe" action="index.php?m=admin_lt_rating&c=saveclass" method="post" id="myform" enctype="multipart/form-data">
+                        <input name="category" type="hidden" value="2">
+						<table width="100%" class="table_form table_form_thr">
+                        <tr>
+                            <th>类别名称：</th>
+                            <td>
+                                <input type="text" name="name" id="name" class="tty_input t_w480" size="30" value="{yun:}$row.name{/yun}">
+                                <span class="admin_web_tip">如：高级会员</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="t_fr">会员模式：</th>
+                            <td>
+								<div class="layui-input-block">
+									<input type="radio" name="type" value="1" title="套餐模式" {yun:}if $row.type==1{/yun}checked{yun:}/if{/yun} lay-filter="type">
+									<input type="radio" name="type" value="2" title="时间模式" {yun:}if $row.type==2{/yun}checked{yun:}/if{/yun} lay-filter="type">
+								</div>
+								<span class="admin_web_tip">套餐模式针对下载简历等数量控制，时间模式在服务有效期内，不限数量，可以限制每日上限</span>
+                            </td>
+                        </tr>
+
+                         <tr>
+                            <th>购买金额：</th>
+                            <td>
+                                <div class="layui-input-block t_w480">
+                                    <input type="text" name="service_price" id="service_price" class="layui-input" size="12" value="{yun:}$row.service_price{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <span class="admin_comclass_add_dw">元</span>
+                                </div>
+                       </td>
+                        </tr>
+
+                       <tr>
+                            <th>优惠价格：</th>
+                            <td>
+                                <div class="layui-input-block t_w480">
+                                    <input type="text" name="yh_price" id="yh_price" class="layui-input" size="12" value="{yun:}$row.yh_price{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+                                    <span class="admin_comclass_add_dw">元</span>
+                                </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                            <th>优惠日期：</th>
+                            <td>
+                                <input id="time" class="layui-input t_w480" type="text" readonly size="20" value="{yun:}if $row.time_start && $row.time_end{/yun}{yun:}$row.time_start|date_format:'%Y-%m-%d'{/yun} ~ {yun:}$row.time_end|date_format:'%Y-%m-%d'{/yun} {yun:}/if{/yun}" name="time">
+                         </td>
+                        </tr>
+
+                       <tr>
+                            <th>服务时间：</th>
+                            <td>
+                                <div class="layui-input-block t_w480">
+                                    <input type="text" name="service_time" id="service_time" class="layui-input" size="12" value="{yun:}$row.service_time{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')">
+                                    <span class="admin_comclass_add_dw">天</span>
+                                </div>
+                       </td>
+                        </tr>
+                         <tr>
+                            <th>赠送优惠券：</th>
+                            <td>
+								<div class="layui-input-block t_w480">
+									<select name="coupon" id="coupon" lay-verify="">
+										<option>请选择</option>
+										{yun:}foreach item=v from=$coupon {/yun}
+										<option value="{yun:}$v.id{/yun}" {yun:}if $row.coupon==$v.id{/yun} selected {yun:}/if{/yun}> {yun:}$v.name{/yun} </option>
+										{yun:}/foreach{/yun}
+									</select>
+								</div>
+                          </td>
+                        </tr>
+						 <tr>
+                            <th class="t_fr">增值服务折扣：</th>
+                            <td>
+								<div class="layui-input-block">
+									<div class="layui-input-block t_w480">
+										<input type="number" name="service_discount" id="service_discount" min="0" max="100" maxlength="3" value="{yun:}$row.service_discount{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" class="layui-input">
+										<span class="admin_comclass_add_dw">%</span>
+									</div>
+									<span class="admin_web_tip">折扣针对不同等级会员所购买增值包服务享有的优惠！（0、100表示无折扣，88表示八八折）</span>
+								</div>
+						  </td>
+                        </tr>
+
+						<tr>
+							<th class="t_fr">设置套餐：</th>
+							<td>
+								<ul class="admin_comclass_add_n">
+									<li style="margin-bottom:10px;"> 
+										<span class="admin_comclass_add_n_s">发布职位</span>
+											 <input type="text" name="lt_job_num" id="lt_job_num" class="admin_comclass_add_n_text" size="12" value="{yun:}$row.lt_job_num{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')">
+										<span class="admin_comclass_add_n_dw">份</span>
+									</li>
+								  <li style="margin-bottom:10px;"> 
+										<span class="admin_comclass_add_n_s">刷新职位</span>
+											<input type="text" name="lt_breakjob_num" id="lt_breakjob_num" class="admin_comclass_add_n_text" size="12" value="{yun:}$row.lt_breakjob_num{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')">
+										<span class="admin_comclass_add_n_dw">份</span>
+									</li>
+								   <li style="margin-bottom:10px;"> 
+										<span class="admin_comclass_add_n_s">下载简历数</span>
+											<input type="text" name="lt_resume" id="lt_resume" class="admin_comclass_add_n_text" size="12" value="{yun:}$row.lt_resume{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')">
+										<span class="admin_comclass_add_n_dw">份</span>
+									</li>
+								</ul>
+
+								<div class="vip_type_title_2" {yun:}if $row.type!=2{/yun} style="display:none;"{yun:}/if{/yun}>
+									<font color="red">限制时间内会员每日最大操作次数</font>
+								</div>
+							</td>
+						</tr>
+
+                        <tr>
+                            <th class="t_fr">排序：</th>
+                            <td>
+                                <input type="text" name="sort" id="sort" class="layui-input t_w480" size="12" value="{yun:}$row.sort{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')">
+                                <span class="admin_web_tip">小前大后</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>显示状态：</th>
+                            <td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<input name="display" id="RadioGroup1_0" value="1" title="启用" {yun:}if $row.display==1{/yun} checked {yun:}/if{/yun} type="radio" />
+										<input name="display" id="RadioGroup1_1" value="0" title="不启用" {yun:}if $row.display!=1{/yun} checked {yun:}/if{/yun} type="radio" />
+									</div>
+								</div>
+							</td>
+                        </tr>
+                         <tr>
+                            <th class="t_fr">会员类别图标：</th>
+                            <td>
+								<div>
+                                    <div class="layui-input-inline" style="float:left">
+                                        <button type="button" class="yun_bth_pic noupload" lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+                                        <input type="hidden" id="laynoupload" value="1" />
+                                        <input type="hidden" name="com_pic" value="{yun:}$row.com_pic{/yun}" />
+                                    </div>
+                                    <div id="imgparent" class="layui-form-mid layui-word-aux ">
+                                        <img id="imgicon" src="{yun:}$row.com_pic{/yun}" class="{yun:}if !$row.com_pic{/yun}none{yun:}/if{/yun}" width="20" height="20">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                         <tr>
+                            <th class="t_fr">会员等级说明：</th>
+                            <td>
+								<div class="layui-input-block t_w480">
+									<textarea name="explains" id="explain" rows="3" cols="50" class="layui-textarea">{yun:}$row.explains{/yun}</textarea>
+								</div>
+                                <span class="admin_web_tip">会员等级备注说明或者优惠活动</span>
+							</td>
+                        </tr>
+						<tr class="admin_comclass_add_list">
+							<th class="t_fr">
+								<div class=" vip_type_title">{yun:}$config.sy_chat_name{/yun}：</div>
+							</th>
+							<td colspan="3">
+								<div class="admin_comclass_add_right">
+									<input type="text" name="chat_num" value="{yun:}$row.chat_num{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')" class="layui-input t_w480">
+									<span class="admin_web_tip">功能类似下载简历，一次扣除后，企业可以向个人用户发送信息</span> 
+								</div>
+	  						</td>
+						</tr>
+                         <tr>
+                            <th></th> 
+							<td>
+								<input name="id" type="hidden" value="{yun:}$row.id{/yun}">
+								<input class="tty_sub" onclick="checkform()" type="button" value="提交">
+								<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+							</td>
+						</tr>
+              </table> 
+            </div>
+        </div>
+		</form>
+        <script type="text/javascript">
+            var weburl = '{yun:}$config.sy_weburl{/yun}';
+        
+			layui.use(['layer', 'form', 'laydate'], function() {
+               
+				var layer = layui.layer,
+                    form = layui.form,
+                    laydate = layui.laydate,
+                    $ = layui.$;
+
+                laydate.render({
+                    elem: '#time',
+                    range: '~'
+                });
+
+                form.on('radio(type)', function(data) {
+                    if(data.elem.value == "1") {
+						$('.vip_type_title_1').show();
+						$('.vip_type_title_2').hide();
+                    }else {
+						$('.vip_type_title_1').hide();
+						$('.vip_type_title_2').show();
+						 
+					}
+                });
+            });
+        </script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+    </body>
+
+</html>

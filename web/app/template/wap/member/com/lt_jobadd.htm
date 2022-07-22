@@ -1,0 +1,774 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta name="keywords" content="人才招聘,网络招聘,wap" />
+		<meta name="description" content="人才招聘网wap网站" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta name="MobileOptimized" content="240" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="format-detection" content="telephone=no,email=no" />
+		<title>{yun:}$config.sy_webname{/yun}</title>
+		<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mobiscroll/css/animate.min.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+		<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mobiscroll/css/mobiscroll.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+		<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<style>
+			html {width: 100%;height: 100%;-webkit-text-size-adjust: none;-moz-text-size-adjust: none;-ms-text-size-adjust: none;-o-text-size-adjust: none;text-size-adjust: none;}
+			body {width: 100%;height: 100%;margin: 0;padding: 0; font-size:0.9em;  
+			line-height: 1.5;background:#f8f8f8;    font-family: PingFang SC,Hiragino Sans GB,Microsoft YaHei;}
+			dl,dd,dt,ul,li{ list-style:none;margin:0; padding:0}
+			h1,h2,h3{ margin:0; padding:0;}
+			textarea,input{font-family: Helvetica,sans-self;}
+			em,i{font-style:normal}
+			a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
+			
+			input:-internal-autofill-selected {background-color: rgb(232, 240, 254) !important;background-image: none !important;color: rgb(0, 0, 0) !important;box-shadow: inset 0 0 0 1000px #ffffff!important;}
+			
+			/*定义任何元素*/
+			*, *:after, *:before {-webkit-box-sizing: before-box;-moz-box-sizing: before-box;-ms-box-sizing: before-box;-o-box-sizing: before-box;}
+			*:after {clear: both}
+			.clearfix{zoom:1}
+			.clear{clear:both}
+			.comheader{width:100%;height:48px;background:#2778F8;position:relative;z-index:10;touch-action:none}
+			.comheader_return{width:50px;height:48px;display:inline-block;position:absolute;left:10px;top:0}
+			.comheader_return:after{content:' ';width:12px;height:12px;border:#fff solid;-webkit-transform:rotate(-135deg);border-width:2px 2px 0 0;color:#fff;display:inline-block;position:absolute;left:5px;top:16px}
+			.comheader_tit{width:100%;text-align:center;font-size:18px;color:#fff;line-height:48px}
+			.mui-page,.mui-page-content,.mui-pages,.mui-view,.mui-views{position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;background-color:#f2f2f2;touch-action:none}
+			.mui-pages{top:48px;height:auto}
+			.mui-scroll,.mui-scroll-wrapper{background-color:#f2f2f2}
+			.mui-page.mui-transitioning{-webkit-transition:-webkit-transform .3s ease;transition:transform .3s ease}
+			.mui-page-left{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+			.mui-ios .mui-page-left{-webkit-transform:translate3d(-20%,0,0);transform:translate3d(-20%,0,0)}
+			.mui-android .mui-navbar-inner.mui-navbar-left{opacity:0}
+			.mui-ios .mui-navbar-left .mui-center,.mui-ios .mui-navbar-left .mui-left,.mui-ios .mui-navbar-left .mui-right{opacity:0}
+			.mui-navbar .mui-btn-nav{-webkit-transition:none;transition:none;-webkit-transition-duration:0s;transition-duration:0s}
+			.mui-navbar .mui-bar .mui-title{display:inline-block;width:auto}
+			.mui-page-shadow{position:absolute;right:100%;top:0;width:16px;height:100%;z-index:-1;content:''}
+			.mui-page-shadow{background:-webkit-linear-gradient(left,rgba(0,0,0,0) 0,rgba(0,0,0,0) 10%,rgba(0,0,0,.01) 50%,rgba(0,0,0,.2) 100%);background:linear-gradient(to right,rgba(0,0,0,0) 0,rgba(0,0,0,0) 10%,rgba(0,0,0,.01) 50%,rgba(0,0,0,.2) 100%)}
+			.mui-navbar-inner .mui-transitioning,.mui-navbar-inner.mui-transitioning{-webkit-transition:opacity .3s ease,-webkit-transform .3s ease;transition:opacity .3s ease,transform .3s ease}
+			.mui-page{display:none}
+			.mui-pages .mui-page{display:block}
+			.mui-page .mui-table-view:first-child{margin-top:15px}
+			.mui-page .mui-table-view:last-child{margin-bottom:30px}
+			.mui-table-view span.mui-pull-right{color:#999}
+			.mui-table-view-divider{background-color:#efeff4;font-size:14px}
+			.mui-table-view-divider:after,.mui-table-view-divider:before{height:0}
+			.mui-fullscreen{position:fixed;z-index:20;background-color:#000}
+			.mui-ios .mui-navbar .mui-bar .mui-title{position:static}
+			.mui-input-row input{font-size:14px}
+			.yunset_list{margin-bottom:0}
+			.yunset li{display:block;padding:13px 0 13px 0;font-size:16px;background:#fff;border-top:1px solid #e6e6e6;position:relative}
+			.yunset li:after{content:' ';position:absolute;top:50%;margin-top:-4px;right:10px;width:8px;height:8px;border:#b2b2b2 solid;-webkit-transform:rotate(45deg);border-width:1px 1px 0 0}
+			.yunset li a{display:block}
+			.yunset li:first-child{border:none}
+			.yunset_tip{position:absolute;right:22px;top:15px;color:#999;font-size:13px;text-align:right;display:inline-block}
+			.yunset_yx .yunset_tip{top:8px;font-size:12px}
+			.yunset_yx_name{font-size:13px}
+			.yunset_list li{display:block;padding:4px 20px 4px 100px;background:#fff;border-top:1px solid #e6e6e6;position:relative;text-overflow:ellipsis;overflow:hidden}
+			.yunset_list li:hover{background:#f8f8f8}
+			.yunset_list li:after{content:' ';position:absolute;top:50%;margin-top:-4px;right:10px;width:8px;height:8px;border:#b2b2b2 solid;-webkit-transform:rotate(45deg);border-width:1px 1px 0 0}
+			.yunset_list_name{width:130px;position:absolute;left:15px;top:12px;display:inline-block;font-size:15px;color:#666}
+			.yunset_xttip{font-size:12px;color:#b4b6c5;margin-left:5px;font-weight:400}
+			.yunset_list .yunset_list_text:after{display:none}
+			.yunset_list_commentary{width:100%;display:block;color:#999;height:40px;line-height:40px;text-align:right}
+			.yunset_list select{margin:0;padding:0}
+			.yunset_list button,.yunset_list input{width:100%;height:40px;line-height:40px;margin:0;padding:0;border:none;text-align:right;font-size:14px;color:#000;background:0 0}
+			.yunset_list input::-webkit-input-placeholder{color:#999}
+			.yunset_list_js{height:40px;line-height:40px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+			.yunset_list_xzbox{padding-right:50px;position:relative}
+			.yunset_list_xz{position:absolute;right:0;top:2px;line-height:40px}
+			.yunset_bth_box{padding:15px 15px}
+			.yunset_bth_box input{margin:0;padding:0;border:none;color:#fff;border-radius:5px;font-size:16px}
+			.yunset_bth{width:100%;height:45px;background:-webkit-linear-gradient(left,#4386f4 ,#4386f4);border:none;color:#fff;font-size:15px}
+			.yunset_bth_box button{width:100%;height:45px;background:-webkit-linear-gradient(left,#4386f4 ,#4386f4);border:none;color:#fff;font-size:16px;margin:0;padding:0;border:none;color:#fff}
+			.reinputText2{color:#fff;background-color:#007aff;background-image:-moz-linear-gradient(top,#007aff,#007aff);background-image:-webkit-gradient(linear,0 0,0 100%,from(#007aff),to(#007aff));background-image:-webkit-linear-gradient(top,#007aff,#007aff);background-image:-o-linear-gradient(top,#007aff,#007aff);background-image:linear-gradient(to bottom,#007aff,#007aff);width:100%;height:43px;font-size:16px;text-align:center;vertical-align:middle;font-family:inherit;border:none}
+			
+			.yun_wap_info_brief{ padding:0px 0px 20px 0px; background:#fff}
+			.yun_wap_info_brief_c{ padding:10px}
+			.yun_wap_info_brief textarea{border:none;}
+			.yun_wap_info_brief_tit{ padding:10px 0;}
+			.yun_wap_info_brief_tit_bc{ display:block;height:45px; line-height:45px; text-align:center; background:#4386f4 ;color:#fff; font-size:15px;border-radius:5px; }
+			.yun_info_fl{ background:#fff; padding:20px 0; }
+			.yun_info_fl_c{padding:0px 0 0px 10px; }
+		</style>
+	</head>
+	<body>
+	
+	<header>
+		<div class="comheader {yun:}if $tplmoblie.color{/yun}bg{yun:}$tplmoblie.color{/yun}{yun:}/if{/yun}">
+
+			<a class="comheader_return {yun:}if !$backurl{/yun}mui-action-back{yun:}/if{/yun}" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}"></a>
+
+			<div class="comheader_tit">{yun:}$header_title{/yun}</div>
+		</div>
+	</header>
+<div id="app" class="mui-views">
+	<div class="mui-view">
+		<div class="mui-pages"></div>
+	</div>
+</div>
+<div id="main" class="mui-page">
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member_box">
+				<ul class="yunset_list">
+					<li class="yunset_list_text"><span class="yunset_list_name">职位名称</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="job_name" id='job_name' value="{yun:}$row.job_name{/yun}" placeholder="请输入职位名称" class="">
+			            </span>
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">职位分类</span>
+						<span class="yunset_list_commentary">
+							<button id="ltjobPicker" class="mui-btn mui-btn-block" type="button" data-jobone="{yun:}$row.jobone{/yun}" data-jobtwo="{yun:}$row.jobtwo{/yun}">{yun:}if $ltjob_name[$row.jobone]{/yun}{yun:}if !$ltjob_name[$row.jobtwo]{/yun}{yun:}$ltjob_name[$row.jobone]{/yun}{yun:}else{/yun}{yun:}$ltjob_name[$row.jobtwo]{/yun}{yun:}/if{/yun}{yun:}else{/yun}请选择职位分类{yun:}/if{/yun}</button>
+							<input type="hidden" id="jobone" name="jobone" value="{yun:}$row.jobone{/yun}">
+							<input type="hidden" id="jobtwo" name="jobtwo" value="{yun:}$row.jobtwo{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select"><span class="yunset_list_name">工作地点</span>
+						<span class="yunset_list_commentary">
+						<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}"  data-cityid="{yun:}$row.cityid{/yun}"  data-three_cityid="{yun:}$row.three_cityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}else{/yun}请选择工作地点{yun:}/if{/yun}</button>
+						<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+						<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+						<input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select">
+						<a href="#contenthtml" id="contenteditor"><span class="yunset_list_name">职位描述</span><span class="yunset_list_commentary yunset_list_js" id="contentshow">{yun:}if $row.job_desc{/yun}{yun:}$row.job_desc_t{/yun}{yun:}else{/yun}请输入职位描述{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="contenttext" name="content">{yun:}$row.job_desc{/yun}</textarea>
+					<li class="yunset_list_select">
+						<a href="#eligiblehtml" id="eligibleeditor"><span class="yunset_list_name">任职资格</span><span class="yunset_list_commentary yunset_list_js" id="eligibleshow">{yun:}if $row.eligible{/yun}{yun:}$row.eligible_t{/yun}{yun:}else{/yun}请输入任职资格500字以内{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="eligibletext" name="eligible">{yun:}$row.eligible{/yun}</textarea>
+					<li class="yunset_list_text"><span class="yunset_list_name">所属部门</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="department" id='department' value="{yun:}$row.department{/yun}" placeholder="请输入所属部门" class="">
+			            </span>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">汇报对象</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="report" id='report' value="{yun:}$row.report{/yun}" placeholder="请输入汇报对象" class="">
+			            </span>
+					</li>
+					<li class="yunset_list_select">
+						<a href="#salaryhtml"><span class="yunset_list_name">职位年薪</span><span class="yunset_list_commentary yunset_list_js" id="salary">
+						{yun:}if $row.maxsalary && $row.maxsalary>0{/yun}{yun:}$row.minsalary|floatval{/yun}-{yun:}$row.maxsalary|floatval{/yun}万元/年{yun:}elseif $row.minsalary{/yun}{yun:}$row.minsalary|floatval{/yun}万元以上/年{yun:}else{/yun}请输入职位年薪{yun:}/if{/yun}</span></a>
+							</span></a>
+						<input type="hidden" id="minsalary" name="minsalary" value="{yun:}$row.minsalary{/yun}">
+						<input type="hidden" id="maxsalary" name="maxsalary" value="{yun:}$row.maxsalary{/yun}">
+					</li>
+						<li class="yunset_list_select">
+						<a href="#constitutehtml"><span class="yunset_list_name">薪资构成</span><span class="yunset_list_commentary yunset_list_js" id="constituteshow">
+								{yun:}if $row.constitute{/yun}
+									{yun:}foreach item=v key=key from=$ltdata.lt_constitute{/yun}
+										{yun:}if in_array($v,$row.constitute){/yun}
+											{yun:}if ($v!=$row.constitute[0]){/yun}
+												,{yun:}$ltclass_name[$v]{/yun}
+											{yun:}else{/yun}
+												{yun:}$ltclass_name[$v]{/yun}
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									{yun:}/foreach{/yun}
+								{yun:}else{/yun}
+								请选择薪资构成
+								{yun:}/if{/yun}
+						</span></a>
+						<input type="hidden" id="constitute" name="constitute" value="{yun:}$row.constitutev{/yun}">
+					</li>
+					<li class="yunset_list_select">
+						<span class="yunset_list_name">年龄要求</span>
+						<span class="yunset_list_commentary">
+							<button id="agePicker" class="mui-btn mui-btn-block" type="button" data-age="{yun:}$row.age{/yun}">{yun:}if $ltclass_name[$row.age]{/yun}{yun:}$ltclass_name[$row.age]{/yun}{yun:}else{/yun}请选择年龄要求{yun:}/if{/yun}</button>
+							<input type="hidden" id="age" name="age" value="{yun:}$row.age{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select">
+						<span class="yunset_list_name">性别要求</span>
+						<span class="yunset_list_commentary">
+							<button id="sexPicker" class="mui-btn mui-btn-block" type="button"data-sex="{yun:}$row.sex{/yun}">{yun:}if $lt_sex[$row.sex]{/yun}{yun:}$lt_sex[$row.sex]{/yun}{yun:}else{/yun}请选择性别要求{yun:}/if{/yun}</button>
+							<input type="hidden" id="sex" name="sex" value="{yun:}$row.sex{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select">
+						<span class="yunset_list_name">学历要求</span>
+						<span class="yunset_list_commentary">
+							<button id="eduPicker" class="mui-btn mui-btn-block" type="button" data-edu="{yun:}$row.edu{/yun}">{yun:}if $ltclass_name[$row.edu]{/yun}{yun:}$ltclass_name[$row.edu]{/yun}{yun:}else{/yun}请选择学历要求{yun:}/if{/yun}</button>
+							<input type="hidden" id="edu" name="edu" value="{yun:}$row.edu{/yun}">
+						</span>
+					</li>
+					<li class="yunset_list_select">
+						<span class="yunset_list_name">工作经验</span>
+						<span class="yunset_list_commentary">
+							<button id="expPicker" class="mui-btn mui-btn-block" type="button"data-exp="{yun:}$row.exp{/yun}">{yun:}if $ltclass_name[$row.exp]{/yun}{yun:}$ltclass_name[$row.exp]{/yun}{yun:}else{/yun}请选择工作经验{yun:}/if{/yun}</button>
+							<input type="hidden" id="exp" name="exp" value="{yun:}$row.exp{/yun}">
+						</span>
+					</li>
+						<li class="yunset_list_select">
+						<a href="#welfarehtml"><span class="yunset_list_name">福利待遇</span><span class="yunset_list_commentary yunset_list_js" id="welfareshow">
+							{yun:}if $row.welfare{/yun}
+								{yun:}foreach item=v key=key from=$ltdata.lt_welfare{/yun}
+									{yun:}if in_array($v,$row.welfare){/yun}
+										{yun:}if ($v!=$row.welfare[0]){/yun}
+											,{yun:}$ltclass_name[$v]{/yun}
+										{yun:}else{/yun}
+											{yun:}$ltclass_name[$v]{/yun}
+										{yun:}/if{/yun}
+									{yun:}/if{/yun}
+								{yun:}/foreach{/yun}
+							{yun:}else{/yun}
+							请选择福利待遇
+							{yun:}/if{/yun}
+						</span></a>
+						<input type="hidden" id="welfare" name="welfare" value="{yun:}$row.welfarev{/yun}">
+					</li>
+					<li class="yunset_list_select">
+						<a href="#languagehtml"><span class="yunset_list_name">语言要求</span><span class="yunset_list_commentary yunset_list_js" id="langshow">
+							{yun:}if $row.language{/yun}
+								{yun:}foreach item=v key=key from=$ltdata.lt_language{/yun}
+									{yun:}if in_array($v,$row.language){/yun}
+										{yun:}if ($v!=$row.language[0]){/yun}
+											,{yun:}$ltclass_name[$v]{/yun}
+										{yun:}else{/yun}
+											{yun:}$ltclass_name[$v]{/yun}
+										{yun:}/if{/yun}
+									{yun:}/if{/yun}
+								{yun:}/foreach{/yun}
+							{yun:}else{/yun}
+							请选择语言要求
+							{yun:}/if{/yun}
+						</span></a>
+						<input type="hidden" id="lang" name="lang" value="{yun:}$row.languagev{/yun}">
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">返利金额</span>
+						<span class="yunset_list_commentary"> 
+							<input type="text" name="rebates" id="rebates" maxlength="6"  value="{yun:}$row.rebates{/yun}" placeholder="请输入返利金额，单位/{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}" class="" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')">
+			            </span>
+					</li>
+					<li class="yunset_list_select">
+						<a href="#otherhtml" id="othereditor"><span class="yunset_list_name">补充说明</span><span class="yunset_list_commentary yunset_list_js" id="othershow">{yun:}if $row.other{/yun}{yun:}$row.other_t{/yun}{yun:}else{/yun}请输入补充说明{yun:}/if{/yun}</span></a>
+					</li>
+					<textarea style="display:none" id="othertext" name="other">{yun:}$row.other{/yun}</textarea>
+				</ul>
+				<div class="yunset_bth_box" style="background: transparent; border: none;">
+					<input id="id" name="id" value="{yun:}$row.id{/yun}" type="hidden" />
+					<input name="r_status" id="r_status" type="hidden" value="{yun:}$company.r_status{/yun}"/>
+					<input type="submit" id="comltjobsubmit" value="提交操作" class="reinputText2">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="contenthtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+						<div class="yun_wap_addresume_box_nexttit">职位描述<div style="display:none" id="description" class="yun_wap_yb"><a href="javascript:void(0)" onclick="setexample()">样本：<span id="descname"></span></a></div></div>
+						<textarea class="textAreaMsg tip" id="content" name="content" style="width: 100%;">{yun:}$row.description{/yun}</textarea></div>
+					<div class="yunset_bth_box"><a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="otherhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+						<div class="yun_wap_info_brief_tit">补充说明</div>
+						<textarea class="textAreaMsg tip othertext" id="other" name="other">{yun:}$row.other{/yun}</textarea>
+						
+					</div><a class="yun_wap_info_brief_tit_bc mui-action-back" id="otherbc">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="eligiblehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+						<div class="yun_wap_info_brief_tit">任职资格</div>
+						<textarea class="textAreaMsg tip eligibletext" id="eligible" name="eligible" maxlength="500" onchange="this.value=this.value.substring(0, 500)" onkeydown="this.value=this.value.substring(0, 500)" onkeyup="this.value=this.value.substring(0, 20)">{yun:}$row.eligible{/yun}</textarea>
+					
+					</div>	<a class="yun_wap_info_brief_tit_bc mui-action-back" id="eligiblebc">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="salaryhtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll wap_member">
+            		<div class="yun_wap_info_brief">
+					<div class="yun_wap_info_brief_c">
+				<ul class="yunset_list  ">
+					<li class="yunset_list_text"><span class="yunset_list_name">最低薪资</span>
+						<div class="yunset_list_xzbox">
+							<input type="number" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" id="minxz" value="{yun:}if $row.minsalary!=""{/yun}{yun:}$row.minsalary|floatval{/yun}{yun:}/if{/yun}" placeholder="请输入最低薪资">
+							<span class="yunset_list_xz">万元/年</span> </div>
+					</li>
+					<li class="yunset_list_text"><span class="yunset_list_name">最高薪资</span>
+						<div class="yunset_list_xzbox">
+							<input type="number" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" id="maxxz" value="{yun:}if $row.minsalary!=""{/yun}{yun:}$row.maxsalary|floatval{/yun}{yun:}/if{/yun}" placeholder="请输入最高薪资">
+
+							<span class="yunset_list_xz">万元/年</span> </div>
+
+					</li>
+
+				</ul>
+				</div>
+			</div>	<a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+		</div>	</div>
+	</div>
+</div>
+<div id="constitutehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_info_fl">
+					<div class="yun_info_fl_c">
+						<div class="yun_info_fl_tit">薪资构成</div>
+						{yun:}foreach item=v from=$ltdata.lt_constitute{/yun}
+						<div class="yun_info_fl_list">
+							<div class="mui-input-row mui-checkbox">
+								<label>{yun:}$ltclass_name[$v]{/yun} </label>
+								<input name="xzgc" value="{yun:}$v{/yun}" type="checkbox" class="constitute" data-id="{yun:}$v{/yun}" data-name="{yun:}$ltclass_name[$v]{/yun}" {yun:}if in_array($v,$row.constitute){/yun}checked{yun:}/if{/yun}>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+						
+					</div><a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="languagehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_info_fl">
+					<div class="yun_info_fl_c">
+						<div class="yun_info_fl_tit">语言要求</div>
+						{yun:}foreach item=v from=$ltdata.lt_language{/yun}
+						<div class="yun_info_fl_list">
+							<div class="mui-input-row mui-checkbox">
+								<label>{yun:}$ltclass_name[$v]{/yun} </label>
+								<input name="yyyq" value="{yun:}$v{/yun}" type="checkbox" class="lang" data-id="{yun:}$v{/yun}" data-name="{yun:}$ltclass_name[$v]{/yun}" {yun:}if in_array($v,$row.language){/yun}checked{yun:}/if{/yun}>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+						
+					</div><a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="welfarehtml" class="mui-page">
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="yun_info_fl">
+					<div class="yun_info_fl_c">
+						<div class="yun_info_fl_tit">福利待遇</div>
+						{yun:}foreach item=v from=$ltdata.lt_welfare{/yun}
+						<div class="yun_info_fl_list">
+							<div class="mui-input-row mui-checkbox">
+								<label>{yun:}$ltclass_name[$v]{/yun} </label>
+								<input name="fldy" value="{yun:}$v{/yun}" type="checkbox" class="welfare" data-id="{yun:}$v{/yun}" data-name="{yun:}$ltclass_name[$v]{/yun}" {yun:}if in_array($v,$row.welfare){/yun}checked{yun:}/if{/yun}>
+							</div>
+						</div>
+						{yun:}/foreach{/yun}
+						
+					</div><a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.loading.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.loading.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll_002.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll_003.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/ltjob.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/lt.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript">
+	UM.getEditor('content', {
+		toolbar: false,
+		elementPathEnabled: false,
+		wordCount: false,
+		autoHeightEnabled: false
+	});
+	UM.getEditor('other', {
+		toolbar: false,
+		elementPathEnabled: false,
+		wordCount: false,
+		autoHeightEnabled: false
+	});
+	UM.getEditor('eligible', {
+		toolbar: false,
+		elementPathEnabled: false,
+		wordCount: false,
+		autoHeightEnabled: false
+	});
+	mui.init();
+	var viewApi = mui('#app').view({
+		defaultPage: '#main'
+	});
+	
+	var view = viewApi.view;
+	(function($) {
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll({
+			scrollY: true, //是否竖向滚动
+			scrollX: false, //是否横向滚动
+			startX: 0, //初始化时滚动至x
+			startY: 0, //初始化时滚动至y
+			indicators: true, //是否显示滚动条
+			deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+			// bounce: true //是否启用回弹
+		});
+		//处理view的后退与webview后退
+		var oldBack = $.back;
+		$.back = function() {
+			if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+				viewApi.back();
+			} else { //执行webview后退
+				oldBack();
+			}
+		};
+		view.addEventListener('pageBeforeShow', function(e) { //动画开始前触发
+			var edittarget = '';
+			if(e.detail.page.id == 'contenthtml') {
+				edittarget = 'content';
+				var contenttext = document.getElementById('contenttext').innerText;
+			} else if(e.detail.page.id == 'eligiblehtml') {
+				edittarget = 'eligible';
+				var contenttext = document.getElementById('eligibletext').innerText;
+			} else if(e.detail.page.id == 'otherhtml') {
+				edittarget = 'other';
+				var contenttext = document.getElementById('othertext').innerText;
+			}
+			if(contenttext) {
+				UM.getEditor(edittarget).setContent(contenttext, '');
+			}
+		});
+		view.addEventListener('pageBeforeBack', function(e) {
+			if(e.detail.page.id == 'salaryhtml') {
+				//薪资待遇
+			var salarytype = 0;
+			if(salarytype == 0) {
+				var minsalary = document.getElementById('minxz').value;
+				var maxsalary = document.getElementById('maxxz').value;
+				if(minsalary != "" && minsalary != '0') {
+					document.getElementById('minsalary').value = minsalary;
+					document.getElementById('salary').innerText = minsalary + '万元以上/年';
+				}
+				if(parseInt(maxsalary) > 0) {
+					if(parseInt(maxsalary) <= parseInt(minsalary)) {
+						mui.toast('最高薪资必须大于最低薪资');
+						document.getElementById('minsalary').value = "";
+						document.getElementById('salary').innerText = "";
+					} else {
+						document.getElementById('maxsalary').value = maxsalary;
+						document.getElementById('salary').innerText = minsalary + '-' + maxsalary + '万元/年';
+					}
+				}
+			}
+			}
+			var content = '',
+				showid = '',
+				textid = '';
+			if(e.detail.page.id == 'contenthtml') {
+				showid = 'contentshow';
+				textid = 'contenttext';
+				content = UM.getEditor('content').getContent();
+			} else if(e.detail.page.id == 'eligiblehtml') {
+				showid = 'eligibleshow';
+				textid = 'eligibletext';
+				content = UM.getEditor('eligible').getContent();
+			} else if(e.detail.page.id == 'otherhtml') {
+				showid = 'othershow';
+				textid = 'othertext';
+				content = UM.getEditor('other').getContent();
+			}
+			if(content != "") {
+				document.getElementById(showid).innerText = content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+				document.getElementById(textid).innerText = content;
+			}
+			//语言要求
+			var checkv = "",
+				checkshow = "",
+				ltcheck = "",
+				vid = "",
+				showid = "";
+			if(e.detail.page.id == 'languagehtml') {
+				ltcheck = ".lang";
+				vid = "lang";
+				showid = "langshow";
+			} else if(e.detail.page.id == 'welfarehtml') {
+				ltcheck = ".welfare";
+				vid = "welfare";
+				showid = "welfareshow";
+			} else if(e.detail.page.id == 'constitutehtml') {
+				ltcheck = ".constitute";
+				vid = "constitute";
+				showid = "constituteshow";
+			}
+			if(ltcheck != "") {
+				$(ltcheck).each(function(w, checkdata) {
+					if(checkdata.checked == true) {
+						if(checkv == "") {
+							checkv = checkdata.dataset.id;
+						} else {
+							checkv = checkv + "," + checkdata.dataset.id;
+						}
+						if(checkshow == "") {
+							checkshow = checkdata.dataset.name;
+						} else {
+							checkshow = checkshow + "," + checkdata.dataset.name;
+						}
+					}
+				});
+				document.getElementById(vid).value = checkv;
+				document.getElementById(showid).innerText = checkshow != "" ? checkshow : "请选择";
+			}
+		});
+	})(mui);
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+		var comltjobsubmit = document.getElementById('comltjobsubmit');
+		if(comltjobsubmit) {
+			comltjobsubmit.addEventListener('tap', function(event) {
+				var job_name = $.trim($("#job_name").val()),
+					jobone = $.trim($("#jobone").val()),
+					jobtwo = $.trim($("#jobtwo").val()),
+					provinceid = $.trim($("#provinceid").val()),
+					cityid = $.trim($("#cityid").val()),
+					three_cityid = $.trim($("#three_cityid").val()),
+					minsalary = $.trim($("#minsalary").val()),
+					maxsalary = $.trim($("#maxsalary").val()),
+					job_desc = $.trim($("#contenttext").val()),
+					eligible = $.trim($("#eligibletext").val()),
+					department = $.trim($("#department").val()),
+					exp = $.trim($("#exp").val()),
+					report = $.trim($("#report").val()),
+					age = $.trim($("#age").val()),
+					sex = $.trim($("#sex").val()),
+					edu = $.trim($("#edu").val()),
+					language = $.trim($("#lang").val()),
+					r_status = $.trim($("#r_status").val()),
+					constitute = $.trim($("#constitute").val()),
+					welfare = $.trim($("#welfare").val()),
+					rebates = $.trim($("#rebates").val()),
+					other = $.trim($("#othertext").val()),
+					id = $.trim($("#id").val());
+			
+				if($.trim($("#job_name").val()) == "") {
+					return mui.toast("请输入职位名称");
+			
+				}
+				if($.trim($("#jobtwo").val()) == "") {
+					return mui.toast("请选择职位分类");
+			
+				}
+				var cionly ='';
+				if(ct.length<=0 || ct=='new Array()'){
+					cionly = '1';
+				}
+				if(cionly == '1'){
+					if(provinceid == '') {
+						return mui.toast('请选择工作地点');
+					}
+				}else{
+					if(cityid == '') {
+						return mui.toast('请选择工作地点');
+					}
+				}
+			
+				var job_desc = $.trim($("#contenttext").val());
+				if(job_desc == "") {
+					return mui.toast("请输入职位描述");
+			
+				}
+				var eligible = $.trim($("#eligibletext").val());
+				if(eligible == "") {
+					return mui.toast("请输入任职资格");
+			
+				}
+				if($.trim($("#department").val()) == "") {
+					return mui.toast("请输入所属部门");
+			
+				}
+				if($.trim($("#report").val()) == "") {
+					return mui.toast("请输入汇报对象");
+			
+				}
+				var min = $.trim($("#minsalary").val());
+				var max = $.trim($("#maxsalary").val());
+			
+				if(min == "" || min == "0") {
+					return mui.toast("请输入职位年薪");
+			
+				}
+				if(parseInt(max)>0 && parseInt(max) <= parseInt(min)) {
+					return mui.toast("最高年薪必须大于最低年薪");
+			
+				}
+				var constitute = [];
+				$('input[name="xzgc"]:checked').each(function() {
+					constitute.push($(this).val());
+				});
+				if(constitute.length == 0) {
+					return mui.toast("请选择薪资构成！", 2);
+			
+				}
+				var welfare = [];
+				$('input[name="fldy"]:checked').each(function() {
+					welfare.push($(this).val());
+				});
+			
+				if($.trim($("#edu").val()) < 1) {
+					return mui.toast("请选择学历要求");
+			
+				}
+			
+				if($.trim($("#exp").val()) < 1) {
+					return mui.toast("请选择工作经验");
+				}
+				var language = [];
+				$('input[name="yyyq"]:checked').each(function() {
+					language.push($(this).val());
+				});
+				var sql = {
+					job_name: job_name,
+					r_status: r_status,
+					jobone: jobone,
+					jobtwo: jobtwo,
+					provinceid: provinceid,
+					cityid: cityid,
+					three_cityid: three_cityid,
+					minsalary: minsalary,
+					maxsalary: maxsalary,
+					department: department,
+					job_desc: job_desc,
+					constitute: constitute,
+					welfare: welfare,
+					exp: exp,
+					report: report,
+					age: age,
+					sex: sex,
+					edu: edu,
+					eligible: eligible,
+					rebates: rebates,
+					other: other,
+					language: language,
+					id: id,
+					submit: 'submit'
+				}
+				mui.showLoading("保存中");
+				$.post('index.php?c=lt_jobadd', sql, function(data) {
+					mui.hideLoading();
+					mui.toast(data.msg);
+					setTimeout(function(){
+						location.href = data.url;
+					},2000);
+				}, 'json');
+			})
+		}
+	})
+	var ltjobData = [];
+	'{yun:}foreach item=v from=$ltjob_index {/yun}'
+	var ltjobson = [];
+	'{yun:}foreach item=val from=$ltjob_type[$v]{/yun}'
+	ltjobson.push({
+		value: '{yun:}$val{/yun}',
+		text: '{yun:}$ltjob_name[$val]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	ltjobData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$ltjob_name[$v]{/yun}',
+		children: ltjobson
+	})
+	'{yun:}/foreach{/yun}'
+	var expData = [];
+	'{yun:}foreach item=v from=$ltdata.lt_exp {/yun}'
+	expData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$ltclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+
+	var ageData = [];
+	'{yun:}foreach item=v from=$ltdata.lt_age{/yun}'
+	ageData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$ltclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var sexData = [];
+	'{yun:}foreach item=v key=key from=$lt_sex{/yun}'
+	sexData.push({
+		value: '{yun:}$key{/yun}',
+		text: '{yun:}$v{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+	var eduData = [];
+	'{yun:}foreach item=v from=$ltdata.lt_edu{/yun}'
+	eduData.push({
+		value: '{yun:}$v{/yun}',
+		text: '{yun:}$ltclass_name[$v]{/yun}'
+	})
+	'{yun:}/foreach{/yun}'
+</script>
+{yun:}if $layer{/yun}
+  	<input id="layermsg" value="{yun:}$layer.msg{/yun}" type="hidden">
+  	<input id="layerurl" value="{yun:}$layer.url{/yun}" type="hidden">
+  	<script>
+		var msg = document.getElementById('layermsg').value;
+  	    if(msg){
+  	        if(msg){
+				var url = document.getElementById('layerurl').value;
+  	    	    if(url){
+  	    		    mui.toast(msg);
+					setTimeout(function(){
+						location.href=url;
+					},1500);
+  	    	    }else{
+  	    		    mui.toast(msg);
+  	    	    } 
+  	        }
+  	    } 
+  	</script>
+{yun:}/if{/yun}
+</body>
+</html>

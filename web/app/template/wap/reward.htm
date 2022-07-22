@@ -1,0 +1,85 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<section>
+    <div class="warp_content" id="app">
+        <div class="job_reward_list" style="padding:0px 10px;">
+
+            {yun:}rewardjob limit=12 reward=1 ispage=1 keyword='auto.keyword' item=job_list islt=4{/yun}
+            <div class="index_rewardjobs_list">
+                <a href="{yun:}$job_list.job_wapurl{/yun}">
+                    <div class="index_rewardjobs_money">
+                        <span class="index_rewardjobs_money_n">￥{yun:}$job_list.money|floatval{/yun}</span>
+                        <div class="index_rewardjobs_list_fs">
+                            <span class="index_rewardjobs_list_fs_name">投递:￥{yun:}$job_list.sqmoney|floatval{/yun}</span>
+                            <span class="index_rewardjobs_list_fs_name">面试:￥{yun:}$job_list.invitemoney|floatval{/yun}</span>
+                            <span class="index_rewardjobs_list_fs_name">入职:￥{yun:}$job_list.offermoney|floatval{/yun}</span>
+                        </div>
+                    </div>
+
+                    <span class="index_rewardjobs_list_ls">领赏</span>
+
+                    <div class="index_rewardjobs_name">{yun:}$job_list.name_n{/yun}</div>
+                    <div class="index_rewardjobs_info">
+                        {yun:}$job_list.job_salary{/yun}
+                        <span class="index_rewardjob_line">|</span>
+                        {yun:}$job_list.job_city_two|mb_substr:0:4:"utf-8"{/yun}
+                        {yun:}if $job_list.job_exp{/yun}<span class="index_rewardjob_line">|</span>{yun:}$job_list.job_exp{/yun}经验</span>{yun:}/if{/yun}
+                        {yun:}if $job_list.job_edu{/yun}<span class="index_rewardjob_line">|</span>{yun:}$job_list.job_edu{/yun}学历</span>{yun:}/if{/yun}
+                    </div>
+                </a>
+            </div>
+            {yun:}/rewardjob{/yun}
+            {yun:}if $total > 12{/yun}
+                <van-pagination v-model="currentPage" :total-items="total" :items-per-page="perpage" force-ellipses @change="pageChange" />
+            {yun:}/if{/yun}
+
+            {yun:}if $total <=0{/yun}
+                {yun:}if $smarty.get.keyword!="" {/yun}
+                <div class="wap_member_no">没有搜索到赏金职位
+                    <div>
+                        <a class="wap_mb_no_sr" href="{yun:}url m=wap c='reward'{/yun}">重新搜索</a>
+                    </div>
+                </div>
+                {yun:}else{/yun}
+                <div class="wap_member_no">暂无赏金职位
+                    <div>
+                        <a class="wap_mb_no_sr" href="{yun:}url m=wap c='reward'{/yun}">重新搜索</a>
+                    </div>
+                </div>
+                {yun:}/if{/yun}
+            {yun:}/if{/yun}
+        </div>
+    </div>
+</section>
+
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/wap_tck.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<script>
+    $(document).ready(function () {
+        $("#search").val();
+        $(".searchOptions_list li a").removeClass("search_h1_box_cur_list");
+    });
+
+    var currentPage = parseInt('{yun:}$smarty.get.page{/yun}'),
+        total = parseInt('{yun:}$total{/yun}'),
+        pagelink = '{yun:}$pagelink{/yun}';
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //分页相关
+            currentPage: currentPage ? currentPage : 1,
+            total: total,
+            perpage: 12,
+        },
+        methods: {
+            pageChange: function (e) {
+                var pageurl = pagelink.replace('{{page}}', e);
+                location.href = pageurl;
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

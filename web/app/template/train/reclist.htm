@@ -1,0 +1,51 @@
+<div class="Courses_right ftr mt10">
+<div class="Courses_right_tj ftl">
+  <div class="training_tit ftl"><span class="training_span ftl">推荐课程</span></div>
+	{yun:}foreach item=v from=$reclist{/yun}
+	<dl class="Courses_right_tj_list ftl">
+	<dt><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}">
+     <img src="{yun:}$v.pic{/yun}" width="60" height="60" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);">
+    </a></dt>
+	<dd><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" class="Courses_right_tj_list_name">{yun:}$v.name|mb_substr:0:20:'utf-8'{/yun}</a>
+	<span class="Courses_right_tj_list_price">￥{yun:}$v.price{/yun}</span></dd>
+	</dl>
+	{yun:}/foreach{/yun}
+</div>
+<div class="Courses_right_tj ftl mt10">
+<div class="training_tit ftl"><span class="training_span ftl">咨询留言</span>
+{yun:}if $uid{/yun}
+<a href="{yun:}url m=train c=zixun id='`$row.uid`'{/yun}" class="Courses_right_tj_a">我要留言</a>
+{yun:}else{/yun}
+<a href="javascript:void(0)" onclick="showlogin('1');" class="Courses_right_tj_a">我要留言</a>
+{yun:}/if{/yun} 
+</div>
+{yun:}if $zixun{/yun}
+{yun:}foreach item=v from=$zixun{/yun}
+<div class="Courses_right_Advisory ftl  mt10">
+<div class="Courses_right_Advisory_photo ftl"><a href="{yun:}url m=ask c=friend a=myquestion uid='`$v.uid`'{/yun}"><img src=".{yun:}$v.pic{/yun}" width="28" height="28" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);"></a></div>
+<div class="Courses_right_Advisory_r ftl">
+<div class="Courses_right_Advisory_r_name"><a href="{yun:}url m=ask c=friend a=myquestion uid='`$v.uid`'{/yun}" class="Courses_right_Advisory_r_name_a" target="_blank">{yun:}$v.nickname{/yun}</a> {yun:}$v.ctime|date_format:"%m月%d日"{/yun}</div>
+</div>
+<div class="Courses_right_Advisory_box ftl"><i class="Courses_right_Advisory_box_icon"></i>{yun:}$v.content{/yun}</div>
+</div>
+{yun:}/foreach{/yun}
+<div class="Courses_right_Advisory_more ftl mt10"><a href="{yun:}url m=train c=zixun id='`$row.uid`'{/yun}">查看更多</a></div>
+{yun:}else{/yun}
+<div class="t_msg_no">该机构还没有留言!</div>
+{yun:}/if{/yun}
+</div>
+</div>
+<script>
+function showImgDelay(imgObj,imgSrc,maxErrorNum){   
+	if(maxErrorNum>0){ 
+        imgObj.onerror=function(){
+            showImgDelay(imgObj,imgSrc,maxErrorNum-1);
+        };
+		
+        setTimeout(function(){
+            imgObj.src=imgSrc;
+        },500);
+		maxErrorNum=parseInt(maxErrorNum)-parseInt(1);
+    }
+}
+</script>

@@ -1,0 +1,277 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<link href="{yun:}$wap_style{/yun}/css/cmc.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+<div id="yunvue" class="yunVueBox none">
+	<div class="personal_details_min_body">
+		<!-- 页面卡片式图 -->
+		<form id="addexpectForm">	
+		<div class="personal_details_card">
+			<div class="job_intention">
+				<div class="job_intention_left">期望职位</div>
+				<div class="job_intention_right">
+					<input type="text" name="name" v-model="info.name" placeholder="请输入期望职位：如客服">
+					<input type="hidden" name="sy_rname_num" :value="sy_rname_num"/>
+				</div>
+			</div>
+			<div class="job_intention" @click="salaryBox = true">
+				<div class="job_intention_left">期望薪资</div>
+				<div class="job_intention_right">{{minsalary}}-{{maxsalary}}</div>
+				<div class="job_intention_nav">
+					<img src="{yun:}$wap_style{/yun}/images/my_more.png" alt="" width="100%" height="100%">
+				</div>
+				<input type="hidden" name="minsalary" :value="minsalary"/>
+				<input type="hidden" name="maxsalary" :value="maxsalary"/>
+			</div>
+			<div class="job_intention" @click="classBox('city')">
+				<div class="job_intention_left">工作城市</div>
+				<div class="job_intention_right" id="citynameshow">{{cityname}}</div>
+				<input type="hidden" id="city_classid" name="city_classid" :value="cityclassid"  />
+				<div class="job_intention_nav">
+					<img src="{yun:}$wap_style{/yun}/images/my_more.png" alt="" width="100%" height="100%">
+				</div>
+			</div>
+			<div class="job_intention" @click="typePicker">
+				<div class="job_intention_left">工作性质</div>
+				<div class="job_intention_right" id="typeValue">{{info.type_n ? info.type_n:'请选择工作性质'}}</div>
+				<div class="job_intention_nav">
+					<img src="{yun:}$wap_style{/yun}/images/my_more.png" alt="" width="100%" height="100%">
+				</div>
+				<input type="hidden" id="type" name="type" :value="info.type">
+			</div>
+			<div class="job_intention" @click="classBox('job')">
+				<div class="job_intention_left">职位类别</div>
+				<div class="job_intention_right" id="jobnameshow">{{jobname}}</div>
+				<div class="job_intention_nav">
+					<img src="{yun:}$wap_style{/yun}/images/my_more.png" alt="" width="100%" height="100%">
+				</div>
+				<input type="hidden" id="job_classid" name="jobclassid" :value="jobclassid" />
+			</div>
+			<div class="job_intention" @click="hyPicker">
+				<div class="job_intention_left">从事行业</div>
+				<div class="job_intention_right" id="hyValue">{{info.hy_n?info.hy_n:'请选择从事行业'}}</div>
+				<div class="job_intention_nav">
+					<img src="{yun:}$wap_style{/yun}/images/my_more.png" alt="" width="100%" height="100%">
+				</div>
+				<input type="hidden" id="hy" name="hy" :value="info.hy">
+			</div>
+			<div class="job_intention" @click="rjPicker">
+				<div class="job_intention_left">求职状态</div>
+				<div class="job_intention_right" id="rjValue">{{info.jobstatus_n?info.jobstatus_n:'请选择'}}-{{info.report_n?info.report_n:'请选择'}}</div>
+				<div class="job_intention_nav">
+					<img src="{yun:}$wap_style{/yun}/images/my_more.png" alt="" width="100%" height="100%">
+				</div>
+				<input type="hidden" id="report" name="report" :value="info.report">
+				<input type="hidden" id="jobstatus" name="jobstatus" :value="info.jobstatus">
+			</div>
+		</div>
+		<input type="hidden" name="eid" :value="eid">
+		<input type="hidden" name="url" value="{yun:}url d=wxapp h=user m=resume c=saveexpect{/yun}">
+		</form>
+	</div>
+	
+	<van-popup v-model="typeShow" round position="bottom">
+		<van-picker show-toolbar :columns="type" :default-index="typeIndex" 
+		 @cancel="typeShow = false" @confirm="typeConfirm"/>
+	</van-popup>
+	<van-popup v-model="hyShow" round position="bottom">
+		<van-picker show-toolbar :columns="hy" :default-index="hyIndex" 
+		 @cancel="hyShow = false" @confirm="hyConfirm"/>
+	</van-popup>
+	<van-popup v-model="rjShow" round position="bottom">
+		<van-picker show-toolbar :columns="rj" @cancel="rjShow = false" @confirm="rjConfirm"/>
+	</van-popup>
+	<!--期望薪资弹窗-->
+	<van-popup v-model="salaryBox" round position="center" round  closeable :style="{ width: '80%'}">
+		<form id="salarySubmit">
+			<div class="">
+				<div class="salaryh1">期望薪资</div>
+				<div class="salary_list">
+				<span class="salaryname">最低薪资：</span>
+				<div class="salary_text">
+					<input type="number" name="minsalary" :value="minsalary" placeholder="最低薪资"/>
+				</div></div>
+				<div class="salary_list">
+				<span class="salaryname">最高薪资：</span>
+				<div class="salary_text">
+					<input type="number" name="maxsalary" :value="maxsalary" placeholder="最高薪资"/>	
+				</div></div>
+				<div class="salary_subnew">
+					<div  class="salary_sub_bth" @click="salarySubmit">确认</div>
+				</div>
+			</div>
+		</form>
+	</van-popup>
+</div>
+<script src="{yun:}$plusstyle{/yun}/user.cache.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/userPicker.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$plusstyle{/yun}/industry.cache.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$plusstyle{/yun}/city.cache.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$plusstyle{/yun}/cityparent.cache.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$plusstyle{/yun}/job.cache.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$plusstyle{/yun}/jobparent.cache.js?v={yun:}$config.cachecode{/yun}"></script>
+<!--职能、城市公共弹窗-->
+{yun:}include file="$wapstyle/member/public/resume_city_job.htm"{/yun}
+<script>
+	var cmcJs = null;
+	var eid = '{yun:}$smarty.get.eid{/yun}';
+		eid = eid ? eid : '';
+
+	var jobclass = '',
+		jobclassname = '',
+		jobclassidData = [],
+		cityclass = '',
+		cityclassname = ''
+		cityclassidData = [];
+
+	var yunvue =  new Vue({
+		el: '#yunvue',
+		data() {
+		    return {
+				typeShow: false,
+				typeIndex: 0,
+				type: [],
+				type_n:'',
+				hyShow: false,
+				hyIndex: 0,
+				hy: [],
+				rjShow: false,
+				rj: [],
+				eid: eid,
+				info: {},
+				cityname: '',
+				cityclassid: '',
+				cityShow: false,
+				jobname: '',
+				jobclassid: '',
+				jobShow: false,
+				jobstatus_report_con:'',
+				jobstatusid: '',		
+				reportid: '',
+				sy_rname_num: 10,
+				salaryBox:false,
+				minsalary:'',
+				maxsalary:''
+		    };
+		},
+		created() {
+			this.infoShow();
+		},
+		methods:{
+			infoShow: function(){
+				showLoading();
+				let that = this;
+				$.post('{yun:}url d=wxapp h=user m=resume c=expectedit{/yun}', {eid: that.eid}, function(data){
+					hideLoading();
+					var list = data.data;
+					
+					that.info = list;
+					that.info.maxsalary = list.maxsalary > 0 ? list.maxsalary : '';
+
+					that.cityname = list.city_classname ? list.city_classname : '';
+					that.cityclassid = list.city_classid ? list.city_classid : '';
+					that.jobname = list.job_classname ? list.job_classname : '';
+					that.jobclassid = list.job_classid ? list.job_classid : '';
+					that.jobstatus_report_con = list.jobstatus_n + '-' + list.report_n ;
+					that.jobstatusid= list.jobstatus;
+					that.reportid = list.report;
+					that.islook = true;
+					that.minsalary = list.minsalary;
+					that.maxsalary = list.maxsalary;
+					that.sy_rname_num = list.sy_rname_num;
+
+					cityjobVue.$data.citynameArr = list.citynameArr;
+					cityjobVue.$data.jobnameArr = list.jobnameArr;
+
+					
+					jobclass = list.job_classid;
+					jobclassname = list.job_classname;
+					jobclassidData = [];
+					for(let i in list.jobArr){
+						jobclassidData.push({
+							value: list.jobArr[i]
+						});
+					}
+
+					cityclass = list.city_classid;
+					cityclassname = list.city_classname;
+					cityclassidData = [];
+					for(let i in list.cityArr){
+						cityclassidData.push({
+							value: list.cityArr[i]
+						});
+					}
+					
+					$(".yunVueBox").css('display', 'block');
+				},'json');
+			},
+			typeConfirm(e){
+				this.typeShow = false;
+				this.info.type_n= e.text;
+				this.info.type = e.value;
+			},
+			hyConfirm(e){
+				this.hyShow = false;
+				this.info.hy_n=e.text;
+				this.info.hy = e.value;
+			},
+			rjConfirm(e){
+				this.rjShow = false;						
+				this.info.report = e[1].value;
+				this.info.report_n=e[1].text;
+				this.info.jobstatus = e[0].value;
+				this.info.jobstatus_n = e[0].text;
+				
+			},
+			typePicker:function(){
+				typePicker(this.info.type);
+			},
+			hyPicker:function(){
+				hyPicker(this.info.hy);
+			},
+			rjPicker:function(){
+				rjPicker(this.info.jobstatus,this.info.report)
+			},
+			salarySubmit:function(){
+				var v = getFormValue('salarySubmit');
+				if (v.minsalary.trim() == '') {
+					showModal('请填写期望薪资');
+					return false;
+				} else if (parseInt(v.minsalary) > parseInt(v.maxsalary) && v.minsalary.trim() != '') {
+					showModal('请正确填写期望薪资范围');
+					return false;
+				}
+				if (v.maxsalary.trim() != '') {
+					this.maxsalary = v.maxsalary;
+					this.minsalary = v.minsalary;
+					this.salary = v.minsalary + '-' + v.maxsalary;
+				} else {
+					this.minsalary = v.minsalary;
+					this.maxsalary = v.maxsalary;
+					this.salary = v.minsalary;
+				}
+				this.salaryBox = false;
+			},
+			classBox: function(type){
+
+				cityjobVue.$data[type + 'Show'] = true;
+				
+				// 加载职位、地区多选js
+				if(cmcJs){
+					cmcJs.remove();
+				}
+				if(typeof zn_search !== "undefined"){
+					delete(zn_search);
+					$('.zn_search').off('input','.inputListener');
+					$('.classTap').off('change','input');
+				}
+				cmcJs = document.createElement('script');
+				cmcJs.src = "{yun:}$wap_style{/yun}/js/cmc.js?v={yun:}$config.cachecode{/yun}";
+				document.body.appendChild(cmcJs);
+			},
+
+		}
+	});
+</script>
+
+</body>
+</html>
+

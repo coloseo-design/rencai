@@ -1,0 +1,47 @@
+{yun:}include file="$wapstyle/header_train.htm"{/yun}
+
+		
+     <div class="train_word_z" {yun:}if $usertype==4{/yun}style="display: none;"{yun:}/if{/yun} onclick=" {yun:}if $uid{/yun}{yun:}if $usertype==4{/yun}showToast('只有个人和hr可以留言咨询！');{yun:}/if{/yun}{yun:}else{/yun}showToast('请先登录！');{yun:}/if{/yun}">
+          <form action="{yun:}url m=wap c=train a=zixun{/yun}" method="post" name="myform" >
+          <div class="pxzixun_list mt10">
+          <div class="pxzixun_list_name"><i class="train_word_z_tit_r">*</i> 联系电话</div>
+          <input name="phone" id="phone" type="text" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" placeholder="请填写联系电话" />
+          </div>
+           <div class="pxzixun_list mt10">
+          <div class="pxzixun_list_name"><i class="train_word_z_tit_r">*</i> 留言内容</div>
+          <textarea class="train_word_box" name="content" id="content" placeholder="请输入您要留言的内容"></textarea>
+                </div>
+                 <div class="pxzixun_bth mt10">
+          <input type="hidden" name="s_uid" id="s_uid" value="{yun:}$smarty.get.id{/yun}" />
+          <input class="" type="submit" name="submit" value="提交" onclick="return check_zixun(this);" />
+                 </div>
+          </form>
+     </div>
+     <div class="train_agency_show_box">
+     <div class="train_show_box_tit"><span class="train_show_box_tit_s">留言列表</span></div>
+        <div class="train_agency_show_box_c">
+     {yun:}foreach item=v from=$rows{/yun}
+        <div class="train_word_list_bot">
+          <div class="train_word_list_w">
+               <div class="train_word_list_img_ft"><a href="{yun:}url m=wap c=ask a=myquestion uid='`$v.uid`'{/yun}"><img src="{yun:}$v.pic{/yun}" style="width:40px;height:40px;" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);" /></a></div>
+               <div class="train_word_list_w_rtt">
+               <span class="train_word_list_w_nm"><a href="{yun:}url m=wap c=ask a=myquestion uid='`$v.uid`'{/yun}">{yun:}$v.nickname{/yun}&nbsp;</a></span>
+               <span>{yun:}$v.ctime|date_format:"%m月%d日"{/yun}</span>
+               </div> 
+
+         <div class="train_word_list_yan">{yun:}$v.content{/yun}</div>
+
+          </div>
+     </div>   
+    
+     {yun:}foreachelse{/yun}
+     <div class="wap_member_no">暂无相关留言</div>
+     {yun:}/foreach{/yun}
+     {yun:}if $pagenav{/yun}
+     <div class="pages">{yun:}$pagenav{/yun}</div>
+     {yun:}/if{/yun}  </div>
+  
+</div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/train.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+</body></html>

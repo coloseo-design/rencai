@@ -1,0 +1,83 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+   <div class="com_tit"><span class="com_tit_span">招聘广告服务</span><span class="remind" style="float:right; margin-right:10px; line-height:36px;color:#F30;cursor:pointer " > </span></div>  、
+    <div class=right_box>
+    <div class="vip_boxshow">	<div class="vip_boxshow_c">
+    
+    <div class="report_uaer_list ">
+    	<div class="report_uaer_list_h1">开通超级会员</div>
+    	<div class="report_uaer_list_p">为企业提供多样化的套餐服务</div>
+         <ul>
+           {yun:}if $config.com_vip_type==2{/yun}
+           <li><a href="index.php?c=right" >套餐会员</a></li>
+           {yun:}/if{/yun}
+           
+           {yun:}if $config.com_vip_type==1{/yun}
+           <li ><a href="index.php?c=right&act=time" >时间会员</a></li>
+           {yun:}/if{/yun}
+           
+           {yun:}if $config.com_vip_type==0{/yun}
+           <li><a href="index.php?c=right" >套餐会员</a></li>
+           <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+           {yun:}/if{/yun}
+           {yun:}if $statis.rating_type != 2 && !$vipIsDown && $config.com_integral_online != 4 {/yun}
+    					<li><a href="index.php?c=right&act=added" >增值包</a></li>
+    			  {yun:}/if{/yun}
+             <li class="report_uaer_list_cur"><a href="index.php?c=ad" > 购买广告位</a></li>
+             <li><a href="index.php?c=pay" >充值服务</a></li>
+             <li><a href="index.php?c=paylogtc" >我的服务</a></li>
+             <li><a href="index.php?c=paylog&consume=ok" >订单管理</a></li>
+             {yun:}if $config.sy_com_invoice == 1{/yun}
+                <li><a href="index.php?c=invoice"  >发票管理</a></li>
+               {yun:}/if{/yun}
+             <li><a href="index.php?c=coupon_list" >优惠卡券</a></li>
+             <li><a href="index.php?c=jobpack&act=loglist"  >赏金收益</a></li>
+             {yun:}if $config.sy_help_open == 1{/yun}
+             <li><a href="index.php?c=friendhelp" >好友助力</a></li>
+             {yun:}/if{/yun}
+            <li><a  href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}积分管理</a></li>
+         </ul>
+       </div>
+       
+	   <div class="job_list_tit">
+         <ul class="">
+      <li {yun:}if $smarty.get.c=="ad"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=ad">购买广告位</a></li> 
+       <li {yun:}if $smarty.get.c=="ad_order"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=ad_order">广告订单</a></li>
+      
+         </ul>
+         </div>
+          <div class="com_m_search"> 
+      <a title="购买广告位" class="com_m_tj" onclick="javascript:history.go(-1);">广告订单列表</a></div>
+
+  <div class="com_body">
+        <div class="table">
+          <table width="100%" cellspacing="1" cellpadding="1" class="com_table">
+            <tr>
+              <th>广告位名称</th>
+              <th>广告名称</th>
+              <th>广告链接</th>
+              <th>购买时长</th>
+              <th>订单金额</th>
+              <th>点击次数</th>
+              <th>广告状态</th>
+            </tr>
+            <tr>
+              <td>{yun:}$info.adname{/yun}</td>
+              <td align="center">{yun:}$info.ad_name{/yun}</td>
+              <td align="center">{yun:}$info.pic_src{/yun}</td>
+              <td align="center">{yun:}$info.buy_time{/yun} 个月</td>
+              <td align="center"><span>{yun:}if $info.buytype==1{/yun}{yun:}$info.integral{/yun}&nbsp;{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}{yun:}else{/yun}{yun:}$info.price{/yun}&nbsp;元{yun:}/if{/yun}</span></td>
+              <td align="center">{yun:}$ad.hits{/yun}</td>
+              <td align="center">{yun:}$ad.type{/yun}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="clear"></div>
+        <div class="ad_bnner_tit" style="padding:20px 0;">广告效果图： </div>
+        <div  class="ad_bnner"><img src="{yun:}$info.pic_url_n{/yun}"  /> </div>
+      </div>
+    </div>
+  </div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

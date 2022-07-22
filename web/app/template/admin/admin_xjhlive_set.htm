@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<form class="layui-form">
+			<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+			<div class="infoboxp">
+				<div class="tty-tishi_top">
+					<div class="admin_new_tip">
+						<a href="javascript:;" class="admin_new_tip_close"></a>
+						<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+						<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>直播功能</div>
+						<div class="admin_new_tip_list_cont">
+							<div class="admin_new_tip_list">功能待开发</div>
+						</div>
+					</div>
+				</div>
+				<!--
+				<div class="clear"></div>
+
+					<div class="tag_box">
+						<div class="">
+							<table width="100%" class="table_form">
+								<tr>
+									<th width="150">宣讲会提醒时间：</th>
+									<td>
+										<input class="tty_input t_w160" type="text" name="sy_xjh_subtime" id="sy_xjh_subtime" value="{yun:}$config.sy_xjh_subtime{/yun}" size="10" />分钟
+										<span class="admin_web_tip">宣讲会开播前X分钟向预约用户发送微信通知，需结合计划任务处理</span>
+									</td>
+								</tr>
+
+								 <tr>
+					                <th width="150" class="t_fl">公告内容：</th>
+					                <td><textarea  name="sy_xjh_notice" id="sy_xjh_notice" rows="5" cols='40' maxlength="255" class="layui-textarea t_w480" >{yun:}$config.sy_xjh_notice{/yun}</textarea></td>
+					            </tr>
+								<tr class="admin_table_trbg">
+									<th width="160">App Key：</th>
+									<td>
+										<input name="sy_xjhlive_appkey" id="sy_xjhlive_appkey" autocomplete="off" class="tty_input t_w480" type="text" value="{yun:}$config.sy_xjhlive_appkey{/yun}" size="60" maxlength="50" />
+										<span class="admin_web_tip"><a href="https://www.wanxiangku.com" target="_blank">前往申请直播服务秘钥</a></span>
+									</td>
+								</tr>
+								<tr class="admin_table_trbg">
+									<th width="160">App Secret：</th>
+									<td>
+										<input name="sy_xjhlive_appsecret" id="sy_xjhlive_appsecret" autocomplete="off" class="tty_input" type="text" value="{yun:}$config.sy_xjhlive_appsecret{/yun}" size="60" maxlength="50" />
+									</td>
+								</tr>
+								<tr>
+									<th width="150">服务秘钥有效期：</th>
+									<td>
+										<input class="tty_input t_w160" type="text" id="rest_num" value="0" readonly="readonly" size="10" />
+									</td>
+								</tr>
+								<tr class="">
+									<th>&nbsp;</th>
+									<td align="left">
+										<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}"/>
+										<input class="tty_sub" id="config" type="button" name="config" value="提交"/>&nbsp;&nbsp;
+										<input class="tty_cz" type="reset" value="重置" />
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				-->
+				<script>
+					layui.use('form', function() {
+						var lform = layui.form;
+					});
+					$(function() {
+						$("#config").click(function() {
+							loadlayer();
+							$.post("index.php?m=admin_xjhlive_set&c=save", {
+								config: $("#config").val(),
+								sy_xjh_subtime: $("#sy_xjh_subtime").val(),
+								sy_xjh_notice : $("#sy_xjh_notice").val(),
+								sy_xjhlive_appkey: $("#sy_xjhlive_appkey").val(),
+								sy_xjhlive_appsecret : $("#sy_xjhlive_appsecret").val(),
+								pytoken: $("#pytoken").val(),
+								
+							}, function(data, textStatus) {
+								parent.layer.closeAll('loading');
+								config_msg(data);
+							});
+						});
+						var pytoken = $("#pytoken").val();
+						$.post("index.php?m=admin_xjhlive_set&c=get_restnum",{pytoken : pytoken},function(data){
+							if(data){
+								var res = eval('('+data+')');
+								if(res.num){
+									$("#rest_num").val(res.num);
+								}else{
+									$("#rest_num").val(0);
+								}
+							}
+						});
+					})
+				</script>
+			</div>
+		</form>
+	</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	
+	<title>后台管理</title>
+</head>
+<body class="body_ifm">
+	<div id="subboxdiv" style="width:100%;height:100%;display:none;position: absolute;"></div>
+
+	<div class="infoboxp"> 
+	<div class="tty-tishi_top">
+		<div class="admin_new_tip">
+			<a href="javascript:;" class="admin_new_tip_close"></a>
+			<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+			<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+			<div class="admin_new_tip_list_cont">
+                <div class="admin_new_tip_list">设置后，联系授权客服提交代码！<a href="https://microapp.bytedance.com/" target="_blank">字节跳动小程序开发者平台</a></div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+
+			<div id="right" style="display:block">
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form method="post" target="supportiframe" action="" name="config" class="layui-form">
+					
+					<div>
+						<table width="100%" class="table_form">
+							<tr>
+								<th colspan="2" class="admin_bold_box">
+									<div class="admin_bold">字节跳动小程序设置</div>
+								</th>
+							</tr>
+							<tr>
+							  <th class="t_fr">appId:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_tt_appId" value="{yun:}$ttData.sy_tt_appId{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">必须配置，请到开发管理-开发设置中查看</span>
+							  </td>
+							</tr>
+							<tr>
+							  <th class="t_fr">token:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_tt_token" value="{yun:}$ttData.sy_tt_token{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">必须配置，功能管理-担保交易-担保交易设置中查看</span>
+							  </td>
+							</tr>
+							<tr>
+							  <th class="t_fr">salt:</th>
+							  <td>
+									<div class="layui-input-block t_w480">
+										<input name="sy_tt_salt" value="{yun:}$ttData.sy_tt_salt{/yun}" autocomplete="off" class="layui-input" type="text" size="60" maxlength="255" />
+									</div>
+									<span class="admin_web_tip">必须配置，功能管理-担保交易-担保交易设置中查看</span>
+							  </td>
+							</tr>
+							<tr class="admin_table_trbg"> 
+								<th class="t_fr" >字节跳动小程序二维码：</th>
+								<td>
+									<div class="admin_uppicbox">
+										<input type="hidden" id="layupload_type" value="2" />
+									
+										<div class="admin_uppicimg">
+											<img width="140" height="140" id="imgtt" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_ttxcxu_qcode{/yun}" {yun:}if !$config.sy_ttxcxu_qcode{/yun}class="none"{yun:}/if{/yun} />
+										</div>
+									
+										<span>
+											<button type="button" class="adminupbtn adminupload" lay-data="{name: 'sy_ttxcxu_qcode',imgid: 'imgtt',path: 'logo',source:'back'}">重新上传</button>		
+										</span>
+									</div>
+
+								</td>
+							</tr>
+							<tr>
+								<th width="160">IOS支付功能：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline" style="width: 80px;">
+											<input type="checkbox" name="sy_tt_iospay" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_tt_iospay=="1"
+											 {/yun} checked {yun:}/if{/yun} />
+										</div>
+										<span class="admin_web_tip">IOS平台不支持虚拟产品购买，提交审核请关闭，否则将被驳回。<a href="https://microapp.bytedance.com/docs/zh-CN/mini-app/operation/standard/refuse/#%E8%99%9A%E6%8B%9F%E6%94%AF%E4%BB%98%E7%9B%B8%E5%85%B3" target="_blank">字节跳动小程序审核标准</a></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td align="left">
+									<input class="tty_sub" id="pay_config" type="submit" name="pay_config" value="&nbsp; 修 改 &nbsp;"  />&nbsp;&nbsp;
+									<input class="tty_cz" type="reset" name="reset" value="&nbsp; 重 置 &nbsp;" />
+									{yun:}if !$ttData.sy_tt_appId && $config.sy_tt_appId{/yun}
+									&nbsp;&nbsp;<input class="tty_cz" type="button" onclick="makeCache()" value="生成缓存" />
+									{yun:}/if{/yun}
+								</td>
+							</tr>
+						</table>
+					</div>
+					<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		var weburl = "{yun:}$config.sy_weburl{/yun}";
+		layui.use('form', function() {
+			var form = layui.form;
+		});
+		function makeCache(){
+			var pytoken = $('#pytoken').val();
+			loadlayer();
+			$.post('index.php?m=admin_xcx_bytedance&c=makeCache',{pytoken: pytoken}, function(data){
+				parent.layer.closeAll();
+				parent.layer.msg('生成成功', 2, 9, function(){
+					window.location.reload();
+				});
+			})
+		}
+	</script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+</body>
+</html>

@@ -1,0 +1,96 @@
+{yun:}include file="$wapstyle/header_school.htm"{/yun}
+
+<div class="wap_school_hd"  >
+<!-- --------------------幻灯片-------------------- -->
+<section>
+	<div class="swiper-container" id="imgswiper">
+	    <div class="swiper-wrapper">
+	        {yun:}adlist classid=50 item="lunbo" key=key{/yun}
+	        <div class="swiper-slide">
+	            <a href="{yun:}$lunbo.src{/yun}">
+	                <img src="{yun:}$lunbo.pic{/yun}" width='100%' height="140"/>
+	            </a>
+	        </div>
+	        {yun:}/adlist{/yun}
+	    </div>
+	</div>
+</section>
+</div>
+<style>
+.slides li img{width:100%;height:3.466666rem}
+</style>
+
+<div class="wap_school_tit"><i class="wap_school_tit_icon wap_school_tit_icon_mq"></i><span class="wap_school_tit_s">名企专区</span></div>
+<div class="wap_school_companyList">
+ <ul>
+ 	{yun:}comlist rec=1 limit=6 item=coms{/yun}
+ 	<a href="{yun:}url m=wap c=company a=show id=$coms.uid{/yun}">
+    <li id="{yun:}$coms.uid{/yun}"><img src="{yun:}$coms.logo{/yun}" alt="{yun:}$coms.name{/yun}" id="{yun:}$coms.uid{/yun}"></li></a>
+     {yun:}comlistelse{/yun}
+     <div class="wap_notip">暂无名企信息</div>
+    {yun:}/comlist{/yun}
+ </ul>
+</div>
+<div class="clear"></div>
+
+
+<div class="wap_school_box wap_school_tit_xjh">
+<div class="wap_school_tit"><i class="wap_school_tit_icon wap_school_tit_icon_xj"></i><span class="wap_school_tit_s">校招宣讲会</span><a href="{yun:}url m=wap c=school a=xjh{/yun}"class="wap_school_more">更多>></a></div>
+{yun:}xjh item=xjhlist limit=5 islt=4{/yun}
+<div class="wap_school_joblist">
+<a href="{yun:}url m=wap c=company a=show id=$xjhlist.uid{/yun}">
+<div class="wap_school_jobname">{yun:}$xjhlist.com_name{/yun}</div>
+<div class="wap_school_xjhtime"><i class="wap_school_xjhtime_icon"></i>{yun:}$xjhlist.xjh_date{/yun} {yun:}$xjhlist.xjh_shour{/yun} </div>
+<div class="wap_school_xjh_add"><i class="wap_school_xjhadd_icon"></i>{yun:}$xjhlist.address{/yun}</div>
+</a>
+</div>
+{yun:}xjhelse{/yun}
+     <div class="wap_notip">暂无校招宣讲会信息</div>
+{yun:}/xjh{/yun}
+
+</div>
+<div class="wap_school_box wap_school_tit_ws">
+<div class="wap_school_tit"><i class="wap_school_tit_icon wap_school_tit_icon_ws"></i><span class="wap_school_tit_s">网申职位</span><a href="{yun:}url m=wap c=school a=job{/yun}" class="wap_school_more">更多>></a></div>
+{yun:}wslist namelen=30 comlen=30 is_graduate='1' limit=5 item=rlist{/yun}
+<div class="wap_school_joblist">
+<a href="{yun:}url m=wap c=job a=comapply id=$rlist.id{/yun}">
+<div class="wap_school_jobname">{yun:}$rlist.name{/yun}</div>
+<div class="wap_school_jobtime">网申时间：{yun:}$rlist.wstime{/yun}</div>
+<div class="wap_school_jobsq">申请</div>
+</a>
+</div>
+{yun:}wslistelse{/yun}
+     <div class="wap_notip">暂无网申职位信息</div>
+{yun:}/wslist{/yun}
+</div>
+
+<div class="wap_school_box wap_school_tit_yx">
+<div class="wap_school_tit"><i class="wap_school_tit_icon wap_school_tit_icon_yx"></i><span class="wap_school_tit_s">院校信息</span><a href="{yun:}url m=wap c=school a=schoolacademy{/yun}" class="wap_school_more">更多>></a></div>
+{yun:}academy limit=6 item=academy_name name=academy_name1{/yun} 
+<div class="wap_school_yxlist">
+<a href="{yun:}url m=wap c='school' a='schoolacademyshow' id={yun:}$academy_name.id{/yun}{/yun}">
+<div class="wap_school_yxpic"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$academy_name.photo{/yun}" width="50" height="50"></div>
+<div class="wap_school_jobname">{yun:}$academy_name.schoolname{/yun}</div>
+<div class="wap_school_yxadd">所在城市：{yun:}$academy_name.provinceid{/yun}-{yun:}$academy_name.cityid{/yun}</div>
+<div class="wap_school_jobtime">学科类别：{yun:}$academy_name.school_categty{/yun}</div>
+</a>
+</div>
+{yun:}academyelse{/yun}
+<div class="wap_notip">暂无院校信息</div>
+{yun:}/academy{/yun}
+</div>
+
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+<link href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"/>
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript">
+    // 轮播图
+    new Swiper('#imgswiper', {
+        direction: 'horizontal',
+        autoplay: true,
+        loop: true
+    });
+</script>
+</body>
+</html>

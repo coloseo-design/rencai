@@ -1,0 +1,95 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<section>
+    <div class=" mt10">
+        <div class="user_contnet_box ">
+            {yun:}score uid=$row.uid item=score{/yun}
+
+            {yun:}if $score.num{/yun}  <div class="evaluate">
+            <div class="jobshow_tit">
+                <span class="jobshow_tit_name">面试评价</span>
+                <span class="evaluate_pf_left_tit_n">( 来自{yun:}$score.num{/yun}人评价 )</span>
+            </div>
+
+            <div class="clear"></div>
+
+          
+                <div class="evaluate_pf_otherbox evaluate_pf_otherbox_bor">
+                    <div class="evaluate_pf_left">
+                        <div class="evaluate_pf_other">
+                            <div class="evaluate_pf_other_name">描述相符：</div>
+                            <div class="evaluate_pf_other_start">
+                                <div class="evaluate_pf_other_startbox" style="width:{yun:}$score.desscore/5*100{/yun}%"><i class="evaluate_pf_other_start_p"></i></div>
+                            </div>
+                            <div class="evaluate_pf_other_fs none">{yun:}$score.desscore{/yun}</div>
+                        </div>
+                        <div class="evaluate_pf_other">
+                            <div class="evaluate_pf_other_name">面试官：</div>
+                            <div class="evaluate_pf_other_start">
+                                <div class="evaluate_pf_other_startbox" style="width:{yun:}$score.hrscore/5*100{/yun}%"><i class="evaluate_pf_other_start_p"></i></div>
+                            </div>
+                            <div class="evaluate_pf_other_fs none">{yun:}$score.hrscore{/yun}</div>
+                        </div>
+                        <div class="evaluate_pf_other">
+                            <div class="evaluate_pf_other_name"> 公司环境：</div>
+                            <div class="evaluate_pf_other_start">
+                                <div class="evaluate_pf_other_startbox" style="width:{yun:}$score.comscore/5*100{/yun}%"><i class="evaluate_pf_other_start_p"></i></div>
+                            </div>
+                            <div class="evaluate_pf_other_fs none">{yun:}$score.comscore{/yun}</div>
+                        </div>
+                    </div>
+
+                    <div class="evaluate_pf_right">
+                        <span class="evaluate_pf_right_fs">{yun:}$score.score{/yun}</span>分
+                        <div class="evaluate_pf_p">综合评分</div>
+                    </div>
+                </div>
+
+                <!-- 循环star-->
+                {yun:}commsg limit=5 id='auto.id' item=mlist{/yun}
+                <div class="evaluate_userlist">
+                    <div class="evaluate_username">
+                        <div class="evaluate_newstartr">
+                            <div class="evaluate_newstart">
+                                <div class="evaluate_newstartbox" style="width:{yun:}$mlist.score*20{/yun}%"><i class="evaluate_newstart_x"></i></div>
+                            </div>
+                        </div>
+                        <div class="evaluate_userphoto"><img src="{yun:}$mlist.photo{/yun}">
+                            <div class="evaluate_photouser_bg"></div>
+                        </div>
+                        <div class="evaluate_username_u">{yun:}$mlist.name{/yun}</div>
+                        <div class="evaluate_pf_job">
+                            面试职位：{yun:}if $mlist.jobname{/yun}<a href="{yun:}url m=job c=comapply id=$mlist.jobid{/yun}">{yun:}$mlist.jobname{/yun}</a>{yun:}else{/yun}职位已下架{yun:}/if{/yun}
+                        </div>
+                    </div>
+                    <div class="evaluate_user_pf">
+                        <div class="evaluate_ms_box"></div>
+                        <div class="evaluate_tag">
+                            {yun:}foreach from=$mlist.tags item=v{/yun}
+                            <span class="evaluate_tag_s">{yun:}$v{/yun}</span>
+                            {yun:}/foreach{/yun}
+                        </div>
+                        <div class="evaluate_pj_box">
+                            <div class="evaluate_pj">[面试过程] {yun:}$mlist.content{/yun}</div>
+                            {yun:}if $mlist.othercontent{/yun}
+                            <div class="evaluate_pj">[其他评价] {yun:}$mlist.othercontent{/yun}</div>
+                            {yun:}/if{/yun}
+                            {yun:}if $mlist.reply{/yun}
+                            <div class="evaluate_pj">[企业回复] {yun:}$mlist.reply{/yun}</div>
+                            {yun:}/if{/yun}
+                        </div>
+                        <div class="evaluate_date">{yun:}$mlist.ctime|date_format:"%Y-%m-%d"{/yun}</div>
+                    </div>
+                </div>
+                {yun:}/commsg{/yun}
+                <!-- 循环end-->
+                {yun:}if $pagenav{/yun}
+                <div class="pages">{yun:}$pagenav{/yun}</div>
+                {yun:}/if{/yun}
+            </div>
+            {yun:}/if{/yun}
+        </div>
+    </div>
+</section>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+</body>
+</html>

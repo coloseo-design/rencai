@@ -1,0 +1,90 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun} 
+<div class="admin_new_tip ">
+	<div class="admin_new_tit">操作提示</div>
+	<div class="admin_new_tip_list_cont">
+		<div class="admin_new_tip_list">
+			单笔转换金额必须达到{yun:}$config.packprice_min_recharge{/yun}元，一日最多转换
+			{yun:}if $config.paypack_max_recharge gt 0{/yun}
+				{yun:}$config.paypack_max_recharge{/yun}次
+			{yun:}else{/yun}
+				次数不限
+			{yun:}/if{/yun}
+			，已经转换{yun:}$changeNum{/yun}次。</div>
+	</div>
+</div>
+<div class="loglist_box">
+	我的钱包：<span class="yun_reward_list_box_n">￥{yun:}$statis.packpay{/yun}</span>
+	<span class="wap_member_msg_job_s"> 冻结金额：<span class="yun_reward_list_box_n">￥{yun:}$statis.freeze{/yun}</span> </span>
+</div>
+
+
+<section class="wap_member">
+	<ul class="yunset_password">
+		<li><span class="yunset_password_mname">转换金额： </span>
+			<div class="">
+				<input type="text" class="yunset_sjtext" name="changeprice" id="changeprice" value="" placeholder="自定义转换金额" onkeyup="changepriceprice(this);" autocomplete="off">
+			</div>
+		</li>
+		<li><span class="yunset_password_mname">转换{yun:}$config.integral_pricename{/yun}：</span>
+			<div style="height:30px; text-align:right">
+				<em class="pay_xymoney_t_n"><span class="payintegral" id="payintegral">0</span></em>个{yun:}$config.integral_pricename{/yun}
+				<input type="hidden" name="changeintegral" id="changeintegral" size="20" value="" class="yunset_sjtext">
+			</div>
+		</li>
+	</ul>
+	<div class="yunset_bth_box">
+		{yun:}if $statis.packpay>0{/yun}
+		<input type="button" onclick="change_form()" value="转换" class="reinputText2">
+		{yun:}else{/yun}
+		<input type="button" value="不可转换" class="reinputText2" disabled>
+		{yun:}/if{/yun}
+	</div>
+</section>
+<script src="{yun:}$wap_style{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/jsMath.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>
+	var proportion = '{yun:}$config.integral_proportion{/yun}';
+	var minchangeprice = '{yun:}$config.packprice_min_recharge{/yun}';
+	function changepriceprice(obj) {
+		var packpay = '{yun:}$statis.packpay{/yun}';
+
+		var changeprice = $("#changeprice").val();
+
+		obj.value = obj.value.replace(/^[0]/gi, "");
+		obj.value = obj.value.replace(/[^\d.]/g, "");
+		obj.value = obj.value.replace(/\.{2,}/g, ".");
+		obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+		obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+
+		if (changeprice != "") {
+			if (changeprice <= packpay) {
+				var integraltotal = parseInt(accMul(proportion, changeprice));
+				var integralFact = accMul(proportion, changeprice);
+				if (integralFact > integraltotal) {
+					var integraltotal = accAdd(integraltotal, 1);
+				}
+				$("#changeintegral").val(integraltotal);
+				$("#payintegral").html(integraltotal);
+
+			} else {
+
+				var integraltotal = parseInt(accMul(proportion, packpay));
+				var integralFact = accMul(proportion, packpay);
+				if (integralFact > integraltotal) {
+					var integraltotal = accAdd(integraltotal, 1);
+				}
+				$("#changeprice").val(packpay);
+				$("#changeintegral").val(integraltotal);
+				$("#payintegral").html(integraltotal);
+			}
+
+		} else {
+
+			$("#changeprice").val("");
+			$("#changeintegral").val("");
+			$("#payintegral").html(0);
+
+		}
+	}
+</script>
+</body></html> 

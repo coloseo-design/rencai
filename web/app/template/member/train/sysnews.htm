@@ -1,0 +1,91 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+    {yun:}include file="$trainstyle/left.htm"{/yun}
+    <div class="right_column frt mt20">
+        <div class="right_column_border_system">
+            <div class="right_column_h1"><span class="right_column_h1_span flt">系统消息</span></div>
+            
+            <div class="clear"></div>
+            
+            {yun:}if $total{/yun}
+            <div class="Reservation_list">
+                <div class="Reservation_list_singup Reservation_list_singup_bg">
+                    <div class="Reservation_list_span Reservation_list_input">&nbsp;</div>
+                    <div class="Reservation_list_span Reservation_list_cont_sys">消息内容 </div>
+                    <div class="Reservation_list_span Reservation_list_time_sys">时间</div>
+                    <div class="Reservation_list_span Reservation_list_cz_sys">操作</div>
+                </div>
+            </div>
+            {yun:}/if{/yun}
+            
+            <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+            <form action="index.php" method="get" target="supportiframe" id='myform' class="layui-form">
+                <input type="hidden" name="c" value="sysnews" />
+                <input type="hidden" name="act" value="del" />
+                <div class="Reservation_list">
+                    {yun:}foreach item=v from=$rows{/yun}
+	                    <div class="Reservation_list_singup">
+	                        <div class="Reservation_list_span Reservation_list_input">
+	                            <input type="checkbox" value="{yun:}$v.id{/yun}" name="del[]" class="Reservation_list_check" lay-skin="primary">
+	                        </div>
+	                        <div class="Reservation_list_span Reservation_list_cont_sys" {yun:}if $v.remind_status==0{/yun} style="padding-left:4px;"  {yun:}/if{/yun}>{yun:}$v.content{/yun}{yun:}if $v.remind_status==0{/yun} <span class="it_not_read">未读</span> {yun:}/if{/yun}</div>
+	                        <div class="Reservation_list_span Reservation_list_time_sys">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+	                        <div class="Reservation_list_span Reservation_list_cz_sys">
+	                            <a href="javascript:void(0)" onclick="showsys('{yun:}$v.content_all{/yun}','{yun:}$v.id{/yun}','{yun:}$v.ctime|date_format:" %Y-%m-%d %H:%M "{/yun}'); "> 查看详情</a>
+	                            <em class="px_line_systerm">|</em>
+	                            <a href="javascript:void(0)" onclick="layer_del('确定要删除？', 'index.php?c=sysnews&act=del&id={yun:}$v.id{/yun}');"> 删除</a>
+	                        </div>
+	                    </div>
+                    {yun:}foreachelse{/yun}
+	                    <div class="clear"></div>
+	                    <div class="msg_no">暂无相关信息</div>
+	                    <div class="clear"></div>
+                    {yun:}/foreach{/yun}
+                    
+                    {yun:}if !empty($rows){/yun}   
+                    <div class="sigm_up_box sigm_up_box_bg">
+	                    <div class="sigm_up_box_checkbox_w50"><input id='checkAll' type="checkbox" lay-filter="alltrain"  lay-skin="primary" class="right_column_news_cbox"><label for="checkAll">全选</label></div>
+	                    <input type="button" value="删除" class="right_column_news_sub" onclick="return really('del[]');">
+	                    <input type="hidden" name="status" value="0" />
+	                    <input class="btn-v3" type="button" value="设为已读" onclick="return isReaded('del[]');"> 
+	                    <input class="btn-v3" type="button" value="全部标记为已读" onclick="return readAll();"> 
+                    </div>
+                    {yun:}/if{/yun}
+                </div>
+            </form>
+            <div class="pages"> {yun:}$pagenav{/yun}</div>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div id="show" style="display:none;">
+        <div class="sys_tm">
+            <p><i>时间：</i><span id="systime"></span></p>
+            <p><i>内容：</i><span id="sysshow"></span></p>
+        </div>
+        <div class="sys_bot" style="padding-bottom:30px;">
+            <a class="sys_bot_del" href="javascript:void(0)" id="delsys"> 删除</a>
+            <a class="sys_bot_qx" href="javascript:void(0)" onclick="window.location.reload();" class="cblue">返回</a>
+        </div>
+    </div>
+</div>
+
+<script>
+	layui.use(['form','layer', 'laydate'], function(){
+    	var $ = layui.$,
+			form = layui.form,
+			laydate = layui.laydate,
+			layer = layui.layer;
+    	
+    	form.on('checkbox(alltrain)', function (data) {
+       	 	$("input[name='del[]']").each(function () {
+            	this.checked = data.elem.checked;
+        	});
+        	form.render('checkbox');
+      	});
+  	});
+</script>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

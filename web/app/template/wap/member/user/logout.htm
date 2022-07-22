@@ -1,0 +1,70 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<div id="yunvue" class="none">
+    <div class="personal_details_min_body">
+
+        <div v-if="step == 1">
+                <div class="deposit_header_reminder">
+                   <div class="deposit_header_info"> 注销账号后将放弃以下资产和权益:</div>
+                   
+                    1. 身份信息，账户信息，会员权益将清空且无法恢复<br>
+                    2. 交易记录将被清空<br>
+                    3. 账号绑定的手机邮箱QQ等相关信息将被释放，账号将无法登陆
+                </div>
+            <div class="deposit_header_account" style="margin-top: .4rem">
+
+                    <div class="job_resume_left" style="width: 30%;">账户密码</div>
+                    <div class="job_resume_right">
+                        <input type="password" v-model="password" placeholder="请输入账号密码">
+                    </div>
+            </div>
+            <div class="Save_button" @click="logoutApply">保存</div>
+        </div>
+        <div v-if="step==3" class="wap_member_no">
+            亲爱的用户，您已提交账户注销申请，</br>
+            工作人员正在进行处理中，注销结果将以短信或邮件的形式通知，请耐心等待~</br>
+            如果您需要再次使用，请重新注册！</br>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#yunvue',
+        data: {
+            step: 1,
+            password: ''
+        },
+        created() {
+            this.getInfo();
+        },
+        methods: {
+            getInfo: function () {
+                showLoading();
+                var self = this;
+                $.post('{yun:}url d=wxapp h=user m=set c=getLogout{/yun}', {rand: Math.random()}, function (res) {
+                    hideLoading();
+                    $("#yunvue").css('display', 'block');
+                    if (res.error == 1) {
+                        self.step = 3;
+                    }
+                }, 'json');
+            },
+            logoutApply: function () {
+                var self = this;
+                if (self.password == '') {
+                    return showModal('请填写账号密码');
+                }
+                showLoading();
+                $.post('{yun:}url d=wxapp h=user m=set c=logoutApply{/yun}', {password: self.password}, function (res) {
+                    hideLoading();
+                    if (res.error == 0) {
+                        self.step = 3;
+                    } else {
+                        return showModal(res.msg);
+                    }
+                }, 'json');
+            }
+        }
+    })
+</script>
+</body>
+</html>

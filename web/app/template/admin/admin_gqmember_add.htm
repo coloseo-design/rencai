@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script language="javascript">
+            function CheckMember() {
+                var cionly  =   $.trim($("#cionly").val());
+                var moblie  =   $("input[name='moblie']").val();
+                if(moblie == '') {
+                    layer.msg('请填写联系手机！', 2, 8);return false;
+                } else {
+                    if(isjsMobile(moblie) == false ) {
+                        layer.msg('联系手机格式错误！', 2, 8);return false;
+                    }
+                }
+                var password = $("#password").val();
+                if(password == '') {
+                    layer.msg('请输入密码！', 2, 8);return false;
+                }
+                var name = $("#name").val();
+                if(password == '') {
+                    layer.msg('请填写姓名！', 2, 8);return false;
+                }
+                var sex = $("#sex").val();
+                if(sex == '') {
+                    layer.msg('请选择性别！', 2, 8);return false;
+                }
+                if(cionly=='1'){
+                    if($("#provinceid").val()==""){
+                        layer.msg('请选择所在地！',2,8);return false;
+                    }
+                }else{
+                    var cityid = $("#cityid").val();
+                    if(cityid == '') {
+                        layer.msg('请选择所在地！', 2, 8);return false;
+                    }
+                }
+                
+                var services=$.trim($("textarea[name='services']").val());
+                    if(services==""){
+                        parent.layer.msg('请填写提供服务！',2,8);return false;
+                    }
+                var speciality = $("#speciality").val();
+                if(speciality==''){
+					layer.msg('请填写技能特长！', 2, 8);return false;
+				}
+
+                var salary = $("#salary").val();
+                if(speciality==''){
+					layer.msg('请填写薪资待遇！', 2, 8);return false;
+				}
+                var content=$.trim($("textarea[name='content']").val());
+                    if(content==""){
+                        parent.layer.msg('请填写个人简介！',2,8);return false;
+                    }
+
+                loadlayer();
+            }
+        </script>
+        <title>后台管理</title>
+    </head>
+
+    <body class="body_ifm">
+        <div class="infoboxp">
+            <div class="admin_new_tip">
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+                    <div class="admin_new_tip_list">该页面展示了添加供求会员信息，可添加供求会员操作。</div>
+                     <div class="admin_new_tip_list">登录用户名是根据手机号码进行保存。</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="admin_add_box">
+                <div class="admin_add_box_c" style="padding:0px 0 20px 0;">
+                    <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                    <form name="myform" {yun:}if $get_info.type=='' {/yun}target="supportiframe" {yun:}/if{/yun} action="index.php?m=admin_gqmember&c=saveadd" onSubmit="return CheckMember();" method="post" class="layui-form" autocomplete="off">
+                    <div class="admin_add_box_tit">会员信息</div>
+                           <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 联系手机</div>
+                            <div class="admin_add_list_right"><input type="text" value="" id="moblie" name="moblie" class="input-text" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')">
+                                <font color="gray"></font>
+                            </div>
+                        </div>
+                        <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 设置密码</div>
+                            <div class="admin_add_list_right"><input type="password" value="" id="password" name="password" class="input-text" style="width:230px">
+                                <font color="gray"></font>
+                            </div>
+                        </div>
+                          <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 姓名</div>
+                            <div class="admin_add_list_right"><input type="text" value="" id="name" name="name" class="layui-input" style="width:230px">
+                                <font color="gray"></font>
+                            </div>
+                        </div>
+                 
+                          <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 性别</div>
+
+                            <div class="admin_add_list_right">
+                                <div class="">
+                                    <div class="layui-input-block">
+                                        <div class="layui-input-inline">
+                                           	<select name="sex" lay-filter="" id="sex">
+                                              <option>请选择</option>
+                                              {yun:}foreach from=$user_sex item=v key=j{/yun}
+                                              <option value="{yun:}$j{/yun}"> {yun:}$v{/yun}
+                                              </option>
+                                              {yun:}/foreach{/yun}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+				
+						
+                      <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 所在地</div>
+                            <input type="hidden" id="cionly" name="cionly" value="{yun:}if empty($cache.city_type){/yun}1{yun:}/if{/yun}">
+                            <div class="admin_add_list_right">
+                                <div class="">
+                                    <div class="layui-input-block">
+                                       <div class="layui-input-inline">
+                                        <select name="provinceid" id="provinceid" lay-filter="citys">
+                                          <option value="">请选择</option>
+                                          {yun:}foreach from=$cache.city_index key=j item=v{/yun}
+                                            <option value="{yun:}$v{/yun}">{yun:}$cache.city_name[$v]{/yun}</option>
+                                          {yun:}/foreach{/yun}
+                                        </select>
+                                      </div>
+										
+                                      <div class="layui-input-inline">
+                                        <select name="cityid" lay-filter="citys" id="cityid">
+                                          <option value="">请选择</option>
+                                          {yun:}foreach from=$cache.city_type[$row.provinceid] key=j item=v{/yun}
+                                            <option value="{yun:}$v{/yun}">{yun:}$cache.city_name[$v]{/yun}</option>
+                                          {yun:}/foreach{/yun}
+                                        </select>
+                                      </div>
+                                      
+                                      <div class="layui-input-inline">
+                                        <select name="three_cityid" lay-filter="three_cityid" id="three_cityid">
+                                          <option value="">请选择</option>
+                                          {yun:}foreach from=$cache.city_type[$row.cityid] key=j item=v{/yun}
+                                            <option value="{yun:}$v{/yun}">{yun:}$cache.city_name[$v]{/yun}</option>
+                                          {yun:}/foreach{/yun}
+                                        </select>
+                                      </div> 
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 提供服务</div>
+                            <div class="admin_add_list_right"><script id="myEditor" name="services" type="text/plain" style="width:400px;height:200px;"></script>
+                            </div>
+                        </div>
+                        <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 技能特长</div>
+                            <div class="admin_add_list_right"><input type="text" value="" id="speciality" name="speciality" class="layui-input" style="width:230px">
+                                <font color="gray"></font>
+                            </div>
+                        </div>
+                          <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 薪资待遇</div>
+                            <div class="admin_add_list_right"><input type="text" value="" id="salary"  name="salary" class="layui-input" style="width:230px">
+                                <font color="gray"></font>
+                            </div>
+                        </div>
+
+                        <div class="admin_add_list">
+                            <div class="admin_add_list_name"><span class="admin_required_icon">*</span> 个人简介</div>
+                            <div class="admin_add_list_right"><script id="mycontentEditor" name="content" type="text/plain" style="width:400px;height:200px;"></script>
+                            </div>
+                        </div>
+              
+                        <div class="admin_add_list">
+
+                            <input class="layui-btn layui-btn-normal" type="submit" name="submit" value="&nbsp;添 加&nbsp;" />
+                            <input class="admin_save_sub_qx" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" />
+
+                        </div>
+
+                        <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+                        <input type="hidden" name="type" value="5">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+		
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+		<script type="text/javascript">
+			var weburl="{yun:}$config.sy_weburl{/yun}";
+			var form ,url = weburl+"/index.php?m=ajax&c=get_city_option";
+		 	
+			layui.use(['layer', 'form'], function() {
+	   			var form = layui.form,
+	  				laydate = layui.laydate,
+	  				$ = layui.$;
+			}); 
+			
+			
+			var editor = UE.getEditor('myEditor', {
+				toolbars : [ [ 'Bold', 'italic', 'underline', 'removeformat',
+						'|', 'justifyleft', 'justifycenter', 'justifyright',
+						'insertorderedlist', 'insertunorderedlist' ] ],
+				wordCount : false,
+				elementPathEnabled : false,
+				initialFrameHeight : 200
+			});
+      
+            var editor = UE.getEditor('mycontentEditor', {
+				toolbars : [ [ 'Bold', 'italic', 'underline', 'removeformat',
+						'|', 'justifyleft', 'justifycenter', 'justifyright',
+						'insertorderedlist', 'insertunorderedlist' ] ],
+				wordCount : false,
+				elementPathEnabled : false,
+				initialFrameHeight : 200
+			});
+		</script>
+	</body>
+</html>

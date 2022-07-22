@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+		<style>
+			* {margin: 0 ;padding: 0;}
+			body,div{ margin: 0 ;padding: 0;}
+			.layui-form-item {margin-bottom: 0px;clear: both;}
+			.layui-form-label {width: 60px;padding: 9px 1px;}
+
+			.spshow_yq_box {width: 600px;}
+			.spshow_yq_div {width: 100%;overflow: hidden;margin-bottom: -1px;}
+			.spshow_yq_div a {display: block;float: left;width: 100px;height: 36px;line-height: 36px;color: #666;text-align: center;text-decoration: none;}
+			.spshow_item{border: 1px solid #E6E6E6;padding: 10px 15px 15px 15px;}
+			.spshow_yq_div_a_curr {border-top: 1px solid #E6E6E6;border-left: 1px solid #e6e6e6;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #fff;box-sizing: border-box;}
+			.com_release_cont_dw{ position:absolute; display:inline-block; position:absolute;right:10px;top:0px; line-height:38px;}
+
+			.spshow_tc_xzjob{width: 400px;background: #fff;border-radius: 5px;border: 1px solid #eee;}
+			.spshow_tc_xzjob_box{overflow-y: auto;max-height: 250px;padding: 10px 20px;}
+			.spshow_tc_job{line-height: 35px;float: left; width: 50%;}
+			.spshow_tc_xzjob_btn{text-align: center;padding: 15px 0;}
+			.spshow_tc_xzjob_btn a:hover{text-decoration: none;}
+			.spshow_tc_xzjob_box::-webkit-scrollbar {width: 6px;height: 1px;}
+			.spshow_tc_xzjob_box::-webkit-scrollbar-thumb {border-radius: 10px;box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: #949494;}
+			.spshow_tc_xzjob_box::-webkit-scrollbar-track {box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);border-radius: 10px;background: #ededed;}
+		</style>
+		<title>后台管理</title>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">视频面试</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form id="zphform" name="myform" target="supportiframe" action="index.php?m=admin_spview&c=save" method="post"
+				 encType="multipart/form-data" onsubmit="return CheckPost();" class="layui-form" autocomplete="off">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<tr class="admin_table_trbg">
+							<th colspan="2" class="admin_bold_box">
+								<div class="admin_bold">添加视频面试</div>
+							</th>
+						</tr>
+						<tr>
+							<th width="120">面试开始时间：</th>
+							<td>
+								<div class="layui-input-inline t_w480">
+									<input type="text" name="sdate" id="sdate" lay-verify="required" value="{yun:}$info.sdate_n{/yun}" placeholder="开始时间" value="" size="60" class="layui-input">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>选择职位：</th>
+							<td>
+								<div class="layui-input-inline t_w480">
+									<input type="text" name="job" id="job" lay-verify="required" placeholder="请选择职位" value="" size="60" class="layui-input xzjob">
+
+								</div>
+							</td>
+						</tr>
+						<tr><th width="120"><span style="font-weight:bold;color:#000">求职者面试要求</span></th></tr>
+						<tr class="admin_table_trbg">
+							<th width="120">经验要求：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="exp" id="exp" lay-verify="">
+											<option>请选择</option> 
+											{yun:}foreach from=$userdata.user_word item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $info.exp==$v{/yun}selected {yun:}/if{/yun} >{yun:}$userclass_name[$v]{/yun}</option> 
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">学历要求：</th>
+							<td>
+								<div class="layui-input-block">
+									<div class="layui-input-inline">
+										<select name="edu" id="edu" lay-verify="">
+											<option>请选择</option> 
+											{yun:}foreach from=$userdata.user_edu item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $info.edu==$v{/yun}selected {yun:}/if{/yun} >{yun:}$userclass_name[$v]{/yun}</option> 
+											{yun:}/foreach{/yun}
+										</select>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">性别要求：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										{yun:}foreach from=$user_sex item=v key=k{/yun}
+
+											<input name="sex[]" id="sex{yun:}$k{/yun}" title="{yun:}$v{/yun}" {yun:}if in_array($k,$info.sex_n){/yun}checked="checked"{yun:}/if{/yun} value="{yun:}$k{/yun}" type="checkbox" lay-skin="primary">
+											<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>{yun:}$v{/yun}</span><i class="layui-icon layui-icon-ok"></i></div>
+
+										{yun:}/foreach{/yun}
+
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">简历要求：</th>
+							<td>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input name="other[]" title="工作经历" {yun:}if in_array(1,$info.other_n){/yun}checked="checked"{yun:}/if{/yun} value="1" type="checkbox" lay-skin="primary">
+										<input name="other[]" title="教育经历" {yun:}if in_array(2,$info.other_n){/yun}checked="checked"{yun:}/if{/yun} value="2" type="checkbox" lay-skin="primary">
+										<input name="other[]" title="项目经历" {yun:}if in_array(3,$info.other_n){/yun}checked="checked"{yun:}/if{/yun} value="3" type="checkbox" lay-skin="primary">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr><th width="120"><span style="font-weight:bold;color:#000">备注视频面试</span></th></tr>
+						<tr class="admin_table_trbg">
+							<th width="120">信息备注：</th>
+							<td>
+								<input type="text" name="remark" id="remark"  value="{yun:}$info.remark{/yun}" autocomplete="off" class="layui-input" lay-key="1" placeholder="添加备注信息，例：XXX等职位 - 2020/08/12 上午 面试专场" style="width: 500px;">
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th></th>
+							<td align="" colspan="2">
+								<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+								<input type="hidden" name="id" value="{yun:}$info.id{/yun}" />
+								<input type="hidden" name="uid" value="{yun:}$info.uid{/yun}" />
+								<input class="tty_sub" type="submit" value="&nbsp;修 改&nbsp;" />
+							</td>
+						</tr>
+					</table>
+
+
+					<div id="jobdiv" class="spshow_tc_xzjob" style="display: none;">
+						<div class="spshow_tc_xzjob_box">
+							{yun:}foreach from=$job item=v key=k{/yun}
+								<div class="layui-input-block spshow_tc_job">
+									<input type="checkbox" {yun:}if in_array($k,$info.jobid_n){/yun}checked="checked"{yun:}/if{/yun} id="jobid{yun:}$k{/yun}" name="jobid[]" data-jid="{yun:}$k{/yun}" value="{yun:}$v{/yun}" lay-skin="primary" title="" >
+									<div class="layui-input-inline">{yun:}$v{/yun}</div>
+								</div>
+							{yun:}/foreach{/yun}
+						</div>
+						<div class="spshow_tc_xzjob_btn">
+							<input type="hidden" name="jid" id="jid" value="">
+							<a href="javascript:void(0)" class="layui-btn layui-btn-normal spview_xzjob">确定</a>
+							<a href="javascript:void(0)" onclick="layer.closeAll()" class="layui-btn layui-btn-primary">取消</a>
+						</div>
+
+					</div>
+
+				</form>
+			</div>
+		</div>
+		<script language="javascript">
+			$(document).ready(function() {
+				'{yun:}if $info.jobid_n!=""{/yun}'
+					var jobid_chk =[];
+					var jobid =[];
+					$('input[name="jobid[]"]:checked').each(function(){
+						jobid_chk.push($(this).val());
+						jobid.push($(this).attr("data-jid"));
+					});
+				$("#job").val(jobid_chk.join(','));
+				$("#jid").val(jobid.join(','));
+
+				'{yun:}/if{/yun}'
+				
+				$('.xzjob').focus(function() {
+					$.layer({
+						type : 1,
+						title : '选择职位',
+						border : [10 , 0.3 , '#000', true],
+						area : ['410px','auto'],
+						page : {dom :"#jobdiv"}
+					});
+				});
+				$(".spview_xzjob").click(function() {
+					layer.closeAll();
+					var jobid_chk =[];
+					var jobid =[];
+
+					$('input[name="jobid[]"]:checked').each(function(){
+
+						jobid_chk.push($(this).val());
+						jobid.push($(this).attr("data-jid"));
+					});
+					$("#job").val(jobid_chk.join(','));
+					$("#jid").val(jobid.join(','))
+				})
+				$('.spshow_yq_div a').each(function() {
+					$(this).click(function() {
+
+						$('.spshow_yq_div a').removeClass("spshow_yq_div_a_curr") //点击时先移除所以选中样式
+						$(this).addClass("spshow_yq_div_a_curr") //当前点击的添加选中样式
+
+						var id = $(this).attr("data-id"); //获取data-id的值
+						$('.spshow_item').addClass("none") //点击时每个内容都隐藏
+						$('#' + id).removeClass("none") //职业data-id和内容id相同的显示
+					})
+				})
+			});
+
+			
+
+			layui.use(['layer', 'form', 'element', 'laydate', 'upload'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					element = layui.element,
+					upload = layui.upload,
+					$ = layui.$;
+				var laydate = layui.laydate;
+				//时间选择器
+				laydate.render({
+					elem: '#sdate',
+					type:'datetime',
+		    		format:'yyyy-MM-dd HH:mm'
+				});
+			});
+			function CheckPost(){
+
+				var sdate=$("#sdate").val();
+
+				if(sdate==""||sdate==$("#sdate").attr('placeholder')){
+					layer.msg("请选择开始日期！",2,8);return false;
+				}
+				var jobid_chk =[];
+				var exp_chk =[];
+				var edu_chk =[];
+				var sex_chk =[];
+
+				$('input[name="jobid[]"]:checked').each(function(){
+					jobid_chk.push($(this).val());
+				});
+				if(jobid_chk.length==0){
+					layer.msg("请选择面试职位！",2,8);return false;
+				}
+			}
+		</script>
+
+	</body>
+</html>

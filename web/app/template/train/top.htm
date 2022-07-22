@@ -1,0 +1,51 @@
+<div class="Agency_banner ftl "><img src="{yun:}$banner.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_banner{/yun}',2);" width="1200" height="160"></div>
+  <div class="Agency_nav ftl">
+    <div class="Agency_logo"><img src="{yun:}$row.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" width="120" height="120"></div>
+    <ul class="Agency_nav_ul">
+      <li {yun:}if $smarty.get.c=="agencyshow"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=agencyshow id='`$row.uid`'{/yun}">机构首页</a></li>
+      <li {yun:}if $smarty.get.c=="intro"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=intro id='`$row.uid`'{/yun}">机构简介</a></li>
+      <li {yun:}if $smarty.get.c=="show"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=show id='`$row.uid`'{/yun}">机构环境</a></li>
+      <li {yun:}if $smarty.get.c=="team"||$smarty.get.c=="teamshow"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=team id='`$row.uid`'{/yun}">师资团队</a></li>
+      <li {yun:}if $smarty.get.c=="mysubject"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=mysubject id='`$row.uid`'{/yun}">机构课程</a></li>
+      <li {yun:}if $smarty.get.c=="news"||$smarty.get.c=="newsshow"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=news id='`$row.uid`'{/yun}">机构新闻</a></li>
+      <li {yun:}if $smarty.get.c=="zixun"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=zixun id='`$row.uid`'{/yun}">咨询留言</a></li>
+      <li {yun:}if $smarty.get.c=="link"{/yun}class="Agency_nav_ul_cur"{yun:}/if{/yun}><a href="{yun:}url m=train c=link id='`$row.uid`'{/yun}">联系我们</a></li>
+    </ul>
+  </div>
+  <div class="Agency_Int ftl">
+    <div class="Agency_Int_left">
+      <h1 class="Agency_Int_Name">{yun:}$row.name{/yun} <a href="{yun:}url m=train c=zixun id='`$row.uid`'{/yun}" class="Agency_Int_Consulting">咨询</a>&nbsp;&nbsp;
+      {yun:}if $uid{/yun}
+      {yun:}if $usertype!='4'{/yun}
+      {yun:}if $isatn.id{/yun} 
+      <a href="javascript:void(0)" onclick="teacheratn('{yun:}$row.uid{/yun}','{yun:}url m=ajax c=atn_train{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="Agency_Int_Consultings">取消关注</a>
+      {yun:}else{/yun}
+      <a href="javascript:void(0)" onclick="teacheratn('{yun:}$row.uid{/yun}','{yun:}url m=ajax c=atn_train{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="Agency_Int_Consultings">关注</a>
+      {yun:}/if{/yun}
+      {yun:}else{/yun} 
+      <a href="javascript:void(0)" onclick="layer.msg('只有个人用户和hr才能关注', 2, 8)" class="Agency_Int_Consultings">关注</a>
+		{yun:}/if{/yun} 
+      {yun:}else{/yun}
+      <a href="javascript:void(0)" onclick="showlogin('1');" class="Agency_Int_Consultings">关注</a>
+      {yun:}/if{/yun} &nbsp;&nbsp;
+      <span class="Agency_Int_spans">已有<font id="antnum{yun:}$row.uid{/yun}">{yun:}$row.ant_num{/yun}</font>人关注</span>
+            
+      </h1>
+      <span class="Agency_Int_span">培训方向：{yun:}$subject_name[$row.sid]{/yun}</span><span class="Agency_Int_span">所属地区：{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.threecityid]{/yun}</span><span class="Agency_Int_span">成立时间：{yun:}$row.sdate{/yun} </span><span class="Agency_Int_span">机构性质：{yun:}$comclass_name[$row.pr]{/yun} </span><span class="Agency_Int_span">机构规模：{yun:}$comclass_name[$row.mun]{/yun}</span>    
+    </div>
+  </div>
+  <script src="{yun:}$train_style{/yun}/js/train_public.js?v={yun:}$config.cachecode{/yun}"></script>
+  <script>
+function showImgDelay(imgObj,imgSrc,maxErrorNum){   
+	if(maxErrorNum>0){ 
+        imgObj.onerror=function(){
+            showImgDelay(imgObj,imgSrc,maxErrorNum-1);
+        };
+		
+        setTimeout(function(){
+            imgObj.src=imgSrc;
+        },500);
+		maxErrorNum=parseInt(maxErrorNum)-parseInt(1);
+    }
+}
+</script>

@@ -1,0 +1,34 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/talent.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+
+<section class="wap_member">
+      <div class="wap_member_comp_h1"><span>简历授权认证</span></div>
+      <div class="pmail_hint">简历授权认证后，您可以将简历推荐给需要的企业赚取赏金 </div>
+       <ul class="yunset_password mt15">
+			<li><span class="yunset_password_mname">简历手机号 </span> 
+			<div class="yunset_sj_box">
+			 <input type="text" class="yunset_sjtext" name="linktel" id="linktel" value="{yun:}$Info.linktel{/yun}" placeholder="请输入简历手机号" style="text-align:left">
+			 </div></li>
+		</ul>
+		 <ul class="yunset_password mt15">
+			<li><span class="yunset_password_mname">图片验证码</span> 
+			<div class="yunset_sj_box">
+				<input type="text" name="authcode" class="yunset_sjtext" placeholder="输入图片验证码" style="text-align:left">
+					<img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php"  class="yunset_sj_boxyzm" onclick="checkCode('vcode_img');">
+					</div></li>
+			<li><span class="yunset_password_mname">短信验证码</span>
+			<div class="yunset_sj_box">
+			<input type="text" class="yunset_sjtext" maxlength="6"  placeholder="输入验证码" id="moblie_code" style="text-align:left">
+			<a href="javascript:void(0);" onclick="tsendmoblie();" class="yunset_sj_yzm" id="time">获取验证码</a>
+			</div></li>
+		</ul>
+		<div class="yunset_bth_box">
+		 <input type='hidden' name='telid' id="telid" value='{yun:}$Info.id{/yun}'>
+		 <input type="button" value="提交" class="yunset_bth" onclick="telstatus();">
+
+		</div>
+</section>
+</div>
+<input type="hidden" id="send" value="0" />
+</body></html> 

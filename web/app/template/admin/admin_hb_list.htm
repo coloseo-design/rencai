@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" href="{yun:}$wap_style{/yun}/hb/reset.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+<div class="subnav" id="hbBox" style="display:none">
+    <div class="">
+        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+        <form name="myform" target="supportiframe" action="index.php?m=admin_hb_config&c=saveWhb" method="post" encType="multipart/form-data" onsubmit="return ckform()" class="layui-form">
+            <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+            <div class="zph_tjlist">
+                <em class="zph_tjlist_s">海报类型：</em>
+                <input type="radio" name="type" id="job_type" title="职位" value="1" lay-filter="hbType" />
+                <input type="radio" name="type" id="com_type" title="企业" value="2" lay-filter="hbType" />
+            </div>
+			<div style="max-height: 303px; overflow: auto;">
+            <div class="zph_tjlist">
+                <em class="zph_tjlist_s">参数设置：</em>
+                <input class="layui-input t_w250" id="wname" name="wname" type="text" value="" placeholder="请填写海报名称" />
+            </div>
+            <div class="zph_tjlist hbDiv" style="display: none;">
+                <em class="zph_tjlist_s">职位数量：</em>
+                <input class="layui-input t_w250" id="num" name="num" type="number" value=""/>
+                <span class="admin_web_tip">根据上传模板风格，填写展示职位数量</span>
+            </div>
+            <div class="zph_tjlist hbDiv" style="display: none;">
+                <em class="zph_tjlist_s">模板风格：</em>
+                <input class="layui-input t_w250" id="style" name="style" type="number" value=""/>
+                <span class="admin_web_tip">上传统一风格，填写相同数字标识</span>
+            </div>
+            <div class="zph_tjlist">
+                <em class="zph_tjlist_s">上传图片：</em>
+                <div class="admin_uppicbox" style="width: 100px;height: 100px;">
+                    <input type="hidden" id="laynoupload" value="1">
+                    <div class="admin_uppicimg" id="imgparent" class="none">
+                        <img id="imgicon" width="100" height="100"/>
+                    </div>
+                    <span>
+                        <button type="button" class="noupload adminupbtn" lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">重新上传</button>
+                    </span>
+                </div>
+                <span class="admin_web_tip">说明：海报的尺寸为1080*1920</span>
+            </div>
+            <div class="zph_tjlist">
+                <em class="zph_tjlist_s">排序：</em>
+                <input class="layui-input t_w250" id="wsort" name="wsort" type="text" value=""/>
+                <span class="admin_web_tip">数字越大排序越靠前</span>
+            </div>
+            <div class="zph_tjlist">
+                <em class="zph_tjlist_s">是否开启：</em>
+                <input type="checkbox" id="wopen" name="wopen" lay-skin="switch" lay-text="开启|关闭"/>
+            </div>  </div>
+            <div class="zph_tjlist tty_tc_botm">
+                <input class="t_tanc_btn" type="hidden" id="wid" name="id" value=""/>
+                <input class="t_tanc_btn" type="submit" name="update" value="提交" style="margin-left:0px;">
+            </div>
+        </form>
+    </div>
+</div>
+
+<form class="layui-form">
+    <div class="infoboxp">
+        <div class="tty-tishi_top">
+
+            <div class="admin_new_tip">
+                <a href="javascript:;" class="admin_new_tip_close"></a>
+                <a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+                    <div class="admin_new_tip_list"> 开启海报则前台展示海报功能 , 模板勾选后前台才能展示相应的海报, 您也可以自定义添加海报 </div>
+                    <div class="admin_new_tip_list"> 职位海报默认展示当前职位信息和企业信息 </div>
+                    <div class="admin_new_tip_list"> 企业海报默认展示企业信息和所选职位数据信息</div>
+                    <div class="admin_new_tip_list"> 不同企业海报模板风格，根据展示职位数量多少，最多上传6张背景图片，分别对应1份职位至6份职位；</div>
+                    <div class="admin_new_tip_list"> 管理员根据上传模板风格，填写对应的海报风格和职位数量；</div>
+                    <div class="admin_new_tip_list"><a href="javascript:void(0);" onclick="editwhb()" style="padding:5px 10px; background:#2d8cf0;color:#fff; display:inline-block;border-radius:3px; margin-left:5px; margin-top:5px;">添加海报</a></div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+
+            <table width="100%" class="table_form">
+                <tbody>
+                <tr>
+                    <th width="100" class="t_fl">招聘海报：</th>
+                    <td>
+                        <div class="layui-input-block">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="sy_haibao_isopen" lay-skin="switch" lay-text="开启|关闭" {yun:}if $config.sy_haibao_isopen=="1" {/yun} checked {yun:}/if{/yun} />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th width="100" class="t_fl">海报网站标识：</th>
+                    <td>
+                        <div class="layui-input-block">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="sy_haibao_web_type" id="sy_haibao_web_type1" title="文字" value="1" lay-filter="sy_haibao_web_type" {yun:}if $config.sy_haibao_web_type=="1" {/yun} checked {yun:}/if{/yun}/>
+                                <input type="radio" name="sy_haibao_web_type" id="sy_haibao_web_type2" title="LOGO" value="2" lay-filter="sy_haibao_web_type" {yun:}if $config.sy_haibao_web_type=="2" {/yun} checked {yun:}/if{/yun}/>
+                                <input type="radio" name="sy_haibao_web_type" id="sy_haibao_web_type3" title="留空" value="3" lay-filter="sy_haibao_web_type" {yun:}if empty($config.sy_haibao_web_type) || $config.sy_haibao_web_type=="3" {/yun} checked {yun:}/if{/yun}/>
+                            </div>
+                            <input class="layui-input t_w250" style="{yun:}if empty($config.sy_haibao_web_type) || $config.sy_haibao_web_type !='1' {/yun} display: none; {yun:}/if{/yun}margin-top: 10px;" id="sy_haibao_web_name" name="sy_haibao_web_name" type="text" value="{yun:}$config.sy_haibao_web_name{/yun}" placeholder="请填写网站名称" />
+                            <div id="sy_haibao_web_logo" style="{yun:}if empty($config.sy_haibao_web_type) || $config.sy_haibao_web_type !='2' {/yun} display: none; {yun:}/if{/yun}margin-top: 10px;" class="t_w480">
+                                <button type="button" class="yun_bth_pic adminupload" lay-data="{name: 'sy_haibao_web_logo',imgid: 'sy_haibao_web_logo_img',path: 'logo'}">上传图片</button>
+                                <input type="hidden" id="layupload_type" value="2" />
+                                {yun:}if $config.sy_haibao_web_logo{/yun}
+                                <img id="sy_haibao_web_logo_img" src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_haibao_web_logo{/yun}" style="max-width:300px;background-color: #ccd6db;">
+                                {yun:}else{/yun}
+                                <img id="sy_haibao_web_logo_img" src="" style="max-width:300px;background-color: #ccd6db;">
+                                {yun:}/if{/yun}
+                                <div class="layui-form-mid layui-word-aux" style="font-size: 12px;">请上传透明LOGO图，建议图片最大尺寸960px X 130px</div>
+                                <style>
+                                    img[src=""],img:not([src]){
+                                        opacity:0;
+                                    }
+                                </style>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th width="100" class="t_fl">职位海报：</th>
+                    <td>
+                        {yun:}foreach from=$jobHbList item=v{/yun}
+                        <div style="width:120px; display:inline-block;  margin-bottom:30px; ">
+                            <div class="hb_cz" style=" padding-bottom:10px;">
+                                <input name="sy_job_hb" value="{yun:}$v.id{/yun}" title="{yun:}$v.name{/yun}" type="checkbox" lay-skin="primary" {yun:}if $v.isopen{/yun}checked{yun:}/if{/yun} />
+                            </div>
+                            <div class=""><img src="{yun:}$v.pic_n{/yun}" width="110"></div>
+                            <div class="hb_cz">
+                                <a href="javascript:void(0);" onclick="editwhb(1, '{yun:}$v.id{/yun}','{yun:}$v.name{/yun}','{yun:}$v.num{/yun}','{yun:}$v.style{/yun}','{yun:}$v.pic_n{/yun}','{yun:}$v.sort{/yun}','{yun:}$v.isopen{/yun}')">管理</a>
+                                <a href="javascript:void(0);" onclick="delWhb('{yun:}$v.id{/yun}')">删除</a>
+                            </div>
+                        </div>
+                        {yun:}foreachelse{/yun}
+                        暂无海报，请先添加海报！<a href="javascript:void(0);" onclick="editwhb(1)" style="padding:5px 10px; background:#2d8cf0;color:#fff; display:inline-block;border-radius:3px; margin-left:5px; margin-top:5px;">添加海报</a>
+                        {yun:}/foreach{/yun}
+                    </td>
+                </tr>
+                <tr>
+                    <th width="100" class="t_fl">企业海报：</th>
+                    <td>
+                        {yun:}foreach from=$comHbList item=v{/yun}
+                        <div style="width:120px; display:inline-block;  margin-bottom:30px; ">
+                            <div class="hb_cz" style=" padding-bottom:10px;">
+                                <input name="sy_com_hb" value="{yun:}$v.id{/yun}" title="{yun:}$v.name{/yun}" type="checkbox" lay-skin="primary" {yun:}if $v.isopen{/yun}checked{yun:}/if{/yun} />
+                            </div>
+                            <div class=""><img src="{yun:}$v.pic_n{/yun}" width="110"></div>
+                            <div class="hb_cz">
+                                <a href="javascript:void(0);" onclick="editwhb(2, '{yun:}$v.id{/yun}','{yun:}$v.name{/yun}','{yun:}$v.num{/yun}','{yun:}$v.style{/yun}','{yun:}$v.pic_n{/yun}','{yun:}$v.sort{/yun}','{yun:}$v.isopen{/yun}')">管理</a>
+                                <a href="javascript:void(0);" onclick="delWhb('{yun:}$v.id{/yun}')">删除</a>
+                            </div>
+                        </div>
+                        {yun:}foreachelse{/yun}
+                        暂无海报，请先添加海报！<a href="javascript:void(0);" onclick="editwhb(2)" style="padding:5px 10px; background:#2d8cf0;color:#fff; display:inline-block;border-radius:3px; margin-left:5px; margin-top:5px;">添加海报</a>
+                        {yun:}/foreach{/yun}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="border-bottom:none;" width="150">&nbsp;</th>
+                    <td align="left" style="border-bottom:none;">
+                        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+                        <input class="layui-btn tty_sub" id="mconfig" type="button" name="config" value="提交"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<script>
+    var form = null;
+    layui.use(['form'], function () {
+        var $ = layui.$;
+        form = layui.form;
+
+        form.on('radio(hbType)', function (data) {
+            if (data.value == 1){
+
+                $('.hbDiv').css('display', 'none');
+            }else if (data.value == 2){
+
+                $('.hbDiv').css('display', 'block');
+            }
+        });
+
+        form.on('radio(sy_haibao_web_type)', function (data) {
+            if (data.value == 1){
+                $('#sy_haibao_web_name').css('display', 'block');
+                $('#sy_haibao_web_logo').css('display', 'none');
+            } else if(data.value == 2){
+                $('#sy_haibao_web_name').css('display', 'none');
+                $('#sy_haibao_web_logo').css('display', 'block');
+            }else{
+                $('#sy_haibao_web_name').css('display', 'none');
+                $('#sy_haibao_web_logo').css('display', 'none');
+            }
+        });
+    });
+
+    function editwhb(type, id, name, num, style, pic, sort, isopen) {
+
+        if (type == 1){
+
+            $('#job_type').prop('checked', true);
+            $('.hbDiv').css('display', 'none');
+        } else if(type == 2){
+
+            $('#com_type').prop('checked', true);
+            $('.hbDiv').css('display', 'block');
+        }
+
+        if (id) {
+            $('#wid').val(id);
+        } else {
+            $('#wid').val('');
+        }
+
+        if (name) {
+            $('#wname').val(name);
+        } else {
+            $('#wname').val('');
+        }
+
+        if (num) {
+            $('#num').val(num);
+        } else {
+            $('#num').val('');
+        }
+
+        if (style) {
+            $('#style').val(style);
+        } else {
+            $('#style').val('');
+        }
+
+
+        if (sort) {
+            $('#wsort').val(sort);
+        } else {
+            $('#wsort').val('');
+        }
+
+        if (pic) {
+            $('#imgicon').attr('src', pic);
+            $('#imgparent').removeClass('none');
+        } else {
+            $('#imgicon').removeAttr('src');
+            $('#imgparent').addClass('none');
+        }
+
+        if (isopen == '1') {
+            $("#wopen").prop("checked", true);
+
+        } else {
+            $("#wopen").prop("checked", false);
+        }
+
+        form.render();
+		$.layer({
+			type : 1,
+			title : '职位海报管理',
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['420px','auto'],
+			page : {dom :'#hbBox'}
+		});
+    }
+
+    function ckform() {
+
+        var type = $("input[name='type']:checked").val();
+        if (type == '' || type == 'undefined' || !type){
+            layer.msg('请选择海报类型！', 2, 8);
+            return false;
+        }
+        if (type == 2){
+            var num = $('#num').val();
+            if (parseInt(num) <= 0 || num == '' || num == undefined){
+                layer.msg('请填写海报展示职位数量！', 2, 8);
+                return false;
+            }else  if (parseInt(num) > 6){
+                layer.msg('海报最多展示6条职位！', 2, 8);
+                return false;
+            }
+        }
+
+        var wname = $("#wname").val();
+        if (!wname || wname == '') {
+            layer.msg('请填写海报名称！', 2, 8);
+            return false;
+        }
+
+        var pic = null;
+        if ($("input[name=file]").val()) {
+            pic = $("input[name=file]").val();
+        }
+        if (!pic && !$('#imgicon').attr('src')) {
+            layer.msg('请上传图片！', 2, 8);
+            return false;
+        }
+
+        parent.layer.load('执行中，请稍后...', 0);
+    }
+
+    function delWhb(id) {
+        var pwcf = parent.layer.confirm("确定删除该海报？", function () {
+            loadlayer();
+            $.post("index.php?m=admin_hb_config&c=delWhb", {
+                id: id,
+                pytoken: $("#pytoken").val()
+            }, function (data, textStatus) {
+                parent.layer.closeAll('loading');
+                config_msg(data);
+            });
+        })
+    }
+
+    $(function () {
+        $("#mconfig").click(function () {
+            var sy_job_hb = "";
+            $('input[name="sy_job_hb"]:checked').each(function () {
+                if (sy_job_hb == "") {
+                    sy_job_hb = $(this).val();
+                } else {
+                    sy_job_hb = sy_job_hb + "," + $(this).val();
+                }
+            });
+            var sy_com_hb = "";
+            $('input[name="sy_com_hb"]:checked').each(function () {
+                if (sy_com_hb == "") {
+                    sy_com_hb = $(this).val();
+                } else {
+                    sy_com_hb = sy_com_hb + "," + $(this).val();
+                }
+            });
+
+            var sy_haibao_web_type = $('input[name="sy_haibao_web_type"]:checked').val();
+            var sy_haibao_web_name = $("#sy_haibao_web_name").val();
+            if(sy_haibao_web_type == 1){
+                if(sy_haibao_web_name === ''){
+                    layer.msg('请填写网站名称！', 2, 8);
+                    return false;
+                }else if(sy_haibao_web_name.length > 12){
+                    layer.msg('网站名称不能大于12个字符！', 2, 8);
+                    return false;
+                }
+            }
+
+            loadlayer();
+            $.post("index.php?m=admin_hb_config&c=saveWhbConfig", {
+                config: $("#mconfig").val(),
+                sy_job_hb: sy_job_hb,
+                sy_com_hb: sy_com_hb,
+                sy_haibao_isopen: $("input[name=sy_haibao_isopen]").is(":checked") ? 1 : 0,
+                sy_haibao_web_type: $('input[name="sy_haibao_web_type"]:checked').val(),
+                sy_haibao_web_name: sy_haibao_web_name,
+                pytoken: $("#pytoken").val()
+            }, function (data, textStatus) {
+                parent.layer.closeAll('loading');
+                config_msg(data);
+            });
+        });
+    });
+</script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script>
+</body>
+</html>
+

@@ -1,0 +1,1455 @@
+﻿<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>大屏数据</title>
+    <link rel="stylesheet" href="{yun:}$style{/yun}/datav/css/comon0.css">
+    <script src="{yun:}$style{/yun}/datav/js/vue.min.js"></script>
+    <script src="{yun:}$style{/yun}/datav/js/vue-resource.js"></script>
+    <script src="{yun:}$style{/yun}/datav/js/jquery.js"></script>
+    <script type="text/javascript" src="{yun:}$style{/yun}/datav/js/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="loading">
+            <div class="loadbox"> <img src="{yun:}$style{/yun}/datav/images/loading.gif"> 页面加载中... </div>
+        </div>
+        <div class="head">
+            <div class="left-line"> <img src="{yun:}$style{/yun}/datav/images/right-background-1.png" alt=""> </div>
+            <h1>{yun:}$datavtitle{/yun}</h1>
+            <div class="right-line"> <img src="{yun:}$style{/yun}/datav/images/right-background-1.png" alt=""> </div>
+        </div>
+        <div class="mainbox">
+            <ul class="clearfix">
+                <li>
+                    <div class="boxall borderadius" style="height: calc(50vh - .15rem)">
+                        <div class="boxall boxallot" style="height: 0.58rem;overflow: hidden;">
+                            <div class="baxallleft"><span>求职者</span></div>
+                            <div class="baxallright">
+                                <div class="rollscroll">
+                                    <ul>
+                                        <li v-for="(item, lkey) in listdata" :key="lkey"><span>{{item.name}}</span>{{item.type}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="boxall boxalllast" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts4"></div>
+                        </div>
+                        <div class="boxall boxalllast" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts5"></div>
+                        </div>
+                        <div class="boxall boxalllast" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts6"></div>
+                        </div>
+                        <div class="boxall boxalllast" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts7"></div>
+                        </div>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                        <div class="beat"></div>
+                    </div>
+                    <div class="boxall borderadius" style="height: calc(40vh - .15rem)">
+                        <div class="alltitle">
+                            <span>最热门的行业</span>
+                        </div>
+                        <div class=" boxnav paim">
+                            <div class="scrollrolltitle">
+                                <p>排名</p>
+                                <p>岗位</p>
+                                <p>投递数</p>
+                                <p>当前岗位数</p>
+                            </div>
+                            <div class="rollDataInfo">
+                                <div class="panel">
+                                    <div class="activity2" id="J_Activity2">
+                                        <ul>
+                                            <li v-for="(hy, hkey) in tableindustry" :key="hkey">
+                                                <p>{{hkey+1}}</p>
+                                                <p>{{hy.name}}</p>
+                                                <p>{{hy.sqnum}}</p>
+                                                <p>{{hy.jobnum}}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="boxall borderadius" style="height: calc(21vh - .15rem)">
+                        <ul class="row h100 row1">
+                            <li class="col-4">
+                                <div class="bar1">
+                                    <img src="{yun:}$style{/yun}/datav/images/esp_bg.png" class="bar1imgbg">
+                                    <h3>{{unit.total}}<span>企业</span></h3>
+                                    <p>今日新增 <b>{{unit.newToday}}</b> 家</p>
+                                </div>
+                            </li>
+                            <li class="col-4">
+                                <div class="bar1">
+                                    <img src="{yun:}$style{/yun}/datav/images/esp_bg.png" class="bar1imgbg">
+                                    <h3>{{post.total}}<span>求职</span></h3>
+                                    <p>今日新增 <b>{{post.newToday}}</b> 位</p>
+                                </div>
+                            </li>
+                            <li class="col-4">
+                                <div class="bar1">
+                                    <img src="{yun:}$style{/yun}/datav/images/esp_bg.png" class="bar1imgbg">
+                                    <h3>{{job.total}}<span>职位</span></h3>
+                                    <p>今日新增 <b>{{job.newToday}}</b> 个</p>
+                                </div>
+                            </li>
+                            <li class="col-4">
+                                <div class="bar1">
+                                    <img src="{yun:}$style{/yun}/datav/images/esp_bg.png" class="bar1imgbg">
+                                    <h3>{{zph.total}}<span>招聘会</span></h3>
+                                    <p>今日新增 <b>{{zph.newToday}}</b> 场</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                        <div class="beat"></div>
+                    </div>
+                    <div class="boxall borderadius" style="height: calc(42vh - .15rem)">
+                        <div class="alltitle" style="overflow: hidden;height:0.5rem;">
+                            <div class="alltitleleft"><span>最近一年求职动态</span></div>
+                            <div class="alltitleright">
+                                <div class="rollscroll3">
+                                    <ul>
+                                        <li v-for="(sqlog, sqkey) in Lastmonthlist.sqjoblog" :key="sqkey"><span>{{sqlog.content}}</span>{{sqlog.time_n}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="boxnavnum" id="echarts1"></div>
+                        <div class="registernum">
+                            <div class="registernumleft">
+                                <p>最近一个月注册总数</p>
+                                <p> <span>{{Lastmonthlist.monthnum}}</span> 人次</p>
+                                <p>今日新增 <span>{{Lastmonthlist.daynum}}</span> 人</p>
+                            </div>
+                            <div class="registernumright">
+                                <ul>
+                                    <li>
+                                        <img src="{yun:}$style{/yun}/datav/images/esp_img.png" alt="">
+                                        <p>{{Lastmonthlist.sqnum}}<span>份</span> </p>
+                                        <h4>投递简历</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{yun:}$style{/yun}/datav/images/esp_img.png" alt="">
+                                        <p>{{Lastmonthlist.yqnum}}<span>次</span> </p>
+                                        <h4>面试邀请</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{yun:}$style{/yun}/datav/images/esp_img.png" alt="">
+                                        <p>{{Lastmonthlist.chatnum}}<span>次</span> </p>
+                                        <h4>直聊沟通</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{yun:}$style{/yun}/datav/images/esp_img.png" alt="">
+                                        <p>{{Lastmonthlist.lresumenum}}<span>份</span> </p>
+                                        <h4>简历浏览</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{yun:}$style{/yun}/datav/images/esp_img.png" alt="">
+                                        <p>{{Lastmonthlist.ljobnum}}<span>份</span> </p>
+                                        <h4>岗位浏览</h4>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                        <div class="beat"></div>
+                    </div>
+                    <div class="boxall borderadius" style="height: calc(27vh - .15rem)">
+                        <div class="alltitle alltitleqiye">最近一年招聘企业数趋势 <b>企业总数：{{ Businesstrendslist.unitTotal}} 家</b></div>
+                        <div class="boxnav" id="echarts2"></div>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                        <div class="beat"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="boxall borderadius" style="height: calc(50vh - .15rem)">
+                        <div class="boxall boxallot" style="height: 0.58rem;overflow: hidden;">
+                            <div class="baxallleft"><span>企业</span></div>
+                            <div class="baxallright">
+                                <div class="rollscroll2">
+                                    <ul>
+                                        <li v-for="(firm, fkey) in firmrolllist" :key="fkey"><span>{{firm.name}}</span>{{firm.type}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="boxall" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts8"></div>
+                        </div>
+                        <div class="boxall boxalllast" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts3"></div>
+                        </div>
+                        <div class="boxall boxalllast" style="height: calc(44% - .15rem)">
+                            <div class="boxnav h100" id="echarts9"></div>
+                        </div>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                        <div class="beat"></div>
+                    </div>
+                    <div class="boxall borderadius" style="height: calc(40vh - .15rem)">
+                        <div class="alltitle">
+                            <span>最热门的岗位</span>
+                        </div>
+                        <div class=" boxnav paim">
+                            <div class="scrollrolltitle">
+                                <p>排名</p>
+                                <p>岗位</p>
+                                <p>投递数</p>
+                                <p>当前岗位数</p>
+                            </div>
+                            <div class="rollDataInfo">
+                                <div class="panel">
+                                    <div class="activity" id="J_Activity">
+                                        <ul>
+                                            <li v-for="(hot, tkey) in tableData" :key="tkey">
+                                                <p>{{tkey+1}}</p>
+                                                <p>{{hot.post}}</p>
+                                                <p>{{hot.delNumber}}</p>
+                                                <p>{{hot.postNumber}}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="icon_l"><img src="{yun:}$style{/yun}/datav/images/icon_l.png" alt=""></i>
+                        <i class="icon_lbot"><img src="{yun:}$style{/yun}/datav/images/icon_lbot.png" alt=""></i>
+                        <i class="icon_rtop"><img src="{yun:}$style{/yun}/datav/images/icon_rtop.png" alt=""></i>
+                        <i class="icon_rbot"><img src="{yun:}$style{/yun}/datav/images/icon_rbot.png" alt=""></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+    var legendintrval7 = legendintrval5 = legendintrval9 = legendintrval8 = legendintrval3 = legendintrval6 = legendintrval4 = '';
+    var weburl = '{yun:}$config.sy_weburl{/yun}';
+    var token = '{yun:}$token{/yun}';
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+
+                // 页面加载框
+                Loading: true,
+                // 中间四个小球的数据
+                newly: '',
+                // 企业
+                unit: '',
+                // 职位
+                job: '',
+                // 求职者
+                post: '',
+                // 招聘会
+                zph: '',
+                // 左侧上方四个饼状图
+                pie: '',
+                // 求职者动态
+                listdata: '',
+                // 性别柄图
+                sexData: [],
+                // 热门岗位数据
+                tableData: [],
+                //  热门行业数据
+                tableindustry: [],
+                // 最近一个月数据
+                Lastmonthlist: {},
+                // 期望薪资数据
+                salaryData: [],
+                // 学历数据
+                eduData: [],
+                // 经历数据
+                expData: [],
+                // 企业趋势总数据
+                Businesstrendslist: {},
+                // 右侧上方三个总数据
+                company: [],
+                // 企业行业分部数据
+                Corporatedivision: [],
+                // 企业分部数据
+                cityData: [],
+                // 企业规模数据
+                munData: [],
+                // 企业滚动动态数据
+                firmrolllist: [],
+            }
+        },
+        created() {
+            this.init()
+            var clear = ''
+            clearInterval(clear);
+            clear = setInterval(() => {
+                this.init()
+            }, 30000);
+
+        },
+        methods: {
+            init() {
+
+                this.getstationlist()
+                this.getindustrylist()
+                this.getballlist()
+                this.getpielist()
+                this.getmonthlist()
+                this.Businesstrends()
+                this.getcompanylist()
+            },
+            async getcompanylist() {
+
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=company&token=' + token)
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.company = res
+                    this.Corporatedivision = res.hyData
+                    this.cityData = res.cityData
+                    this.munData = res.munData
+                    this.firmrolllist = res.listData
+                    this.getdivisionlist()
+                    this.getcitylist()
+                    this.getmunlist()
+
+                    this.Loading = false
+                }
+            },
+            getmunlist() {
+                var myChart = echarts.init(document.getElementById('echarts9'));
+
+                var option;
+                let result = Object.entries(this.munData).map(item => {
+                    return {
+                        'value': item[1]
+                    }
+                })
+                let newArr = []
+                result.forEach(element => {
+                    let obj = {
+                        value: `${element.value.value}`,
+                        name: `${element.value.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '企业规模',
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c}'
+                    },
+                    color: ['#02cdfb', '#ce5a4d', '#fbd436', '#36c9ca', '#4acc72', '#0671d4', '#9760e5', '#f90'],
+                    legend: {
+                        id: 'legend9',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        pageIconSize: '',
+                        textStyle: {
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '企业规模',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        center: ["65%", "55%"],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: newArr
+                    }]
+                };
+
+
+                myChart.setOption(option);
+
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval9);
+                legendintrval9 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend9'
+                    });
+                    i = i < (cont - 5) ? i + 1 : 0;
+                }, 1100);
+
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+
+            },
+            getdivisionlist() {
+                var myChart = echarts.init(document.getElementById('echarts8'));
+
+                var option;
+                let result = Object.entries(this.Corporatedivision).map(item => {
+                    return {
+                        'value': item[1]
+                    }
+                })
+                let newArr = []
+                result.forEach(element => {
+                    let obj = {
+                        value: `${element.value.value}`,
+                        name: `${element.value.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '行业分布',
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    color: ['#02cdfb', '#9760e5', '#fbd436', '#36c9ca', '#4acc72', '#1e8df3', '#c306d4', '#ce5a4d', '#1abc9c', '#006450', '#c60900', '#1b35a2', '#b29303', '#ecdd97', '#0f8f4e', '#1e8f0f', ],
+                    legend: {
+                        id: 'legend8',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        pageIconSize: '',
+                        textStyle: {
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '行业分布',
+                        type: 'pie',
+                        radius: ['35%', '70%'],
+                        center: ["60%", "55%"],
+                        data: newArr,
+                        minAngle: 18,
+                        startAngle: 270,
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                    }]
+                };
+
+
+                myChart.setOption(option);
+
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval8);
+                legendintrval8 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend8'
+                    });
+                    i = i < (cont - 1) ? i + 1 : 0;
+                }, 1300);
+
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+            },
+            getcitylist() {
+                var myChart = echarts.init(document.getElementById('echarts3'));
+
+                var option;
+                let result = Object.entries(this.cityData).map(item => {
+                    return {
+                        'value': item[1]
+                    }
+                })
+                let newArr = []
+                result.forEach(element => {
+                    let obj = {
+                        value: `${element.value.value}`,
+                        name: `${element.value.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '企业分布',
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c}'
+                    },
+                    color: ['#02cdfb', '#9760e5', '#fbd436', '#36c9ca', '#4acc72', '#c306d4', '#f5a623', '#50e3c2', '#b8e986', '#444a54', '#ce5a4d', '#0671d4', '#0671d4', '#93001c'],
+                    legend: {
+                        id: 'legend3',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        pageIconSize: '',
+                        textStyle: {
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '企业分布',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        center: ["65%", "55%"],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: newArr
+                    }]
+                };
+                myChart.setOption(option);
+
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval3);
+                legendintrval3 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend3'
+                    });
+                    i = i < (cont - 3) ? i + 1 : 0;
+                }, 1300);
+
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+            },
+            async Businesstrends() {
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=comyear&token=' + token)
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.Businesstrendslist = res
+                    this.gettrendslist()
+                }
+            },
+            gettrendslist() {
+                var myChart = echarts.init(document.getElementById('echarts2'));
+
+                let valueArr = []
+                let nameArr = []
+                this.Businesstrendslist.List.forEach(res => {
+                    valueArr.push(res.value)
+                    nameArr.push(res.name)
+                })
+                var option;
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '单位：家',
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            lineStyle: {
+                                color: '#dddc6b'
+                            }
+                        }
+                    },
+                    grid: {
+                        left: '0',
+                        top: '25%',
+                        right: '20',
+                        bottom: '-10',
+                        containLabel: true
+                    },
+
+                    xAxis: [{
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLabel: {
+                            textStyle: {
+                                color: "rgba(255,255,255,.6)",
+                                fontSize: 14,
+                            },
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)'
+                            }
+
+                        },
+
+                        data: nameArr
+
+                    }, {
+
+                        axisPointer: { show: false },
+                        axisLine: { show: false },
+                        position: 'bottom',
+                        offset: 20,
+
+
+
+                    }],
+
+                    yAxis: [{
+                        type: 'value',
+                        axisTick: { show: false },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)'
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: "rgba(255,255,255,.6)",
+                                fontSize: 14,
+                            },
+                        },
+
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)',
+
+                            }
+                        }
+                    }],
+                    series: [{
+                            name: '标题名称',
+                            type: 'line',
+                            smooth: true,
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            showSymbol: true,
+                            lineStyle: {
+                                normal: {
+                                    color: 'rgba(228, 228, 126, 1)',
+                                    width: 2
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(228, 228, 126, .8)'
+                                    }, {
+                                        offset: 0.8,
+                                        color: 'rgba(228, 228, 126, 0.1)'
+                                    }], false),
+                                    shadowColor: 'rgba(0, 0, 0, 0.1)',
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#dddc6b',
+                                    borderColor: 'rgba(221, 220, 107, .1)',
+                                    borderWidth: 12
+                                }
+                            },
+                            data: valueArr
+
+                        }
+
+                    ]
+
+                };
+
+                myChart.setOption(option);
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+            },
+            // 最近一年求职动态
+            async getmonthlist() {
+
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=resumeLog&token=' + token)
+                var that = this;
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.Lastmonthlist = res
+                    this.getjobliat()
+
+                }
+            },
+            getjobliat() {
+                var myChart = echarts.init(document.getElementById('echarts1'));
+
+                let valueArr = []
+                let nameArr = []
+                var delnum = 0;
+                if (this.Lastmonthlist.List.length > 9) {
+                    delnum = this.Lastmonthlist.List.length - 9;
+                    this.Lastmonthlist.List.splice(0, delnum);
+                }
+
+
+                this.Lastmonthlist.List.forEach(res => {
+                    valueArr.push(res.value)
+                    nameArr.push(res.name)
+                })
+
+                var option;
+
+                option = {
+                    title: {
+                        top: '1%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '求职注册',
+                        subtext: '单位：人次',
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    grid: {
+                        top: '30%',
+                        left: '3%',
+                        right: '4%',
+                        bottom: '2%',
+                        containLabel: true
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        data: nameArr,
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)'
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: "rgba(255,255,255,.6)",
+                                fontSize: 14,
+                            },
+                        },
+
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)',
+
+                            }
+                        }
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)'
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: "rgba(255,255,255,.6)",
+                                fontSize: 14,
+                            },
+                        },
+
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)',
+
+                            }
+                        }
+                    }],
+                    series: [{
+                        name: '求职人数',
+                        type: 'bar',
+                        barWidth: '60%',
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1, [
+                                        { offset: 0, color: '#01FDFF' },
+                                        { offset: 1, color: '#00A7FF' },
+                                    ]
+                                )
+                            },
+                        },
+                        data: valueArr,
+                    }]
+                };
+
+
+                myChart.setOption(option);
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+
+
+            },
+            // 热门行业数据
+            async getindustrylist() {
+                var self = this;
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=tophy&token=' + token)
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.tableindustry = res;
+
+                    setTimeout(function() {
+                        if (self.tableindustry.length > 0) {
+
+                            $('#scrollrolldl1').css('top', '0');
+                            var tblTop = 0;
+                            var speedhq = 50; // 数值越大越慢
+                            var outerHeight = $('#scrollrolldl1').find("li").outerHeight();
+
+                            var Marqueehq = function() {
+
+
+                                if (tblTop <= -outerHeight * self.tableindustry.length) {
+                                    tblTop = 0;
+                                } else {
+                                    tblTop -= 1;
+                                }
+                                $('#scrollrolldl1').css('top', tblTop + 'px');
+                            }
+
+                            var MyMarhq = setInterval(Marqueehq, speedhq);
+
+                            // 鼠标移上去取消事件
+                            $(".scrollrolldl1").hover(function() {
+                                clearInterval(MyMarhq);
+                            }, function() {
+                                clearInterval(MyMarhq);
+                                MyMarhq = setInterval(Marqueehq, speedhq);
+                            })
+                        }
+                    }, 200)
+
+                }
+            },
+            //  热门岗位数据
+            async getstationlist() {
+                var self = this;
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=toppost&token=' + token)
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.tableData = res
+
+                    setTimeout(function() {
+                        if (self.tableData.length > 0) {
+
+                            $('#scrollrolldl2').css('top', '0');
+                            var tblTop = 0;
+                            var speed2 = 50; // 数值越大越慢
+                            var outerHeight = $('#scrollrolldl2').find("li").outerHeight();
+
+                            var Marquee2 = function() {
+
+
+                                if (tblTop <= -outerHeight * self.tableData.length) {
+                                    tblTop = 0;
+                                } else {
+                                    tblTop -= 1;
+                                }
+                                $('#scrollrolldl2').css('top', tblTop + 'px');
+                            }
+
+                            var MyMarhq2 = setInterval(Marquee2, speed2);
+
+                            // 鼠标移上去取消事件
+                            $(".scrollrolldl2").hover(function() {
+                                clearInterval(MyMarhq2);
+                            }, function() {
+                                clearInterval(MyMarhq2);
+                                MyMarhq2 = setInterval(Marquee2, speed2);
+                            })
+                        }
+                    }, 200)
+                }
+            },
+            // 中间上半部分四个小球数据
+            async getballlist() {
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=index&token=' + token)
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.newly = res
+                    this.unit = this.newly.unit
+                    this.job = this.newly.job
+                    this.post = this.newly.post
+                    this.zph = this.newly.zph
+                }
+
+            },
+            // 左侧上方四个饼状图数据
+            async getpielist() {
+                const self = this
+                const { data: res } = await this.$http.get(weburl + '/api/datav/index.php?m=index&c=resume&token=' + token)
+                if (res.error == '1001') {
+                    window.location.href = res.url;
+                } else {
+                    this.pie = res
+                    this.listdata = this.pie.ListData
+                    this.sexData = this.pie.sexData
+                    this.salaryData = this.pie.salaryData
+                    this.eduData = this.pie.eduData
+                    this.expData = this.pie.expData
+                    this.getsexdata()
+                    this.getsalaryData()
+                    this.geteduData()
+                    this.getexpData()
+
+                }
+            },
+            getexpData() {
+                var myChart = echarts.init(document.getElementById('echarts7'));
+
+                var option;
+                let newArr = []
+                this.expData.forEach(element => {
+                    let obj = {
+                        value: `${element.value}`,
+                        name: `${element.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '工作经历',
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c}'
+                    },
+                    color: ['#02cdfb', '#ce5a4d', '#fbd436', '#36c9ca', '#4acc72', '#0671d4', '#9760e5', '#d0c27c', '#b8e986', '#9f5600'],
+                    legend: {
+                        id: 'legend7',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        pageIconSize: '',
+                        textStyle: {
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '工作经历',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        center: ["65%", "55%"],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: newArr
+                    }]
+                };
+
+                myChart.setOption(option);
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval7);
+                legendintrval7 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend7'
+                    });
+                    i = i < (cont - 3) ? i + 1 : 0;
+                }, 1200);
+
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+
+
+            },
+            getsalaryData() {
+                var myChart = echarts.init(document.getElementById('echarts6'));
+
+                var option;
+                let newArr = []
+                this.salaryData.forEach(element => {
+                    let obj = {
+                        value: `${element.value}`,
+                        name: `${element.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '期望薪资',
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c}'
+                    },
+                    color: ['#02cdfb', '#ce5a4d', '#fbd436', '#36c9ca', '#4acc72', '#0671d4', '#9760e5', '#f90'],
+                    legend: {
+                        id: 'legend6',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        pageIconSize: '',
+                        textStyle: { //图例文字的样式
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '期望薪资',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        center: ["65%", "55%"],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: newArr
+                    }]
+                };
+
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval6);
+                legendintrval6 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend6'
+                    });
+                    i = i < (cont - 3) ? i + 1 : 0;
+                }, 1400);
+
+                myChart.setOption(option);
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+
+
+            },
+
+            geteduData() {
+                var myChart = echarts.init(document.getElementById('echarts5'));
+
+                var option;
+                let newArr = []
+                this.eduData.forEach(element => {
+                    let obj = {
+                        value: `${element.value}`,
+                        name: `${element.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+                        },
+                        text: '学历',
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c}'
+                    },
+                    color: ['#02cdfb', '#ce5a4d', '#fbd436', '#36c9ca', '#4acc72', '#0671d4', '#b8e986', '#9760e5', '#d0c27c', ],
+                    legend: {
+                        id: 'legend5',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        pageIconSize: '',
+                        textStyle: {
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '学历',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        center: ["65%", "55%"],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: newArr
+                    }]
+                };
+
+                myChart.setOption(option);
+
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval5);
+                legendintrval5 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend5'
+                    });
+                    i = i < (cont - 3) ? i + 1 : 0;
+                }, 1000);
+
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+
+
+            },
+            getsexdata() {
+                var myChart = echarts.init(document.getElementById('echarts4'));
+
+                var option;
+                let newArr = []
+                this.sexData.forEach(element => {
+                    let obj = {
+                        value: `${element.value}`,
+                        name: `${element.name}`
+                    }
+                    newArr.push(obj)
+                });
+
+                option = {
+                    title: {
+                        top: '3%',
+                        itemGap: 8,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14,
+                            fontWeight: '500',
+
+                        },
+                        text: '性别',
+
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c}'
+                    },
+                    color: ['#045dce', '#ce5a4d'],
+                    legend: {
+                        id: 'legend4',
+                        orient: 'vertical',
+                        left: '1%',
+                        top: '20%',
+                        type: "scroll",
+                        textStyle: {
+                            color: '#fff',
+                        },
+                        pageTextStyle: {
+                            color: "#052865",
+                        },
+                    },
+                    series: [{
+                        name: '性别比例',
+                        type: 'pie',
+                        radius: '60%',
+                        center: ["65%", "55%"],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: newArr
+                    }]
+                };
+
+                myChart.setOption(option);
+                var cont = newArr.length,
+                    i = 0;
+                clearInterval(legendintrval4);
+                legendintrval4 = setInterval(() => {
+                    myChart.dispatchAction({
+                        type: 'legendScroll',
+                        scrollDataIndex: i,
+                        legendId: 'legend4'
+                    });
+                    i = i < (cont - 3) ? i + 1 : 0;
+                }, 1000);
+
+
+                setTimeout(function() {
+                    window.addEventListener("resize", () => {
+                        myChart.resize();
+                    });
+                }, 200)
+            },
+        }
+    })
+
+
+
+
+    $(function() {
+        var $this = $(".rollscroll");
+        var $this2 = $(".rollscroll2");
+        var $this3 = $(".rollscroll3");
+        var scrollTimer1 = scrollTimer2 = scrollTimer3 = '';
+        $this.hover(function() {
+            clearInterval(scrollTimer1);
+        }, function() {
+            clearInterval(scrollTimer1);
+            scrollTimer1 = setInterval(function() {
+                scrollContent($this);
+            }, 1800);
+        }).trigger("mouseout");
+        $this2.hover(function() {
+            clearInterval(scrollTimer2);
+        }, function() {
+            clearInterval(scrollTimer2);
+            scrollTimer2 = setInterval(function() {
+                scrollContent($this2);
+            }, 1900);
+        }).trigger("mouseout");
+        $this3.hover(function() {
+            clearInterval(scrollTimer3);
+        }, function() {
+            clearInterval(scrollTimer3);
+            scrollTimer3 = setInterval(function() {
+                scrollContent($this3);
+            }, 2000);
+        }).trigger("mouseout");
+
+        function scrollContent(obj) {
+            var $self = obj.find("ul:first");
+            var lineHeight = $self.find("li:first").height();
+            $self.animate({
+                "margin-top": -lineHeight + "px"
+            }, 1000, function() {
+                $self.css({
+                    "margin-top": "0px"
+                }).find("li:first").appendTo($self);
+            })
+        }
+    });
+    $(function() {
+        var listPanel = $('.activity ul');
+        var nubcers = 0; //向上滚动top值
+        function up() { //向上滚动
+            listPanel.animate({
+                'top': (nubcers - 0.6) + 'rem'
+            }, 1500, 'linear', function() {
+                listPanel.css({
+                        'top': '0px'
+                    })
+                    .find("li:first").appendTo(listPanel);
+                up();
+            });
+        }
+        up();
+
+    });
+    $(function() {
+        var listPanel = $('.activity2 ul');
+        var nubcers = 0; //向上滚动top值
+        function up() { //向上滚动
+            listPanel.animate({
+                'top': (nubcers - 0.6) + 'rem'
+            }, 1500, 'linear', function() {
+                listPanel.css({
+                        'top': '0px'
+                    })
+                    .find("li:first").appendTo(listPanel);
+                up();
+            });
+        }
+        up();
+
+    });
+    </script>
+    <script language="JavaScript" src="{yun:}$style{/yun}/datav/js/js.js"></script>
+</body>
+
+</html>

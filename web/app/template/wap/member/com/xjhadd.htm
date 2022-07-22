@@ -1,0 +1,292 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<!--页面主结构结束-->
+<!--单页面开始-->
+<style type="text/css">
+	[v-cloak]{display: none;}
+</style>
+<div id="main">
+	<!--页面主内容区开始-->
+    <div class="wap_member_box">
+		<ul class="yunset_list">
+			<li class="yunset_list_select"><span class="yunset_list_name">宣讲城市</span>
+				<span class="yunset_list_commentary">
+					<button @click="areaShow = true" v-cloak>{{city ? city : '请选择'}}</button>
+					<input type="hidden" id="provinceid" name="provinceid" :value="provinceid">
+					<input type="hidden" id="cityid" name="cityid" :value="cityid">
+    			</span>
+			</li>
+			<li class="yunset_list_select">
+				<span class="yunset_list_name">宣讲学校</span>
+				<span class="yunset_list_commentary">					
+					<button @click="schoolShow = true" v-cloak>{{schoolTex ? schoolTex : '请选择'}}</button>
+                    <input type="hidden" id="schoolid" name="schoolid" :value="schoolId">
+				</span>
+			</li>
+			<li class="yunset_list_text"><span class="yunset_list_name">详细地点</span>
+				<span class="yunset_list_commentary"> 
+					<input type="text" id="address" name="address" value="{yun:}$row.address{/yun}" class="reinputText" placeholder="请填写详细地点">
+	            </span>
+			</li>
+			<li class="yunset_list_select"><span class="yunset_list_name">宣讲日期</span>
+				<span class="yunset_list_commentary">
+	                <button @click="dateShow = true" v-cloak>{{datetime ? datetime : '宣讲日期'}}</button>
+                    <input type="hidden" id="datetime" name="datetime" :value="datetime">
+				</span>
+			</li>
+			<li class="yunset_list_select"><span class="yunset_list_name">开始时间</span>
+				<span class="yunset_list_commentary">
+					<button @click="sTimeShow = true" v-cloak>{{sTime ? sTime : '开始时间'}}</button>
+	                <input type="hidden" id="stime" name="stime" :value="sTime">
+				</span>
+			</li>
+			<li class="yunset_list_select"><span class="yunset_list_name">结束时间</span>
+				<span class="yunset_list_commentary">
+					<button @click="eTimeShow = true" v-cloak>{{eTime ? eTime : '结束时间'}}</button>
+	                <input type="hidden" id="etime" name="etime" :value="eTime">
+				</span>
+			</li>
+		</ul>
+		<div class="yunset_bth_box" style="background: transparent; border: none;">
+			<input id="id" name="id" value="{yun:}$row.id{/yun}" type="hidden" />
+    		<input type="hidden" name="r_status" id="r_status"  value="{yun:}$company.r_status{/yun}" />
+			<input type="submit" id="xjhsubmit" value="提交操作" class="reinputText2" onclick="xjhsubmit()">
+		</div>
+	</div>	
+	
+	<van-popup v-model="areaShow" round position="bottom">
+        <van-cascader
+                v-model="areaValue"
+                :options="areaOptions"
+                @close="areaShow = false"
+                @finish="onAreaFinish"
+        ></van-cascader>
+    </van-popup>
+    <van-popup v-model="schoolShow" round position="bottom">
+        <van-picker
+                show-toolbar
+                @cancel="schoolShow = false"
+                :columns="schoolData"
+                @confirm="schoolConfirm"
+        ></van-picker>
+    </van-popup>
+ 
+	<van-calendar v-model="dateShow" @confirm="dateConfirm" ></van-calendar>
+
+	<van-popup v-model="sTimeShow" round position="bottom">
+        <van-datetime-picker
+		  type="time"
+		  title="选择时间"
+		  @confirm="sTimeConfirm"
+		  @cancel="sTimeShow = false"
+		/>
+    </van-popup>
+    <van-popup v-model="eTimeShow" round position="bottom">
+        <van-datetime-picker
+		  type="time"
+		  title="选择时间"
+		   @confirm="eTimeConfirm"
+		   @cancel="eTimeShow = false"
+		/>
+    </van-popup>
+</div>
+
+<script type="text/javascript">
+
+
+	function xjhsubmit(){
+	
+		var provinceid = $.trim($("#provinceid").val()),
+			cityid = $.trim($("#cityid").val()),
+			schoolid = $.trim($("#schoolid").val()),
+			address = $.trim($("#address").val()),
+			datetime = $.trim($("#datetime").val()),
+			stime = $.trim($("#stime").val()),
+			etime = $.trim($("#etime").val()),
+			id = $.trim($("#id").val());
+				
+		var cionly ='';
+		// if(ct.length<=0 || ct=='new Array()'){
+		// 	cionly = '1';
+		// }
+		if(cionly == '1'){
+			if(provinceid == '') {
+				return showToast('请选择宣讲城市');
+			}
+		}else{
+			if(provinceid==''){
+				showToast('请选择宣讲省份');
+				return false;
+			}
+			if(cityid==''){
+				showToast('请选择宣讲城市');
+				return false;
+			}
+		}
+		
+		if(schoolid==''){
+			showToast('请选择宣讲学校');
+			return false;
+		}
+		if(address==''){
+			showToast('请选择详细地点');
+			return false;
+			
+		}
+		if(datetime==''){
+			showToast('请选择宣讲日期');
+			return false;
+		}
+		if(stime==''){
+			showToast('请选择宣讲开始时间');
+			return false;
+		}
+		if(etime==''){
+			showToast('请选择宣讲结束时间');
+			return false;
+		}else if(etime<stime){
+			showToast('宣讲结束时间不得小于宣讲开始时间');
+			return false;
+		}
+		var sql={
+			provinceid : provinceid,
+			cityid : cityid,
+			schoolid : schoolid,
+			address : address,
+			datetime : datetime,
+			stime : stime,
+			etime : etime,
+			id:id,
+			submit: 'submit'
+		}
+		$.post('index.php?c=xjhadd', sql, function(data) {
+			if(data.url){
+				showToast(data.msg, 2, function() {
+					location.href = data.url;
+				});
+			}else{
+				showToast(data.msg);return false;
+			}
+			
+		}, 'json');
+
+}
+var xjhcityData = [],
+	xjhschoolData = [],
+  	xjhschooltwodata=[],
+  	newxjhschoolData = [];
+
+'{yun:}foreach from=$city_index item=v{/yun}'
+	var xjhcityson = [];
+	'{yun:}foreach from=$city_type[$v] item=val{/yun}'
+		xjhcityson.push({
+			value: '{yun:}$val{/yun}',
+			text: '{yun:}$city_name[$val]{/yun}'
+		})
+		
+	'{yun:}/foreach{/yun}'
+	xjhcityData.push({
+		value : '{yun:}$v{/yun}',
+		text : '{yun:}$city_name[$v]{/yun}',
+		children :xjhcityson
+	})
+'{yun:}/foreach{/yun}'
+'{yun:}foreach from=$school item=sv{/yun}'
+	xjhschoolData.push({
+		cid: '{yun:}$sv["cityid"]{/yun}',
+		value: '{yun:}$sv["id"]{/yun}',
+		text: '{yun:}$sv["schoolname"]{/yun}'
+	})
+'{yun:}/foreach{/yun}'
+'{yun:}foreach from=$schooltwo item=sv{/yun}'
+	xjhschooltwodata.push({
+		value: '{yun:}$sv["id"]{/yun}',
+		text: '{yun:}$sv["schoolname"]{/yun}'
+	})
+'{yun:}/foreach{/yun}'
+newxjhschoolData = xjhschoolData;
+var schoolName = "{yun:}if $row.schoolid{/yun}{yun:}foreach from=$school item=v{/yun}{yun:}if $row.schoolid == $v['id']{/yun}{yun:}$v['schoolname']{/yun}{yun:}/if{/yun}{yun:}/foreach{/yun}{yun:}/if{/yun}";
+var yunvue = new Vue({
+        el: '#main',
+        data() {
+            return {
+                // 工作地点选择
+                areaShow: false,
+                areaValue: 0,
+                provinceid: '{yun:}$row.provinceid{/yun}',
+                cityid: '{yun:}$row.cityid{/yun}',
+                city: '{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}/if{/yun}',
+                areaOptions: xjhcityData,
+                schoolShow: false,
+                schoolData: xjhschoolData,
+                schoolTex:schoolName,
+        		schoolId:'{yun:}$row.schoolid{/yun}',
+        		dateShow: false,
+        		datetime: '{yun:}if $row.stime{/yun}{yun:}$row.stime|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}',
+        		sTimeShow: false,
+        		sTime: '{yun:}if $row.stime{/yun}{yun:}$row.stime|date_format:'%H:%M'{/yun}{yun:}/if{/yun}',
+        		eTimeShow:false,
+        		eTime: '{yun:}if $row.etime{/yun}{yun:}$row.etime|date_format:'%H:%M'{/yun}{yun:}/if{/yun}',
+            };
+        },
+        methods: {
+            onAreaFinish({selectedOptions}) {
+            	var that = this;
+                that.provinceid = 0;
+                that.cityid = 0;
+                let cityStr = '';
+                
+                if (selectedOptions[0] && selectedOptions[0].value > 0) {
+                    if (selectedOptions[0]) {
+                        that.provinceid = selectedOptions[0].value;
+                        cityStr += selectedOptions[0].text;
+                    }
+                }
+                if (selectedOptions[1] && selectedOptions[1].value > 0) {
+                    if (selectedOptions[1]) {
+                        that.cityid = selectedOptions[1].value;
+                        cityStr += ' ' + selectedOptions[1].text;
+                    }
+                }
+                that.city = cityStr ? cityStr : citydefault;
+            	newxjhschoolData = [];
+            	$.each(xjhschoolData, function(index, item) {
+            		if (that.cityid == item.cid) {
+							newxjhschoolData.push({
+							cid: item.cid,
+							value: item.value,
+							text: item.text
+						})
+            		}
+				});
+				that.schoolData =  newxjhschoolData;
+				that.schoolId='';
+				that.schoolTex='';
+                that.areaShow = false;
+            },
+            schoolConfirm(value, index) {
+            	if (value) {
+            		this.schoolTex = value.text;
+                	this.schoolId = value.value;
+            	}
+                this.schoolShow = false;
+            },
+            dateConfirm(date){
+            	this.datetime = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+            	this.dateShow = false;
+            },
+            sTimeConfirm(date){
+            	this.sTime = date;
+            	this.sTimeShow = false;
+            },
+            eTimeConfirm(date){
+            	this.eTime = date;
+            	this.eTimeShow = false;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

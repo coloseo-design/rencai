@@ -1,0 +1,584 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/clipboard/clipboard.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+	var weburl = "{yun:}$config.sy_weburl{/yun}";
+</script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+	<div class="infoboxp">
+		<div class="tty-tishi_top">
+			<div class="tabs_info">
+				<ul>
+					<li><a href="index.php?m=wx&c=pubtool">发布工具</a></li>
+					<li><a href="index.php?m=wx&c=wxPubTempList&temptype=0">公众号文章模板</a></li>
+					<li><a href="index.php?m=wx&c=wxPubTempList&temptype=1">社群推文模板</a></li>
+					<li class="curr"><a href="index.php?m=wx&c=twTask">推文任务</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+             <style>
+			 .n_tw_list{ padding-left: 100px; position: relative; margin-top: 10px;;}
+			 .n_tw_name{ position: absolute;left:0px;top:0px; font-size: 14px; line-height: 35px;;}
+			 .tw_table_left{width:600px; float: left; padding-left:20px;}
+			 .tw_yl{width:400px; float: left;}
+			 .tw_table_tit{ font-weight: bold;}
+			 </style>
+			<div class="tw_table" style="border:none;">
+				<form class="layui-form">
+						<div class="tw_table_left">
+					<div class="tw_table_tit">推文选择</div>
+					<div class="n_tw_list"><span class="n_tw_name">模板类型</span>		
+					<div class="layui-input-block">
+										<div class="layui-input-inline">
+											<span onclick="setTemp(1)"><input type="radio" checked name="temptype" value='1' title="社群推文模板"></span>
+											<span onclick="setTemp(0)"><input type="radio" name="temptype" value='0' title="公众号文章模板"></span>
+										</div>
+									</div></div>
+					<div class="n_tw_list"><span class="n_tw_name">模板类型</span>		<div style="width: 180px;" id="temp1">
+										<select name="tempid1" id="tempid1" lay-verify="">
+											<option value="">选择推文模板</option> 
+											{yun:}foreach from=$temps item=tv{/yun}
+											<option value="{yun:}$tv.id{/yun}">{yun:}$tv.title{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div><div style="width: 180px;display: none" id="temp2">
+										<select name="tempid2" id="tempid2" lay-verify="">
+											<option value="">选择推文模板</option> 
+											{yun:}foreach from=$temps2 item=tv{/yun}
+											<option value="{yun:}$tv.id{/yun}">{yun:}$tv.title{/yun}</option>
+											{yun:}/foreach{/yun}
+										</select>
+									</div></div>
+					<div class="n_tw_list"><span class="n_tw_name">指定职位</span>	<div class="" style="position: relative">
+										<div style="width: 380px; display: inline-block">
+											<select id="job_search" class="" name="job_search"
+												xm-select-type="job" xm-select="job_search"
+												xm-select-search="{yun:}url m=ajax c=getWxpubJob{/yun}"
+												xm-select-skin="default" xm-select-direction="down">
+												<option value="">输入搜索职位</option>
+											</select>
+										</div>
+										<a href="javascript:void(0);" class="tw_jobqc" onclick="clearJob();">清除职位</a>
+										<div id="joblist"></div>
+										<input id="job_ids" type="hidden" value="" name="job_ids">
+									</div>
+									<div class="tw_jobscbox">
+										<input type="button" onclick="getTW()" value="生成推文" class="admin_Filter_bth"></input>
+									</div>
+									</div>
+									</div>
+							<div class="tw_yl">			
+					<div class="tw_table_tit"> 推文内容预览 </div>
+							
+						<div  id="sqtw_preview">
+										<div class="tw_textarea">
+											<textarea id='temp_content' name="temp_content" style="width: 100%; height: 150px; border: 1px solid #ddd;border-radius:8px;"></textarea>
+										</div>
+										<div class="tw_jobfzbox">
+											<input id="copy" data-clipboard-action="copy" data-clipboard-target="#temp_content" type="button" value="一键复制" class="admin_Filter_bth"></input>
+											
+											<a href="javascript:void(0);" onclick="$('#temp_content').val('');" class="tw_jobfz_qk" style=" background-color: #e5e5e5;color:#2d8cf0;border-radius:5px;height:32px; line-height: 32px;;">清空内容</a>
+										</div>
+									</div>
+									
+									<div  id="gzh_preview" style="display: none;">
+					             		
+										<div class="wxpubtool_sj_con" id="gzh_content" style="border:1px solid #eee; margin: 5px 0;border-radius:5px; ">
+										</div>
+										
+											
+										<div class="wxpubtool_CZ" style="width:280px;">	
+											<input type="button" class="wxpubtool_CZbth" id="gzh_copy" data-clipboard-action="copy" data-clipboard-target="#gzh_content" value="一键复制" />
+										</div>
+									</div>
+						
+					</div>
+					
+				</form>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="tty-tishi_top" style="margin-top: 15PX;">
+			<div class="admin_new_search_box">
+				<form class="layui-form" action="index.php" name="myform" method="get" style="float: left">
+					<input name="m" value="wx" type="hidden" /> 
+					<input name="c" value="twTask" type="hidden" /> 
+					<div class="admin_new_search_name">搜索：</div>
+                    <input class="admin_Filter_search" type="text" name="keyword" size="25" style="float: left" placeholder="职位名、企业名称、备注、职位ID">
+					<div class="admin_new_search_name">创建人：</div>
+					<div class="admin_Filter_text formselect" style="z-index: 100">
+						<div class="layui-input-block">
+							<div class="layui-input-inline">
+								<select name="auid" id="auid" lay-verify="">
+									<option value="">选择管理员</option> 
+									{yun:}foreach from=$adminList item=v{/yun}
+									<option value="{yun:}$v.uid{/yun}" {yun:}if $smarty.get.auid==$v.uid{/yun}selected{yun:}/if{/yun}>{yun:}$v.username{/yun}</option>
+									{yun:}/foreach{/yun}
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="admin_new_search_name" style="margin-left: 20px;">福利待遇：</div>
+					<input class="admin_Filter_search" type="text" name="welfarekeyword" value="" size="25" style="float: left" placeholder="多个福利 以空格分隔 如搜索 双休 五险">
+					<div class="admin_new_search_name" style="margin-left: 20px;">状态：</div>
+					<div class="admin_Filter_text formselect" did='dstatus' style="z-index: 100">
+						<input type="button" value="{yun:}if $smarty.get.status=='1'{/yun}已推送{yun:}else{/yun}未推送{yun:}/if{/yun}" class="admin_new_select_text" id="bstatus"> 
+						<input type="hidden" id='status' value="{yun:}if $smarty.get.status=='1'{/yun}1{yun:}else{/yun}0{yun:}/if{/yun}" name='status'>
+						<div class="admin_Filter_text_box" style="display: none" id='dstatus'>
+							<ul>
+								<li><a href="javascript:void(0)" onClick="formselect('0','status','未推送')">未推送</a></li>
+								<li><a href="javascript:void(0)" onClick="formselect('1','status','已推送')">已推送</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="admin_new_search_name">标签：</div>
+					<div class="admin_Filter_text formselect" style="width: 70px;">
+
+						<a id="urgentCtrl" href="javascript:void(0);" onclick="tagsearch('urgent');" class="{yun:}if $smarty.get.urgent=='1'{/yun}urgent_search_y{yun:}else{/yun}urgent_search_n{yun:}/if{/yun}"> </a> 
+						<a id="wcmomentsCtrl" href="javascript:void(0);" onclick="tagsearch('wcmoments');" class="{yun:}if $smarty.get.wcmoments=='1'{/yun}wcmoments_search_y{yun:}else{/yun}wcmoments_search_n{yun:}/if{/yun}"></a> 
+						<input type="hidden" id="urgent" name="urgent" value="{yun:}if $smarty.get.urgent=='1'{/yun}1{yun:}else{/yun}0{yun:}/if{/yun}">
+						<input type="hidden" id="wcmoments" name="wcmoments" value="{yun:}if $smarty.get.wcmoments=='1'{/yun}1{yun:}else{/yun}0{yun:}/if{/yun}">
+					</div>
+					<input class="admin_Filter_bth" type="submit" name="news_search" value="搜索" />
+				</form>
+				{yun:}include file="admin/admin_search.htm"{/yun}
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="tty_table-bom">
+			<div class="table-list">
+				<div class="admin_table_border">
+					<iframe id="supportiframe" name="supportiframe"
+						onload="returnmessage('supportiframe');" style="display: none"></iframe>
+					<form action="index.php?m=wx&c=delTwTask"
+						method="get" target="supportiframe" name="myform" id='myform'>
+						<input type="hidden" name="m" value="wx">
+						<input type="hidden" name="c" value="delTwTask">
+						<input type="hidden" name="pytoken" id='pytoken'
+							value="{yun:}$pytoken{/yun}">
+						<table width="100%">
+							<thead>
+								<tr class="admin_table_top">
+									<th width="5%"><label for="chkall"> <input
+											type="checkbox" id='chkAll' onclick='CheckAll(this.form)' />
+									</label></th>
+									<th>
+										{yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun} 
+										<a href="{yun:}searchurl order=desc t=id m=wx c=twTask untype='order,t'{/yun}">ID<img
+											src="images/sanj.jpg" /></a> 
+										{yun:}else{/yun} 
+										<a href="{yun:}searchurl order=asc t=id m=wx c=twTask untype='order,t'{/yun}">ID<img
+											src="images/sanj2.jpg" /></a> 
+										{yun:}/if{/yun}
+									</th>
+									<th align="left">标签</th>
+									<th align="left" width="10%">企业名称</th>
+									<th align="left" width="10%">职位名称</th>
+									<th>职位创建时间</th>
+									<th>状态</th>
+									<th>创建人</th>
+									<th>
+										{yun:}if $smarty.get.t=="ctime" && $smarty.get.order=="asc"{/yun} 
+										<a href="index.php?m=wx&c=twTask&order=desc&t=ctime">添加时间<img src="images/sanj.jpg" /></a> {yun:}else{/yun} 
+										<a href="index.php?m=wx&c=twTask&order=asc&t=ctime">添加时间<img src="images/sanj2.jpg" /></a> {yun:}/if{/yun}
+									</th>
+									<th width="20%">备注</th>
+									<th class="admin_table_th_bg" width="150">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								{yun:}foreach item=v key=key from=$rows{/yun}
+								<tr align="center" {yun:}if ($key+1)%2== '0' {/yun}class="admin_com_td_bg" {yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+									<td>
+										<input type="checkbox" value="{yun:}$v.id{/yun}" data-jobid="{yun:}$v.jobid{/yun}" data-jobname="{yun:}$v.jobname{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+									<td align="left"> <span>{yun:}$v.id{/yun}</span></td>
+									<td align="left">
+										<span class="{yun:}if $v.urgent=='1'{/yun}twtask_xz{yun:}else{/yun}twtask_xz_w{yun:}/if{/yun}"></span>
+										<span class="{yun:}if $v.wcmoments=='1'{/yun}twtask_pyqxz{yun:}else{/yun}twtask_pyqxzw{yun:}/if{/yun}"></span>
+									</td>
+
+									<td align="left"><a href="{yun:}$v.comurl{/yun}" target="_blank">{yun:}$v.comname{/yun}</a></td>
+									<td align="left"><a href="{yun:}$v.joburl{/yun}" target="_blank">{yun:}$v.jobname{/yun}</a>
+										{yun:}if $v.jobstatus=='1'{/yun}
+										<div class="tw_job_tip"><span class="tw_job_tip_sc">已删除</span></div>
+										{yun:}else if $v.jobstatus=='2'{/yun}
+										<div class="tw_job_tip"><span class="tw_job_tip_xj">已下架</span></div>
+										{yun:}/if{/yun}
+									</td>
+
+									<td>{yun:}$v.jobsdate_n{/yun}</td>
+									<td>{yun:}if $v.status=='1'{/yun}已推送{yun:}else{/yun}未推送{yun:}/if{/yun}</td>
+									<td>{yun:}$v.admin_username{/yun}</td>
+									<td>{yun:}$v.ctime_n{/yun}</td>
+									<td><div style="width:200px">{yun:}$v.content{/yun}</div></td>
+									<td>
+										<div class="admin_new_bth_c">
+											{yun:}if $v.jobstatus=='1'{/yun}
+											<span style="cursor: pointer;" class="tw_sc_bth addToJobList_n">生成</span>
+											{yun:}else{/yun}
+											<span id="addjobCtrl_{yun:}$v.id{/yun}" style="cursor: pointer;" data-id="{yun:}$v.id{/yun}" data-jobid="{yun:}$v.jobid{/yun}" data-jobname="{yun:}$v.jobname{/yun}" class="tw_sc_bth addToJobList_y">生成</span>
+											{yun:}/if{/yun}
+										</div>
+										<div class="admin_new_bth_c">
+											{yun:}if $v.status=='1'{/yun}
+											<span style="cursor: pointer;" class="ts_ybth">已推送</span>
+											{yun:}else{/yun}
+											<span style="cursor: pointer;" onclick="taskFinish('{yun:}$v.id{/yun}');"  class="ts_bth">未推送</span>
+											{yun:}/if{/yun}
+											
+										</div>
+										<a href="javascript:void(0)" class="admin_new_c_bth admin_new_c_bth_sc" onClick="layer_del('确定要删除？', 'index.php?m=wx&c=delTwtask&del={yun:}$v.id{/yun}');">删除</a>
+									</td>
+								</tr>
+								{yun:}/foreach{/yun}
+								<tr>
+									<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+									<td colspan="10">
+										<label for="chkAll2">全选</label> &nbsp; 
+										<input class="admin_button" type="button" name="delsub" value="删除所选" onclick="return really('del[]')" />
+										<input class="admin_button" type="button" name="delsub" value="批量生成" onclick="return multiAdd('del[]')" />
+									</td>
+								</tr>
+								{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+									<td colspan="3">从 1 到 {yun:}$config.sy_listnum {/yun} ，总共
+										{yun:}$total{/yun} 条</td> {yun:}else if $pagenum > 1 && $pagenum <
+									$pages{/yun}
+									<td colspan="3">从 {yun:}($pagenum-1) * $config.sy_listnum
+										+ 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共
+										{yun:}$total{/yun} 条</td> {yun:}else if $pagenum == $pages{/yun}
+									<td colspan="3">从 {yun:}($pagenum-1) * $config.sy_listnum
+										+ 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="8" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+								{yun:}/if{/yun}
+							</tbody>
+
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div id="bg" class="admin_bg"></div>
+		<link
+			href="{yun:}$config.sy_weburl{/yun}/js/layui/css/formSelects-v4.css?v={yun:}$config.cachecode{/yun}"
+			rel="stylesheet" type="text/css" />
+		<script
+			src="{yun:}$config.sy_weburl{/yun}/js/layui/formSelects-v4.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script type="text/javascript">
+			var idindex = 1;
+			var tw_jobids = window.localStorage.getItem("tw_jobids");
+			tw_jobids = tw_jobids?JSON.parse(tw_jobids):[];
+			
+			if(tw_jobids){
+				var twhtml  = '',
+					twjobid_arr = [];
+
+				for(let i in tw_jobids){
+					twjobid_arr.push(tw_jobids[i].jobid);
+					twhtml += joblistHtml(tw_jobids[i].jobid, tw_jobids[i].jobname, tw_jobids[i].tid);
+				}
+
+				$('#job_ids').val(twjobid_arr.join(','));
+				$('#joblist').append(twhtml);
+			}
+
+			$(function() {
+				var clipboard = new ClipboardJS("#copy");
+				clipboard.on('success', function(e) {
+					layer.msg('复制成功！');
+					e.clearSelection();
+				});
+				clipboard.on('error', function(e) {});
+
+				var gzh_clipboard = new ClipboardJS("#gzh_copy");
+				gzh_clipboard.on('success', function(e) {
+					layer.msg('复制成功！');
+					e.clearSelection();
+				});
+				gzh_clipboard.on('error', function(e) {});
+
+				$('.addToJobList_y').click(function() {
+
+					var tid = $(this).attr('data-id');
+					var jobid = $(this).attr('data-jobid');
+					var jobname = $(this).attr('data-jobname');
+
+					addToJobList(jobid, jobname, tid);
+				})
+
+			})
+
+			var job_sids = [];
+			var form = '';
+			layui.use([ 'layer', 'form' ],function() {
+				form = layui.form; var laydate = layui.laydate, formSelects = layui.formSelects, $ = layui.$;
+
+				formSelects.btns('job_search', []);
+				formSelects.on('job_search', function(id, vals, val, isAdd, isDisabled){
+
+					job_sids = [];
+
+					vals.forEach(function(item,index){
+						job_sids.push({'value':item.value,'name':item.name});
+					})
+					
+				}, true);
+				formSelects.closed('job_search', function(id){
+					if(job_sids.length>0){
+						for(let i in job_sids){
+							addToJobList(job_sids[i].value,job_sids[i].name,'');
+						}
+					}
+					formSelects.value('job_search', []);
+				});
+			});
+			function setTemp(val){				
+				if(val==1){
+					$("#temp2").hide();
+					$("#temp1").show();
+					idindex = 1;
+					$('#sqtw_preview').show();
+					$('#gzh_preview').hide();
+				}else{
+
+					$("#temp1").hide();
+					$("#temp2").show();
+					idindex = 2;
+					$('#sqtw_preview').hide();
+					$('#gzh_preview').show();
+				}
+			}
+			function tagsearch(sname) {
+				var sval = $('#' + sname).val();
+				if (sval == '1') {
+					$('#' + sname + 'Ctrl').attr('class', sname + '_search_n');
+					$('#' + sname).val(0);
+				} else {
+					$('#' + sname + 'Ctrl').attr('class', sname + '_search_y');
+					$('#' + sname).val(1);
+				}
+			}
+
+			function addToJobList(jobid, jobname, tid) {
+
+				var job_ids = $('#job_ids').val();
+				var job_arr = [];
+				var tid = tid != '' ? tid : '';
+				if (job_ids != '') {
+
+					job_arr = job_ids.split(',');
+
+				}
+
+				if (job_arr.indexOf(jobid) == -1) {
+					//将生成按钮样式变成不可点击
+					if (tid != '') {
+						if ($('#addjobCtrl_' + tid)) {
+							$('#addjobCtrl_' + tid).removeClass('addToJobList_y');
+							$('#addjobCtrl_' + tid).addClass('addToJobList_n');
+						}
+					}
+
+					//加入待生成的职位列表并生成标签
+					job_arr.push(jobid);
+					job_arr.join(',');
+					$('#job_ids').val(job_arr);
+
+					tw_jobids.push({
+						'jobid':jobid,
+						'jobname':jobname,
+						'tid':tid
+					});
+
+					window.localStorage.setItem("tw_jobids",JSON.stringify(tw_jobids));
+
+					var html = joblistHtml(jobid, jobname, tid);
+
+					$('#joblist').append(html);
+				}else{
+					if (tid != '') {
+						if ($('#addjobCtrl_' + tid)) {
+							$('#addjobCtrl_' + tid).removeClass('addToJobList_y');
+							$('#addjobCtrl_' + tid).addClass('addToJobList_n');
+						}
+					}
+				}
+
+			}
+			function joblistHtml(jobid, jobname, tid){
+
+				var html = '<div id="jobid_'+jobid+'" class="tw_job_tag">'+ jobname + '<span id="jobdel_'+jobid+'" data-jobid="'+jobid+'" data-tid="'+tid+'" onclick="removeJob(this);" class="tw_jobscbth"></span></div>';
+
+				return html;
+			}
+			function removeJob(obj){
+
+				var jobid = $(obj).attr('data-jobid');
+				var tid = $(obj).attr('data-tid');
+
+				var job_ids = $('#job_ids').val();
+				var job_arr = [];
+				var tid = tid!=''?tid:'';
+				if(job_ids!=''){
+
+					job_arr = job_ids.split(',');
+
+				}
+
+				if(job_arr.indexOf(jobid)!=-1){
+					//将生成按钮样式变成可点击
+					if(tid!=''){
+						if($('#addjobCtrl_'+tid)){
+							$('#addjobCtrl_'+tid).removeClass('addToJobList_n');
+							$('#addjobCtrl_'+tid).addClass('addToJobList_y');
+						}
+					}
+					
+
+					//去掉待生成的职位和标签
+					var job_index = job_arr.indexOf(jobid);
+   					job_arr.splice(job_index, 1);
+					job_arr.join(',');
+					$('#job_ids').val(job_arr);
+
+					if($('#jobid_'+jobid)){
+						$('#jobid_'+jobid).remove();
+					}
+
+					if(tw_jobids){
+						var index = '';
+						for(let i in tw_jobids){
+							if(tw_jobids[i].jobid==jobid){
+								index = i;
+							}
+						}
+						if(index!=''){
+							tw_jobids.splice(index, 1);
+
+							window.localStorage.setItem("tw_jobids",JSON.stringify(tw_jobids));
+						}
+						
+					}
+					
+				}
+			}
+			function clearJob(){
+				var job_ids = $('#job_ids').val();
+
+				if($("span[id^='jobdel_']")){
+					$("span[id^='jobdel_']").each(function(index,element){
+					    $('#'+element.id).click();
+					});
+				}
+			}
+			
+			function getTW() {
+
+				var job_ids = $('#job_ids').val(), tempid = $('#tempid'+idindex).val();
+				if (tempid == '') {
+					parent.layer.msg("请选择模板！", 2, 8);
+					return false
+				}
+				if (job_ids == '') {
+					parent.layer.msg("请添加要生成的职位！", 2, 8);
+					return false
+				}
+
+				loadlayer();
+				var postData = {};
+				var pytoken = $("#pytoken").val();
+
+				postData.tpl = tempid;
+				postData.jobids = job_ids;
+				postData.pytoken = pytoken;
+
+				$.post("index.php?m=wx&c=getTW", postData, function(data) {
+
+					parent.layer.closeAll();
+					if(idindex==1){
+						$("#temp_content").val(data);
+					}else if(idindex==2){
+						$("#gzh_content").html(data);
+						// 将图片转成base64，防止复制到其他地方会跨域
+						$("#gzh_content").find('img').each(function(){
+							var _this = $(this);
+							var backImg = new Image();
+							backImg.src = _this.attr('src');;
+							backImg.onload = function() {
+								// 将是人才网域名的图片转成base64
+								if(backImg.src.indexOf(weburl) > -1){
+									var base = getBase64Image(backImg);
+									_this.attr('src', base);
+								}
+							};
+						});
+					}
+					
+				});
+
+			}
+			function taskFinish(id){
+
+				var pytoken = $('#pytoken').val();
+				parent.layer.confirm('确认已推送？', function(){
+					loadlayer();
+					var postData = {
+						'pytoken':pytoken,
+						'id':id
+					};
+					$.post("index.php?m=wx&c=taskFinish",postData,function(data){
+
+						parent.layer.closeAll();
+						var data=eval('('+data+')');
+						parent.layer.msg(data.msg, Number(data.tm), Number(data.st),function(){
+							if(data.st=='9'){
+								$('#list'+id).remove();
+							}
+						});
+						
+					});
+
+				});
+
+			}
+			function multiAdd(name){
+				var tid='',jobid='',jobname='';
+				$('input[name="'+name+'"]:checked').each(function(){    
+					tid= $(this).val(); 
+					jobid= $(this).attr('data-jobid');
+					jobname= $(this).attr('data-jobname'); 
+					addToJobList(jobid,jobname,tid);
+				});  
+			
+			}
+			// 将图片转成base64
+			function getBase64Image(img) {
+				var canvas = document.createElement("canvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, img.width, img.height);
+				var dataURL = canvas.toDataURL("image/png");
+				return dataURL;
+			}
+		</script>
+</body>
+</html>

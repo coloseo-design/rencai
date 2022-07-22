@@ -1,0 +1,146 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+    {yun:}include file="$trainstyle/left.htm"{/yun}
+    <div class="right_column_index_home frt mt20">
+        <div class="right_index_sj_box">
+            <div class="right_index_sj_box_c">
+            
+            <div class="header_info">
+<div class="">
+<div class="header_info_logo"> 
+	  <img src="{yun:}$info.logo_n{/yun}" width="100" height="100" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2)" />
+	    </div>
+<div class="header_info_cont">
+<div class="header_info_jgname">{yun:}if $info.name==""{/yun}<a href="index.php?c=info" class="header_info_ws">您还未完善基本信息，点击完善！</a>{yun:}else{/yun}{yun:}$info.name{/yun}{yun:}/if{/yun}</div>
+<div class="header_info_cz">
+<div class="header_info_cruiser">
+<a class="accomodation_abuse" href="index.php?c=uppic">修改LOGO</a>
+<span class="header_info_cz_line">|</span> <a class="accomodation_abuse" href="index.php?c=info">修改基本资料</a><span class="header_info_cz_line"> |</span> <a class="accomodation_abuse" href="{yun:}url m=train c=agencyshow id=$uid{/yun}">预览主页</a></div>
+<div class="header_info_accuracy">
+<a href="index.php?c=integral" class="hqjf"> 赚{yun:}$config.integral_pricename{/yun}</a>
+<div class="com_index_sign_box">
+  <div class="com_index_sign">{yun:}sign{/yun}</div>
+</div>
+</div>
+</div>
+
+
+<div class="rz_box"> 
+{yun:}if $info.email_status=="1"{/yun}
+        <a href="index.php?c=binding"><span class="rz_icon yxrz">邮箱已验证 </span> </a>
+        {yun:}else{/yun}
+        <a href="index.php?c=binding"><span class="rz_icon yxwrz">{yun:}$info.linkmail{/yun} 未验证 </span>  </a>
+        {yun:}/if{/yun}
+        {yun:}if $info.moblie_status=="1"{/yun}
+        <a href="index.php?c=binding"><span class="rz_icon sjrz">手机已验证 </span> </a>
+        {yun:}else{/yun}
+        <a href="index.php?c=binding"><span class="rz_icon sjwrz">{yun:}$info.linktel{/yun}未验证 </span>  </a>
+        {yun:}/if{/yun}
+        {yun:}if $info.yyzz_status=="1"{/yun}
+      <a href="index.php?c=binding"><span class="rz_icon zzrz">执照已验证 </span> </a>
+        {yun:}else{/yun}
+     <a href="index.php?c=binding"><span class="rz_icon zzwrz">执照未验证 </span>  </a>
+        {yun:}/if{/yun}
+        </div>
+        
+
+        
+</div>
+<div class="header_jf">
+<span class="right_index_sj_box_s"><a href="index.php?c=sign_up" class="right_index_sj_box_s_a1"><strong>{yun:}$baoming_num{/yun}</strong>课程预约</a></span>
+<span class="right_index_sj_box_s"><a href="index.php?c=subject" class="right_index_sj_box_s_a2"><strong>{yun:}$subject_num{/yun}</strong>已有课程</a></span>
+<br>
+<span class="right_index_sj_box_s"><a href="index.php?c=message"  class="right_index_sj_box_s_a3"><strong>{yun:}$zixun_num{/yun}</strong>咨询留言</a> </span>
+<span class="right_index_sj_box_s"><a href="index.php?c=integral"  class="right_index_sj_box_s_a3"><strong>{yun:}$statis.integral{/yun}</strong>我的{yun:}$config.integral_pricename{/yun}</a> </span>
+
+</div>
+        
+        
+        
+</div>
+</div>
+
+
+                
+            </div>
+        </div>
+        <div class="right_index_border_index_home mt20">
+            <div class="right_index_h1">预约名单</div>
+            <div class="right_index_ybox">
+                <div class="new_Leave_list_tit new_Leave_list_h flt">
+                    <div class="new_Leave_li_list_tit new_Leave_w172">姓名 </div>
+                    <div class="new_Leave_li_list_tit new_Leave_w240">手机号码 </div>
+                    <div class="new_Leave_li_list_tit new_Leave_w200" style="width:344px;padding-left:4px;">预约课程 </div>
+                    <div class="new_Leave_li_list_tit new_Leave_w200" style="width:141px;">预约时间 </div>
+
+                </div>
+                {yun:}foreach item=v from=$baoming{/yun}
+                <div class="new_Leave_list flt">
+                    <div class="new_Leave_li_list new_Leave_w172" style="padding-left:16px;">{yun:}$v.name{/yun} </div>
+                    <div class="new_Leave_li_list new_Leave_w240">{yun:}$v.phone{/yun} </div>
+                    <div class="new_Leave_li_list new_Leave_w200" style="width:344px;padding-left:4px;">{yun:}$v.sub_name{/yun} </div>
+                    <div class="new_Leave_li_list new_Leave_w200" style="width:141px;">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun} </div>
+
+                </div>
+                {yun:}/foreach{/yun} {yun:}if !$baoming{/yun}
+                <div class="right_index_nomsg">暂无相关预约内容!</div>
+                {yun:}/if{/yun}
+            </div>
+        </div>
+        <div class="right_index_border_index_home mt20">
+            <div class="right_index_h1">最新留言</div>
+            <div class="right_index_ybox">
+                <div class="new_Leave_list new_Leave_list_h flt" style="margin-left:0px;">
+                    <div class="new_Leave_li_list new_Leave_name">留言者</div>
+                    <div class="new_Leave_li_list  new_Leave_tel">手机号码</div>
+                    <div class="new_Leave_li_list new_Leave_date">留言日期</div>
+                    <div class="new_Leave_li_list new_Leave_zt">状态 </div>
+                    <div class="new_Leave_li_list new_Leave_zt_change">操作 </div>
+                </div>
+                {yun:}foreach item=v from=$zixun{/yun}
+                <div class="new_Leave_list flt">
+                    <div class="new_Leave_li_list new_Leave_name new_Leave_name_cor">{yun:}$v.nickname{/yun}</div>
+                    <div class="new_Leave_li_list new_Leave_tel" style="padding-left:0px;">{yun:}$v.phone{/yun}</div>
+                    <div class="new_Leave_li_list new_Leave_date" style="padding-left:26px;">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+                    <div class="new_Leave_li_list new_Leave_zt" style="padding-left:4px;">
+                        <a href="javascript:void(0);" class="new_Leave_Unanswered">{yun:}if $v.status==1{/yun}未回复{yun:}else{/yun}已回复{yun:}/if{/yun}</a>
+                        {yun:}if $v.status=="1"{/yun}
+                        {yun:}/if{/yun}
+                   </div>
+                    <div class="new_Leave_li_list new_Leave_zt_change">
+                        <a href="javascript:void(0);" class="new_Leave_Unanswered">{yun:}if $v.status==2{/yun}{yun:}else{/yun}<a href="javascript:void(0)" onclick="$('#reply{yun:}$v.id{/yun}').toggle();" class="new_Leave_zt_fh">回复</a><em class="px_line">|</em>{yun:}/if{/yun}</a>
+                        
+                        <a href="javascript:void(0)" class="new_Leave_Unanswered" onclick="layer_del('确定删除该咨询留言？','index.php?c=message&act=del&del={yun:}$v.id{/yun}');">删除</a>
+                        {yun:}if $v.status=="1"{/yun}
+                        <!--<a href="javascript:void(0)" onclick="$('#reply{yun:}$v.id{/yun}').toggle();" class="new_Leave_zt_fh">点击回复</a>-->{yun:}/if{/yun}
+                    </div>
+                    <div class="new_Leave_nr">留言内容：{yun:}$v.content{/yun}</div>
+                    {yun:}if $v.status=="1"{/yun}
+                    <div class="Courses_right_Advisory_box Courses_right_Advisory_box_690 ftl" id="reply{yun:}$v.id{/yun}" style="display:none">
+                        <i class="Courses_right_Advisory_box_icon"></i>
+                        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                        <form name="myform" method="post" target="supportiframe" action="index.php?c=message&act=reply&reply=1">
+                            <div class="goog-textarea_box">
+                                <textarea name="content" class="goog-textarea_ly"></textarea>
+                            </div>
+                            <div class="goog-textarea_tj">
+                                <input type="hidden" name="id" value="{yun:}$v.id{/yun}" />
+                                <input type="submit" value="提交" class="goog-textarea_tj_bth">
+                            </div>
+                        </form>
+                    </div>
+                    {yun:}elseif $v.status=="2"{/yun}
+                    <div class="Courses_right_Advisory_hf ftl">{yun:}$v.reply{/yun}</div>
+                    {yun:}/if{/yun}
+                </div>
+                {yun:}/foreach{/yun} {yun:}if !$zixun{/yun}
+                <div class="right_index_nomsg">暂无相关留言内容!</div>
+                {yun:}/if{/yun}
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

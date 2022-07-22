@@ -1,0 +1,584 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/wap_tck.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/umeditor/themes/default/css/umeditor.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<style type="text/css">
+    .yun_wap_info_brief_tit_bc{margin:10px;}
+</style>
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll wap_member">
+                <ul class="yunset_list">
+                    <li class="yunset_list_text"><span class="yunset_list_name">职位名称</span>
+                        <span class="yunset_list_commentary"> 
+							<input type="text" name="job_name" id='job_name' value="{yun:}$row.job_name{/yun}" placeholder="请填写职位名称" class="">
+			            </span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">职位分类</span>
+                        <span class="yunset_list_commentary">
+							<button id="ltjobPicker" class="mui-btn mui-btn-block" type="button" data-jobone="{yun:}$row.jobone{/yun}" data-jobtwo="{yun:}$row.jobtwo{/yun}">{yun:}if $ltjob_name[$row.jobone]{/yun}{yun:}if !$ltjob_name[$row.jobtwo]{/yun}{yun:}$ltjob_name[$row.jobone]{/yun}{yun:}else{/yun}{yun:}$ltjob_name[$row.jobtwo]{/yun}{yun:}/if{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="jobone" name="jobone" value="{yun:}$row.jobone{/yun}">
+							<input type="hidden" id="jobtwo" name="jobtwo" value="{yun:}$row.jobtwo{/yun}">
+						</span>
+                    </li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">工作地点</span>
+                        <span class="yunset_list_commentary">
+						<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}"  data-cityid="{yun:}$row.cityid{/yun}"  data-three_cityid="{yun:}$row.three_cityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+						<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+						<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+						<input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}">
+						</span>
+                    </li>
+                    <li>
+                        <a href="#contenthtml" id="contenteditor"><span class="yunset_list_name">职位描述</span><span class="yunset_list_commentary yunset_list_js" id="contentshow">{yun:}if $row.job_desc{/yun}{yun:}$row.job_desc_t{/yun}{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+                    </li>
+                    <textarea style="display:none" id="contenttext" name="content">{yun:}$row.job_desc{/yun}</textarea>
+                    <li>
+                        <a href="#eligiblehtml" id="eligibleeditor"><span class="yunset_list_name">任职资格</span><span class="yunset_list_commentary yunset_list_js" id="eligibleshow">{yun:}if $row.eligible{/yun}{yun:}$row.eligible_t{/yun}{yun:}else{/yun}请填写任职资格{yun:}/if{/yun}</span></a>
+                    </li>
+                    <textarea style="display:none" id="eligibletext" name="eligible">{yun:}$row.eligible{/yun}</textarea>
+                    <li class="yunset_list_text"><span class="yunset_list_name">所属部门</span>
+                        <span class="yunset_list_commentary"> 
+							<input type="text" name="department" id='department' value="{yun:}$row.department{/yun}" placeholder="请填写所属部门" class="">
+			            </span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">汇报对象</span>
+                        <span class="yunset_list_commentary"> 
+							<input type="text" name="report" id='report' value="{yun:}$row.report{/yun}" placeholder="请填写汇报对象" class="">
+			            </span>
+                    </li>
+                    <li>
+                        <a href="#salaryhtml"><span class="yunset_list_name">职位年薪</span><span class="yunset_list_commentary yunset_list_js" id="salary">{yun:}if $row.maxsalary{/yun}{yun:}$row.minsalary|floatval{/yun}-{yun:}$row.maxsalary|floatval{/yun}万元/年{yun:}elseif $row.minsalary{/yun}{yun:}$row.minsalary|floatval{/yun}万元以上/年{yun:}else{/yun}请填写{yun:}/if{/yun}</span></a>
+                        <input type="hidden" id="minsalary" name="minsalary" value="{yun:}$row.minsalary{/yun}">
+                        <input type="hidden" id="maxsalary" name="maxsalary" value="{yun:}$row.maxsalary{/yun}">
+                    </li>
+                    <li>
+                        <a href="#constitutehtml"><span class="yunset_list_name">薪资构成</span><span class="yunset_list_commentary yunset_list_js" id="constituteshow" style="width: 90%;margin-left: 10%">
+								{yun:}if $row.constitute{/yun}
+									{yun:}foreach item=v key=key from=$ltdata.lt_constitute{/yun}
+										{yun:}if in_array($v,$row.constitute){/yun}
+											{yun:}if ($v!=$row.constitute[0]){/yun}
+												,{yun:}$ltclass_name[$v]{/yun}
+											{yun:}else{/yun}
+												{yun:}$ltclass_name[$v]{/yun}
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									{yun:}/foreach{/yun}
+								{yun:}else{/yun}
+								请选择
+								{yun:}/if{/yun}
+						</span></a>
+                        <input type="hidden" id="constitute" name="constitute" value="{yun:}$row.constitutev{/yun}">
+                    </li>
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">年龄要求</span>
+                        <span class="yunset_list_commentary">
+							<button id="agePicker" class="mui-btn mui-btn-block" type="button" data-age="{yun:}$row.age{/yun}" >{yun:}if $ltclass_name[$row.age]{/yun}{yun:}$ltclass_name[$row.age]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="age" name="age" value="{yun:}$row.age{/yun}">
+						</span>
+                    </li>
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">性别要求</span>
+                        <span class="yunset_list_commentary">
+							<button id="sexPicker" class="mui-btn mui-btn-block" type="button" data-sex="{yun:}$row.sex{/yun}">{yun:}if $lt_sex[$row.sex]{/yun}{yun:}$lt_sex[$row.sex]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="sex" name="sex" value="{yun:}$row.sex{/yun}">
+						</span>
+                    </li>
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">学历要求</span>
+                        <span class="yunset_list_commentary">
+							<button id="eduPicker" class="mui-btn mui-btn-block" type="button" data-edu="{yun:}$row.edu{/yun}">{yun:}if $ltclass_name[$row.edu]{/yun}{yun:}$ltclass_name[$row.edu]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="edu" name="edu" value="{yun:}$row.edu{/yun}">
+						</span>
+                    </li>
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">工作经验</span>
+                        <span class="yunset_list_commentary">
+							<button id="expPicker" class="mui-btn mui-btn-block" type="button" data-exp="{yun:}$row.exp{/yun}">{yun:}if $ltclass_name[$row.exp]{/yun}{yun:}$ltclass_name[$row.exp]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="exp" name="exp" value="{yun:}$row.exp{/yun}">
+						</span>
+                    </li>
+                    <li>
+                        <a href="#welfarehtml"><span class="yunset_list_name">福利待遇<em class="yunset_xttip">(选填)</em></span><span class="yunset_list_commentary yunset_list_js" id="welfareshow" style="width:90%;margin-left: 10%">
+							{yun:}if $row.welfare{/yun}
+								{yun:}foreach item=v key=key from=$ltdata.lt_welfare{/yun}
+									{yun:}if in_array($v,$row.welfare){/yun}
+										{yun:}if ($v!=$row.welfare[0]){/yun}
+											,{yun:}$ltclass_name[$v]{/yun}
+										{yun:}else{/yun}
+											{yun:}$ltclass_name[$v]{/yun}
+										{yun:}/if{/yun}
+									{yun:}/if{/yun}
+								{yun:}/foreach{/yun}
+							{yun:}else{/yun}
+							请选择
+							{yun:}/if{/yun}
+						</span></a>
+                        <input type="hidden" id="welfare" name="welfare" value="{yun:}$row.welfarev{/yun}">
+                    </li>
+                    <li>
+                        <a href="#languagehtml"><span class="yunset_list_name">语言要求<em class="yunset_xttip">(选填)</em></span><span class="yunset_list_commentary yunset_list_js" id="langshow" style="width:90%;margin-left: 10%">
+							{yun:}if $row.language{/yun}
+								{yun:}foreach item=v key=key from=$ltdata.lt_language{/yun}
+									{yun:}if in_array($v,$row.language){/yun}
+										{yun:}if ($v!=$row.language[0]){/yun}
+											,{yun:}$ltclass_name[$v]{/yun}
+										{yun:}else{/yun}
+											{yun:}$ltclass_name[$v]{/yun}
+										{yun:}/if{/yun}
+									{yun:}/if{/yun}
+								{yun:}/foreach{/yun}
+							{yun:}else{/yun}
+							请选择
+							{yun:}/if{/yun}
+						</span></a>
+                        <input type="hidden" id="lang" name="lang" value="{yun:}$row.languagev{/yun}">
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">公司名称</span>
+                        <span class="yunset_list_commentary"> 
+							<input type="text" name="com_name" id="com_name" maxlength="60"  value="{yun:}$row.com_name{/yun}" placeholder="请填写公司名称" class="">
+			            </span>
+                    </li>
+
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">公司性质</span>
+                        <span class="yunset_list_commentary">
+							<button id="prComPicker" class="mui-btn mui-btn-block" type="button" data-pr="{yun:}$row.pr{/yun}">{yun:}if $comclass_name[$row.pr]{/yun}{yun:}$comclass_name[$row.pr]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="pr" name="pr" value="{yun:}$row.pr{/yun}">
+						</span>
+                    </li>
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">所属行业</span>
+                        <span class="yunset_list_commentary">
+							<button id="hyPicker" class="mui-btn mui-btn-block" type="button" data-hy="{yun:}$row.hy{/yun}">{yun:}if $industry_name[$row.hy]{/yun}{yun:}$industry_name[$row.hy]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="hy" name="hy" value="{yun:}$row.hy{/yun}">
+						</span>
+                    </li>
+                    <li class="yunset_list_select">
+                        <span class="yunset_list_name">公司规模</span>
+                        <span class="yunset_list_commentary">
+							<button id="munComPicker" class="mui-btn mui-btn-block" type="button" data-mun="{yun:}$row.mun{/yun}">{yun:}if $comclass_name[$row.mun]{/yun}{yun:}$comclass_name[$row.mun]{/yun}{yun:}else{/yun}请选择{yun:}/if{/yun}</button>
+							<input type="hidden" id="mun" name="mun" value="{yun:}$row.mun{/yun}">
+						</span>
+                    </li>
+                    <li>
+                        <a href="#deschtml" id="desceditor">
+                        	<span class="yunset_list_name">公司介绍</span>
+                        	<span class="yunset_list_commentary yunset_list_js" id="descshow">
+                        		{yun:}if $row.desc{/yun}{yun:}$row.desc{/yun}{yun:}else{/yun}请填写公司介绍{yun:}/if{/yun}
+                        	</span>
+                        </a>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">返利金额<em class="yunset_xttip">(选填)</em></span>
+                        <span class="yunset_list_commentary"> 
+							<input type="text" name="rebates" id="rebates" maxlength="6"  value="{yun:}$row.rebates{/yun}" placeholder="请填写返利金额" style="width:90%;" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')">{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun}
+			            </span>
+                    </li>
+                    <li>
+                        <a href="#otherhtml" id="othereditor">
+                        	<span class="yunset_list_name">补充说明<em class="yunset_xttip">(选填)</em></span>
+                        <div style="padding-left:20px;">	<span class="yunset_list_commentary yunset_list_js" id="othershow">
+                        		{yun:}if $row.other{/yun}{yun:}$row.other_t{/yun}{yun:}else{/yun}请填写{yun:}/if{/yun}
+                        	</span>
+                            </div>
+                        </a>
+                    </li>
+                    <textarea style="display:none" id="othertext" name="other">{yun:}$row.other{/yun}</textarea>
+                </ul>
+                <div class="yunset_bth_box" style="background: transparent; border: none;">
+                    <input id="id" name="id" value="{yun:}$row.id{/yun}" type="hidden" />
+                    <input name="r_status" id="r_status" type="hidden" value="{yun:}$info.r_status{/yun}"/>
+                    <input type="submit" id="ltjobsubmit" value="提交操作" class="reinputText2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="contenthtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit">职位描述</div>
+                        <textarea class="textAreaMsg tip" id="content" name="content">{yun:}$row.job_desc{/yun}</textarea>
+                        <div class="clear"></div>
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back" id="contentbc">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="otherhtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit">补充说明</div>
+                        <textarea class="textAreaMsg tip" id="other" name="other">{yun:}$row.other{/yun}</textarea>
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back" id="otherbc">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="eligiblehtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit">任职资格</div>
+                        <textarea class="textAreaMsg tip" id="eligible" name="eligible" maxlength="500" onchange="this.value=this.value.substring(0, 500)" onkeydown="this.value=this.value.substring(0, 500)" onkeyup="this.value=this.value.substring(0, 20)">{yun:}$row.eligible{/yun}</textarea>
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back" id="eligiblebc">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="salaryhtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll wap_member">
+                <ul class="yunset_list  ">
+                    <li class="yunset_list_text"><span class="yunset_list_name">最低薪资</span>
+                        <input type="number" id="minxz" value="{yun:}$row.minsalary{/yun}" placeholder="请填写最低薪资，单位万元/年">
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">最高薪资</span>
+                        <input type="number" id="maxxz" value="{yun:}$row.maxsalary{/yun}" placeholder="请填写最高薪资，单位万元/年">
+                    </li>
+                </ul>
+                <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="constitutehtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_info_fl">
+                    <div class="yun_info_fl_c">
+                        <div class="yun_wap_addresume_box_nexttit">薪资构成</div>
+                        {yun:}foreach item=v from=$ltdata.lt_constitute{/yun}
+                        <div class="yun_info_fl_list">
+                            <div class="mui-input-row mui-checkbox">
+                                <label>{yun:}$ltclass_name[$v]{/yun} </label>
+                                <input name="xzgc" value="{yun:}$v{/yun}" type="checkbox" class="constitute" data-id="{yun:}$v{/yun}" data-name="{yun:}$ltclass_name[$v]{/yun}" {yun:}if in_array($v,$row.constitute){/yun}checked{yun:}/if{/yun}>
+                            </div>
+                        </div>
+                        {yun:}/foreach{/yun}
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="languagehtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_info_fl">
+                    <div class="yun_info_fl_c">
+                        <div class="yun_wap_addresume_box_nexttit">语言要求</div>
+                        {yun:}foreach item=v from=$ltdata.lt_language{/yun}
+                        <div class="yun_info_fl_list">
+                            <div class="mui-input-row mui-checkbox">
+                                <label>{yun:}$ltclass_name[$v]{/yun} </label>
+                                <input name="yyyq" value="{yun:}$v{/yun}" type="checkbox" class="lang" data-id="{yun:}$v{/yun}" data-name="{yun:}$ltclass_name[$v]{/yun}" {yun:}if in_array($v,$row.language){/yun}checked{yun:}/if{/yun}>
+                            </div>
+                        </div>
+                        {yun:}/foreach{/yun}
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deschtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit">公司介绍</div>
+                        <textarea class="textAreaMsg tip" id="desc" name="desc">{yun:}$row.desc{/yun}</textarea>
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back" id="descbc">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="welfarehtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_info_fl">
+                    <div class="yun_info_fl_c">
+                        <div class="yun_wap_addresume_box_nexttit">福利待遇</div>
+                        {yun:}foreach item=v from=$ltdata.lt_welfare{/yun}
+                        <div class="yun_info_fl_list">
+                            <div class="mui-input-row mui-checkbox">
+                                <label>{yun:}$ltclass_name[$v]{/yun} </label>
+                                <input name="fldy" value="{yun:}$v{/yun}" type="checkbox" class="welfare" data-id="{yun:}$v{/yun}" data-name="{yun:}$ltclass_name[$v]{/yun}" {yun:}if in_array($v,$row.welfare){/yun}checked{yun:}/if{/yun}>
+                            </div>
+                        </div>
+                        {yun:}/foreach{/yun}
+                        <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/umeditor/umeditor.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/ltjob.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/lt.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<!-- <script src="{yun:}$wap_style{/yun}/js/member_caregory.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> -->
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript">
+    UM.getEditor('content', {
+        toolbar: false,
+        elementPathEnabled: false,
+        wordCount: false,
+        autoHeightEnabled: false
+    });
+    UM.getEditor('eligible', {
+        toolbar: false,
+        elementPathEnabled: false,
+        wordCount: false,
+        autoHeightEnabled: false
+    });
+    UM.getEditor('other', {
+        toolbar: false,
+        elementPathEnabled: false,
+        wordCount: false,
+        autoHeightEnabled: false
+    });
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    
+    var view = viewApi.view;
+    (function($) {
+    	//初始化单页的区域滚动
+	    mui('.mui-scroll-wrapper').scroll({
+	        scrollY: true, //是否竖向滚动
+	        scrollX: false, //是否横向滚动
+	        startX: 0, //初始化时滚动至x
+	        startY: 0, //初始化时滚动至y
+	        indicators: true, //是否显示滚动条
+	        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+	        // bounce: true //是否启用回弹
+	    });
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+        view.addEventListener('pageBeforeShow', function(e) { //动画开始前触发
+            var edittarget = '';
+            if(e.detail.page.id == 'contenthtml') {
+                edittarget = 'content';
+                var contenttext = document.getElementById('contenttext').value;
+            } else if(e.detail.page.id == 'eligiblehtml') {
+                edittarget = 'eligible';
+                var contenttext = document.getElementById('eligibletext').value;
+            } else if(e.detail.page.id == 'otherhtml') {
+                edittarget = 'other';
+                var contenttext = document.getElementById('othertext').value;
+            }
+            if(contenttext) {
+                UM.getEditor(edittarget).setContent(contenttext, '');
+            }
+        });
+        view.addEventListener('pageBeforeBack', function(e) {
+        	if(e.detail.page.id == 'salaryhtml') {
+        		//薪资待遇
+            var salarytype = 0;
+            if(salarytype == 0) {
+                var minsalary = document.getElementById('minxz').value;
+                var maxsalary = document.getElementById('maxxz').value;
+                if(minsalary != "") {
+                    document.getElementById('minsalary').value = minsalary;
+                    document.getElementById('salary').innerText = minsalary + '万元以上/年';
+                }
+                if(parseInt(maxsalary) > 0) {
+                    if(parseInt(maxsalary) <= parseInt(minsalary)) {
+                        mui.toast('最高薪资必须大于最低薪资');
+                        document.getElementById('minsalary').value = "";
+                        document.getElementById('salary').innerText = "";
+                    } else {
+                        document.getElementById('maxsalary').value = maxsalary;
+                        document.getElementById('salary').innerText = minsalary + '-' + maxsalary + '万元/年';
+                    }
+                }
+            }
+        	}
+            var content = '',
+                showid = '',
+                textid = '';
+            if(e.detail.page.id == 'contenthtml') {
+                showid = 'contentshow';
+                textid = 'contenttext';
+                content = UM.getEditor('content').getContent();
+            } else if(e.detail.page.id == 'eligiblehtml') {
+                showid = 'eligibleshow';
+                textid = 'eligibletext';
+                content = UM.getEditor('eligible').getContent();
+            } else if(e.detail.page.id == 'otherhtml') {
+                showid = 'othershow';
+                textid = 'othertext';
+                content = UM.getEditor('other').getContent();
+            }
+            if(content != "") {
+                document.getElementById(showid).innerText = content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+                document.getElementById(textid).value = content;
+            }
+            if(e.detail.page.id == 'deschtml') {
+            	document.getElementById('descshow').innerText = document.getElementById('desc').value;
+            }
+
+            //语言要求
+            var checkv = "",
+                checkshow = "",
+                ltcheck = "",
+                vid = "",
+                showid = "";
+            if(e.detail.page.id == 'languagehtml') {
+                ltcheck = ".lang";
+                vid = "lang";
+                showid = "langshow";
+            } else if(e.detail.page.id == 'welfarehtml') {
+                ltcheck = ".welfare";
+                vid = "welfare";
+                showid = "welfareshow";
+            } else if(e.detail.page.id == 'constitutehtml') {
+                ltcheck = ".constitute";
+                vid = "constitute";
+                showid = "constituteshow";
+            }
+            if(ltcheck != "") {
+                $(ltcheck).each(function(w, checkdata) {
+                    if(checkdata.checked == true) {
+                        if(checkv == "") {
+                            checkv = checkdata.dataset.id;
+                        } else {
+                            checkv = checkv + "," + checkdata.dataset.id;
+                        }
+                        if(checkshow == "") {
+                            checkshow = checkdata.dataset.name;
+                        } else {
+                            checkshow = checkshow + "," + checkdata.dataset.name;
+                        }
+                    }
+                });
+                document.getElementById(vid).value = checkv;
+                document.getElementById(showid).innerText = checkshow != "" ? checkshow : "请选择";
+            }
+        });
+    })(mui);
+	$(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+    var ltjobData = [];
+    '{yun:}foreach item=v from=$ltjob_index {/yun}'
+    var ltjobson = [];
+    '{yun:}foreach item=val from=$ltjob_type[$v]{/yun}'
+    ltjobson.push({
+        value: '{yun:}$val{/yun}',
+        text: '{yun:}$ltjob_name[$val]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    ltjobData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$ltjob_name[$v]{/yun}',
+        children: ltjobson
+    })
+    '{yun:}/foreach{/yun}'
+
+    var expData = [];
+    '{yun:}foreach item=v from=$ltdata.lt_exp {/yun}'
+    expData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$ltclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+
+    var ageData = [];
+    '{yun:}foreach item=v from=$ltdata.lt_age{/yun}'
+    ageData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$ltclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var sexData = [];
+    '{yun:}foreach item=v key=key from=$lt_sex{/yun}'
+    sexData.push({
+        value: '{yun:}$key{/yun}',
+        text: '{yun:}$v{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var eduData = [];
+    '{yun:}foreach item=v from=$ltdata.lt_edu{/yun}'
+    eduData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$ltclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var hyData = [];
+    '{yun:}foreach item=v from=$industry_index{/yun}'
+    hyData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$industry_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var prData = [];
+    '{yun:}foreach item=v from=$comdata.job_pr{/yun}'
+    prData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$comclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var munData = [];
+    '{yun:}foreach item=v from=$comdata.job_mun{/yun}'
+    munData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$comclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}';
+    console.info(cityData);
+</script>
+{yun:}include file="$wapstyle/member/public/phptoast.htm"{/yun}
+</body></html>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}" />
+<meta name="description" content="{yun:}$description{/yun}" />
+</head>
+<body class="body_bg">
+  {yun:}include file="$schoolstyle/header.htm"{/yun} 
+ <div class="school_show_header">
+  <div class="school_w1200">
+  <div class="school_show_logo">
+ <div class=""><img src="{yun:}$row.photo{/yun}"width="120" height="120"></div>
+  {yun:}if $uid{/yun}
+		{yun:}if $usertype==1{/yun}
+			{yun:}if $atn{/yun}
+				<a href="javascript:void(0);" onclick="atn_academy('{yun:}$atn.id{/yun}', '{yun:}url m=school c=del_school_academy{/yun}');"  class="school_show_atn">取消关注</a> 
+			{yun:}else{/yun}
+				 <a href="javascript:;" onclick="atn_academy('{yun:}$row.id{/yun}','{yun:}url m=school c=add_school_academy{/yun}')" class="school_show_atn">关注</a>
+			{yun:}/if{/yun}
+		{yun:}else{/yun}
+			<a href="javascript:void(0);" onclick="layer.msg('只有个人用户才能关注', 2, 8)" class="school_show_atn">关注</a> 
+		{yun:}/if{/yun}
+   {yun:}else{/yun}
+            <a href="javascript:void(0);" class="school_show_atn" onclick="showlogin('1');" >关注</a> 
+  {yun:}/if{/yun}
+
+ </div>
+ <div class="school_show_info">
+<div class="school_show_name">{yun:}$row.schoolname{/yun}<span class="school_show_name_n">{yun:}$row.schooltag_n{/yun}</span></div>
+<div class="school_show_p">学科类别：{yun:}$row.school_categty_n{/yun}</div>
+<div class="school_show_p">就业信息网：{yun:}$row.schoolinternet{/yun}</div>
+<div class="school_show_p">主管部门：{yun:}$row.school_department_n{/yun}</div>
+<div class="school_show_p">学校地址：{yun:}$row.address{/yun}</div>
+<div class="school_show_p">联系电话：{yun:}$row.school_phone{/yun}</div>
+</div>
+</div>
+</div>
+  <div class="school_w1200">
+<div class="school_show_left">
+<div class="school_show_tit"><span class="school_show_tit_s">本校宣讲会</span></div>
+<ul class="school_show_list">
+{yun:}xjh sid='@row.id' item=slist limit=10 ispage=1{/yun}
+<li>
+<div class="school_show_list_time">{yun:}$slist.stime|date_format:'%Y-%m-%d'{/yun} {yun:}$slist.xjh_week{/yun} </div>
+<div class="school_show_listcomname"><a href="{yun:}$slist.com_url{/yun}" class="school_show_listcomname_a">{yun:}$slist.com_name{/yun}</a></div>
+<div class="school_show_list_add">宣讲地点：<i class="school_show_listmap"></i>{yun:}$slist.address{/yun}</div>
+<div class="school_show_list_zt">
+{yun:}if $slist.stime lt time()&& $slist.etime gt time(){/yun}
+<font color="#009933">举办中</font>
+{yun:}elseif $slist.etime lt time(){/yun}
+已举办
+{yun:}elseif $slist.stime gt time(){/yun}
+{yun:}if !$uid{/yun}
+	<a href="javascript:;" onclick="showlogin()" class="school_show_listgz">关注</a>
+{yun:}else{/yun}
+	{yun:}if $slist.atnid{/yun}
+        <a href="javascript:;"  class="school_show_listgz">已关注</a>
+    {yun:}else{/yun}
+        {yun:}if $usertype==1{/yun}
+         <a href="javascript:;" onclick="atnxjh('{yun:}$slist.id{/yun}','{yun:}$slist.uid{/yun}')" class="school_show_listgz">关注</a>
+        {yun:}else{/yun}
+            <a href="javascript:void(0);" onclick="layer.msg('只有个人用户才能关注', 2, 8)" class="school_show_listgz">关注</a> 
+        {yun:}/if{/yun}
+   {yun:}/if{/yun}
+
+{yun:}/if{/yun}
+{yun:}/if{/yun}
+</div>
+</li>
+{yun:}xjhelse{/yun}
+</ul>
+<div class="school_show_nomsg">暂无本校宣讲会信息</div>
+{yun:}/xjh{/yun}
+</div>
+<div class="school_show_right">
+<div class="school_show_right_tip">
+<div class="school_show_right_tip_t">温馨提示</div>
+<div class="school_show_right_tip_h">同学们！</div>
+<div class="school_show_right_tip_p">少数宣讲会场次可能临时改变时间、地点、甚至取消。宣讲会开始前，可与相关企业和承办学校联系确认哦~
+</div>
+</div>
+<div class="school_show_right_may_box">
+<div class="school_show_right_may">猜你感兴趣的高校</div>
+<ul class="school_show_right_may_list">
+{yun:}foreach key=key item=v from=$academy{/yun}
+{yun:}if $key<9{/yun}
+<li><a href="{yun:}url m=school c=academyshow id=$v.id{/yun}"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$v.photo{/yun}"width="25" height="25">{yun:}$v.schoolname{/yun} 宣讲会 (<font color="#CC0000">{yun:}if $v.atnnum{/yun}{yun:}$v.atnnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}</font>)</a></li>
+{yun:}/if{/yun}
+{yun:}/foreach{/yun}
+</ul>
+</div>
+</div>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$school_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<script>
+    function atn_academy(id, url){
+		layer.load('执行中，请稍候...',0);  
+        $.post(url,{id:id},function(data){
+		layer.closeAll('loading');
+		var data=eval('('+data+')');
+            if(data.status==9){
+                layer.msg(data.msg,2,9,function(){window.location.reload();});return false;
+            }else{
+                layer.msg(data.msg,2,8);return false;
+            }
+        });
+    }
+</script>
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun} 
+{yun:}include file="$trainstyle/footer.htm"{/yun}  

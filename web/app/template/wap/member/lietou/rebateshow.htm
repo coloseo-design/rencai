@@ -1,0 +1,34 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+  <section>
+    <div class="reateshow_box mt10">
+      <div class="user_contnet_box ">
+        <div class="wap_title"><span class="">基本信息</span></div>
+        <ul class="reateshow_box_ul">
+        <li><span class="">姓名：</span>{yun:}$resume.uname{/yun}</li>
+          <li><span class="">性别：</span>{yun:}$resume.sex{/yun}</li>
+          <li class=""><span class="">出生年月：</span>{yun:}$resume.birthday{/yun} </li>
+          <li class=""><span class="">最高学历：</span>{yun:}$resume.edu{/yun}</li>
+          <li class=""><span class="">工作经验：</span>{yun:}$resume.exp{/yun}</li>
+           <li class="com_show_li"><span class="">联系手机：</span>{yun:}$resume.telphone{/yun}</li>
+            {yun:}if $resume.email{/yun}<li class=""><span class="">联系邮箱：</span>{yun:}$resume.email{/yun}</li>{yun:}/if{/yun}
+        </ul>
+      </div>
+      <div class="reateshow_box mt10 ">
+        <div class="wap_title"><span class="">求职意向</span></div>
+        <ul class="reateshow_box_ul">
+          <li class=""><span class="">从事行业：</span><span class="">{yun:}$resume.hy{/yun}</span></li>
+          <li class=""><span class="">期望职位：</span>{yun:}$resume.job_classid{/yun}</li>
+          <li class=""><span class="">期望城市：</span>{yun:}$resume.city{/yun}</li>
+          <li class=""><span class="">期望薪资：</span>{yun:}$resume.salary{/yun}</li>
+          <li class=""><span class="">工作性质：</span>{yun:}$resume.type{/yun}</li>
+          <li class=""><span class="">到岗时间：</span>{yun:}$resume.report{/yun}</li>
+        </ul>
+      </div>
+      <div class="reateshow_box mt10 ">
+        <div class="wap_title"><span class="">推荐理由</span></div>
+      <div class="reateshow_box_ul">  {yun:}$resume.content{/yun}  </div>
+        </div>
+	      </div>
+  </section>
+ 
+</body></html> 

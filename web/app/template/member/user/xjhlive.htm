@@ -1,0 +1,47 @@
+{yun:}include file="$userstyle/header.htm"{/yun}
+<div class="yun_w1200">
+    {yun:}include file="$userstyle/left.htm"{/yun}
+    <div class="yun_m_rightbox fltR mt20 re">
+    
+        <div class="member_right_index_h1 fltL"> <span class="member_right_h1_span fltL">预约直播</span> <i class="member_right_h1_icon user_bg"></i></div>
+   		<div id="gms_showclew"></div>
+        <div class="resume_box_list mt20">
+
+			{yun:}if !empty($rows){/yun}
+            <div class="attention_enterprises_tit">
+                <div style="width:290px; padding-left:20px;" class="attention_enterprises_span attention_enterprises_job">宣讲会名称</div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_job">预约时间</div>
+				<div style="width:150px;" class="attention_enterprises_span attention_enterprises_job">开播时间</div>
+                <div style="width:100px;" class="attention_enterprises_span attention_enterprises_job">直播状态</div>
+                <div  style="width:220px; text-align:center; float:right"  class="attention_enterprises_span attention_enterprises_cz">操作</div>
+            </div>
+            {yun:}/if{/yun}
+
+            {yun:}foreach item=log from=$rows{/yun}
+            <div class="attention_enterprises_list">
+                <div style="width:300px;" class="attention_enterprises_span attention_enterprises_job mt15">
+                    <a href="{yun:}url m=xjhlive c=show id='`$log.xid`'{/yun}" target="_blank" class="attention_enterprises_name_a">{yun:}$log.xjhname{/yun}&nbsp;</a>
+                </div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_job mt15">
+					{yun:}$log.ctime_n{/yun}&nbsp;</a>
+                </div>
+                <div style="width:150px;" class="attention_enterprises_span attention_enterprises_time mt15">{yun:}$log.stime_n{/yun}</div>
+                <div style="width:100px;" class="attention_enterprises_span attention_enterprises_time mt15">{yun:}$log.livestatus_n{/yun}</div>
+                <div  style="width:220px; text-align:center; float:right"  class="attention_enterprises_span attention_enterprises_cz mt15">
+                    <a href="javascript:void(0)" onclick="layer_del('您确定要取消预约？', 'index.php?c=xjhlive&act=delXjhLiveyy&del={yun:}$log.id{/yun}');" class="cblue">取消预约</a>       <span class="jobnotice_cz_line">|</span>
+					<a href="{yun:}url m=xjhlive c=show id='`$log.xid`'{/yun}" target="_blank" class="cblue">查看</a>
+                </div>
+            </div>
+            {yun:}foreachelse{/yun}
+			<div class="msg_no">
+				<p>亲爱的用户，目前您未预约直播</p>
+				<a href="{yun:}url m=xjhlive{/yun}" target="_blank" class="msg_no_sq uesr_submit">搜索直播</a>
+			</div>
+            {yun:}/foreach{/yun}
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>
+</div>
+
+{yun:}include file="$userstyle/footer.htm"{/yun} 

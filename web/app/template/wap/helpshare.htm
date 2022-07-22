@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{yun:}$title{/yun}</title>
+	<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+	<meta name="description" content="{yun:}$description{/yun}" />
+	<script src="{yun:}$wap_style{/yun}/js/flexible.js"></script>
+    <link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/base.css">
+    <link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/member/memberwap.css">
+</head>
+<body>
+<div class="heinvite_friends_header">
+    <div class="friends_header_back" onclick="goBack()">
+        <img src="{yun:}$wap_style{/yun}/images/nav_icon_return.png" alt="" style="max-width: 100%;">
+    </div>
+    <div class="friends_header_timeline help_time"></div>
+    <div class="friends_header_btn" id="shareClick">邀请好友助力</div>
+</div>
+<div class="heinvite_friends_body">
+    <div class="friends_body_card">
+        <div class="body_card_title">
+            <div>
+                <img src="{yun:}$wap_style{/yun}/images/invite_friends_title.png" alt="" style="max-width: 100%;">
+            </div>
+        </div>
+        <div class="body_card_box">
+            <ul>
+                {yun:}foreach from=$package item=pack{/yun}
+                <li>
+                    <div class="card_box_top">+{yun:}$pack.zl{/yun}助力</div>
+                    <div class="card_box_bom"><i class="card_box_acquire">获得</i><i class="card_box_number">{yun:}$pack.num{/yun}</i>次{yun:}$pack.name{/yun}
+                    </div>
+                </li>
+                {yun:}/foreach{/yun}
+            </ul>
+        </div>
+    </div>
+</div>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script src="{yun:}$wap_style{/yun}/js/jsMath.js"></script>
+<script>
+	window.localStorage.setItem("needRefresh", 1);
+    shareEnd('{yun:}$row.etime{/yun}');
+
+    var config = {
+        url: '{yun:}url m=wap c=friendhelp a=show id=$smarty.get.id token=$smarty.get.token{/yun}',
+        title: '{yun:}$title{/yun}',
+        desc: '{yun:}$description{/yun}',
+        img: '{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+        img_title: '{yun:}$job.name{/yun}',
+        from: '{yun:}$config.sy_webname{/yun}'
+    };
+</script>
+</body>
+</html>

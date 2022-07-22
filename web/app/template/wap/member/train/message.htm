@@ -1,0 +1,98 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<style type="text/css">
+	.van-button__text{
+		color: #f7f8fa;
+	    border: 1px solid #007aff;
+	    background-color: #007aff;
+	    width: 88%;
+	    height: 40px;
+	    line-height: 40px;
+	    margin: 0 0 10px 0;
+	    border-radius: 3px;
+	}
+</style>
+<div id="app">
+	<section>
+		<div class="wap_member_tit wap_member_titw30">
+			<ul>
+				<li {yun:}if $smarty.get.status==""{/yun}class="wap_member_tit_cur"{yun:}/if{/yun}>
+					<a href="index.php?c=message">全部</a>
+				</li>
+				<li {yun:}if $smarty.get.status=="2"{/yun}class="wap_member_tit_cur"{yun:}/if{/yun}>
+					<a href="index.php?c=message&status=2">已回复</a>
+				</li>
+				<li {yun:}if $smarty.get.status=="1"{/yun}class="wap_member_tit_cur"{yun:}/if{/yun}>
+					<a href="index.php?c=message&status=1">未回复</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section>
+		<div class="wap_member_job_show">
+			{yun:}foreach item=v from=$rows{/yun}
+			<div class="wap_member_msg ">
+				<div class="yun_m_job_list_zt">用户名：{yun:}$v.nickname{/yun}</div>
+				<div class="yun_m_job_list_zt">联系电话：{yun:}$v.phone{/yun}</div>
+				<div class="yun_m_job_list_zt">留言内容：{yun:}$v.content{/yun}</div>
+				<div class="yun_m_job_list_zt">留言时间：{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+				{yun:}if $v.status==2{/yun}
+					<div class="yun_m_job_list_hf">我的回复：{yun:}$v.reply{/yun}</div>
+				{yun:}/if{/yun}
+				<div class="yun_member_bth" >
+					<a class="yun_member_subpx" href="javascript:void(0);" onclick="vant_del('确定删除该咨询留言？','index.php?c=message&del={yun:}$v.id{/yun}');" >删除</a> 
+					{yun:}if $v.status==1{/yun}
+						<a href="javascript:void(0);" class="yun_member_subpx" @click="reply('{yun:}$v.id{/yun}')" style="border-left: 1px solid #f2f2f2;">回复</a>
+					{yun:}/if{/yun}
+				</div>
+			</div>
+			{yun:}foreachelse{/yun}
+				<div class="wap_member_no">暂无相关信息</div>
+			{yun:}/foreach{/yun}
+			<div class="pages">{yun:}$pagenav{/yun}</div>
+		</div>
+	</section>
+	<van-dialog v-model="contentShow" confirm-button-text="提交" @confirm="replySubmit" title="回复" >
+		<div class="yun_wap_addresume_box" id="reply">
+		  	<div class="yun_wap_addresume_box_group" style="min-width:260px">
+					<textarea id="content" name="content" class="yun_wap_textarea" ></textarea>
+			</div>
+			<div class="pt_ly_bth"><input type="hidden" id="id" name="id"  v-bind:value="id" /></div>
+		</div>
+	</van-dialog>
+	
+</div>
+	<script type="text/javascript">
+		var wapurl = "{yun:}url m=wap{/yun}";
+		var vm = new Vue({
+        el: '#app',
+        data: {
+	        contentShow:false,
+	        id:'',
+        },
+        methods: {
+	    	reply(value) {
+	 			this.contentShow = true;
+	 			this.id= value;
+		    },
+		    replySubmit(){
+		    	var content = $("#content").val();
+		    	if(content ==''){
+					showToast("回复内容不能为空！");
+					return false;
+				}
+
+				$.post(wapurl+"member/index.php?c=message&reply=1",{id:this.id,content:content},function(data){
+					var data=eval('('+data+')');
+					showToast(data.msg,2,function(){
+						window.location.href=data.url;
+					});
+					return false; 
+
+				});	
+		    }
+		}
+    });
+	</script>
+</body>
+</html>

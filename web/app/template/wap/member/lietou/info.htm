@@ -1,0 +1,461 @@
+{yun:}include file="$wapstyle/member/lheader.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="{yun:}$wap_style{/yun}/js/webapppic/cropper.css?v={yun:}$config.cachecode{/yun}" />
+
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/demo.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+
+<script src="{yun:}$wap_style{/yun}/js/alloy/transform.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/alloy/alloy-finger.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/alloy-crop.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/compress.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/exif.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+
+<script>var weburl = "{yun:}$config.sy_weburl{/yun}";</script>
+<style>
+    .photo_i_box {
+        width: 120px;
+        height: 120px;
+        background: #fff
+    }.grade-eject, .Category-eject, .Sort-eject, .Substation-eject, .Gengduoj-eject, .Gengduos-eject, .lietou-eject, .lthy-eject, .Sortpr-eject, .Sortmun-eject, .Sortexp-eject, .redeem-eject{top:-195%}
+</style>
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-pages"></div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="main" class="mui-page">
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="yunset_list">
+                    <li>
+                        <a href="#photohtml" class="yunset_list_max">
+                        	<span class="yunset_list_name">头像</span>
+                            <span class="yunset_list_tx "><img id="photoshow" src="{yun:}$row.photo_big{/yun}"  style="border-radius:0px; width:30px;height:30px;"></span>
+                        </a>
+					</li>
+				</ul>
+				<ul class="yunset_list mt15">
+					<li class="yunset_list_text"><span class="yunset_list_name">真实姓名 </span><span class="yunset_list_commentary"> 
+					<input type="text" name="realname" id='realname' value="{yun:}$row.realname{/yun}" placeholder="请填写真实姓名" >
+					</span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">所在公司</span>
+                        <span class="yunset_list_commentary"> 
+					<input type="text" name="com_name" id='com_name' value="{yun:}$row.com_name{/yun}" placeholder="请填写所在公司" >
+					</span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">公司座机</span>
+                        <span class="yunset_list_commentary"> 
+						<input type="text" name="phone" id='phone' value="{yun:}$row.phone{/yun}"  onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" placeholder="请填写公司座机" >
+					</span>
+                    </li>
+                    <li class="yunset_list_text">
+                        <span class="yunset_list_name">联系邮箱</span>
+                        <span class="yunset_list_commentary ">
+					 {yun:}if $row.email_status==1{/yun}
+ 					<div class="">{yun:}$row.email{/yun}</div>
+						<input type="hidden" id="email" value="{yun:}$row.email{/yun}">
+					{yun:}else{/yun}
+						 <div class=""><input type="text" name="email" id="email" value="{yun:}$row.email{/yun}" class="" placeholder="请填写联系邮箱" ></div>
+					{yun:}/if{/yun} 
+					</span>
+                    </li>
+                    <li class="yunset_list_text"><span class="yunset_list_name">手机号码</span><span class="yunset_list_commentary">
+					{yun:}if $row.moblie_status==1{/yun}
+					（已绑定）{yun:}$row.moblie{/yun} 
+					<input type="hidden" id="moblie" value="{yun:}$row.moblie{/yun}">
+					{yun:}else{/yun}
+					<input type="text" name="moblie" id="moblie" value="{yun:}$row.moblie{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class=""placeholder="请填写手机号码" >
+					{yun:}/if{/yun} 
+					</span></li>
+                </ul>
+                <ul class="yunset_list mt15">
+                    <li class="yunset_list_select"><span class="yunset_list_name">所在地</span><span class="yunset_list_commentary">
+					<button id='cityPicker' class="mui-btn mui-btn-block" type='button' data-provinceid="{yun:}$row.provinceid{/yun}"  data-cityid="{yun:}$row.cityid{/yun}"  data-three_cityid="{yun:}$row.three_cityid{/yun}">{yun:}if $row.provinceid{/yun}{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.three_cityid]{/yun}{yun:}else{/yun}请选择所在地{yun:}/if{/yun}</button>
+					<input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}">
+					<input type="hidden" id="cityid" name="cityid" value="{yun:}$row.cityid{/yun}">
+					<input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}">
+					</span></li>
+
+                    <li class="yunset_list_select"><span class="yunset_list_name">工作经验</span><span class="yunset_list_commentary">
+					<button id='expPicker' class="mui-btn mui-btn-block" type='button' data-exp="{yun:}$row.exp{/yun}" >{yun:}if $row.exp{/yun}{yun:}$ltclass_name[$row.exp]{/yun}{yun:}else{/yun}请选择工作经验{yun:}/if{/yun}</button>
+					<input type="hidden" id="exp" name="exp" value="{yun:}$row.exp{/yun}">
+					</span></li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">目前头衔</span><span class="yunset_list_commentary">
+					<button id='titlePicker' class="mui-btn mui-btn-block" type='button'  data-title="{yun:}$row.title{/yun}" >{yun:}if $row.title{/yun}{yun:}$ltclass_name[$row.title]{/yun}{yun:}else{/yun}请选择目前头衔{yun:}/if{/yun}</button>
+					<input type="hidden" id="title" name="title" value="{yun:}$row.title{/yun}">
+					</span></li>
+
+                    <li class="yunset_list_select"><span class="yunset_list_name">擅长行业</span><span class="yunset_list_commentary">
+					<button id="lthyname"  data-pop="lietouhy" class="mui-btn mui-btn-block lt_hy_but lietouhy popup" type='button'>{yun:}if $hyname{/yun}{yun:}$hyname{/yun}{yun:}else{/yun}请选择擅长行业{yun:}/if{/yun}</button>
+					<input type="hidden" id="qw_hy" name="qw_hy"value="{yun:}$row.hy{/yun}"  >
+					</span></li>
+                    <li class="yunset_list_select"><span class="yunset_list_name">擅长职位</span><span class="yunset_list_commentary">
+					<button id="ltjobname"  data-pop="lietoujobs" class="mui-btn mui-btn-block lt_hy_but lietoujobs popup" type='button'>{yun:}if $jobname{/yun}{yun:}$jobname{/yun}{yun:}else{/yun}请选择擅长职位{yun:}/if{/yun}</button>
+					<input type="hidden" id="job" name="job"value="{yun:}$row.job{/yun}"  >
+					</span></li>
+
+                </ul>
+
+                <ul class="yunset_list mt15">
+                    <li>
+                        <a href="#contenthtml" id="contenteditor" class=""><span class="yunset_list_name">顾问介绍</span><span class="yunset_list_commentary yunset_list_js" id="contentshow">{yun:}if $row.content{/yun}{yun:}$row.content{/yun}{yun:}else{/yun}请输入顾问介绍{yun:}/if{/yun}</span></a>
+                    </li>
+                    <textarea style="display:none" id="contenttext">{yun:}$row.content{/yun}</textarea>
+                </ul>
+                <ul class="yunset_list mt15">
+                    <li>
+                        <a href="#clienthtml" id="clienteditor" class=""><span class="yunset_list_name">合作用户</span><span class="yunset_list_commentary yunset_list_js" id="clientshow">{yun:}if $row.client{/yun}{yun:}$row.client{/yun}{yun:}else{/yun}请输入合作过的用户{yun:}/if{/yun}</span></a>
+                    </li>
+                    <textarea style="display:none" id="clienttext">{yun:}$row.client{/yun}</textarea>
+                </ul>
+
+                <div class="yunset_bth_box"> <button id="infosubmit" type="button" class="mui-btn mui-btn-block mui-btn-primary">保 存</button>
+                    <!--<input type="submit" name="submit" value="保 存" class="yunset_bth">--></div>
+
+            </div>
+
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+<!--单页面结束-->
+<div id="contenthtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit"> 顾问介绍 </div>
+                        <textarea class="textAreaMsg tip contenttext" id="content" name="content" placeholder="请输入顾问介绍描述500字以内">{yun:}$row.content{/yun}</textarea></div>
+                    <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="clienthtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="yun_wap_info_brief">
+                    <div class="yun_wap_info_brief_c">
+                        <div class="yun_wap_addresume_box_nexttit"> 合作用户 </div>
+                        <textarea class="textAreaMsg tip" id="client" name="client" placeholder="请输入合作过的用户，多个客户以（,半角逗号）隔开">{yun:}$row.client{/yun}</textarea></div>
+                    <a class="yun_wap_info_brief_tit_bc mui-action-back">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="photohtml" class="mui-page">
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div id="showResult">
+                    <div id="changeAvatar" class="photo_i_box">
+                        <img src="{yun:}$row.photo_big{/yun}" width="100" height="100">
+                    </div>
+                    <div class="clear"></div>
+                    <div class="photo_xz">
+                        <input id="image" type="file" accept="image/*" />选择上传头像
+                    </div>
+                    <div class="yunset_identity_msg"><i class="yunset_identity_msg_icon"></i>选择上传头像点击提交按钮即可上传{yun:}if $row.photo_n{/yun}({yun:}if $row.photo_status=='1'{/yun}<font color="red">审核中</font>{yun:}else if $row.photo_status=='2'{/yun}<font color="red">未通过</font>{yun:}else{/yun}<font color="red">已审核</font>{yun:}/if{/yun}){yun:}/if{/yun}</div>
+                    <div class="photo_tj">
+                        <input type='hidden' name="txt" id="uimage" value="">
+                        <input name="submit" type="button" onclick="photo()" value="提交" class="yunset_bth" />
+                    </div>
+
+                </div>
+                <input type="hidden" value=""  id="preview">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.view.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/category.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/lt.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/demo.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script language="javascript">
+    var cityParam={
+            sy_web_city_one:'{yun:}$config.sy_web_city_one{/yun}',
+            sy_web_city_two:'{yun:}$config.sy_web_city_two{/yun}',
+        };
+    var cityData    =   cityCategory(cityParam);
+    var jobData     =   jobCategory();
+    mui.init();
+    var viewApi = mui('#app').view({
+        defaultPage: '#main'
+    });
+    
+    var view = viewApi.view;
+    (function($) {
+    	//初始化单页的区域滚动
+	    mui('.mui-scroll-wrapper').scroll({
+	        scrollY: true, //是否竖向滚动
+	        scrollX: false, //是否横向滚动
+	        startX: 0, //初始化时滚动至x
+	        startY: 0, //初始化时滚动至y
+	        indicators: true, //是否显示滚动条
+	        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+	        // bounce: true //是否启用回弹
+	    });
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function() {
+            if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+        view.addEventListener('pageBeforeShow', function(e) { //动画开始前触发
+            //console.log(e);
+        });
+        view.addEventListener('pageShow', function(e) {
+
+            //console.log(e);
+        });
+        view.addEventListener('pageBeforeBack', function(e) {
+            var content = document.getElementById('content').value;
+            if(content) {
+                document.getElementById('contentshow').innerText = content;
+            }
+            var client = document.getElementById('client').value;
+            if(client) {
+                document.getElementById('clientshow').innerText = client;
+            }
+        });
+        view.addEventListener('pageBack', function(e) {
+            //console.log(e);
+        });
+
+    })(mui);
+    $(document).ready(function() {
+		if(document.getElementById('main')){
+			document.getElementById('main').addEventListener('touchmove', function (e) { e.preventDefault();}, {passive: false});
+		}
+	})
+    var expData = [];
+    '{yun:}foreach from=$ltdata.lt_exp item=v{/yun}'
+    expData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$ltclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}'
+    var titleData = [];
+    '{yun:}foreach from=$ltdata.lt_title item=v{/yun}'
+    titleData.push({
+        value: '{yun:}$v{/yun}',
+        text: '{yun:}$ltclass_name[$v]{/yun}'
+    })
+    '{yun:}/foreach{/yun}';
+	
+    $(function() {
+		$('#image').on('change', function() {
+            cutImg();
+		});
+		
+		var $inputImage = $('#image'),
+			URL = window.URL || window.webkitURL;
+		if(URL) {
+			$inputImage.change(function() {
+				var files = this.files,
+					file;
+	            previewImage(this,'preview');
+				if(files && files.length) {
+					file = files[0];
+	                if(/^image\/\w+$/.test(file.type)) {
+						setTimeout(function(){
+                            toAlloyCrop($('#preview').val());
+                        },1000);
+						$inputImage.val('');
+					} else {
+						showMessage('请上传图片');
+					}
+				}
+			});
+		} else {
+			$inputImage.parent().remove();
+		}
+	});
+    function cutImg() {
+		$('#showResult').fadeOut();
+	}
+    function toAlloyCrop(pic){
+        var mAlloyCrop;
+        
+        mAlloyCrop = new AlloyCrop({
+            image_src: pic,
+            width: 200,
+            height: 200,
+            output: 1,
+            ok: function(base64, canvas) {
+                $("#changeAvatar > img").attr("src", base64);
+                document.getElementById('uimage').value = base64;
+                $('#showResult').fadeIn();
+            },
+            cancel: function() {
+                $('#showResult').fadeIn();
+            },
+            ok_text: '确定',
+            cancel_text: '取消'
+        });
+    }
+    function photo() {
+        var uimage = $("#uimage").val();
+        if(uimage == '') {
+            showToast('头像未改变，无需修改');
+            return false;
+        }else{
+			var regS = new RegExp("\\+", "gi");
+			uimage = uimage.replace(regS, "#");
+			showLoading()
+			$.ajax({
+				type: 'POST',
+				url: "index.php?c=uppic",
+				cache: false,
+				dataType: 'json',
+				data: {
+					uimage: uimage,
+					submit: 1
+				},
+				success: function(res) {
+					hideLoading();
+					if(res){
+                        showToast(res.msg, 2, function() {
+                            window.location.href = wapurl + "member/index.php?c=info";
+                        });
+                        return false;
+                    }
+				}
+			});
+		}
+        
+    }
+    (function() {
+        var submitBtn = document.getElementById('infosubmit')
+        if(submitBtn) {
+            submitBtn.addEventListener('tap', function() {
+                var realname = $.trim(document.getElementById('realname').value),
+                    com_name = $.trim(document.getElementById('com_name').value),
+                    phone = $.trim(document.getElementById('phone').value),
+                    email = $.trim(document.getElementById('email').value),
+                    moblie = $.trim(document.getElementById('moblie').value),
+                    provinceid = $.trim(document.getElementById('provinceid').value),
+                    cityid = $.trim(document.getElementById('cityid').value),
+                    three_cityid = $.trim(document.getElementById('three_cityid').value),
+                    exp = $.trim(document.getElementById('exp').value),
+                    title = $.trim(document.getElementById('title').value),
+                    qw_hy = $.trim(document.getElementById('qw_hy').value),
+                    job = $.trim(document.getElementById('job').value),
+                    client = $.trim(document.getElementById('client').value),
+                    content = $.trim(document.getElementById('content').value),
+                    myreg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+
+                if(realname == '') {
+                    return mui.toast("请输入真实姓名！");
+                    return false;
+                }
+                if(com_name == '') {
+                    return mui.toast("请输入所在公司！");
+                    return false;
+                }
+                if(phone == '') {
+                    return mui.toast("请输入公司座机！");
+                    return false;
+                }
+                if(email && !myreg.test(email)) {
+                    return mui.toast("联系邮箱格式错误！");
+                    return false;
+                }
+                if(moblie == '') {
+                    return mui.toast("请输入手机号码！");
+                    return false;
+                }
+                if(moblie && !isjsMobile(moblie)) {
+                    return mui.toast("手机号码格式错误！");
+                    return false;
+                }
+                var cionly ='';
+                if(ct.length<=0 || ct=='new Array()'){
+                    cionly = '1';
+                }
+                if(cionly == '1'){
+                    if(provinceid == '') {
+                        return mui.toast('请选择所在地！');
+                        return false;
+                    }
+                }else{
+                    if(cityid == '') {
+                        return mui.toast("请选择所在地！");
+                        return false;
+                    }
+                }
+                
+                if(exp == '') {
+                    return mui.toast("请选择工作经验！");
+                    return false;
+                }
+                if(title == '') {
+                    return mui.toast("请选择目前头衔！");
+                    return false;
+                }
+                if(qw_hy == '') {
+                    return mui.toast("请选择擅长行业！");
+                    return false;
+                }
+                if(job == '') {
+                    return mui.toast("请选择擅长职位！");
+                    return false;
+                }
+                if(content == '') {
+                    return mui.toast("请输入顾问介绍！");
+                    return false;
+                }
+                mui.post('index.php?c=info', {
+                    realname: realname,
+                    com_name: com_name,
+                    phone: phone,
+                    email: email,
+                    moblie: moblie,
+                    provinceid: provinceid,
+                    cityid: cityid,
+                    three_cityid: three_cityid,
+                    exp: exp,
+                    title: title,
+                    job: job,
+                    qw_hy: qw_hy,
+                    client: client,
+                    content: content,
+                    submit: 'submit'
+                }, function(data) {
+                  if(data.url){
+                    showToast(data.msg, 2, function() {
+                        location.href = data.url;
+                    });
+                  }else{
+                   return showToast(data.msg, 2);
+                  }
+          
+                }, 'json');
+            }, false)
+        }
+    })();
+</script>
+
+{yun:}include file="$wapstyle/member/publictwo.htm"{/yun}
+{yun:}include file="$wapstyle/member/public/remind.htm"{/yun}
+</body></html>

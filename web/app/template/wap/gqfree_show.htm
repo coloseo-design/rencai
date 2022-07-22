@@ -1,0 +1,25 @@
+{yun:}include file="$wapstyle/header_gq.htm"{/yun}
+<!--自由职业者详细页-->
+<div class="free_job_usershow">
+<div class="free_job_usershow_name">{yun:}$show.name{/yun}</div>
+<div class="free_job_usershow_job">{yun:}$show.speciality{/yun}</div>
+<div class="">{yun:}$show.cityid_n{/yun}</div>
+{yun:}if $show.photo_status==0{/yun}
+<div class="free_job_usershow_pic"><img src="{yun:}if $show.photo_n{/yun}{yun:}$show.photo_n{/yun}{yun:}else{/yun}{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}{yun:}/if{/yun}" width="60" height="60"></div>
+{yun:}else{/yun}
+<div class="free_job_usershow_pic"><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.gq_photo{/yun}" width="60" height="60"></div>
+{yun:}/if{/yun}
+
+</div>
+<div class="free_job_usershow_cont">
+<div class="free_job_usershowtit">个人简介</div>
+<div class="free_job_usershow_p">{yun:}$show.content{/yun}</div>
+<div class="free_job_usershowtit">联系方式</div>
+<div class="free_job_usershow_tel">
+{yun:}if $config.gq_info_link==0{/yun}{yun:}$show.moblie{/yun}{yun:}else{/yun}{yun:}if $uid{/yun}{yun:}$show.moblie{/yun}{yun:}else{/yun}{yun:}substr_replace($show.moblie,'*******',3,10){/yun}{yun:}/if{/yun}{yun:}/if{/yun}</div>
+</div>
+<div class="free_job_usershow_touch"><a href="tel:{yun:}$show.moblie{/yun}">联系TA</a></div>
+
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<div class="training_subject_right ftr">
+<div class="training_subject_right_ban ftl mt15">{yun:}ad cid=40 id=148{/yun}</div>
+<div class="training_Agencies_rec ftr mt10">
+<div class="training_Agencies_rec_tit  ftl">培训机构推荐</div>
+{yun:}foreach item=v from=$rectrain{/yun}
+<dl class="training_Agencies_rec_list ftl">
+<dt><a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}" title="{yun:}$v.name{/yun}">
+<img src="{yun:}$v.logo{/yun}" width="50" height="50" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" />
+</a></dt>
+<dd>
+<a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}" class="training_Agencies_rec_name" title="{yun:}$v.name{/yun}">{yun:}$v.name|mb_substr:0:10:'utf-8'{/yun}</a>
+<span class="training_Agencies_rec_list_span">授课：{yun:}$subject_name[$v.sid]{/yun} </span>
+<span class="training_Agencies_rec_list_span">课程({yun:}$v.num{/yun})</span>
+</dd>
+</dl>
+{yun:}/foreach{/yun}
+</div>
+<div class="training_rec_subject ftl mt10">
+<div class="training_tit"><span class="training_span">推荐课程</span></div>
+{yun:}foreach item=v from=$reclist{/yun}
+<dl class="training_rec_subject_list">
+<dt><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}">
+<!--<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$v.pic{/yun}" width="176" height="132">-->
+<img src="{yun:}$v.pic{/yun}" width="176" height="132" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);">
+</a></dt>
+<dd><a class="train_class_t" href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}">{yun:}$v.name|mb_substr:0:15:'utf-8'{/yun}</a></dd>
+<dd>价格: <span  class="training_rec_subject_p">￥{yun:}$v.price{/yun}</span></dd>
+<dd class="train_class_r">{yun:}$v.baomingnum{/yun}人报名</dd>
+</dl>
+{yun:}/foreach{/yun}
+</div>
+</div>

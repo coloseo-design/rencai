@@ -1,0 +1,207 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<!--header end-->
+<div class="clear"></div>
+<div class="hunter_bar">
+  <div class="hunter_banner_con">
+    <div class="layui-carousel" id="test1" lay-filter="test1">
+      <div carousel-item=""> {yun:}adlist classid=35 name=foo item=ad_l{/yun}
+        <div><a href="{yun:}$ad_l.src{/yun}" target="_blank" style="display:block;width:100%;height:100%;"><img src="{yun:}$ad_l.pic{/yun}"></a></div>
+        {yun:}/adlist{/yun} </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="training_index_search ftl">
+  <div class="training_index_search_left">
+    <div class="training_index_search_s ftl">
+      <form method="get" action="index.php" onsubmit="check_search();">
+        {yun:}if  !$config.sy_traindir{/yun}
+        <input type="hidden" value="train" name="m" />
+        {yun:}/if{/yun}
+        <input type="hidden" name="c" value="subject" />
+        <div class="training_index_search_select ftl" id="selectslist">
+          <input type="button" id="subname" value="找课程" class="training_index_search_but"onclick="check_search_type();">
+          <div class="training_index_search_select_list none" id="selects">
+            <ul class="training_index_search_select_ul">
+              <li><a href="javascript:search_type('subject','找课程');">找课程</a></li>
+              <li><a href="javascript:search_type('agency','找机构');">找机构</a></li>
+              <li><a href="javascript:search_type('teacher','找培训师');">找培训师</a></li>
+            </ul>
+          </div>
+        </div>
+        <input type="text" value="请输入关键字查询" name="keyword" class="training_index_search_text  ftl" onblur="if(this.value==''){this.value='请输入关键字查询'}" onclick="if(this.value=='请输入关键字查询'){this.value=''}">
+        <input type="submit" value="搜索" class="training_index_search_bth">
+      </form>
+    </div>
+
+  </div>
+</div>
+<div class="clear"></div>
+<div class="clear"></div>
+<div class="training_w980">
+  <div class="training_index_tit"><span class="training_index_tit_s">精品课程</span> <a href="{yun:}url m=train c=subject rec=1{/yun}" class="training_index_tit_more">更多精品课程 ></a> </div>
+  <div class="training_tj_box">
+    <div class="training_tj_box_c">
+      <ul class="training_tj_list">
+        {yun:}foreach item=v from=$recsubject{/yun}
+        <li>
+          <div class="training_tj_img"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank" > <img src="{yun:}$v.pic{/yun}"  onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);" width="280" height="158"></a></div>
+          <div class="training_tj_box_info">
+            <div class="training_tj_box_name"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank" >{yun:}$v.name{/yun}</a></div>
+            <div class="training_tj_box_comname">{yun:}$v.comname{/yun}</div>
+            <div class="training_tj_box_b"><span class="training_tj_box_jg">￥{yun:}$v.price{/yun}</span> <span class="training_tj_box_user">{yun:}$v.baomingnum{/yun}人报名</span></div>
+          </div>
+        </li>
+        {yun:}/foreach{/yun}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="training_index_jg">
+  <div class="training_w980">
+    <div class="training_index_tit"><span class="training_index_tit_s">入驻机构</span> <a href="{yun:}url m=train c=agency{/yun}" target="_blank"  class="training_index_tit_more">查看更多 ></a> </div>
+    <div class="training_tj_box">
+      <div class="training_tj_box_c">
+        <ul class="training_index_jg_list">
+          {yun:}foreach item=v from=$rectrain{/yun}
+          <li>
+            <div><a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}" target="_blank" title="{yun:}$v.name{/yun}"> <img src="{yun:}$v.logo{/yun}" width="100" height="100" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" /></a></div>
+            <div class="training_index_jg_name"> 
+				<a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}" class="" title="{yun:}$v.name{/yun}" target="_blank">{yun:}$v.name{/yun}</a>
+            </div>
+          </li>
+          {yun:}/foreach{/yun}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="training_w980">
+  <div class="training_index_tit"><span class="training_index_tit_s">最新课程</span><em class="training_index_tit_e">快速筛选你所需要的课程，全面提升你的职场能力</em> <a href="{yun:}url m=train c=subject order=ctime t=desc {/yun}" class="training_index_tit_more">查看所有课程 ></a> </div>
+  <div class="training_tj_box">
+    <div class="training_tj_box_c">
+      <ul class="training_tj_list">
+        {yun:}foreach item=v from=$newsubject{/yun}
+        <li>
+          <div class="training_tj_img"> <a  href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank" > <img  src="{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);" width="280" height="158"></a></div>
+          <div class="training_tj_box_info">
+            <div class="training_tj_box_name"><a href="{yun:}url m=train c=subshow id='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank" >{yun:}$v.name{/yun}</a></div>
+            <div class="training_tj_box_comname">{yun:}$v.comname{/yun}</div>
+            <div class="training_tj_box_b"><span class="training_tj_box_jg">￥{yun:}$v.price{/yun}</span> <span class="training_tj_box_user">{yun:}$v.baomingnum{/yun}人报名</span></div>
+          </div>
+        </li>
+        {yun:}/foreach{/yun}
+      </ul>
+    </div>
+  </div>
+  <div class="training_index_tit"><span class="training_index_tit_s">明星讲师</span> <a href="{yun:}url m=train c=teacher rec=1{/yun}" target="_blank" class="training_index_tit_more">查看更多 ></a> </div>
+  <div class="training_tj_box">
+    <div class="training_tj_box_c">
+      <ul class="training_index_js">
+        {yun:}foreach item=v from=$teacher{/yun}
+        <li>
+          <div class="training_index_img"><a href="{yun:}url m=train c=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}" title="{yun:}$v.name{/yun}" target="_blank" ><img  src="{yun:}$v.pic{/yun}" width="225" height="225" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxteacher_icon{/yun}',2);"></a></div>
+          <div class="training_index_js_name"><a href="{yun:}url m=train c=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}" class="" title="{yun:}$v.name{/yun}" target="_blank" >{yun:}$v.name{/yun}</a></div>
+          <div class="training_index_sc">擅长领域：{yun:}$subject_name[$v.sid]{/yun}</div>
+        </li>
+        {yun:}/foreach{/yun}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="training_index_newsbox">
+  <div class="training_w980">
+    <div class="training_index_tit"><span class="training_index_tit_s">机构新闻</span></div>
+    <div class="training_tj_box">
+      <div class="training_tj_box_c">
+        <ul class="training_index_newslist">
+          {yun:}foreach item=v key=key from=$newslist{/yun}
+          <li> <i class="training_index_news_line"></i> <i class="training_index_news_quan"></i> <span class="training_index_newstime">{yun:}$v.ctime|date_format:'%Y-%m-%d'{/yun}</span>
+            <div class="training_index_newslist_box"> <a href="{yun:}url m=train c=newsshow id='`$v.uid`' nid='`$v.id`'{/yun}" title="{yun:}$v.title{/yun}" target="_blank" class="training_index_news_name" >{yun:}$v.title|mb_substr:0:20:'utf-8'{/yun}</a> </div>
+            <a href="{yun:}url m=train c=newsshow id='`$v.uid`' nid='`$v.id`'{/yun}" title="{yun:}$v.title{/yun}" target="_blank" class="training_index_newsxq" >查看详情></a> </li>
+          {yun:}/foreach{/yun}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="training_w980">
+{yun:}if $subjectkeyword{/yun}
+
+    <div class="training_index_search_hot ftl"> 热门搜索：
+      {yun:}key limit=8 recom=1 type=9 item=keylist{/yun} 
+      	<a href="{yun:}$keylist.url{/yun}" class="training_subject_tag_a" target="_blank">{yun:}$keylist.key_name{/yun}</a> 
+      {yun:}/key{/yun} 
+      </div>
+      {yun:}else{/yun}
+      <div class="training_index_search_hot ftl"> &nbsp;</div>
+      {yun:}/if{/yun}
+      </div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script> 
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]--> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/slides.jquery.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script src="{yun:}$train_style{/yun}/js/jquery.flexslider.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script>
+/*$(function(){
+	$("#slides").slides({
+		preload: true,
+		preloadImage: '{yun:}$style{/yun}/images/loading.gif',
+		play: 2000,
+		pause: 2500,
+		hoverPause: true
+	});
+	$('body').click(function(evt) {
+		if($(evt.target).parents("#selectslist").length==0 && evt.target.id != "selects") {
+			$('#selects').hide();
+		}
+	});
+});*/
+layui.use(['carousel'], function(){
+  var carousel = layui.carousel;
+  carousel.render({
+    elem: '#test1'
+    ,width: '100%'
+    ,height: '380px'
+  });
+});
+$(window).load(function() {
+	$('.flexslider').flexslider({
+		directionNav: true,
+		pauseOnAction: false
+	});
+});
+$(document).ready(function () {
+    //首页搜索框，搜索类型的选择
+    $('body').click(function (evt) {
+        if (!$(evt.target).parent().hasClass('training_index_search_select') && !$(evt.target).hasClass('training_index_search_select') && evt.target.id != 'selectslist') {
+            $('.training_index_search_select_list').hide();
+        }
+    });
+})
+
+function check_search_type(){
+	$(".training_index_search_select_list").show();
+}
+function search_type(type,name){
+	$("input[name=c]").val(type);
+	$("#subname").val(name);
+	$(".training_index_search_select_list").hide();
+}
+function check_search(){
+	var keyword=$("input[name=keyword]").val();
+	if(keyword=="请输入关键字查询"){
+		$("input[name=keyword]").val('');
+	}
+}
+</script> 
+{yun:}include file="$trainstyle/footer.htm"{/yun} 

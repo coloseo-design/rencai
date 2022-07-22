@@ -1,0 +1,62 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+	{yun:}include file="$trainstyle/left.htm"{/yun}	
+	<div class="right_column frt mt20">	
+		<div class="right_column_border">
+			<div class="right_column_h1"><span class="right_column_h1_span flt">金额管理</span></div>	
+			<div class="clear"></div>
+			<div class="job_list_tit">
+				<ul class="">
+					<li class=""><a href="index.php?c=subpay&act=change">金额转换</a></li>
+					<li class="job_list_tit_cur"><a href="index.php?c=subpay&act=changelist">转换记录</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="resume_Prompt">		
+				单笔转换金额必须达到{yun:}$config.packprice_min_recharge{/yun}元。
+			</div>
+			<div class="clear"></div>		
+			<div class="admin_new_tip_list">	
+				<span class="withdraw_tx_box_d"> 可转换金额：</span> 
+				<span class="withdraw_tx_box_n">￥{yun:}$statis.packpay{/yun}</span>  元
+
+				<span class="withdraw_tx_box_d" style="margin-left:50px;"> 已冻结金额：</span> 
+				<span class="withdraw_tx_box_n">￥{yun:}$statis.freeze{/yun}</span>  元
+            </div>         
+			<div class="clear"></div>        
+			<div class="clear"></div>
+			<div class="mt20">
+				<table class="com_table">
+					<tr>
+						<th>转换单号</th>
+						<th>转换{yun:}$config.integral_pricename{/yun}</th>
+						<th>时间</th>
+					</tr>
+					{yun:}foreach from=$rows item=v{/yun}
+					<tr>
+						<td align="center">{yun:}$v.order_id{/yun}</td>
+						<td align="center">{yun:}$v.order_price|floatval{/yun}个</td>
+						<td align="center">{yun:}$v.pay_time|date_format:'%Y-%m-%d'{/yun}</td>
+					</tr>
+					{yun:}foreachelse{/yun}
+					<tr>
+                        <td colspan="6" class="table_end">
+                            <div class="msg_no">您还没有转换记录。</div>
+                        </td>
+                    </tr>
+					{yun:}/foreach{/yun}
+					<tr>
+						<td colspan="6" style="border:none;">
+							<div class="pages">{yun:}$pagenav{/yun}</div>
+						</td>
+					</tr>
+				</table>
+			</div>			
+		</div>	
+	</div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

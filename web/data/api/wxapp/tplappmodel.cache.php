@@ -1,0 +1,26 @@
+<?php 
+$tplappmodel=array(
+	"0"=>array("id"=>"1","name"=>"找工作","url"=>"/pages/job/job")
+	,"1"=>array("id"=>"2","name"=>"找人才","url"=>"/pages/resume/resume")
+	,"2"=>array("id"=>"4","name"=>"找兼职","url"=>"/pages/part/part")
+	,"3"=>array("id"=>"6","name"=>"职场资讯","url"=>"/pages/article/article")
+	,"4"=>array("id"=>"8","name"=>"赏金职位","url"=>"/pages/reward/reward")
+	,"5"=>array("id"=>"9","name"=>"找企业","url"=>"/pages/company/company")
+	,"6"=>array("id"=>"10","name"=>"专题招聘","url"=>"/pages/special/special")
+	,"7"=>array("id"=>"11","name"=>"招聘会","url"=>"/pages/zph/zph")
+	,"8"=>array("id"=>"14","name"=>"红包职位","url"=>"/pages/rewardshare/index")
+	,"9"=>array("id"=>"15","name"=>"店铺招聘","url"=>"/pages/once/once")
+	,"10"=>array("id"=>"16","name"=>"普工专区","url"=>"/pages/tiny/tiny")
+	,"11"=>array("id"=>"17","name"=>"附近职位","url"=>"/pages/map/map")
+    ,"12"=>array("id"=>"18","name"=>"网络招聘会","url"=>"/pages/zphnet/zphnet")
+    ,"13"=>array("id"=>"19","name"=>"直播招聘","url"=>"/pages/xjhlive/xjhlive")
+    ,"14"=>array("id"=>"20","name"=>"视频面试","url"=>"/pages/spview/spview")
+    ,"15"=>array("id"=>"21","name"=>"公招","url"=>"/pages/gongzhao/gongzhao")
+);
+$tplappgy = array(
+    "0"=>array("id"=>"1","name"=>"联系我们","url"=>"/pages/advice/contact")
+    ,"1"=>array("id"=>"2","name"=>"隐私政策","url"=>"/pson/pages/advice/privacy")
+    ,"2"=>array("id"=>"3","name"=>"意见反馈","url"=>"/pson/pages/advice/advice")
+    ,"3"=>array("id"=>"4","name"=>"关于我们","url"=>"/pson/pages/advice/about")
+);
+?>

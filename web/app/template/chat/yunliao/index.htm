@@ -1,0 +1,283 @@
+{yun:}if $usertype == 1{/yun}
+	{yun:}include file="$userstyle/header.htm"{/yun}
+{yun:}elseif $usertype == 2{/yun}
+	{yun:}include file="$comstyle/header.htm"{/yun}
+{yun:}elseif $usertype == 3{/yun}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+{yun:}include file="$lietoustyle/public.htm"{/yun} 
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/jianli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+
+</head>
+<body>
+{yun:}include file="$lietoustyle/header.htm"{/yun} 
+
+{yun:}/if{/yun}
+
+<link href="{yun:}$config.sy_weburl{/yun}/app/template/chat/css/chat.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+
+	
+	{yun:}if $usertype == 1{/yun}
+	<div class="yun_w1200">
+		{yun:}include file="$userstyle/left.htm"{/yun}
+	{yun:}elseif $usertype == 2{/yun}
+	<div class="admin_mainbody">
+		{yun:}include file="$comstyle/left.htm"{/yun}
+	{yun:}elseif $usertype == 3{/yun}
+		{yun:}include file="$lietoustyle/left.htm"{/yun}
+	{yun:}/if{/yun}
+
+		<div class="chat_content">
+			<div class="chat_boxall">
+				<!--  left-->
+				<div class="chat_box_left">
+					<div class="chat_box_header">
+						<div class="chat_box_header_l">
+							<div class="chat_box_header_l_u">联系人 </div>
+                            <span id="showUnread" class="chat_box_header_wd"><i class="chat_wd_checkbox"></i>未读消息</span>
+						</div>
+					</div>
+					<ul id="chatList" class="chat_box_userlist">
+						{yun:}foreach from=$rows item=v{/yun}
+						<li id="chat_{yun:}$v.id{/yun}" onclick="toChat('{yun:}$v.id{/yun}','{yun:}$v.tusertype{/yun}','{yun:}$usertype{/yun}')" class="{yun:}if $v.id == $smarty.get.id{/yun}chat_box_user_cur{yun:}/if{/yun} chatlistCtrl none">
+							<div class="chat_box_userpic"><img src="{yun:}$v.avatar{/yun}" >
+							<i id="unread_{yun:}$v.id{/yun}" class="chat_box_usermsg">{yun:}if $v.unread>0{/yun}{yun:}$v.unread{/yun}{yun:}/if{/yun}</i>
+							</div>
+							<div class="chat_box_userinfo">
+								<div class="chat_box_username">{yun:}$v.linkman{/yun}<span class="chat_box_userzw none">{yun:}if $v.tusertype == 2 || $v.tusertype == 3{/yun}招聘者{yun:}elseif $v.tusertype == 1{/yun} {yun:}/if{/yun}</span>
+								</div>
+								
+								<div class="chat_box_userp" id="chat_desc_{yun:}$v.id{/yun}">
+								{yun:}if $v.tusertype != 1{/yun}
+									{yun:}$v.username{/yun}
+								{yun:}else{/yun}
+									{yun:}$v.content{/yun}
+								{yun:}/if{/yun}
+								</div>
+								<span class="chat_box_usertime">{yun:}$v.time{/yun}</span>
+							
+							</div>
+						</li>
+						{yun:}/foreach{/yun}
+						
+					</ul>
+					<div id="chatlist_load" class="none">
+						加载中...
+					</div>
+
+				</div>
+				<!--  right-->
+				<div class="chat_box_right">
+					<!--  有内容-->
+					<div id="cbr_y" class="{yun:}if !$smarty.get.id{/yun}none{yun:}/if{/yun}">
+						<div id="single_head" class="chat_box_right_gtinfo">
+							{yun:}if $receive{/yun}
+							<span class="chat_box_right_gtinfo_u">{yun:}$receive.linkman{/yun}</span>
+							{yun:}$receive.identity{/yun}
+							
+							{yun:}if $v.down == 1{/yun}
+								<span class="xz_zt_a">已下载简历</span>
+							{yun:}/if{/yun}
+							{yun:}if $v.sq == 1 && ($usertype == 2 || $usertype == 3){/yun}
+								<span class="xz_zt_a">已投递简历</span>
+							{yun:}/if{/yun}
+							{yun:}if $v.sq == 1 && $usertype == 1{/yun}
+								<span class="xz_zt_a">已申请职位</span>
+							{yun:}/if{/yun}
+							<div class="">
+							{yun:}if $receive.usertype != 1{/yun}
+							<div id="content_job" class="chat_box_right_gtjob"></div>
+							{yun:}/if{/yun}
+							{yun:}if $receive.usertype == 1 {/yun}
+							<div id="content_expect" class="chat_box_right_gtjob"></div>
+							{yun:}/if{/yun}
+							</div>
+							
+							{yun:}/if{/yun}
+						</div>
+						
+						<div id="chat_box" class="chat_box_all">
+							<div id="chat_content" class="chat_sendcontent">
+								<ul>
+								</ul>
+							</div>
+						</div>
+						<!--footer-->
+						<div class="chat_footer_box">
+							<div class="chat_footer_czk">
+								{yun:}if !isset($adminChat){/yun}
+								<div id="single_foot" class="chat_box_right_cz">
+									{yun:}if !$config.sy_chat_exphone || $config.sy_chat_exphone == 2{/yun}
+									<span data-id='tel' class="chat_box_right_cz_a sendask">
+										<div id="header_hdh" class="{yun:}if $cantel=='3'{/yun}chat_header_hdh_grey{yun:}else{/yun}chat_header_hdh{yun:}/if{/yun}"><i class="header_czicon header_hdhicon"></i>
+											<div id="header_hdhtxt">{yun:}if $cantel=='3'{/yun}请求电话中{yun:}else{/yun}互换电话{yun:}/if{/yun}</div>
+										</div>
+									</span>
+									<span data-id='wx' class="chat_box_right_cz_a sendask">
+										<div id="header_hwx" class="{yun:}if $canwx=='3'{/yun}chat_header_hwx_grey{yun:}else{/yun}chat_header_hwx{yun:}/if{/yun}"><i class="header_czicon header_hwxicon"></i>
+											<div id="header_hwxtxt">{yun:}if $canwx=='3'{/yun}请求微信中{yun:}else{/yun}互换微信{yun:}/if{/yun}</div>
+										</div>
+									</span>
+									{yun:}/if{/yun}
+									{yun:}if $usertype == 2{/yun}
+										{yun:}if $config.sy_spview_web == 1{/yun}
+									<span id="spview" class="chat_box_right_cz_a"><i class="header_czicon header_spmsicon"></i>视频面试</span>
+										{yun:}/if{/yun}
+									<span id="inviteCheck" uid='{yun:}$smarty.get.id{/yun}' class="chat_box_right_cz_a"><i class="header_czicon header_msicon"></i>面试邀请</span>
+									{yun:}/if{/yun}
+									{yun:}if $usertype == 1{/yun}
+									<span id="sendExpcet" class="chat_box_right_cz_a"><i class="header_czicon header_msicon"></i>发简历</span>
+									<span id="sendJob" class="chat_box_right_cz_a"><i class="header_czicon header_fbicon"></i>发职位</span>
+									{yun:}/if{/yun}
+									<span id="nochat" class="chat_box_right_cz_a"><i class="header_czicon header_bzhicon"></i>不感兴趣</span>
+								</div>
+								{yun:}/if{/yun}
+								<div class="cc_left">
+									<iframe id="chat_iframe" name="chat_iframe" class="chat_iframe"></iframe>
+									<form id="imgform" target="chat_iframe" method="post"  enctype="multipart/form-data" action="{yun:}$config.sy_weburl{/yun}/index.php?m=chat&c=uploadImage">
+										<span class="chat_footer_czk_tj"><input type="file" name="file" accept="image/*" onchange="upImage(this)" value="" class="chat_footer_czk_tj_bth"></span>
+
+									<i id="usefulButton" onclick="UsefulTrigger();" class="cyy"> </i>
+									<i id="face" class="sendbq sendbq_i"></i>
+									<div id="commonly" class="showbq"></div>
+										
+									</form>
+									<div id="usefulBox" class="cyy_box none">
+										<div class="cyy_box_tit">
+											<span class="cyy_box_titname">常用语</span> <a href="javascript:void(0);" onclick="usefulSetShow();" class="cyy_box_titset">设置</a>	
+										</div>
+										<div id="usefulListBox" class="cyy_show">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="chat_footer_box_c">
+								<textarea id="send_content" class="chat_footer_textarea" placeholder="请输入内容" oninput="checkSend()"></textarea>
+								<div class="chat_footer_bth_c">
+									<span class="chat_footer_bth_tip">按Enter可以发送</span>
+									<input id="send" type="submit" value="发送" class="chat_footer_bth">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--无内容 提示-->
+					<div id="cbr_n" class="chattip {yun:}if $smarty.get.id{/yun}none{yun:}/if{/yun}">提示：与您进行过沟通过信息的都会在左侧列表中显示</div>
+                   </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!--弹出职位-->
+	<div id="joblist" class="none">
+		<div id="bg" style="display:block"></div>
+		<div class="chatjob_box">
+			<div class="chatjob_box_tit"><span class="chatjob_box_tit_name">选职位</span><span id="closeJob" class="chatjob_box_tit_close"></span></div>
+			<div class="chatjob_box_c">
+				<div id="chatjob_list" class="chatjob_box_job"></div>
+			</div>
+		</div>
+	</div>
+	
+	<!--填写微信号/手机号-->
+	<div id="hhshow" class="none">
+		<div id="bg" style="display:block"></div>
+		<div  class="wx_tck_box">
+			<div class="wx_tck_boxall">
+			<div id="wxdiv" class="">
+				<div class="wx_tck_boxtit">互换微信</div>
+
+				<div class="wx_tck_boxall_text">
+					<input id="wxinput" type="text" value="" placeholder="请输入微信号" class="wx_tck_boxall_input">
+				</div>
+			</div>
+			<div id="teldiv" class="none">
+				<div class="wx_tck_boxtit">互换电话</div>
+				<div class="wx_tck_boxall_text">
+					<input id="telinput" type="text" value="" placeholder="请输入手机号" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" class="wx_tck_boxall_input">
+				</div>
+			</div>
+			<input id="sendtype" type="hidden" value="">
+			<input id="hhtype" type="hidden" value="">
+			<input id="chatid" type="hidden" value="">
+			<div class="wx_tck_boxall_bth">
+				<a href="javascript:void(0)" onclick="savehh();" class="wx_tck_boxall_bth_a">确认</a>
+				<a href="javascript:void(0)" onclick="$('#hhshow').hide();" class="wx_tck_boxall_no">聊聊再说~</a>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="none">
+		<input type="hidden" name="eid" id="eid" value="" />
+	</div>
+	<div id="zwf" class="none">【&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;】</div>
+	<!--弹出职常用语设置-->
+	<div id="usefulSetBox" style=" display: none;">
+		<div class="cyy_setbox">
+			<div class="cyy_setcont">
+				<div id="usefulSetList" class="cyy_setshow">
+					
+				</div>
+				<div class="cyy_set_tj">
+					<a href="javascript:void(0);" onclick="editUseful();" class="cyy_set_tj_a">添加常用语</a>
+				</div>
+				<div id="usefulAddBox" class="" style="display: none;">
+					<div class="cyy_set_tip">请不要填写手机、QQ、微信等联系方式或广告信息，否则系统将封禁您的账号！</div>
+					<div class="cyy_set_textarea">
+						<textarea id="usefulcon"></textarea>
+					</div>
+					<div class="cyy_set_bth">
+						<input type="button" onclick="usefulSave();" value="确认" class="cyy_set_bth_a"> 
+						<input type="button" onclick="editUsefulClose();" value="取消"  class="cyy_set_bth_b">
+					</div>
+					<input type="hidden" id="usefulid" name="usefulid" value=""> 
+		 		</div>
+			</div>
+		</div>
+	</div>
+	<!--弹出职常用语设置 end-->
+    <style>
+	
+	.m_cont_inner{ background:none;}
+	.m_inner_zuob{ display:none;}
+	</style>
+	<script type="text/javascript">
+		var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+			weburl = "{yun:}$config.sy_weburl{/yun}",
+			jid = '{yun:}$smarty.get.jid{/yun}',
+			eid = '{yun:}$smarty.get.eid{/yun}',
+			toid = '{yun:}$receive.id{/yun}',
+			totype = '{yun:}$receive.usertype{/yun}',
+			inviteid = '{yun:}$smarty.get.invite{/yun}',
+			mine = {id: '{yun:}$uid{/yun}',usertype: '{yun:}$usertype{/yun}'},
+			chat_name = '{yun:}$config.sy_chat_name{/yun}',
+
+			tel = "",
+			wxid = "",
+			towx = "",
+			totel = "",
+			cantel = '{yun:}$cantel{/yun}',
+			canwx = '{yun:}$canwx{/yun}',
+			linkman = '{yun:}$receive.linkman{/yun}',
+			identity = '{yun:}$receive.identity{/yun}',
+			sy_chat_exphone = '{yun:}$config.sy_chat_exphone{/yun}',
+			sy_spview_web = '{yun:}$config.sy_spview_web{/yun}',
+			greeting = '{yun:}$greeting{/yun}';
+	</script>
+	<script src="{yun:}$config.sy_weburl{/yun}/app/template/chat/yunliao/websocket.js?v={yun:}$config.cachecode{/yun}"></script>
+
+{yun:}if $usertype == 1{/yun}
+	{yun:}include file="$userstyle/footer.htm"{/yun}
+{yun:}elseif $usertype == 2{/yun}
+	{yun:}include file="$comstyle/yqms.htm"{/yun}
+	{yun:}include file="$comstyle/footer.htm"{/yun}
+{yun:}elseif $usertype == 3{/yun}
+	{yun:}include file="$lietoustyle/footer.htm"{/yun} 
+{yun:}/if{/yun}		 

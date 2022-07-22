@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+{yun:}include file="$lietoustyle/public.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/jianli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/account.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+</head>
+<body>
+{yun:}include file="$lietoustyle/header.htm"{/yun} 
+<!--内容部分content-->
+<style>
+.my_table_msg th{ text-align:right}
+</style>
+<div class="m_content">
+  <div class="wrap"> {yun:}include file="$lietoustyle/left.htm"{/yun}
+    <div class="m_inner_youb fr">
+    <div class="lt_m_tit fl">
+      <ul class="lt_m_tit_list">
+		<li><a href="index.php?c=baoming_subject" >报名课程</a></li>
+		<li><a href="index.php?c=fav_subject" >收藏课程</a></li> 
+		<li><a href="index.php?c=atn_teacher" >关注讲师</a></li> 
+		<li class="lt_m_tit_list_cur"><a href="index.php?c=fav_agency" >关注机构</a></li>
+		<li><a href="index.php?c=subject_zixun" >培训留言</a></li> 
+      </ul>
+		</div>
+      <div class="com_body">
+      <div class="train_class_s">
+	  {yun:}if $rows{/yun} <ul>
+	  {yun:}foreach from=$rows item=v{/yun}
+          
+               <li>
+                   <div class="train_class_img fl" style="width:90px;"><a href="{yun:}url m=train c=agencyshow id=$v.sc_uid{/yun}" target="_blank" ><img style="width:70px;height:70px;" src="{yun:}$v.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);"/></a></div>
+                   <div class="train_class_tra fl">
+                   <div class="train_class_tit fl" style="padding-top:0;"><a href="{yun:}url m=train c=agencyshow id=$v.sc_uid{/yun}" target="_blank" class="List_Title_span_com">{yun:}$v.name{/yun}</a>        
+				<div class="train_class_cit fl" style="font-size:14px;">{yun:}$v.time|date_format:"%Y-%m-%d"{/yun}</div>
+				</div>
+                   <div class="train_class_mm fl"> 
+                     {yun:}if $v.num>0{/yun}
+                    <div class="train_class_mkc">{yun:}$v.subname{/yun} </div>
+                    <a style="color:#f90;" href="{yun:}url m=train c=mysubject id=$v.sc_uid{/yun}" target="_blank">共{yun:}$v.num{/yun}门课程>></a>
+                    {yun:}else{/yun} 暂无课程 {yun:}/if{/yun}
+                   </div>
+                   <div class="train_class_qx fl"><a href="javascript:void(0)" onclick="layer_del('您确定要取消关注？', 'index.php?c=fav_agency&act=del&id={yun:}$v.id{/yun}');" class="cblue">取消关注</a></div>
+                   </div>
+               </li>
+               
+          
+		   {yun:}/foreach{/yun} </ul>
+		   {yun:}else{/yun}
+      </div>       
+            <div class="msg_no fl">
+				<p>亲爱的用户，目前您未关注任何培训机构，想要了解培训机构近况</p>
+			    <p>立即搜索我感兴趣的讲师培训机构吧！</p>
+			   <div class="lt_src">    <a href="{yun:}url m=train c=agency{/yun}" target="_blank" class="">立即搜索我感兴趣的培训机构</a></div>
+				{yun:}/if{/yun}
+			</div>
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>               
+      
+      </div>
+    </div>
+</div>
+{yun:}include file="$lietoustyle/footer.htm"{/yun} 

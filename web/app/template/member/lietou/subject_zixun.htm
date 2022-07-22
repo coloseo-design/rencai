@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+{yun:}include file="$lietoustyle/public.htm"{/yun}
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/jianli.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$lietou_style{/yun}/css/account.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/member_public.js?v={yun:}$config.cachecode{/yun}"></script>
+</head>
+<body>
+{yun:}include file="$lietoustyle/header.htm"{/yun} 
+<!--内容部分content-->
+<style>
+.my_table_msg th{ text-align:right}
+</style>
+<div class="m_content">
+  <div class="wrap"> {yun:}include file="$lietoustyle/left.htm"{/yun}
+    <div class="m_inner_youb fr">
+     <div class="lt_m_tit fl">
+      <ul class="lt_m_tit_list">
+		<li><a href="index.php?c=baoming_subject" >报名课程</a></li>
+		<li><a href="index.php?c=fav_subject" >收藏课程</a></li> 
+		<li><a href="index.php?c=atn_teacher" >关注讲师</a></li> 
+		<li><a href="index.php?c=fav_agency" >关注机构</a></li>
+		<li class="lt_m_tit_list_cur"><a href="index.php?c=subject_zixun" >培训留言</a></li> 
+      </ul>
+		</div>
+      <div class="com_body">
+	  {yun:}if $rows{/yun}
+	 
+       <div class="train_leave_msg">
+           <ul>
+		    {yun:}foreach item=v from=$rows{/yun}
+               <li>
+                   <div class="train_leave_msg_img"><a href="{yun:}url m=train c=mysubject id=$v.s_uid{/yun}" target="_blank"><img style="width:65px;height:65px;border:1px solid #ddd;" src="{yun:}$v.px{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);"/></a></div>
+                   <div class="train_leave_msg_r">
+                   <div class="train_leave_msg_tit">
+                        <a class="train_leave_msg_tit_cr" href="{yun:}url m=train c=mysubject id=$v.s_uid{/yun}" target="_blank">{yun:}if $v.name{/yun}{yun:}$v.name{/yun}{yun:}/if{/yun}</a>
+                        <i class="train_leave_tm">{yun:}$v.ctime|date_format:'%Y-%m-%d %H:%M:%S'{/yun}</i>
+                        <span class="train_leave_state">回复状态：<i class="train_leave_state_no">{yun:}if $v.status=='1'{/yun}未回复</i><i class="train_leave_state_yes">{yun:}else{/yun}已回复{yun:}/if{/yun}</i></span>
+                   </div>
+                   <div class="train_leave_msg_cs"> {yun:}if $v.subname{/yun}培训课程：{yun:}$v.subname{/yun}{yun:}/if{/yun}</div>
+                   <div class="train_leave_msg_ly">联系电话：{yun:}$v.phone{/yun}</div>
+                   <div class="train_leave_msg_ly">留言内容：{yun:}$v.content{/yun}</div>
+                   {yun:}if $v.reply{/yun} 
+                   <div class="train_leave_msg_re">
+                   <div>回复内容：{yun:}$v.reply{/yun} </div>
+                   <div class="train_leave_msg_re_tm">{yun:}$v.reply_time|date_format:'%Y-%m-%d %H:%M:%S' {/yun}</div>
+                   </div>{yun:}/if{/yun}
+                   <div class="train_leave_msg_but fl"><a href="javascript:void(0)" onclick="layer_del('您确定要删除留言咨询？', 'index.php?c=subject_zixun&act=del&id={yun:}$v.id{/yun}');" class="cblue">删除留言</a></div>
+                   </div>
+               </li>
+			    {yun:}/foreach{/yun} 
+           </ul>
+      </div>  
+		   {yun:}else{/yun}
+            <div class="msg_no fl">
+				<p>亲爱的用户，目前您未对任何培训机构留言咨询，想要了解培训机构近况</p>
+			    <p>立即搜索我感兴趣的讲师培训机构吧！</p>
+			    <div class="lt_src">   <a href="{yun:}url m=train c=agency{/yun}" target="_blank" >立即搜索我感兴趣的培训机构>></a></div>
+				{yun:}/if{/yun}
+			</div>
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>               
+      </div>
+</div>
+{yun:}include file="$lietoustyle/footer.htm"{/yun} 

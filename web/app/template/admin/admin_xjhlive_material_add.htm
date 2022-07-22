@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script>var weburl = '{yun:}$config.sy_weburl{/yun}';</script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tabs_info">
+				<ul>
+					<li>
+						<a href="index.php?m=admin_xjhlive&c=caster&id={yun:}$smarty.get.id{/yun}">导播服务</a>
+					</li>
+					<li>
+						<a href="index.php?m=admin_xjhlive&c=material&id={yun:}$smarty.get.id{/yun}">导播素材</a>
+					</li>
+					<li class="curr">添加导播素材</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="tag_box mt10">
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form id="xjhform" name="myform" target="supportiframe" action="index.php?m=admin_xjhlive&c=saveMaterial" method="post" encType="multipart/form-data" class="layui-form" onsubmit="return CheckPost()">
+					<table width="100%" class="table_form" style="background:#fff;">
+						<tr class="admin_table_trbg">
+							<th colspan="4" class="admin_bold_box">
+								<div class="admin_bold">添加导播素材</div>
+							</th>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="120">名称：</th>
+							<td>
+								<div class="layui-input-inline">
+									<input type="text" name="name" id="name" placeholder="请输入名称" value="{yun:}$row.name{/yun}" size="60" class="layui-input">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="120" class="t_fl">素材：</th>
+							<td>
+								<button id="choosepic" type="button" class="yun_bth_pic" lay-data="{parentid: 'imgparent'}">上传文件</button>
+								<div class="layui-upload {yun:}if !$row.url{/yun}none{yun:}/if{/yun}" id="imgparent">
+									<img src="{yun:}$row.url{/yun}" width="200px" height="112px"/>
+								</div>
+
+								<span class="admin_web_tip" style="margin-left: 10px;">图片尺寸1280*720px，jpg、png格式，小于5M。视频限mp4格式，小于50M。</span>
+								 
+							</td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<td align="center" colspan="2">
+								<input type="hidden" name="xid" value="{yun:}$smarty.get.id{/yun}" />
+								<input type="hidden" name="id" value="{yun:}$row.id{/yun}" />
+								<input class="layui-btn layui-btn-normal" type="submit" value="&nbsp;添 加&nbsp;" />
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+		<script>
+			layui.use(['form','upload'], function() {
+				var form = layui.form
+					,upload = layui.upload
+					,$ = layui.$;
+					
+				upload.render({
+					elem: '#choosepic'
+					,auto: false
+					,accept: 'file'
+					,field:'file'
+					,exts: 'jpg|png|gif|bmp|jpeg|mp4'
+					,choose: function(obj){
+						var parentid = null;
+						parentid = this.parentid;
+						obj.preview(function(index, file, result){
+							if (!/\.(mp4|MP4)$/.test(file.name)) {
+								$("#" + parentid).show();
+								$("#" + parentid).find('img').attr('src',result);
+							}
+						});
+					}
+				});
+			});
+			function CheckPost(){
+				if($.trim($("#name").val())==''){layer.msg('请输入名称！',2,8);return false;}
+				loadlayer();
+			} 
+		</script>
+	</body>
+</html>

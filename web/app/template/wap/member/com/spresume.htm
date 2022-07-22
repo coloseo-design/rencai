@@ -1,0 +1,120 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue" class="wap_member_box none">
+	<div class="memberuser_looklist" v-for="(item, zk) in list" :key="zk">
+		<a href="javascript:void(0)" @click="toresume(item.uid,zk)" class="memberuser_looklist_a">
+			<div class="memberuser_looklistpt">
+				<img :src="item.photo" width="100%" height="100%">
+			</div>
+			<div class="memberuser_lookxb">
+				<img v-if="item.sex == '男'" src="{yun:}$wap_style{/yun}/images/set_man.png" width="100%" height="100%">
+				<img v-else src="{yun:}$wap_style{/yun}/images/set_woman.png" width="100%" height="100%">
+			</div>
+			<div class="memberuser_name">{{item.name}}
+				<i class="hr_rusume_new" v-if="item.is_browse == 1">新</i>
+			</div>
+			<div class="memberuser_info">{{item.exp}}·{{item.edu}}·{{item.age}}岁</div>
+		</a>
+		<div class="memberuser_lookjob">
+			<span class="memberuser_lookname">预约职位</span>
+			<span class="memberuser_jobname">{{item.jobname}}</span>
+		</div>
+		<div class="memberuser_lookjob">
+			<span class="memberuser_lookname">预约时间</span>
+			<span class="memberuser_jobname">{{item.ctime_n}}</span>
+		</div>
+		<div class="memberuser_lookjob memberuser_lookyxjob">
+			<span class="memberuser_lookname">面试状态</span>
+			<span class="memberuser_jobname"> 
+				<span v-if="item.status == 0">未面试 </span>
+				<span v-if="item.status == 1">正在面试 </span>
+				<span v-if="item.status == 2">已面试 </span>
+			</span>
+		</div>
+		<a href="javascript:void(0)" @click.stop="del(zk)" class="memberuser_sc">
+			<img src="{yun:}$wap_style{/yun}/images/resume_del.png" width="100%" height="100%">
+		</a>
+	</div>
+	<div v-if="count ==2 && islook">
+		<van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+	</div>
+	<span v-show="islook&&count==0">
+		<div class="wap_member_no">暂无预约人才~ 您可以主动邀请人才哦！</div>
+		<div>
+			<a class="wap_member_no_submit" href="{yun:}url m=wap c=resume{/yun}">去搜索人才</a>
+		</div>
+	</span>
+</div>
+<script>
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}') || 1;
+	var yunvue = new Vue({
+		el: '#yunvue',
+		data: {
+			list: [],
+			limit: 10,
+			total: 0,
+			page: currentPage,
+			islook: false
+		},
+		computed: {
+			count() {
+				if (this.total > this.limit) {
+					return 2;
+				} else if (this.list.length == 0) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		},
+		created() {
+			this.getList();
+		},
+		methods: {
+			getList: function() {
+				showLoading();
+				var that = this;
+				var paramer = {
+					sid: '{yun:}$smarty.get.sid{/yun}',
+					page: this.page,
+					limit: this.limit
+				};
+				var url = '{yun:}url d=wxapp h=com m=spview c=spresume{/yun}';
+				$.post(url, paramer, function(data) {
+					hideLoading();
+					if(data.error == 0){
+						var res = data.data;
+						that.list = res.list;
+						that.total = res.total;
+					}
+					that.islook = true;
+					$("#yunvue").css('display', 'block');
+				}, 'json');
+			},
+			del(id, key) {
+				var that = this;
+				var url = '{yun:}url d=wxapp h=com m=spview c=delSub{/yun}';
+				showConfirm('确定删除？', function() {
+					showLoading('删除中');
+					$.post(url, {id: id}, function(data) {
+						if (data.error == 1) {
+							that.list.splice(key, 1);
+							showToast('删除成功');
+						}
+					}, 'json')
+				});
+			},
+			pageChange: function(e) {
+				location.href = 'index.php?c=spreaume&page=' + e;
+			},
+			toPage: function(url) {
+				window.location.href = url;
+			},
+			toresume(uid, key){
+				this.list[key].is_browse = 2;
+				window.location.href = wapurl + 'index.php?c=resume&a=show&uid=' + uid;
+			}
+		}
+	})
+</script>
+</body>
+</html>

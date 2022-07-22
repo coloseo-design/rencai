@@ -1,0 +1,128 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+  <div class="training_cur ftl">
+    <div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > 培训师 </div>
+  </div>
+  <div class="training_subject_search ftl ">
+    <div class="training_subject_search_list ftl">
+      <div class="training_subject_search_list_left ftl">擅长领域</div>
+      <div class="training_subject_search_list_right ftl"> <a href="{yun:}listurl m=train c=teacher type=sid v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.sid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a> {yun:}foreach item=v from=$subject_index{/yun} <a href="{yun:}listurl m=train c=teacher v=$v type=sid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.sid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$subject_name[$v]{/yun}</a> {yun:}/foreach{/yun} </div>
+    </div>
+    {yun:}if !$smarty.get.provinceid&&!$smarty.get.cityid&&!$smarty.get.three_cityid{/yun}
+    <div class="training_subject_search_list ftl">
+      <div class="training_subject_search_list_left ftl">所在地区</div>
+      <div class="training_subject_search_list_right ftl"> <a href="{yun:}listurl m=train c=teacher type=provinceid v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.provinceid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a> {yun:}foreach item=v from=$city_index{/yun} <a href="{yun:}listurl m=train c=teacher  type=provinceid v=$v{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.provinceid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a> {yun:}/foreach{/yun} </div>
+    </div>
+    {yun:}/if{/yun}
+    
+    {yun:}if $smarty.get.provinceid &&!$smarty.get.cityid&& !$smarty.get.three_cityid{/yun}
+    <div class="training_subject_search_list ftl">
+      <div class="training_subject_search_list_left ftl">所在城市</div>
+      <div class="training_subject_search_list_right ftl"> <a href="{yun:}listurl m=train c=teacher untype='cityid'{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.cityid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a> {yun:}foreach item=v from=$city_type[$smarty.get.provinceid]{/yun} <a href="{yun:}listurl m=train c=teacher v=$v type=cityid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.cityid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a> {yun:}/foreach{/yun} </div>
+    </div>
+    {yun:}else if $smarty.get.provinceid && $smarty.get.cityid && !$city_type[$smarty.get.cityid]{/yun}
+    <div class="training_subject_search_list ftl">
+      <div class="training_subject_search_list_left ftl">所在城市</div>
+      <div class="training_subject_search_list_right ftl"> <a href="{yun:}listurl m=train c=teacher untype='cityid'{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.cityid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a> {yun:}foreach item=v from=$city_type[$smarty.get.provinceid]{/yun} <a href="{yun:}listurl m=train c=teacher v=$v type=cityid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.cityid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a> {yun:}/foreach{/yun} </div>
+    </div>
+    {yun:}/if{/yun}
+    
+    {yun:}if $smarty.get.cityid && $city_type[$smarty.get.cityid]{/yun}
+    <div class="training_subject_search_list ftl">
+      <div class="training_subject_search_list_left ftl">所在县区</div>
+      <div class="training_subject_search_list_right ftl"> <a href="{yun:}listurl m=train c=teacher untype='three_cityid'{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.three_cityid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a> {yun:}foreach item=v from=$city_type[$smarty.get.cityid]{/yun} <a href="{yun:}listurl m=train c=teacher v=$v type=three_cityid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.three_cityid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a> {yun:}/foreach{/yun} </div>
+    </div>
+    {yun:}/if{/yun}
+    <div class="training_subject_search_list ftl" >
+      <div class="training_subject_search_list_left ftl">擅长行业</div>
+      <div class="training_subject_search_list_right  ftl"> <a href="{yun:}listurl m=train c=teacher type=hy v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.hy{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a> {yun:}foreach item=v from=$industry_index{/yun} <a href="{yun:}listurl m=train c=teacher v=$v type=hy{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.hy==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$industry_name[$v]{/yun}</a> {yun:}/foreach{/yun} </div>
+    </div>
+    <div class="training_subject_search_list ftl">
+      <div class="training_subject_search_list_left ftl">关&nbsp;键&nbsp; 字</div>
+      <div class="training_subject_search_list_right ftl">
+        <div class="sub_search">
+          <form method="get" action="{yun:}if !$config.sy_traindir{/yun}index.php{yun:}else{/yun}{yun:}url m=train{/yun}{yun:}/if{/yun}">
+            {yun:}if  !$config.sy_traindir{/yun}
+            <input type="hidden" value="train" name="m" />
+            {yun:}/if{/yun}
+            <input type="hidden" name="c" value="teacher" />
+            <input type="text" name="keyword" value="" placeholder="搜索培训师"  class="Search_Courses_text  ftl">
+            <input type="submit" value="" class="Search_Courses_bth1 ftl">
+          </form>
+        </div>
+      </div>
+    </div>
+    {yun:}if $smarty.get.sid||$smarty.get.hy||$smarty.get.provinceid||$smarty.get.cityid||$smarty.get.three_cityid||$smarty.get.keyword{/yun}
+    <div class="Search_close_box">
+      <div>
+        <div class="Search_clear"> <a href="{yun:}url m=train c=teacher{/yun}"> 清除所选</a></div>
+        <span class="Search_close_box_s">已选条件：</span></div>
+      {yun:}if $smarty.get.sid{/yun} <a href="{yun:}listurl m=train c=teacher untype='sid'{/yun}" class="Search_jobs_c_a disc_fac">擅长领域：{yun:}$subject_name[$smarty.get.sid]{/yun}</a> {yun:}/if{/yun}
+      {yun:}if $smarty.get.provinceid{/yun} <a href="{yun:}listurl m=train c=teacher untype='provinceid'{/yun}" class="Search_jobs_c_a disc_fac">所在地区：{yun:}$city_name[$smarty.get.provinceid]{/yun}</a> {yun:}/if{/yun}
+      {yun:}if $smarty.get.cityid{/yun} <a href="{yun:}listurl m=train c=teacher untype='cityid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.cityid]{/yun}</a> {yun:}/if{/yun} 
+      {yun:}if $smarty.get.three_cityid{/yun} <a href="{yun:}listurl m=train c=teacher untype='three_cityid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.three_cityid]{/yun}</a> {yun:}/if{/yun} 
+      {yun:}if $smarty.get.hy{/yun} <a href="{yun:}listurl m=train c=teacher untype='hy'{/yun}" class="Search_jobs_c_a disc_fac">擅长行业：{yun:}$industry_name[$smarty.get.hy]{/yun}</a> {yun:}/if{/yun} 
+      {yun:}if $smarty.get.keyword{/yun} <a href="{yun:}listurl m=train c=teacher untype='keyword'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$smarty.get.keyword{/yun}</a> {yun:}/if{/yun} 
+      &nbsp; </div>
+    {yun:}/if{/yun} </div>
+  <div class="training_subject_closex">
+    <div class="training_subject_title"> <span class="training_subject_span">培训师列表</span> {yun:}if $teacherkeyword{/yun} <em class="training_subject_tag ftl">您是不是要找： 
+      {yun:}key limit=8 recom=1 type=11 item=keylist{/yun} <a href="{yun:}$keylist.url{/yun}" class="training_subject_tag_a" target="_blank">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun} </em> {yun:}else{/yun} <em class="training_subject_tag ftl">&nbsp;</em> {yun:}/if{/yun} </div>
+    <div class="training_subject_c_box ftl  ">
+      <div class="training_subject_Sort ftl">
+        <div class="training_subject_coy">共找到相关的讲师 <span class="training_rec_subject_p">{yun:}$total{/yun}</span> 条</div>
+      </div>
+    </div>
+  </div>
+  <div class="training_subject_content ftl">
+    <div class="training_subject ftl mt15"> {yun:}foreach item=v from=$rows{/yun}
+      <div class="training_kc_list">
+        <div class="training_jg_boxpic ftl"><a href="{yun:}url m=train c=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}" target="_bank"><img src="{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxteacher_icon{/yun}',2);" width="120" height="120"></a> </div>
+        <div class="training_kc_info">
+          <div class="training_kc_name"><a href="{yun:}url m=train c=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}" target="_bank">{yun:}$v.name{/yun}</a> <span class="training_Courses_zy">{yun:}$subject_name[$v.sid]{/yun}讲师</a> </div>
+          <div class="training_kc_info_js">{yun:}$v.content|strip_tags|mb_substr:0:45:'utf-8'{/yun}...</div>
+          <div class="training_kc_p"><span class="training_Courses_span">所属机构：</span> {yun:}$v.train_name|mb_substr:0:12:'utf-8'{/yun} 
+            {yun:}if $city_name[$v.cityid]{/yun} <span class="training_Courses_span training_Courses_span_ml">所在地区：</span> {yun:}$city_name[$v.cityid]{/yun}{yun:}if $city_name[$v.threecityid]{/yun} - {yun:}$city_name[$v.threecityid]{/yun}{yun:}/if{/yun}
+            
+            {yun:}/if{/yun}</div>
+          <div class="training_kc_p"><span class="training_Courses_span">擅长行业：</span>{yun:}$industry_name[$v.hy]{/yun} <span class="training_Courses_span training_Courses_span_ml">课程：</span>{yun:}if $v.num==0{/yun}（{yun:}$v.num{/yun}）{yun:}else{/yun}<a style="color: red;" href="{yun:}url m=train c=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}" target="_bank">（{yun:}$v.num{/yun}）</a>{yun:}/if{/yun} </div>
+        </div>
+        <div class="training_Courses_zx ftr"> {yun:}if $usertype!=4{/yun}
+          {yun:}if $v.atn==1{/yun} <a href="javascript:void(0);" id="atn_{yun:}$v.id{/yun}" onclick="pxatn('{yun:}$v.id{/yun}','{yun:}url m=ajax c=atncompany{/yun}','{yun:}$v.uid{/yun}');" class="training_Courses_zx_a " style="background:#ccc">取消关注</a> {yun:}else{/yun} <a href="javascript:void(0);" id="atn_{yun:}$v.id{/yun}" onclick="pxatn('{yun:}$v.id{/yun}','{yun:}url m=ajax c=atncompany{/yun}','{yun:}$v.uid{/yun}');" class="training_Courses_zx_a">关注TA</a> {yun:}/if{/yun}
+          {yun:}else{/yun}
+          {yun:}if $uid{/yun} <a href="javascript:void(0);" onclick="layer.msg('只有个人用户和hr才能关注', 2, 8)" class="training_Courses_zx_a">关注TA</a> {yun:}else{/yun} <a href="javascript:void(0);"  onclick="showlogin('1');" class="training_Courses_zx_a">关注TA</a> {yun:}/if{/yun}
+          {yun:}/if{/yun} <span class="training_Courses_zx_ar">
+          <label><i id="antnum{yun:}$v.id{/yun}"  class="crop-add-yb_i">{yun:}$v.ant_num{/yun}</i>人已关注 </label>
+          </span> </div>
+      </div>
+      {yun:}foreachelse{/yun}
+      <div class="seachno">
+        <div class="seachno_left"><img src="{yun:}$train_style{/yun}/images/search-no.gif" width="144" height="102"></div>
+        <div class="listno-content"> <strong>很抱歉，没有找到满足条件的讲师</strong><br>
+          <span> 建议您：<br>
+          1、适当减少已选择的条件<br>
+          2、适当删减或更改搜索关键字<br>
+          </span> <span> 热门关键字：<br>
+          {yun:}key limit=8 recom=1 type=11 item=keylist{/yun} <a href="{yun:}$keylist.url{/yun}" class="jos_tag_a"  target="_blank">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun} </span></div>
+      </div>
+      {yun:}/foreach{/yun} </div>
+    <!--分页-->
+    <div class="clear"></div>
+    <div class="pages">{yun:}$pagenav{/yun}</div>
+    <!--分页--> 
+  </div>
+  {yun:}include file="$trainstyle/right.htm"{/yun} </div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$train_style{/yun}/js/train_public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script> 
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]--> 
+{yun:}include file="$trainstyle/footer.htm"{/yun} 

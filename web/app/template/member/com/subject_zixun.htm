@@ -1,0 +1,55 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class="com_tit"> <span class="com_tit_span">培训管理</span> </div>
+    <div class="new_com_tit">
+        <div class="job_list_tit">
+         <ul class="">
+     <li {yun:}if $smarty.get.c=="baoming_subject"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=baoming_subject">报名课程</a></li>
+         <li {yun:}if $smarty.get.c=="fav_subject"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=fav_subject">收藏课程</a></li>
+       <li {yun:}if $smarty.get.c=="atn_teacher"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=atn_teacher">关注讲师</a></li> 
+        <li {yun:}if $smarty.get.c=="fav_agency"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=fav_agency">关注机构</a></li> 
+         <li {yun:}if $smarty.get.c=="subject_zixun"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=subject_zixun">培训留言</a></li> 
+         </ul>
+         </div></div><div class=right_box>
+      <div class=admincont_box>      
+         
+	  {yun:}if $rows{/yun}
+	 
+       <div class="train_leave_msg">
+           <ul>
+		    {yun:}foreach item=v from=$rows{/yun}
+               <li>
+                   <div class="train_leave_msg_img"><a href="{yun:}url m=train c=mysubject id=$v.s_uid{/yun}" target="_blank"><img style="width:65px;height:65px;border:1px solid #ddd;" src="{yun:}$v.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);"/></a></div>
+                   <div class="train_leave_msg_r">
+                   <div class="train_leave_msg_tit">
+                        <a class="train_leave_msg_tit_cr" href="{yun:}url m=train c=mysubject id=$v.s_uid{/yun}" target="_blank">{yun:}if $v.name{/yun}{yun:}$v.name{/yun}{yun:}/if{/yun}</a>
+                        <i class="train_leave_tm">{yun:}$v.ctime|date_format:'%Y-%m-%d %H:%M:%S'{/yun}</i>
+                        <span class="train_leave_state">回复状态：<i class="train_leave_state_no">{yun:}if $v.status=='1'{/yun}未回复</i><i class="train_leave_state_yes">{yun:}else{/yun}已回复{yun:}/if{/yun}</i></span>
+                   </div>
+                   <div class="train_leave_msg_cs"> {yun:}if $v.subname{/yun}培训课程：{yun:}$v.subname{/yun}{yun:}/if{/yun}</div>
+                   <div class="train_leave_msg_ly">联系电话：{yun:}$v.phone{/yun}</div> 
+                   <div class="train_leave_msg_ly">留言内容：{yun:}$v.content{/yun}</div> 
+                   <div class="train_re_msg">{yun:}if $v.reply{/yun}回复内容：{yun:}$v.reply{/yun} &nbsp;&nbsp;  <span class="train_re_tm">{yun:}$v.reply_time|date_format:'%Y-%m-%d %H:%M:%S'{/yun}</span>{yun:}/if{/yun}</div>
+                   <div class="train_leave_msg_but"><a href="javascript:void(0)" onclick="layer_del('您确定要删除留言咨询？', 'index.php?c=subject_zixun&act=del&id={yun:}$v.id{/yun}');" class="cblue">删除留言</a></div>
+                   </div>
+               </li>
+			    {yun:}/foreach{/yun} 
+           </ul>
+      </div>       
+		  
+		   {yun:}else{/yun}
+            <div class="com_msg_no fl">
+				<p>亲爱的用户，目前您未对任何培训机构留言咨询！</p>
+			    <a href="{yun:}url m=train c=agency{/yun}" target="_blank" class="com_msg_no_bth com_submit">立即搜索我感兴趣的培训机构咨询>></a>
+				
+			</div>
+			{yun:}/if{/yun}
+            <div class="clear"></div>
+            <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+    </div>
+    </div>
+  </div> 
+
+{yun:}include file="$comstyle/footer.htm"{/yun}

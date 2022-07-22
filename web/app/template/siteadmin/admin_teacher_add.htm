@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript">
+var weburl="{yun:}$config.sy_weburl{/yun}";
+</script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+body, div {
+	margin: 0;
+	padding: 0;
+}
+</style>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站培训讲师信息。</div>
+</div>
+</div>
+  <div class="infoboxp_top mt10">
+    <h6>培训讲师信息</h6>
+  </div>
+  <div class="admin_table_border">
+    <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form class="layui-form" name="myform" method="post" target="supportiframe" action="" enctype="multipart/form-data">
+      <table width="100%" class="table_form" style="background:#fff;">
+        <input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+        <tr>
+          <th>讲师姓名：</th>
+          <td><input type="text" name="name" value="{yun:}$row.name{/yun}" class="input-text"></td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th>擅长领域：</th>
+          <td>
+				<div class="layui-form-item">
+				 <div class="layui-input-block">
+					<div class="layui-input-inline">
+						<select name="sid" id="sid" lay-verify="" >
+						<option>请选择</option>
+						 {yun:}foreach from=$subject_index item=v{/yun}
+							<option  value="{yun:}$v{/yun}"
+							 {yun:}if $row.sid==$v{/yun}
+							  selected
+								  {yun:}/if{/yun}
+								  > {yun:}$subject_name[$v]{/yun}
+								</option>
+							  {yun:}/foreach{/yun}
+							</select>
+						  </div>
+						</div>
+				  </div>
+			</td>
+        </tr>
+        <tr>
+          <th>擅长行业：</th>
+          <td>
+			<div class="layui-form-item">
+				 <div class="layui-input-block">
+					<div class="layui-input-inline">
+						<select name="hy" id="hy" lay-verify="" >
+						<option>请选择</option>
+						 {yun:}foreach from=$industry_index item=v{/yun}
+							<option  value="{yun:}$v{/yun}"
+							 {yun:}if $row.hy==$v{/yun}
+							  selected
+								  {yun:}/if{/yun}
+								  > {yun:}$industry_name[$v]{/yun}
+								</option>
+							  {yun:}/foreach{/yun}
+							</select>
+						  </div>
+						</div>
+				  </div>
+			</td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th>所在地区：</th>
+		   <td>
+  		   <div class="layui-form-item">
+          <div class="layui-input-inline">
+            <select name="provinceid" id="provinceid" lay-filter="citys">
+              <option value="">请选择</option>
+              {yun:}foreach from=$city_index key=j item=v{/yun}
+              <option value="{yun:}$v{/yun}" {yun:}if $row.provinceid == $v{/yun} selected{yun:}/if{/yun}
+                >{yun:}$city_name[$v]{/yun}
+              </option>
+              {yun:}/foreach{/yun}
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="cityid" lay-filter="citys" id="cityid">
+              <option value="">请选择</option>
+              {yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}
+              <option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun} selected{yun:}/if{/yun}
+                >{yun:}$city_name[$v]{/yun}
+              </option>
+              {yun:}/foreach{/yun}
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="threecityid" lay-filter="threecityid" id="three_cityid">
+              <option value="">请选择</option>
+              {yun:}foreach from=$city_type[$row.cityid] key=j item=v{/yun}
+              <option value="{yun:}$v{/yun}" {yun:}if $row.threecityid==$v{/yun} selected{yun:}/if{/yun}
+                >{yun:}$city_name[$v]{/yun}
+              </option>
+              {yun:}/foreach{/yun}
+            </select>
+          </div>
+        </div>
+            </td>
+        </tr>
+        <tr>
+          <th width="120">讲师简介：</th>
+          <td>
+ 		  <script id="myEditor" name="content" type="text/plain" style="width:600px;height:220px;">{yun:}$row.content{/yun}</script>
+		  </td>
+        </tr>
+        <tr class="admin_table_trbg">
+          <th width="120">讲师形象：</th>
+          <td>
+			<button type="button" class="yun_bth_pic noupload" lay-data="{imgid: 'imgicon',parentid: 'imgparent'}">上传图片</button>
+			<input type="hidden" id="laynoupload" value="1"/>
+			
+ 			最佳尺寸120*80 
+		  </td>
+        </tr>
+        <tr id="imgparent" {yun:}if !$row.pic{/yun}class="none"{yun:}/if{/yun}>
+          <th width="120">预览图片：</th>
+          <td><img id="imgicon" src="{yun:}$row.pic{/yun}" width="120" height="80" /></td>
+        </tr>
+        <tr class="admin_table_trbg" >
+          <th width="120"></th>
+          <td><input type="hidden" name="id" size="40" value="{yun:}$row.id{/yun}"/>
+            <input class="layui-btn layui-btn-normal" type="submit" name="update" value="&nbsp;更 新&nbsp;"  />
+            <input class="layui-btn layui-btn-normal" type="reset" name="reset" value="&nbsp;重 置 &nbsp;" /></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+<script language="javascript">
+UE.getEditor('myEditor',{
+	toolbars:[['Source', 'Bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright','insertorderedlist', 'insertunorderedlist','emotion','simpleupload']],
+	wordCount:false,
+    elementPathEnabled:false,
+    initialFrameHeight:180
+});
+</script>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/js/city.js?v={yun:}$config.cachecode{/yun}'></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui.upload.js?v={yun:}$config.cachecode{/yun}" type='text/javascript'></script> 
+<script>
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+</script>
+</body>
+</html>

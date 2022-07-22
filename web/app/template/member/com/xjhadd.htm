@@ -1,0 +1,113 @@
+<div id="xjhadd"  style="width:550px; display:none;">
+	<div class="">
+		<form action='index.php?c=xjh&act=save' target="supportiframe" method="post" class="layui-form">
+			<div class="job_box_inp"  style="padding:10px 5px 5px 20px"> 
+				<label>宣讲城市</label>
+                	<div class="layui-input-inline">
+						<select name="provinceid" id="provinceid" lay-filter="citys">
+						  <option value="">请选择城市</option>
+						  {yun:}foreach from=$city_index key=j item=v{/yun}
+						  <option value="{yun:}$v{/yun}" {yun:}if $row.provinceid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+						  {yun:}/foreach{/yun}
+						</select>
+					</div>
+                	<div class="layui-input-inline">
+						<select name="cityid" id="cityid" lay-filter="citys">
+						  <option value="">请选择城市</option>
+                          {yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}
+						  <option value="{yun:}$v{/yun}" {yun:}if $row.cityid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+						  {yun:}/foreach{/yun}
+						</select>
+					</div>
+			</div>
+            <div class="job_box_inp"  style="padding:10px 5px 5px 20px"> 
+				<label>宣讲学校</label>
+                	<div class="layui-input-inline">
+						<select name="schoolid" id="schoolid">
+						  <option value="">请选择院校</option>
+						  {yun:}foreach from=$school item=v{/yun}
+						  <option value="{yun:}$v.id{/yun}" {yun:}if $row.schoolid==$v.id{/yun}selected{yun:}/if{/yun}>{yun:}$v.schoolname{/yun}</option>
+						  {yun:}/foreach{/yun}
+						</select>
+					</div>
+			</div>
+            <div class="job_box_inp"  style="padding:10px 5px 5px 20px"> 
+				<label>详细地点</label>
+                	<div class="layui-input-inline" style="width:400px"><input type="text" name="address" id="address" value="{yun:}$row.address{/yun}" class="layui-input" placeholder="请填写详细地点，如山东大学中心校区大学生活动中心" /></div>
+			</div>
+            <div class="job_box_inp"  style="padding:10px 5px 5px 20px"> 
+				<label>宣讲时间</label>
+                	<div class="layui-input-inline" style="width:130px">
+                    <input type="text" name="datetime" id="datetime" value="{yun:}$row.stime|date_format:'%Y-%m-%d'{/yun}" class="layui-input" placeholder="日期"/>
+                    </div>
+                	<div class="layui-input-inline" style="width:130px">
+                    <input type="text" name="stime" id="stime" value="{yun:}$row.stime|date_format:'%H:%M'{/yun}" class="layui-input" placeholder="开始时间"/>
+                    </div>
+                    <span>-</span>
+                	<div class="layui-input-inline" style="width:130px">
+                    <input type="text" name="etime" id="etime" value="{yun:}$row.etime|date_format:'%H:%M'{/yun}" class="layui-input" placeholder="结束时间"/>
+                    </div>
+			</div>
+			<div class="job_box_inp"  style="padding:10px 5px 5px 20px;width:100%; text-align:center;"> 
+                <input type="hidden" name="r_status" id="r_status" class="layui-btn layui-btn-normal" value="{yun:}$company.r_status{/yun}" />
+                <input type="hidden" name="id" id="id" class="layui-btn layui-btn-normal" value="{yun:}$row.id{/yun}" />
+                <input type="submit" name="submit" class="layui-btn layui-btn-normal" value="确定" />
+			</div>
+		</form>
+	</div>
+</div>
+<script language=javascript src='{yun:}$config.sy_weburl{/yun}/data/plus/city.cache.js?v={yun:}$config.cachecode{/yun}'></script>
+<script>var weburl='{yun:}$config.sy_weburl{/yun}';
+layui.use(['form','layer', 'laydate'], function(){
+    var $ = layui.$,
+    form = layui.form,
+    laydate = layui.laydate,
+    layer = layui.layer,
+    url = weburl+"/index.php?m=ajax&c=get_city_option";  
+    
+       	form.on('checkbox(allcom)', function (data) {
+       	 	$("input[name='del[]']").each(function () {
+            	this.checked = data.elem.checked;
+        	});
+        	form.render('checkbox');
+      	});
+    if(ct.length>0 && ct!='new Array()'){
+		form.on('select(citys)', function(data){
+			$.post(url,{cityid : data.value},function(htm){
+				if(data.elem.name=='provinceid'){
+					$("#cityid").html(htm);
+	 			}
+				form.render('select');
+			});
+			$.post(weburl+"/index.php?m=ajax&c=get_school_option",{cityid : data.value,type:data.elem.name},function(htm){
+				if(htm){
+					$("#schoolid").html(htm);
+	 			}
+				form.render('select');
+			});
+		});
+	}else{
+	    if($("#cityid")){
+	      $("#cityid").parent().remove();
+	    }
+	    if($("#three_cityid")){
+	      $("#three_cityid").parent().remove();
+	    }
+	    form.render('select');
+    
+  }
+	laydate.render({
+		elem: '#datetime'
+	})
+	laydate.render({
+		elem: '#stime',
+		type: 'time',
+		format: 'HH:mm'
+	})
+	laydate.render({
+		elem: '#etime',
+		type: 'time',
+		format: 'HH:mm'
+	})
+});
+</script>

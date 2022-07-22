@@ -1,0 +1,152 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+  <div class="com_tit"><span class="com_tit_span">会员服务</span></div>
+        <div class=right_box>
+     <div class="vip_boxshow">	<div class="vip_boxshow_c">
+     
+     <div class="report_uaer_list ">
+     	<div class="report_uaer_list_h1">开通超级会员</div>
+     	<div class="report_uaer_list_p">为企业提供多样化的套餐服务</div>
+          <ul>
+            {yun:}if $config.com_vip_type==2{/yun}
+            <li><a href="index.php?c=right" >套餐会员</a></li>
+            {yun:}/if{/yun}
+            
+            {yun:}if $config.com_vip_type==1{/yun}
+            <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+            {yun:}/if{/yun}
+            
+            {yun:}if $config.com_vip_type==0{/yun}
+            <li><a href="index.php?c=right" >套餐会员</a></li>
+            <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+            {yun:}/if{/yun}
+            {yun:}if $statis.rating_type != 2 && !$vipIsDown && $config.com_integral_online != 4 {/yun}
+     					<li><a href="index.php?c=right&act=added" >增值包</a></li>
+     			  {yun:}/if{/yun}
+          <li><a href="index.php?c=ad" > 购买广告位</a></li>
+          <li ><a href="index.php?c=pay" >充值服务</a></li>
+          <li><a href="index.php?c=paylogtc" >我的服务</a></li>
+          <li><a href="index.php?c=paylog&consume=ok" >订单管理</a></li>
+          {yun:}if $config.sy_com_invoice == 1{/yun}
+                     <li  class="report_uaer_list_cur"><a href="index.php?c=invoice"  >发票管理</a></li>
+                   {yun:}/if{/yun}
+          <li><a href="index.php?c=coupon_list" >优惠卡券</a></li>
+          <li><a href="index.php?c=jobpack&act=loglist"  >赏金收益</a></li>
+              {yun:}if $config.sy_help_open == 1{/yun}
+              <li><a href="index.php?c=friendhelp" >好友助力</a></li>
+              {yun:}/if{/yun}
+          <li><a  href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}管理</a></li>
+          </ul>
+        </div>
+            
+                <div class="hyfw_qh">
+                    <ul>
+                        <li>
+                            <a href="index.php?c=invoice&act=apply">发票索取</a>
+                        </li>
+                        <li class="hyfw_qh_cur">
+                            <a href="index.php?c=invoice">发票列表</a>
+                        </li>
+                        <li>
+                            <a href="index.php?c=invoice&act=info">发票信息管理</a>
+                        </li>
+                    </ul>
+                </div>  
+	<div class="paylogpc" >
+		
+
+                <div class="clear"></div>
+
+                    <div  class="com_tablefpbox">
+                        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                        <form action="{yun:}$now_url{/yun}" target="supportiframe" method="post" id='myform'>
+                           
+                            <table width="100%" cellspacing="1" cellpadding="1" class="newcom_table" id="job_checkbokid">
+                                    {yun:}if $rows{/yun}
+
+                                    <tr>
+                                        <th>申请时间</th>
+                                        <th>发票抬头</th>
+                                        <th>发票总额</th>
+                                        <th>发票性质</th>
+                                        <th>联系人姓名</th>
+                                        <th>发票状态</th>
+                                    </tr>
+                                    {yun:}/if{/yun} {yun:}foreach from=$rows item=log{/yun}
+                                    <tr>
+                                        <td align="center">{yun:}$log.addtime|date_format:'%Y-%m-%d %H:%M:%S'{/yun}</td>
+                                        <td align="center">{yun:}$log.title|mb_substr:0:10:'utf-8'{/yun}</td>
+                                        <td align="center">￥{yun:}$log.price{/yun}</td>
+                                        <td align="center">{yun:}if $log.style=='2'{/yun}电子（邮箱）{yun:}else if $log.style!='2'{/yun}纸质（快递）{yun:}/if{/yun}</td>
+                                        <td align="center">{yun:}$log.link_man{/yun}</td>
+                                        <td align="center">
+                                            {yun:}if $log.status=='0'{/yun}
+                                            <font color=red>未审核</font>{yun:}if $log.statusbody{/yun}<span class="com_m_line">|</span>
+                                            <a href="javascript:;" onclick="show_msg('{yun:}$log.statusbody{/yun}')">审核说明</a>{yun:}/if{/yun}
+                                            {yun:}elseif $log.status=='1'{/yun}已审核
+                                            {yun:}if $log.statusbody{/yun}<span class="com_m_line">|</span>
+                                            <a href="javascript:;" onclick="show_msg('{yun:}$log.statusbody{/yun}')">审核说明</a>{yun:}/if{/yun}
+                                            {yun:}elseif $log.status=='2'{/yun}
+                                            <font color=red>未通过</font>{yun:}if $log.statusbody{/yun}<span class="com_m_line">|</span>
+                                            <a href="javascript:;" onclick="show_msg('{yun:}$log.statusbody{/yun}')">查看原因</a>{yun:}/if{/yun}
+                                            {yun:}elseif $log.status=='3'{/yun}已打印          
+                                            {yun:}elseif $log.status=='4'{/yun}已邮寄                               
+                                            {yun:}/if{/yun}
+                                        </td>
+                                    </tr>
+                                    {yun:}foreachelse{/yun}
+                                    <tr>
+                                        <td colspan="7" class="table_end">
+                                            <div class="msg_no">您还没有发票列表。</div>
+                                        </td>
+                                    </tr>
+                                    {yun:}/foreach{/yun}
+                                    <tr>
+                                        <td colspan="7" class="table_end">
+                                            <div class="diggg">{yun:}$pagenav{/yun}</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </form>
+                        <div class="clear"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function show_msg(msg) {
+        $("#msgs").html(msg);
+        var layindex = $.layer({
+            type: 1,
+            title: '审核说明',
+            closeBtn: [0, true],
+            border: [10, 0.3, '#000', true],
+            area: ['400px', '210px'],
+            page: {
+                dom: "#showmsg"
+            }
+        });
+        $("#layindex").val(layindex);
+    }
+</script>
+<div id="showmsg" style="display:none; width: 400px;">
+    <div>
+        <div id="infobox">
+            <div class="admin_Operating_sh" style="padding:10px; ">
+                <div class="admin_Operating_sh_h1" style="padding:5px;">
+                    <div style="height:80px;overflow:auto;" id="msgs"></div>
+                </div>
+                <div class="admin_Operating_sub" style="margin-top:10px;"> &nbsp;&nbsp;
+                    <input type="button" onClick="layer.close($('#layindex').val());" class="cancel_btn" value='确认'>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

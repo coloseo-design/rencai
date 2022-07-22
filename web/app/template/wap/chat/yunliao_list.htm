@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<title>{yun:}$title{/yun}</title>
+		<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<link rel="stylesheet" href="{yun:}$wap_style{/yun}/chat/css/chat.css?v={yun:}$config.cachecode{/yun}">
+	</head>
+	<body style="background:#fff">
+		<div class="chat_msg_header">
+			<span class="chat_msg_header_p_back"></span>
+			<span class="chat_msg_header_p" onclick="{yun:}if $smarty.get.fr{/yun}chatBack(){yun:}else{/yun}history.back(){yun:}/if{/yun}">{yun:}$config.sy_chat_name{/yun}</span>
+		</div>
+		{yun:}if $rows{/yun}
+		<div class="chat_msg_box">
+			<ul id="chatList">
+				{yun:}foreach from=$rows item=v{/yun}
+				<li id="chat_{yun:}$v.id{/yun}" onclick="toChat('{yun:}$v.id{/yun}','{yun:}$v.tusertype{/yun}','{yun:}$usertype{/yun}')">
+					<div class="chat_msg_tx"><img src="{yun:}$v.avatar{/yun}" width="50" height="50"></div>
+					{yun:}if $v.unread>0{/yun}<span class="chat_msg_new">{yun:}$v.unread{/yun}</span>{yun:}/if{/yun}
+					<div class="chat_name_box">
+						<div class="chat_name"><span class="chat_hrname">{yun:}$v.linkman{/yun}</span>&nbsp;&nbsp;&nbsp;{yun:}if $v.usertype != 1{/yun}<span class="chat_comname">{yun:}$v.username{/yun}</span>{yun:}/if{/yun}</div>
+					</div>
+					<div class="chat_new_p">{yun:}$v.content{/yun}</div>
+					<span class="chat_new_time">{yun:}$v.time{/yun}</span>
+                    <div class="xz_zt">
+						{yun:}if $v.down == 1{/yun}
+							<span class="xz_zt_a">已下载简历</span>
+						{yun:}/if{/yun}
+						{yun:}if $v.sq == 1 && ($usertype == 2 || $usertype == 3){/yun}
+							<span class="xz_zt_a">已投递简历</span>
+						{yun:}/if{/yun}
+						{yun:}if $v.sq == 1 && $usertype == 1{/yun}
+							<span class="xz_zt_a">已申请职位</span>
+						{yun:}/if{/yun}
+					</div>
+				</li>
+				{yun:}/foreach{/yun}
+			</ul>
+		</div>
+		{yun:}else{/yun}
+		<div class="wap_member_no">没有{yun:}$config.sy_chat_name{/yun}记录。</div>
+		{yun:}/if{/yun}
+		<input type="hidden" id="refreshed" value="no">
+		<!--邀请视频面试   start-->
+		<div id="spviewModal" class="none">
+			<div class="wapspms_bg"></div>
+			<div class="wapspms_show">
+				<div class="wapspms_com">
+					<div class="wapspms_comlogo"><img id="modalLogo" src=""></div>
+					<div class="wapspms_comname" id="modalName"></div>
+					<div>邀请你进行视频面试</div>
+				</div>
+				<div class="wapspms_cz">
+					<a href="javascript:void(0);" onclick="closeSp()" class="wapspms_cz_a"><i class="wapspms_cz_icon"></i><div class="wapspms_cz_p">拒绝</div></a>
+					<a href="javascript:void(0);" onclick="allowSp()" class="wapspms_cz_a wapspms_cz_aml"><i class="wapspms_cz_icon wapspms_cz_icon_js"></i><div class="wapspms_cz_p">接受</div></a>
+				</div>
+			</div>
+		</div>
+		<!--邀请视频面试   end-->
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script>
+			var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+				wapurl = '{yun:}url m=wap{/yun}',
+				mine = {usertype:"{yun:}$usertype{/yun}"},
+				cpage   =   "{yun:}$smarty.get.c{/yun}";
+			
+			$(function () {
+				var needRefresh = window.sessionStorage.getItem("needRefresh");
+
+				if(needRefresh!='false' && needRefresh){
+					window.sessionStorage.setItem("needRefresh", false);
+					location.reload();
+				}
+			});
+			function toChat(id,type,nowtype){
+				if(nowtype != 1){
+					layer.open({type: 2});
+					$.post(wapurl + "index.php?c=chat&a=chatRight",{chatid:id},function(data){
+						layer.closeAll('loading');
+						var data	=	eval('('+data+')');
+						
+						var status	=	data.status;
+						
+						if(status == 1){	//	可以聊天
+							
+							window.location.href = wapurl + 'index.php?c=chat&id=' + id + '&type=' + type;
+							
+						}else if(status == 2){	//	购买服务
+								
+							layer.open({
+								title : [ '温馨提示', 'background-color: #FF4351; color:#fff;' ],
+								content : data.msg,
+								btn : [ '确认', '取消' ],
+								shadeClose : false,
+								yes : function() {
+									window.location.href = wapurl + "member/index.php?c=server&server=chat&id="+ id;
+								}
+							});
+							 
+						}else{
+							layer.open({
+								content: data.msg
+								,skin: 'msg'
+								,time: 2
+							});
+						}
+					});	
+				}else{
+					window.location.href = wapurl + 'index.php?c=chat&id=' + id + '&type=' + type;
+				}
+			}
+			function chatBack(){
+				window.location.href = wapurl;
+			}
+		</script>
+		<script src="{yun:}$wap_style{/yun}/chat/yunliao/socket.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	</body>
+</html>

@@ -1,0 +1,74 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+  <div class="training_cur ftl">
+    <div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > 培训课程 </div>
+  </div>
+  {yun:}include file="$trainstyle/top.htm"{/yun}
+  <div class="Courses_content_box  ftl ">
+    <div class="Courses_Table_detail ftl mt10">
+      <ul class="Courses_Table_detail_touch">
+        {yun:}if $row.linkman{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_pp"></i>联 系 人：</span> {yun:}$row.linkman{/yun}</li>{yun:}/if{/yun}
+        {yun:}if $row.linkqq{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_qq"></i>Q Q 号码：</span> {yun:}$row.linkqq{/yun}</li>{yun:}/if{/yun}
+        {yun:}if $row.linkphone{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_lx"></i>联系电话：</span> {yun:}$row.linkphone{/yun}</li>{yun:}/if{/yun}
+        {yun:}if $row.linktel{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_sj"></i>手机号码：</span> {yun:}$row.linktel{/yun}</li>{yun:}/if{/yun}
+        {yun:}if $row.linkmail{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_yj"></i>联系邮件：</span> {yun:}$row.linkmail{/yun}</li>{yun:}/if{/yun}
+        {yun:}if $row.address{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_dz"></i>机构地址：</span> {yun:}$row.address{/yun}</li>{yun:}/if{/yun}
+        {yun:}if $row.website{/yun}<li><span class="Courses_Table_detail_touch_s"><i class="courses_content_wz"></i>机构网址：</span><a rel="nofollow" href="{yun:}$row.website{/yun}"> {yun:}$row.website{/yun}</a></li>{yun:}/if{/yun}
+		<li>
+        <div class="clear"></div>
+		<div class="job_hare"> 
+		<span class="job_hare_fl">分享到：</span> 
+		<span >
+			
+			  <!-------分享代码----------->
+			
+				<div class="pyshare bdsharebuttonbox bdshare-button-style0-16" data-tag="share_1">
+					<a class="li s1 bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+					<a class="li s3 bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+					<a class="li s5 bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+					<a class="li s6 bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+					<div class="clear"></div>
+				</div>
+			
+			  <!-------分享代码END----------->
+		  </span>
+		   </div>
+           <div class="clear"></div>
+		</li>
+      </ul>
+    </div>
+  </div>
+{yun:}include file="$trainstyle/reclist.htm"{/yun}
+</div>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+ <!--------shareJS--------->
+<script>
+	window._bd_share_config = {
+		common : {
+			bdText : '{yun:}$title{/yun}',
+			bdDesc : '{yun:}$description{/yun}',	
+			bdUrl : '{yun:}url m=train c=agencyshow id=$row.uid{/yun}',
+			bdPic : '{yun:}$row.logo{/yun}'
+		},
+		share : [{
+			"tag" : "share_1",
+			"bdSize" : 24,
+			"bdCustomStyle":'{yun:}$style{/yun}/style/share.css'
+		}]
+	}
+	$(function(){
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src=weburl+'/js/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+	});
+</script>
+<!--------shareJS END--------->
+{yun:}include file="$trainstyle/footer.htm"{/yun}

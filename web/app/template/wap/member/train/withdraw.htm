@@ -1,0 +1,58 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<div class="wap_member_comp_h1"><span>提现</span></div> 
+
+<ul class="yun_m_tit">
+	<li class="yun_m_tit_cur">
+		<a href="index.php?c=withdraw">金额提现</a>
+	</li>	
+	<li>
+		<a href="index.php?c=withdrawlist">提现明细</a>
+	</li>
+</ul>
+
+<div class="loglist_box">
+	我的钱包：<span class="yun_reward_list_box_n">￥{yun:}$statis.packpay{/yun}</span> 
+	<span class="wap_member_msg_job_s"> 冻结金额：<span class="yun_reward_list_box_n">￥{yun:}$statis.freeze{/yun}</span> </span> 
+</div>
+
+<div style="padding:10px 10px 0 10px;">
+	<div class="admin_new_tip ">
+		<div class="admin_new_tit">操作提示</div>
+		<div class="admin_new_tip_list_cont">
+			<div class="admin_new_tip_list"> 
+					{yun:}if $config.sy_withdraw_minmoney{/yun}单笔提现金额必须达到{yun:}$config.sy_withdraw_minmoney{/yun}元{yun:}/if{/yun}{yun:}if $config.sy_withdraw_num>0 && $config.sy_withdraw_minmoney{/yun}，单次提现收取每笔{yun:}$config.sy_withdraw_pound{/yun}%手续费{yun:}/if{/yun}{yun:}if $config.sy_withdraw_money>0{/yun}，{yun:}$config.sy_withdraw_money{/yun}元以内及时到账，超过{yun:}$config.sy_withdraw_money{/yun}元需审核。{yun:}/if{/yun}注意：提现到微信账户，请先绑定微信
+			</div>
+		</div>
+	</div>
+</div> 
+
+<section class="wap_member">
+	<form name="pay"  action="index.php?c=withdraw" method="post" onsubmit="return withdraw_form();">
+		<ul class="yunset_password mt15">
+			<li>
+				<span class="yunset_password_mname">真实姓名： </span> 
+				<div class="yunset_sj_box">
+					<input type="text" class="yunset_sjtext" name="real_name" id="real_name" value=""placeholder="请输入真实姓名">
+				</div>
+			</li>
+			<li>
+				<span class="yunset_password_mname">提现金额：</span> 
+				<div class="yunset_sj_box">
+					<input type="text" class="yunset_sjtext" name="price" id="price" onkeyup= "this.value=this.value.replace(/[^0-9.]/g,'')" value=''  placeholder="请输入提现金额">
+				</div>
+			</li>
+		</ul>
+		<div class="yunset_bth_box">
+			{yun:}if $statis.packpay>=$config.sy_withdraw_minmoney{/yun}
+				<input class="reinputText2" type="submit" value="提现">
+			{yun:}else{/yun}
+				<input  type="button" value="不可提现" name='nextstep' disabled  class="reinputText2" >
+			{yun:}/if{/yun}
+		</div>
+	</form>
+</section> 
+</body>
+</html>

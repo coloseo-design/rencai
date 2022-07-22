@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="keywords" content="{yun:}$keywords{/yun}" />
+    <meta name="description" content="{yun:}$description{/yun}" />
+    <link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+    <link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_job_fairs.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+    <link rel="stylesheet" href="{yun:}$style{/yun}/style/tips.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+    <title>{yun:}$title{/yun}</title>
+</head>
+
+<body style="background:#f8f8f8">
+    {yun:}include file="$tplstyle/header.htm"{/yun}
+    <div class="clear"></div>
+    {yun:}if $row.toptitle{/yun}
+    <div id="scrollobj" class="led">
+        {yun:}$row.toptitle{/yun}
+    </div>
+    {yun:}/if{/yun}
+    <div class="clear"></div>
+    <div class="wlzp_showbanner" style="{yun:}if $row.banner{/yun}background:url({yun:}$row.banner_n{/yun}) no-repeat center center{yun:}/if{/yun}">
+    </div>
+    <div class="clear"></div>
+    <div class="yun_content">
+        <div class="clear"></div>
+        <div class="wlzp_show_sm">
+            <div class="wlzp_fw ">
+                <marquee direction="left">
+                    {yun:}foreach from=$look item=lk{/yun}
+                    <span class="wlzp_fw_p">
+                        {yun:}$lk.name{/yun}<em class="wlzp_show_fw_n">刚才查看了</em>
+                        {yun:}if $lk.jobname{/yun} {yun:}$lk.jobname{/yun}
+                        {yun:}else{/yun} {yun:}$lk.comname{/yun}的职位
+                        {yun:}/if{/yun}
+                    </span>
+                    {yun:}/foreach{/yun}
+                </marquee>
+            </div>
+            <!-- 新增开始 -->
+            <div class="yun_network">
+                <ul>
+                    <li>
+                        <p>{yun:}$allnum.comnum{/yun}<span>家</span> </p>
+                        <h4>参会企业</h4>
+                    </li>
+                    <li>
+                        <p>{yun:}$allnum.jobnum{/yun} <span>个</span> </p>
+                        <h4>参会职位</h4>
+                    </li>
+                    <li>
+                        <p>{yun:}$allnum.zpnum{/yun} <span>人</span> </p>
+                        <h4>招聘人数</h4>
+                    </li>
+                    <li>
+                        <p>{yun:}$allnum.userjobnum{/yun} <span>次</span> </p>
+                        <h4>投递简历</h4>
+                    </li>
+                    <li>
+                        <p>{yun:}$allnum.usernum{/yun}<span>人</span> </p>
+                        <h4>参会求职者</h4>
+                    </li>
+                </ul>
+            </div>
+            <div class="yun_network_text">
+                <div>
+                    {yun:}$row.body{/yun}
+                </div>
+            </div>
+            <!-- 结束 -->
+            <div class="clear"></div>
+        </div>
+        <div class="wlzp_new_tit">
+            <div class="wlzp_show_dtc">
+                <div class="wlzp_show_tit">
+                    <ul>
+                        <li class="{yun:}if ($boxtype=='comlist' || !$boxtype) && !$smarty.get.page{/yun}wlzp_show_tit_cur{yun:}/if{/yun}" onclick="tabChange(this,'comlist')"><a>招聘大厅</a></li>
+                        <li class="{yun:}if $boxtype=='hall' || $smarty.get.page{/yun}wlzp_show_tit_cur{yun:}/if{/yun}" onclick="tabChange(this,'hall')"><a>求职大厅</a></li>
+                    </ul>
+                </div>
+                <div class="wlzp_show_search">
+                    <form action="index.php" method="get" autocomplete="off">
+                        <input type="hidden" name="m" value="{yun:}$smarty.get.m{/yun}" />
+                        <input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}" />
+                        <input type="hidden" name="id" value="{yun:}$smarty.get.id{/yun}" />
+                        <input type="hidden" name="ztype" id="ztype" value="job" />
+                        <input type="hidden" name="boxtype" id="boxtype" value="{yun:}$smarty.get.boxtype{/yun}" />
+                        <input type="text" name="keyword" value="{yun:}$smarty.get.keyword{/yun}" placeholder="请输入关键字" class="wlzp_show_search_text">
+                        <input type="submit" value="搜索" class="wlzp_show_search_bth">
+                    </form>
+                </div>
+            </div>
+            <!-- 新增 -->
+            {yun:}if $zphArea{/yun}
+            <div class="positionroll">
+                
+                <div class="positionroll_all">
+                    <div>                      
+                        <a href="{yun:}url m=zphnet c=show id=$row.id {/yun}#comlist" class="{yun:}if $smarty.get.zw == '' || !$smarty.get.zw{/yun}clickroll{yun:}/if{/yun}" href="javascript:void(0);">全部</a>
+                       {yun:}foreach from=$area key=qkey item=qy{/yun}
+                        <a href="{yun:}url m=zphnet c=show id=$row.id zw=$qy.id{/yun}#comlist" class="{yun:}if $smarty.get.zw == $qy.id{/yun}clickroll{yun:}/if{/yun}">{yun:}$qy.name{/yun}</a>
+                        {yun:}/foreach{/yun}
+                        <a href="{yun:}url m=zphnet c=show id=$row.id zw=other {/yun}#comlist" class="{yun:}if $smarty.get.zw == 'other'{/yun}clickroll{yun:}/if{/yun}">其他区域</a>
+                    </div>
+                    <!-- <div class="wlzp_sidebar_tit"> {yun:}$zphArea.name{/yun} </div> -->
+                </div>
+                
+            </div>
+            {yun:}/if{/yun}
+            <!-- 结束 -->
+        </div>
+        <div id="comlist" class="zphnetdiv {yun:}if $boxtype=='hall' || $smarty.get.page{/yun} none {yun:}/if{/yun}">
+            <div class="clear"></div>
+            <div class="wlzp_show_ulbox">
+                <div class="wlzp_show_ulboxleft">
+                    <!--列表-->
+                    <div id="comdiv">
+                        {yun:}foreach from=$areaCom.com item=zd{/yun}
+                        <div class="wlzp_show_comlistbox">
+                            <span id="dxzph_{yun:}$zd.uid{/yun}" class="spmszx zphnetOnline none">在线</span>
+                            <div class="wlzp_show_combox_left">
+                                <div class="wlzp_showthree_pic"><img src="{yun:}$zd.logo{/yun}" width="100" height="100"></div>
+                                <div class="wlzp_showthreecom">
+                                    <div class="wlzp_showthreecomname">
+                                        <a href="{yun:}url m=company c=show id=$zd.uid {/yun}" target="_blank">{yun:}$zd.comname{/yun}</a>
+                                        <p> <span> {yun:}$industry_name[$zd.hy]{/yun} </span>|<span> {yun:}$comclass_name[$zd.pr]{/yun} </span>|<span>{yun:}$comclass_name[$zd.mun]{/yun}</span>人</p>
+                                    </div>
+                                </div>
+                                <div class="wlzp_show_combox_right">
+                                    <div class="wlzp_show_comlist_gd">
+                                        <ul class="wlzp_show_job">
+                                            {yun:}foreach from=$zd.job item=zdjob{/yun}
+                                            <li class="wlzp_show_comlistbox_z">
+                                                {yun:}if $row.etime < 0{/yun} <a href="javascript:void(0)" onclick="zphend()" class="wlzp_show_rightjobname">{yun:}$zdjob.name{/yun}</a>
+                                                    {yun:}else{/yun}
+                                                    <a href="javascript:void(0)" onclick="zphnetLook('{yun:}$row.id{/yun}','{yun:}$zdjob.uid{/yun}','{yun:}$zdjob.id{/yun}','{yun:}url m=job c=comapply id=$zdjob.id {/yun}')" class="wlzp_show_rightjobname">{yun:}$zdjob.name{/yun}</a>
+                                                    {yun:}/if{/yun}
+                                                    <span class="wlzp_show_rightjobxz">{yun:}$zdjob.job_salary{/yun}</span>
+                                            </li>
+                                            {yun:}/foreach{/yun}
+                                        </ul>
+                                    </div>
+                                </div>
+                                {yun:}if $config.sy_chat_open==1{/yun}
+                                <div class="wlzp_show_cz">
+                                    {yun:}if $config.sy_spview_web == 1{/yun}
+                                    {yun:}if $row.etime < 0{/yun} <a href="javascript:void(0)" onclick="zphend()" class="wlzp_show_dh_shipin wlzp_show_dh5"><img src="{yun:}$style{/yun}/images/shivideo.png">视频面试</a>
+                                    {yun:}else{/yun}
+                                    <a href="javascript:void(0)" onclick="spdiv('{yun:}$row.id{/yun}','{yun:}$zd.uid{/yun}','{yun:}$usertype{/yun}', '2')" class="wlzp_show_dh_shipin wlzp_show_dh5"> <img src="{yun:}$style{/yun}/images/shivideo.png"> 视频面试</a>
+                                    {yun:}/if{/yun}
+                                    {yun:}/if{/yun}
+                                    {yun:}if $row.etime < 0{/yun} <a href="javascript:void(0)" onclick="zphend()" class="wlzp_show_dh_gtbth wlzp_show_dh5 communicaterts"><img src="{yun:}$style{/yun}/images/gouton.png">立即沟通</a>
+                                    {yun:}else{/yun}
+                                    <a href="javascript:void(0)" onclick="jobChat('{yun:}$zd.uid{/yun}','com','{yun:}$usertype{/yun}','','{yun:}$config.sy_chat_name{/yun}','{yun:}$config.sy_user_change{/yun}',this)" data-zid="{yun:}$row.id{/yun}" class="wlzp_show_dh_gtbth wlzp_show_dh5 communicaterts"><img src="{yun:}$style{/yun}/images/gouton.png">立即沟通</a>
+                                    {yun:}/if{/yun}
+
+                                    <a href="{yun:}url m=company c=show id=$zd.uid{/yun}" class="wlzp_show_dh_more">查看更多岗位</a>
+                                </div>
+                                {yun:}/if{/yun}
+                            </div>
+                            <input type="hidden" name="dxzph[]" value="{yun:}$zd.uid{/yun}" />
+                        </div>
+                        {yun:}foreachelse{/yun}
+                        <div class="wlzp_notip">
+                            <div class="no_tip">招聘企业整理中，即将发布</div>
+                        </div>
+                        {yun:}/foreach{/yun}
+                    </div>
+                    {yun:}if $areaCom.total > 1{/yun}
+                    <div class="clear"></div>
+                    <div class="fypages">
+                        <a href="javascript:void(0)" class="fypages_a" onclick="compage('1')">上一页</a>
+                        <div class="pages_sz">
+                            <div id="nowpage" class="pages_szbox" onclick="pageHtmlShow()">1</div>
+                            <div id="pagehtml" class="pages_sz_s" style="display:none">
+                                {yun:}for $var=1 to $areaCom.total{/yun}
+                                <a href="javascript:void(0);" onclick="tocompage('{yun:}$var{/yun}')" class="pages_sz_a">{yun:}$var{/yun}</a>
+                                {yun:}/for{/yun}
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)" onclick="compage('2')" class="fypages_a">下一页</a><em class="fypages_a">共{yun:}$areaCom.total{/yun}页</em>
+                    </div>
+                    {yun:}/if{/yun}
+                    <!--列表 end-->
+                </div>
+            </div>
+        </div>
+        <div id="hall" class="zphnetdiv {yun:}if ($boxtype=='comlist' || !$boxtype) && !$smarty.get.page{/yun}none{yun:}/if{/yun}">
+            <div class="wlzp_show_userbox">
+                <ul class="wlzp_show_userlist">
+                    {yun:}zphnetuser id='auto.id' keyword='auto.keyword' item=user limit=50{/yun}
+                    <li>
+                        <span id="dxzph_{yun:}$user.uid{/yun}" class="spmszx zphnetOnline none">在线</span>
+                        <div class="wlzp_show_userjob">{yun:}$user.name{/yun}</div>
+                        <div class="wlzp_show_userpic"><a href="{yun:}url m=resume c=show id=$user.id{/yun}" target="_blank"><img src="{yun:}$user.photo_n{/yun}" /></a></div>
+                        <div class="wlzp_show_userinfo">{yun:}$user.uname_n{/yun} <span class="wlzp_show_userinfo_n">({yun:}$user.sex_n{/yun},{yun:}$user.age_n{/yun}岁)</span></div>
+                        {yun:}$user.exp_n{/yun}经验<span class="wlzp_show_userinfoline">|</span>{yun:}$user.edu_n{/yun}学历
+                        {yun:}if $config.sy_chat_open==1{/yun}
+                        <div class="wlzp_show_cz" style="text-align: left;">
+                            {yun:}if $config.sy_spview_web == 1{/yun}
+                            {yun:}if $row.etime < 0{/yun} <a href="javascript:void(0)" onclick="zphend()" class="wlzp_show_dh_shipin wlzp_show_dh5" style="margin-right: 5px;"> <img src="{yun:}$style{/yun}/images/shivideo.png" > 视频面试</a>
+                                {yun:}else if $usertype == 2{/yun}
+                                <a href="javascript:void(0)" onclick="spdiv('{yun:}$row.id{/yun}','{yun:}$user.uid{/yun}','{yun:}$usertype{/yun}','1')" class="wlzp_show_dh_shipin wlzp_show_dh5" style="margin-right: 5px;"> <img src="{yun:}$style{/yun}/images/shivideo.png"> 视频面试</a>
+                                {yun:}else{/yun}
+                                <a href="javascript:void(0)" onclick="layer.msg('非企业用户，暂无视频权限！',2,8);return false;" class="wlzp_show_dh_shipin wlzp_show_dh5" style="margin-right: 5px;"> <img src="{yun:}$style{/yun}/images/shivideo.png"> 视频面试</a>
+                                {yun:}/if{/yun}
+                                {yun:}/if{/yun}
+                                {yun:}if $row.etime < 0{/yun} <a href="javascript:void(0)" onclick="zphend()" class="wlzp_show_dh_gtbth wlzp_show_dh5"><img src="{yun:}$style{/yun}/images/gouton.png">立即沟通</a>
+                                    {yun:}else if $usertype == 2{/yun}
+                                    <a href="javascript:void(0)" onclick="zphnetChat('{yun:}$user.uid{/yun}','{yun:}$user.id{/yun}','{yun:}$usertype{/yun}','{yun:}$config.sy_chat_name{/yun}',this)" data-zid="{yun:}$row.id{/yun}" class="wlzp_show_dh_gtbth wlzp_show_dh5"><img src="{yun:}$style{/yun}/images/gouton.png">立即沟通</a>
+                                    {yun:}else{/yun}
+                                    <a href="javascript:void(0)" onclick="layer.msg('非企业用户，暂无聊天权限！',2,8);return false;" class="wlzp_show_dh_gtbth wlzp_show_dh5"><img src="{yun:}$style{/yun}/images/gouton.png">立即沟通</a>
+                                    {yun:}/if{/yun}
+                        </div>
+                        {yun:}/if{/yun}
+                        <input type="hidden" name="dxzph[]" value="{yun:}$user.uid{/yun}" />
+                    </li>
+                    {yun:}/zphnetuser{/yun}
+                </ul>
+                <div class="clear"></div>
+                <div class="search_pages">
+                    <div class="pages"> {yun:}$pagenav{/yun}</div>
+                </div>
+                {yun:}if !$user{/yun}
+                <div class="wlzp_notip">
+                    <div class="no_tip">很抱歉，还没有相关信息</div>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    {yun:}if $row.etime > 0{/yun}
+    {yun:}if !$uid && !$usertype{/yun}
+    <div class="businessHallWindow">
+        <a href="javascript:void(0)" onclick="showlogin('1')" class=""><img src="{yun:}$style{/yun}/images/qizhz.png">求职者报名</a>
+        <a href="javascript:void(0)" onclick="showlogin('2')" class="companySignedUpp"><img src="{yun:}$style{/yun}/images/baoem.png">企业报名</a>
+    </div>
+    {yun:}elseif $usertype == '1' && $enum < 1{/yun} <div class="businessHallWindow">
+        <a href="javascript:void(0)" onclick="noresume()" class=""><img src="{yun:}$style{/yun}/images/qizhz.png">求职者报名</a>
+        </div>
+        {yun:}/if{/yun}
+        {yun:}if $usertype == '2'{/yun}
+        <div class="businessHallWindow">
+            <a href="javascript:void(0)" onclick="clickZphnet('{yun:}$row.id{/yun}')" class="companySignedUpp"><img src="{yun:}$style{/yun}/images/baoem.png"> 企业报名</a>
+        </div>
+        {yun:}/if{/yun}
+        {yun:}/if{/yun}
+        <div id="zphend" class="none">
+            <div class="wlzp_over_tip">本场招聘会已结束 , 去逛逛其他招聘会吧~</div>
+        </div>        
+        <div id="TB_window" style='display:none;padding-bottom: 5px;'>
+            <form class="layui-form">
+                <div id="error_zph" class="error_zph"></div>
+                <div id="TB_ajaxContent" class="">
+                    <div class="yd_zph_tck">
+                        <div class="yd_zph_tck_h1">尊敬的用户您好！</div>
+                        <div class="yd_zph_tck_jobtit">请选择参与网络招聘会的职位：</div>
+                        <div class="layui-input-inline">
+                            <input name="checkall" value="checkall" lay-filter="allChoose" id="checkall" type="checkbox" lay-skin="primary" title="全选" class="check_all" />
+                        </div>
+                        <div class="zph_tck_jobpost_box">
+                            <div id="joblist" class="zph_tck_jobpost"></div>
+                        </div>
+                        <div class="zph_tck_jobpost_bth">
+                            <input type='button' value="提交" onclick="submitzphnet()" class="zph_tck_jobpost_bth_b " />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <input id="zid" type="hidden" value="{yun:}$row.id{/yun}" />
+        <input id="zphnet_zw" type="hidden" value="{yun:}$smarty.get.zw{/yun}" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+        <script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <script src="{yun:}$style{/yun}/js/zphnet.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+        <script src="{yun:}$style{/yun}/js/pay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <link href="{yun:}$style{/yun}/js/liMarquee/liMarquee.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+        <script src="{yun:}$style{/yun}/js/liMarquee/jquery.liMarquee.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+        <!--[if IE 6]>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script>
+		DD_belatedPNG.fix('.png');
+		</script>
+		<![endif]-->
+        <script type="text/javascript">
+        var weburl = '{yun:}$config.sy_weburl{/yun}',style='{yun:}$style{/yun}';
+        var form = null;
+        layui.use(['layer', 'form'], function() {
+            var layer = layui.layer,
+                $ = layui.$,
+                form = layui.form;
+
+            form.on('checkbox(allChoose)', function(data) {
+                var child = $(".job_select input[type='checkbox']");
+                child.each(function(index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
+            });
+
+        });
+        marquee("3000", ".gdbq  ul");
+        var usertype = "{yun:}$usertype{/yun}",
+            sy_chat_name = "{yun:}$config.sy_chat_name{/yun}",
+            sy_chat_open = "{yun:}$config.sy_chat_open{/yun}",
+            sy_user_change = "{yun:}$config.sy_user_change{/yun}",
+            zphetime = "{yun:}$row.etime{/yun}",
+            searchKeyword = "{yun:}$smarty.get.keyword{/yun}",
+            page = 1,
+            comPageAll = "{yun:}$areaCom.total{/yun}",
+            img = "{yun:}$style{/yun}/images/wlzp_hr.png";
+
+        $(function() {
+            setTimeout(function() {
+                '{yun:}if $row.etime < 0{/yun}'
+                zphend();
+                '{yun:}/if{/yun}'
+            }, 1000);
+            $(document).on('click', function(e) {
+                if ($('#pagehtml').css('display') != 'none') {
+                    $('#pagehtml').hide();
+                }
+            });
+            if ($("#scrollobj")) {
+                $('#scrollobj').liMarquee({
+                    scrollamount: 50
+                });
+            }
+        })
+
+        function autoScroll(obj) {
+            $(obj).find("ul").animate({
+                marginTop: "-30px"
+            }, 800, function() {
+                $(this).css({
+                    marginTop: "0px"
+                }).find("li:first").appendTo(this);
+            })
+        }
+        $(function() {
+            setInterval('autoScroll(".gunmsg")', 4000);
+        })
+        </script>
+        <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+        {yun:}include file="$tplstyle/public_search/public_tips.htm"{/yun}
+        {yun:}include file="$tplstyle/public_search/login.htm"{/yun}
+        {yun:}include file="$temstyle/chat/webim.htm"{/yun}
+        <input id="zphnet_group" type="hidden" value="1" />
+        <script>
+        var weburl = "{yun:}$config.sy_weburl{/yun}",
+            user_sqintegrity = "{yun:}$config.user_sqintegrity{/yun}",
+            integral_pricename = '{yun:}$config.integral_pricename{/yun}',
+            pricename = '{yun:}$config.integral_pricename{/yun}',
+            code_web = '{yun:}$config.code_web{/yun}',
+            code_kind = '{yun:}$config.code_kind{/yun}';
+        </script>
+        <style>
+        .chat_box {
+            bottom: 0px;
+        }
+
+        .go-top {
+            display: none;
+        }
+
+        .hp_head_box {
+            display: none;
+        }
+
+        .zph_footer {
+            width: 100%;
+            text-align: center;
+            padding-bottom: 20px;
+            line-height: 25px;
+            font-size: 12px;
+            color: #666;
+            padding-top: 50px;
+        }
+        </style>
+        <div class="clear"></div>
+        <div class="zph_footer">如果您有任何疑问或在找工作过程中遇到任何困难，您都可以通过以下方式与我们联系
+            <div class="">电话： {yun:}$config.sy_freewebtel{/yun} <span class="reg_footer_yz">客服QQ：{yun:}$config.sy_qq{/yun}</span>
+            </div>
+            <div class="">{yun:}$config.sy_webcopyright{/yun} </div>
+        </div>
+        <script>
+        $(function() {
+
+            //获取登录信息
+            if ($('#login_head_id').length == 1) {
+                $.get(weburl + "/index.php?m=ajax&c=RedLoginHead&type=ajax", function(data) {
+                    $('#login_head_id').html(data);
+                });
+            }
+
+        });
+        </script>
+        <script>
+        $(document).ready(function() {
+            $(".positionroll_all a").click(function() {
+                $(this).siblings('a').removeClass('clickroll');
+                $(this).addClass("clickroll");
+            });
+        });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+   	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+ 	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+ 	
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+  	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	
+	<title>后台管理</title>
+	
+</head>
+
+<div id='cinfo' style='display:none;'>
+	<table class="layui-table" lay-skin='line'>
+  		<colgroup>
+			<col width="100">
+		    <col width="250">
+  		</colgroup>
+	  	 
+	  	<tbody>
+	    	<tr>
+	      		<td>录入时间：</td>
+				<td id='atime'></td>
+ 	    	</tr>
+ 	    	<tr>
+				<td>最后修改：</td>
+				<td id='uptime'></td>
+			</tr>
+			<tr>
+				<td>客户名称：</td>
+				<td id='name'></td>
+			</tr>
+			<tr>
+				<td>跟进时间：</td>
+				<td id='time'></td>
+				
+			</tr>
+			<tr>
+				<td>跟进方式：</td>
+				<td id='type'></td>
+			</tr>
+			<tr>
+				<td>跟进阶段：</td>
+				<td id='status'></td>
+			</tr>
+			<tr>
+				<td>跟进内容：</td>
+				<td id='content'></td>
+			</tr>
+			<tr>
+				<td>客户状态：</td>
+				<td id='c_status'></td>
+			</tr>
+			<tr>
+				<td>备注信息：</td>
+				<td id='note'></td>
+			</tr>
+			
+			
+	  	</tbody>
+	</table>
+</div>
+
+<body class="body_ifm">
+
+	<div class="infoboxp">    
+		<div class="tabs_info">
+           	<ul>
+               	<li {yun:}if $smarty.get.day==''{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_concern">全部</a></li>
+                <li {yun:}if $smarty.get.day==1{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_concern&day=1">今天</a></li>
+                <li {yun:}if $smarty.get.day==2{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_concern&day=2">昨天</a></li>
+                <li {yun:}if $smarty.get.day==3{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_concern&day=3">本周</a></li>
+                <li {yun:}if $smarty.get.day==4{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_concern&day=4">本月</a></li>
+           	</ul>
+       	</div>
+       	
+        <div class="clear"></div>
+        
+        <div class="">
+        	
+        	<div class="crm_follow_up"><a href="javascript:void(0);" onClick='addFollow()' class="crm_follow_up_a crm_follow_up_gj">写跟进</a></div>
+        	<div class="crm_follow_up"><a href="javascript:void(0);" onClick='addWaitTask()' class="crm_follow_up_a crm_follow_up_xj">新建任务</a></div>
+        </div> 
+	  	<div class="clear"></div>
+      	
+      	<div class="table-list" style=" margin-top:10px;">
+	  		<div class="admin_table_border">	
+      			<table width="100%">
+		      		<thead>
+		      			<tr class="admin_table_top">
+		      				<th>客户名称</th>
+		      				<th>跟进时间</th>
+		      				<th>联系方式</th>
+		      				<th>跟进阶段</th>
+		      				<th>跟进结果</th>
+		      				<th>录入时间</th>
+		      				<th>操作</th>
+		      			</tr>
+		        	</thead>
+		        	
+		       		<tbody>
+		       			{yun:}foreach from = $rows item = v{/yun}
+      					<tr>
+      						
+      						<td>
+     							<div style="padding-left:10px;">
+      								<a href='{yun:}url m=company c=show id=$v.comid{/yun}' target="_blank">{yun:}$v.name{/yun}</a>
+       								<div class="mt5">联系人：<a href="javascript:OpenContact('{yun:}$v.comid{/yun}','index.php?m=crm_waitingtask&c=ComDetail')" class="admin_com_name">{yun:}$v.linkman{/yun}</a></div>
+       							</div>
+       						</td>
+       						<td align="center">{yun:}$v.time|date_format:'m月d日 H时i分'{/yun}</td>
+							<td align="center">{yun:}$v.type_n{/yun}</td>
+							<td align="center">{yun:}$v.status_n{/yun}</td>
+						 	<td width="300">
+						 		<a href='javascript:FollowDetail({yun:}$v.id{/yun})' title='查看详情'>
+							 		<div>
+							 			{yun:}$v.content{/yun}
+							 		</div>
+						 		</a>
+						 	</td>
+							
+							<td align="center">{yun:}$v.time|date_format:'Y-m-d H:i:s'{/yun}</td>
+							<td align="center">
+								<input type="hidden" id="pytoken" name="pytoken" value="{yun:}$pytoken{/yun}">
+								
+								<a href="javascript:FollowDetail({yun:}$v.id{/yun})" class="admin_new_c_bth admin_new_c_bth_yl" data-method="setTop">详细</a>
+								
+								<br>
+
+								{yun:}if $v.isup == 1{/yun}
+									
+									<a href="javascript:UpFollow({yun:}$v.id{/yun})" class="admin_new_c_bth mt5">修改</a>
+									<br>
+								{yun:}/if{/yun}
+								
+								<a href="javascript:void(0);" onClick="layer_del('确定要删除？', 'index.php?m=crm_concern&c=del&id={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc mt5">删除</a>
+								
+							</td>
+      					</tr>
+       					{yun:}foreachelse{/yun}
+      					
+	      					<tr align="center">
+					        	<td class="ud" colspan="7"><div class="admin_notip">暂无跟进记录~</div></td>
+					      	</tr>
+      					
+      					{yun:}/foreach{/yun}
+      					
+
+      					{yun:}if $total > $config.sy_listnum {/yun}
+					 		<tr>
+								{yun:}if $pagenum==1{/yun}
+									<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum == $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}/if{/yun}
+								<td colspan="4" class="digg">{yun:}$pagenav{/yun}</td>
+							</tr>
+						{yun:}/if{/yun}
+        			</tbody>
+        			
+        			<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+        			
+      			</table>
+          	</div>
+      	</div>
+      	
+	</div>
+ 
+
+	<script>
+		layui.use('layer', function(){
+	  		var $ = layui.jquery,
+	  			layer = layui.layer; 
+		});
+		
+		//	修改联系跟进 
+		function UpFollow(id) {
+			var	id = id;	
+			layer.open({
+		        title:'修改联系记录',
+		        type: 2,
+		        area: ['900px', '650px'],
+		        fix: false, //不固定
+		        maxmin: true,
+		        content: 'index.php?m=crm_concern&c=add&id='+id
+			});
+			 
+		}
+
+		//	联系跟进详情页面， 
+		function FollowDetail(id) {
+			var	id 		= 	id;
+			var pytoken	=	$('#pytoken').val();
+			var url		=	'index.php?m=crm_concern&c=show';
+			$.post(url,{id:id, pytoken:pytoken}, function(data){
+				if(data){
+					var dataJson = eval("(" + data + ")");
+					$('#atime').html(dataJson.atime);
+					$('#uptime').html(dataJson.uptime);
+					$('#name').html(dataJson.name);
+					$('#time').html(dataJson.time);
+					$('#type').html(dataJson.type);
+					$('#status').html(dataJson.status);
+					$('#content').html(dataJson.content);
+					$('#c_status').html(dataJson.c_status);
+					$('#note').html(dataJson.note);
+				}
+				
+				
+			});
+			
+			layer.open({
+				type: 1, 
+				anim: 5,
+				content: $('#cinfo'),  
+				area:["950px", "550px"]
+			});
+		}
+	</script>
+
+	{yun:}include file="siteadmin/crm_public.htm"{/yun}
+
+</body>
+</html>

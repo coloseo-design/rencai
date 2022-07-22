@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}" />
+<meta name="description" content="{yun:}$description{/yun}" />
+</head>
+<body class="body_bg">
+  {yun:}include file="$schoolstyle/header.htm"{/yun} 
+  <div class="school_w1200">
+  <div class="school_jobsearch">
+  <div class="school_jobssearch_box">
+
+  <form action="" method="get">
+  <input type="hidden" name="m" value="{yun:}$smarty.get.m{/yun}" />
+  <input type="hidden" name="c" value="job" />
+  <input type="text" name="keyword" value="{yun:}$smarty.get.keyword{/yun}" placeholder="请输入要搜索的职位" class="school_jobssearch_text">
+  <input type="submit" value="搜索" class="school_jobssearch_bth">
+  </form>
+  </div>
+  <div class="school_hotjob">
+  热搜词：{yun:}key limit=8 recom=1 type=3 item=keylist{/yun} <a href="{yun:}listurl m=school c=job type=keyword v=$keylist.key_title{/yun}">{yun:}$keylist.key_name{/yun}</a>{yun:}/key{/yun}</div>
+
+  </div>
+    </div> <div class="school_w1200"> 
+<div class="school_index_banner">
+ <div class="school_index_banner_cont">
+{yun:}adlist classid=77 limit=15 item=adlist_77{/yun}
+{yun:}$adlist_77.html{/yun}
+{yun:}/adlist{/yun}
+        </div>     </div>
+      </div>
+ <div class="school_w1200"> 
+ <div class="school_index_tit"><span class="school_index_tit_s"><i class="school_index_tit_line"></i>名企招聘专区</span></div>
+<div class="yunFamousenterprises fl">    
+<div class="yunFamousenterprises_box fl">
+          <div class="Famous_recruitment_cont">
+            <div class="index_left15560">
+              <div id="mainids"> 
+  {yun:}hotjob item=hotjoblist limit=24{/yun}
+                <div class="tlogo">
+                  <ul>
+                    <li onmouseover="showDiv2(this)" onmouseout="showDiv2(this)"> <a href="{yun:}$hotjoblist.url{/yun}" target="_blank" class="tlogo_p_a"><img width="110" height="110" border="1" class="on lazy" src="{yun:}$hotjoblist.hot_pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" alt="{yun:}$hotjoblist.username{/yun}"/></a>
+                    <div class="yunFamousenterprises_comname">{yun:}$hotjoblist.username{/yun}</div>
+                      <div class="show">
+                        <div class="area"><i class="area_icon"></i>{yun:}$hotjoblist.job{/yun}</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                {yun:}/hotjob{/yun} 
+ </div>
+  </div>
+   </div>
+    </div> </div>
+ 
+ <div class="school_index_w1200">
+  <div class="school_index_w1200_c">
+ <div class="school_index_new">
+<div class="school_index_new_tit"><span class="school_index_new_tit_s">推荐网申职位</span><a href="{yun:}url m=school c=job rec=1{/yun}">更多>></a></div>
+<ul class="school_index_new_list">
+{yun:}wslist namelen=30 comlen=30 is_graduate='1' rec=1 limit=4 item=rlist{/yun}
+<li><a href="{yun:}url m=job c=comapply id=$rlist.id{/yun}" target="_blank" class="school_index_new_name" title="{yun:}$rlist.name{/yun}">{yun:}$rlist.name{/yun}</a> <div class="school_index_new_date">网申时间：{yun:}$rlist.wstime{/yun} </div><a href="{yun:}url m=job c=comapply id=$rlist.id{/yun}" target="_blank" class="school_index_new_sq">立即申请</a></li>
+{yun:}/wslist{/yun} 
+</ul>
+</div>
+  <div class="school_index_new school_index_new_xj">
+<div class="school_index_new_tit"><span class="school_index_new_tit_s">近期热门校招宣讲会</span><a href="{yun:}url m=school c=xjh{/yun}">更多>></a></div>
+<ul class="school_index_new_list">
+{yun:}xjh item=xjhlist limit=4{/yun}
+<li>
+<div class="school_index_xjh_time"> {yun:}$xjhlist.stime|date_format:'%Y-%m-%d %H:%M'{/yun} <a href="{yun:}$xjhlist.com_url{/yun}" title="{yun:}$xjhlist.com_name{/yun}">{yun:}$xjhlist.com_name{/yun}</a> </div>
+<div class="school_index_xjh_add school_index_xjh_add_pd"> {yun:}$xjhlist.address{/yun}</div>
+
+ </li>
+{yun:}/xjh{/yun} 
+</ul>
+ </div>
+ </div>
+  </div>
+ <div class="clear"></div>
+ 
+ <div class="school_index_tit"><span class="school_index_tit_s"><i class="school_index_tit_line"></i>最新网申职位</span><a href="{yun:}url m=school c=job{/yun}">更多>></a></div>
+
+<ul class="school_index_xz">
+{yun:}wslist noids=1 namelen=10 comlen=12 ispage=1 key=key is_graduate='1' limit=36 item=job_list name=joblist1{/yun}
+<li>
+<span class="school_index_xz_city">[{yun:}$job_list.job_city_one{/yun}]</span><a href="{yun:}$job_list.job_url{/yun}" title="{yun:}$job_list.name{/yun}">{yun:}$job_list.name_n{/yun}</a>
+<a href="{yun:}url id={yun:}$job_list.uid{/yun} m=company c=show{/yun}" class="school_index_ws_comname" title="{yun:}$job_list.com_n{/yun}">{yun:}$job_list.com_n{/yun}</a>
+</li>
+{yun:}/wslist{/yun}
+</ul>
+
+  <div class="school_index_tit"><span class="school_index_tit_s"><i class="school_index_tit_line"></i>最新校招宣讲会</span><a href="{yun:}url m=school c=xjh{/yun}">更多>></a></div>
+<ul class="school_index_xjh">
+{yun:}xjh item=xjhnew limit=30{/yun}
+<li> <div class="school_index_xjh_time">{yun:}$xjhnew.stime|date_format:'%m-%d %H:%M'{/yun}  <a href="{yun:}$xjhnew.com_url{/yun}" title="{yun:}$xjhnew.com_name{/yun}">{yun:}$xjhnew.com_name{/yun}</a></div>
+ <div class="school_index_xjh_add">{yun:}$xjhnew.address{/yun}</div></li>
+{yun:}/xjh{/yun} 
+</ul>
+   <div class="school_index_tit"><span class="school_index_tit_s"><i class="school_index_tit_line"></i>院校信息</span><a href="{yun:}url m=school c=academy{/yun}">更多>></a></div>
+<div class="school_index_yx">
+<div class="school_index_yx_box">
+<div class="school_index_yx_left">
+<ul class="school_index_yx_city"> <!--class="school_index_yx_city_cur"-->
+        <div id="schoolacademycity"></div>
+</ul>
+<div class="school_index_yx_more"><a href="{yun:}url m=school c=academy{/yun}" class="">更多城市</a></div>
+</div>
+<div class="school_index_yx_right">
+    <div id="schoolacademy"></div>
+</div>
+</div>
+</div></div>
+  </div>
+  <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+<script src="{yun:}$config.sy_weburl{/yun}/js/slides.jquery.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script src="{yun:}$style{/yun}/js/jquery.flexslider.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script> 
+<script>
+layui.use(['carousel'], function(){
+  var carousel = layui.carousel;
+  carousel.render({
+    elem: '#test1'
+    ,width: '1415px'
+    ,height: '420px'
+  });
+});
+$(window).load(function() {
+	$('.flexslider').flexslider({
+		directionNav: true,
+		pauseOnAction: false
+	});
+});
+$(function(){
+	
+	$.getJSON("index.php?m=school&c=schoollist&callback=?",{provieid:'{yun:}$city_index.0{/yun}'},function(data){ 
+      
+		layer.closeAll('loading');
+        var schoolcityhtml='';
+       
+        var schoolhtml=''
+        if(data!=null){
+            var k=0; 
+            for(var i=0;i<data.length;i++){
+                if( k<16){
+                    k=k+1;
+                    schoolhtml+='<dl class="school_index_yx_list">'
+                    schoolhtml+='<dt><a href="'+data[i].url+'"><img src="'+data[i].photo+'"></a></dt>'
+                    schoolhtml+='<dd>'                  
+                    schoolhtml+='<a href="'+data[i].url+'" class="school_index_yx_name">'+data[i].schoolname+'</a>'
+                    schoolhtml+='<div class="school_index_yx_p">学校所在地:'+data[i].provinceid+'-'+data[i].cityid+'</div>'
+                    schoolhtml+='<div class="school_index_yx_p">学校类型：'+data[i].school_categty+'</div>'
+                    schoolhtml+='</dd>'
+                    schoolhtml+='  </dl>'
+                }
+            }
+            
+        }else{
+            schoolhtml+='<dl class="school_index_yx_list">'
+            schoolhtml+='当前省份没有院校'
+            schoolhtml+='</dl>'
+        }
+            schoolcityhtml+='{yun:}foreach from=$city_index key=key item=v{/yun}'
+            schoolcityhtml+=' {yun:}if $key<12{/yun}'
+            schoolcityhtml+=' <li {yun:}if $key<1{/yun}class="school_index_yx_city_cur"{yun:}/if{/yun}>'
+            schoolcityhtml+='<a href="javascript:void(0)" onclick="provie({yun:}$v{/yun})">{yun:}$city_name[$v]{/yun}</a>'
+            schoolcityhtml+='</li>'             
+            schoolcityhtml+='{yun:}/if{/yun}'
+            schoolcityhtml+='{yun:}/foreach{/yun}'  
+       
+       document.getElementById("schoolacademy").innerHTML=schoolhtml;
+       document.getElementById("schoolacademycity").innerHTML=schoolcityhtml;
+	}); 
+	
+	$(".school_mq a").hover(function() {
+		var obj=$(this).attr('pid');
+		$("#comshow"+obj).toggle();
+	});
+	
+})
+
+function search_type(type,name){
+	$("input[name=c]").val(type);
+	$("#subname").val(name);
+	$(".training_index_search_select_list").hide();
+}
+function provie(provieid){
+		loadlayer();
+        $.getJSON("index.php?m=school&c=schoollist&callback=?",{provieid:provieid},function(data){ 
+		layer.closeAll('loading');
+        var schoolhtml='';
+        var schoolcityhtml=''
+        if(data!=null){
+            var k=0;
+            for(var i=0;i<data.length;i++){
+                if( k<16){
+                    k=k+1;
+                    schoolhtml+='<dl class="school_index_yx_list">'
+                    schoolhtml+='<dt><a href="'+data[i].url+'"><img src="'+data[i].photo+'"></a></dt>'
+                    schoolhtml+='<dd>'                  
+                    schoolhtml+='<a href="'+data[i].url+'" class="school_index_yx_name">'+data[i].schoolname+'</a>'
+                    schoolhtml+='<div class="school_index_yx_p">学校所在地:'+data[i].provinceid+'-'+data[i].cityid+'</div>'
+                    schoolhtml+='<div class="school_index_yx_p">学校类型：'+data[i].school_categty+'</div>'
+                    schoolhtml+='</dd>'
+                    schoolhtml+='  </dl>'
+                }
+            }
+        }else{
+            schoolhtml+='<div class="school_show_nomsg">'
+            schoolhtml+='当前省份没有院校'
+            schoolhtml+='</div>'
+        }
+        schoolcityhtml+='{yun:}foreach from=$city_index key=key item=v{/yun}'
+        schoolcityhtml+=' {yun:}if $key<12{/yun}'
+        if({yun:}$v{/yun}==provieid){
+            schoolcityhtml+='<li class="school_index_yx_city_cur">'
+        }else{
+            schoolcityhtml+='<li>'
+        }
+        
+        schoolcityhtml+='<a href="javascript:void(0)" onclick="provie({yun:}$v{/yun})">{yun:}$city_name[$v]{/yun}</a>'
+        schoolcityhtml+='</li>'     
+        schoolcityhtml+='{yun:}/if{/yun}'
+        schoolcityhtml+='{yun:}/foreach{/yun}'
+       document.getElementById("schoolacademy").innerHTML=schoolhtml;
+       document.getElementById("schoolacademycity").innerHTML=schoolcityhtml;
+	}); 
+}
+</script>
+{yun:}include file="$tplstyle/footer.htm"{/yun}  

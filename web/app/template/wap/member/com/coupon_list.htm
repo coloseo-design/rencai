@@ -1,0 +1,200 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<div id="yunvue">
+    <div class="  none" v-bind:class="{show: islook}">
+
+        <div v-if="total > 0">
+            <div class="wap_member_box" v-for="(item,couk) in list" :key="couk">
+
+                <div class="coupon_list" v-bind:class="{coupon_list_cur: item.status!=1}">
+                    <div class="coupon_list_left">
+                        <div class="coupon_list_left_n">￥<span
+                                class="coupon_list_left_n_m">{{item.coupon_amount}}</span></div>
+                        <div class="coupon_list_left_p">满 {{item.coupon_scope}} 使用</div>
+                    </div>
+
+                    <div class="coupon_list_right_time">使用时间：{{item.ctime_n}} 至 {{item.validity_n}}</div>
+                    <div class="coupon_list_right_qm">优惠券码：{{item.number}}</div>
+                    <div class="" v-if="item.status==2">已使用</div>
+                    <div class="">
+                        <a v-if="item.status==1" @click="send" :data-id="item.id" href="javascript:void(0)"
+                           class="coupon_list_right_zs coupon">可赠送</a>
+                        <a v-else href="javascript:void(0)" @click="del" :data-id="item.id" :data-key="couk"
+                           class="coupon_list_right_cz"><img src="{yun:}$wap_style{/yun}/images/resume_del.png"
+                                                             width="100%" height="100%"></a>
+                    </div>
+                </div>
+
+            </div>
+            <div v-if="total > limit">
+                <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses
+                                @change="pageChange"/>
+            </div>
+        </div>
+        <div v-else class="wap_member_no">您暂时没有优惠券哦</div>
+    </div>
+
+    <van-popup v-model="issend" round   position="bottom">
+   
+                <div class=" search_com_tit">
+                    <span class="search_com_titname">选择赠送企业</span>
+					  <div class=" search_com_close">
+                    <img src="{yun:}$wap_style{/yun}/images/job.dell.png"
+                         class="yun_jobadd_touch_gb" @click="closeSend">
+                </div>      </div>
+                         <div class=" search_com_pd">
+							 
+							   <div class="search_com_text_box">
+                    <div class="search_com_text" style="border:0.026666rem solid #eee"><input type="text" name="keyword" v-model="keyword"  placeholder="请输入企业名称"></input>
+                      <div class="search_com_button">
+                        <button @click="searchcom">搜索</button>
+                    </div> </div> </div>
+                 
+                </div>
+                <div class="search_com_show" v-if="count">
+                    <div class="search_com_list" v-for="(citem,ck) in comlist" :key="ck"
+                         :class="comcheck==citem.uid?'lag_text_t_cur':''">
+                        <span @click="ckcomlist" :data-id="citem.uid" class="lag_text_t_a"><i class="search_com_xz"></i>{{citem.name}}</span>
+                    </div>
+                </div>
+                <div class="search_com_show" v-else>
+                    <div class=" search_com_showno" v-if="issends">
+                        <span>暂未匹配到相关企业</span>
+                    </div>
+                </div>
+                <div class="search_com_tj">
+                    <span class="search_com_tjbut" @click="sendsubmit">确定</span>      </div>
+    
+    </van-popup>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                list: [],
+                islook: false,
+                issend: false,
+                comlist: [],
+                comcheck: '',
+                couid: '',
+                issends: false,
+                keyword: '',
+
+                total: 0,
+                pageTotal: 0,
+                page: 1,
+                limit: 20,
+            };
+        },
+        created() {
+            this.getCoupon();
+        },
+        computed: {
+            count: function () {
+                return this.comlist.length > 0;
+            }
+        },
+        methods: {
+            getCoupon() {
+                var that = this;
+                var param = {
+                    page: that.page,
+                    limit: that.limit,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=couponlist{/yun}', param, function (data) {
+                    hideLoading();
+                    that.total = parseInt(data.total);
+                    that.pageTotal = Math.ceil(that.total / that.limit);
+                    let res = data.data;
+                    if (res.length > 0) {
+                        that.list = data.data;
+                    }
+                    that.islook = true;
+                }, 'json')
+            },
+            del: function (e) {
+                let that = this,
+                    param = {
+                        id: e.currentTarget.dataset.id,
+                    };
+                var key = e.currentTarget.dataset.key;
+
+                showConfirm('确定删除？', function () {
+                    showLoading('删除中');
+                    $.post('{yun:}url d=wxapp h=com m=finance c=delcoupon{/yun}', param, function (data) {
+                        hideLoading();
+                        if (data.error == 1) {
+                            showToast('删除成功', 2, function () {
+                                that.list.splice(key, 1);
+                                if (that.list.length == 0) { // 无数据时重新加载页面
+                                    that.page = that.page > 1 ? (that.page - 1) : 1;
+                                    that.getCoupon();
+                                }
+                            });
+                        } else {
+                            showModal(data.msg);
+                        }
+                    }, 'json')
+                })
+            },
+            send: function (e) {
+                var that = this;
+                that.issend = true;
+                that.couid = e.currentTarget.dataset.id;
+            },
+            ckcomlist: function (e) {
+                var that = this;
+                that.comcheck = e.currentTarget.dataset.id;
+            },
+            searchcom() {
+                var that = this;
+                var param = {
+                    name: that.keyword,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=searchcom{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 0) {
+                        that.comlist = data.data;
+                    } else {
+                        that.comlist = '';
+                        that.issends = true;
+                    }
+                }, 'json')
+            },
+            sendsubmit() {
+                var that = this;
+                var param = {
+                    coupon: that.couid,
+                    cuid: that.comcheck,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=handsel{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error == 1) {
+                        showToast('赠送成功', 2, function () {
+                            history.go(-1)
+                        });
+                    } else {
+                        showModal(data.msg);
+                    }
+                }, 'json')
+            },
+            closeSend: function () {
+                this.issend = false;
+            },
+            pageChange: function (page) {
+                this.page = page;
+                this.getCoupon();
+            },
+        }
+    });
+</script>
+
+</body>
+</html>

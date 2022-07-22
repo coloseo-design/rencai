@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<title>后台管理</title>
+
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div id="leftbox" class="admin_jobleft">
+				<div class="admin_jobname">{yun:}$Info.name{/yun}</div>
+				<div class="admin_jobinfo">
+					<span class="admin_jobinfo_n">{yun:}$Info.job_salary{/yun}</span>{yun:}$Info.job_address{/yun}
+				</div>
+				{yun:}if $Info.job_welfare{/yun}
+				<div class="admin_jobfl">
+					{yun:}foreach from=$Info.job_welfare item=wlist{/yun}
+					<span class="admin_jobfl_n ">{yun:}$wlist{/yun}</span>
+					{yun:}/foreach{/yun}
+				</div>
+				{yun:}/if{/yun}
+				
+				<div class="admin_jobh1"> 基本要求</div>
+				{yun:}if $Info.job_exp{/yun}
+					<div class="admin_jobmx"> 经验要求：{yun:}$Info.job_exp{/yun}</div>
+				{yun:}/if{/yun}
+				
+				{yun:}if $Info.job_edu{/yun}
+					<div class="admin_jobmx"> 学历要求：{yun:}$Info.job_edu{/yun} 
+					{yun:}if $Info.is_graduate{/yun}
+						<span class="admin_jobmx_n">可接受应届生</span>
+					{yun:}/if{/yun}
+					</div>
+				{yun:}/if{/yun}
+				
+				{yun:}if $Info.job_number{/yun}
+					<div class="admin_jobmx"> 招聘人数：{yun:}$Info.job_number{/yun} </div>
+				{yun:}/if{/yun}
+
+				{yun:}if $Info.job_report{/yun}
+					<div class="admin_jobmx"> 到岗时间：{yun:}$Info.job_report{/yun}</div>
+				{yun:}/if{/yun}
+
+				{yun:}if $Info.job_age{/yun}
+					<div class="admin_jobmx"> 年龄要求：{yun:}$Info.job_age{/yun} </div>
+				{yun:}/if{/yun}
+
+				{yun:}if $Info.job_sex{/yun}
+					<div class="admin_jobmx"> 性别要求：{yun:}$Info.job_sex{/yun}</div>
+				{yun:}/if{/yun}
+
+				{yun:}if $Info.job_marriage{/yun}
+					<div class="admin_jobmx"> 婚况要求：{yun:}$Info.job_marriage{/yun}</div>
+				{yun:}/if{/yun}
+
+				<div class="admin_jobh1"> 职位描述</div>
+				<div class="admin_jobp">
+					{yun:}$Info.description{/yun}
+				</div>
+				<div class="admin_jobh1"> 联系方式</div>
+				<div class="admin_jobp"> 联系人：{yun:}$Info.linkman{/yun} </div>
+				<div class="admin_jobp"> 联系电话：{yun:}$Info.tel{/yun} </div>
+			</div>
+			<div class="admin_jobright">
+				<form class="layui-form">
+					<div class="admin_jobh1">审核操作</div>
+			
+					<div class="admin_joblist"> <span class="admin_joblistname">职位审核：</span>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<input name="status" value="1" title="正常" type="radio" {yun:}if $Info.state != 3{/yun}checked="checked"{yun:}/if{/yun} lay-filter="userstatus" />
+								<input name="status" value="3" title="未通过" type="radio" {yun:}if $Info.state == 3{/yun}checked="checked"{yun:}/if{/yun} lay-filter="userstatus" />
+							</div>
+						</div>
+					</div>
+					<div class="admin_joblist">
+						<span class="admin_joblistname">审核模板：</span>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<select lay-filter="tpl">
+									<option>请选择</option>
+									{yun:}foreach from=$comdata.job_audit item=v{/yun}
+									<option value="{yun:}$comclass_name[$v]{/yun}">{yun:}$comclass_name[$v]{/yun}</option>
+									{yun:}/foreach{/yun}
+								</select>
+							</div>
+						</div>
+					</div>
+					{yun:}if $Info.r_status != 1{/yun}
+					<div class="admin_joblist">
+						<span class="admin_joblistname">企业审核：</span>
+						<div class="layui-form-item" style=" margin-bottom:10px;">
+							<div class="layui-input-block">
+								<input name="istb" title="同步审核" type="checkbox" value="1" lay-skin="primary" checked="checked" disabled="disabled" />
+							</div>
+						</div>
+                        <div class="admin_jobshtip">同步说明：企业身份为未审核状态需同步审核</div>
+					</div>
+					{yun:}/if{/yun}
+					<div class="admin_joblist">
+						<span class="admin_joblistname">审核说明：</span>
+						<textarea id="statusbody" name="statusbody" class="shsm_textarea" style="width: 300px;height: 100px;">{yun:}$Info.statusbody{/yun}</textarea>
+					</div>
+					<div class="admin_joblist">
+						<input type="hidden" name="pid" value="{yun:}$Info.id{/yun}" />
+						<input type="hidden" name="uid" value="{yun:}$Info.uid{/yun}" />
+						<input type="hidden" id="pytoken" name="pytoken" value="{yun:}$pytoken{/yun}" />
+						<input type="button" value="保存" class="admin_job_bth" onclick="audit(1)">
+						{yun:}if $snum{/yun}
+						<input type="button" value="保存，并审核下一个" class="admin_job_xybbth" onclick="audit(2)">
+						{yun:}/if{/yun}
+					</div>
+				</form>
+				<input type="hidden" id="com_status" value="{yun:}$Info.r_status{/yun}" /> 
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form',], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+					
+				$("#leftbox").css({'height':$(window).height() - 50 + 'px', 'overflow': 'auto'});
+				
+				form.on('select(tpl)', function (data) {
+					$('#statusbody').val(data.value);
+					form.render('select');
+				});
+			});
+			function audit(atype){
+				var status = $("input[name='status']:checked").val();
+				if(typeof status ==='undefined'){
+					parent.layer.msg("请选择审核状态！", 2, 8);
+					return false;
+				}
+				var params = {
+					single: 1,
+					status: status,
+					pid: $("input[name='pid']").val(),
+					uid: $("input[name='uid']").val(),
+					statusbody: $("#statusbody").val(),
+					atype: atype,
+					pytoken: $("#pytoken").val()
+				};
+				if($("#com_status").val() != '1'){
+					var url = 'index.php?m=admin_company_job&c=cjobstatus';
+				}else{
+					var url = 'index.php?m=admin_company_job&c=status';
+				}
+				loadlayer();
+				$.ajax({
+					data: params,
+					type: 'post',
+					dataType: 'json',
+					url: url,
+					success: function (res) {
+						parent.layer.closeAll('loading');
+						if(res.st == 9){
+							parent.layer.msg(res.msg, 2, 9, function(){
+								if(res.url){
+									parent.needLoad = true;
+									window.location.href = res.url;
+								}else{
+									parent.window.location.reload();
+								}
+							});
+						}else{
+							parent.layer.msg(res.msg, 2, 8);
+						}
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

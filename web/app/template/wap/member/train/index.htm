@@ -1,0 +1,108 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<style>
+    .header_bg {
+        display: none;
+    }
+</style>
+<div id="changeutype">
+    <div class="index_header">
+        <div class="index_header_top">
+    		<div class="" style="position:absolute;left:15px;top:15px;">
+        		{yun:}if $signstate==1 {/yun}
+        		<span class="yun_usermember_qdbth" onClick="signok();">已签到</span> 
+        		{yun:}else{/yun}
+        		<a href="javascript:void(0);" onClick="sign();"><span class="yun_usermember_qdbth">签到</span></a>
+        		{yun:}/if{/yun}
+    		</div>
+            <!--<span class="yun_com_member_index_set"><a class="yun_com_member_index_set_icon" href="index.php?c=set"></a></span>-->
+                <span class="yun_com_member_index_msg"><a class="yun_com_membersysnews" href="index.php?c=sysnews"><i class="yun_com_membersysnews_n" id="sysmsgnum"></i></a></span> 
+        </div>
+        <div class="com_header_img">
+            <div class="com_header_bg">
+                <a href="index.php?c=uppic"><img src="{yun:}$info.logo_n{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" /></a>
+            </div>
+        </div>
+        <div class="member_header_info">
+            <div class="m_user_name">你好！{yun:}$username{/yun} </div>
+            <div class="member_header_info_cz">
+                <a href="index.php?c=uppic">修改LOGO</a><span class="member_header_info_line">|</span>
+                <a href="index.php?c=info">编辑</a><span class="member_header_info_line">|</span>
+                <a href="{yun:}url m=wap c=train a=agencyshow id=$uid{/yun}">预览主页</a>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="m_index_msg">
+            <dl class="m_index_msg_list">
+                <a href="index.php?c=signup">
+                    <dt id="baoming_num"></dt>
+                    <dd>课程预约</dd>
+                </a>
+            </dl>
+            <dl class="m_index_msg_list">
+                <a href="index.php?c=message">
+                    <dt  id="zixun_num"></dt>
+                    <dd>咨询留言</dd>
+                </a>
+            </dl>
+
+            <dl class="m_index_msg_list">
+                <a href="index.php?c=subject">
+                    <dt id="subject_num"></dt>
+                    <dd>已有课程</dd>
+                </a>
+            </dl>
+        </div>
+    </section>
+
+    <div class="index_section">
+        <section class="wap_member">
+            <div class="wap_member_mrecord">
+
+                <a href="index.php?c=subject" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_kc"></i>课程管理</a>
+                <a href="index.php?c=addsubject" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_fbkc"></i>发布新课程</a>
+                <a href="index.php?c=signup" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icomd"></i>预约名单</a>
+                <a href="index.php?c=subpay" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_yje"></i>在线预约金额</a>
+                <a href="index.php?c=message" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_zx"></i>咨询留言</a>
+            </div>
+
+        </section>
+        <section class="wap_member">
+            <div class="wap_member_mrecord">
+                <a href="index.php?c=team" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_js"></i>讲师管理</a>
+                <a href="index.php?c=addteam" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_fbjs"></i>发布讲师</a>
+                <a href="index.php?c=show" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_jg"></i>机构环境</a>
+            </div>
+        </section>
+        <section class="wap_member">
+            <div class="wap_member_mrecord">
+                <a href="index.php?c=integral" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_jf"></i>{yun:}$config.integral_pricename{/yun}管理</a>
+                <a href="{yun:}url m=wap c=ask{/yun}" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_wd"></i>职场问答</a>
+            </div>
+        </section> 
+        <section class="wap_member">
+            <div class="wap_member_mrecord">
+
+                <a href="index.php?c=binding" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_rz"></i>帐号绑定</a>
+                <a href="index.php?c=password" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_xg"></i>修改密码</a>
+                <a href="{yun:}url m=wap c=free{/yun}" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_gq"></i>供求任务大厅</a>
+    			 {yun:}if $config.sy_user_change==1{/yun}
+           <li>
+           <a href="javascript:;"  class="wap_member_mrecord_list" onclick="changeUType()"><i class="lt_index_icon lt_index_icon_qh"></i>切换身份</a></li>
+            {yun:}/if{/yun}
+            </div>
+
+        </section>
+        <section class="wap_member">
+            <div class="wap_member_mrecord">
+                <a href="javascript:void(0);" onclick="islogout('{yun:}url m=wap c=loginout{/yun}','确认退出吗？');" class="wap_member_mrecord_list"><i class="lt_index_icon lt_index_icon_tc"></i>退出登录</a>
+            </div>
+        </section>
+    </div>
+
+{yun:}include file="$wapstyle/member/public/changeutype.htm"{/yun}
+
+{yun:}include file="$wapstyle/footer.htm"{/yun}

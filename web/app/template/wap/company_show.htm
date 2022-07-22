@@ -1,0 +1,705 @@
+{yun:}include file="$wapstyle/header.htm"{/yun}
+<style>
+    .About_Us img{max-width: 100%;}
+</style>
+<!-- 页面头部导航栏 -->
+<div class="companyheader">
+    <div class="company_top">
+        <a href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}" class="company_back"></a>
+        <div class="com_topright ">
+           
+		   {yun:}if $usertype=='1'{/yun}
+                {yun:}if $isatn.id{/yun}
+                <span class="atn_{yun:}$row.uid{/yun}">
+                    <a href="javascript:void(0)" onclick="atn('{yun:}$row.uid{/yun}','{yun:}url m=wap c=ajax a=atncompany{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="com_topygzicon"></a>
+                </span>
+                {yun:}else{/yun}
+                <span class=" atn_{yun:}$row.uid{/yun}">
+                    <a href="javascript:void(0)" onclick="atn('{yun:}$row.uid{/yun}','{yun:}url m=wap c=ajax a=atncompany{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="com_topgzicon " title="关注"></a>
+                </span>
+                {yun:}/if{/yun}
+            {yun:}else{/yun}
+                {yun:}if $usertype{/yun}
+                    <a href="javascript:void(0)" class="com_topgzicon " title="关注" {yun:}if $config.sy_user_change==1{/yun}onclick="showToast('请先申请个人账户');" {yun:}else{/yun}onclick="showToast('只有个人用户才能关注');" {yun:}/if{/yun}> </a>
+                {yun:}else{/yun}
+                    <a href="javascript:void(0)" class=" com_topgzicon" title="关注" onclick="pleaselogin('您还未登录个人账号，是否登录？','{yun:}url m=wap c=login{/yun}')"></a>
+                {yun:}/if{/yun}
+            {yun:}/if{/yun}
+
+            {yun:}if $hbNum > 0{/yun}
+                <a href="javascript:void(0);" onclick="shareShow();" title="分享" class="com_topfxicon"></a>
+            {yun:}else{/yun}
+                {yun:}if $config.sy_h5_share==1{/yun}
+                <a href="javascript:void(0);" data-url='{yun:}url m=wap c=company a=share id=$row.uid{/yun}' id="shareClick" class="com_topfxicon" title="分享"></a>
+                {yun:}else{/yun}
+                <a href="javascript:void(0);" class="com_topfxicon" id="shareClick" title="分享"></a>
+                {yun:}/if{/yun}
+            {yun:}/if{/yun}
+            <a href="javascript:void(0)" onclick="yunfootClose()" class="com_topnavicon " title="导航"> </a>
+        </div>
+    </div>
+</div>
+
+<!-- 页面主体部分 -->
+<div class="min_body">
+    <!-- 顶部卡片视图 -->
+    <div class="top_card">
+        <div class="top_card_top">
+            <div class="top_card_top_logo"><img src="{yun:}$row.logo{/yun}" alt="" width="100%" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);"></div>
+            <div class="top_card_top_word">
+                <div class="top_card_top_word_name">
+                    <div class="top_card_top_word_name_left">
+                        {yun:}if $row.shortnam{/yun}
+                        <div class="top_card_top_word_name_left_1">{yun:}$row.shortname{/yun}</div>
+                        {yun:}else{/yun}
+                        <div class="top_card_top_word_name_left_1">{yun:}$row.name{/yun}</div>
+                        {yun:}/if{/yun}
+                    </div>
+                    {yun:}if $row.hotlogo==1 {/yun}
+                    <div class="top_card_top_word_name_right">名企</div>
+                    {yun:}/if{/yun}
+                </div>
+                <div class="newcom_info">
+                    {yun:}if $comclass_name[$row.mun]{/yun}
+                    <span>{yun:}$comclass_name[$row.mun]{/yun} ·</span>
+                    {yun:}/if{/yun}
+                    {yun:}if $comclass_name[$row.pr]{/yun}
+                    <span>{yun:}$comclass_name[$row.pr]{/yun} ·</span>
+                    {yun:}/if{/yun}
+                    <span>{yun:}$industry_name[$row.hy]{/yun}</span>
+                </div>
+            </div>
+        </div>
+        {yun:}if $row.address{/yun}
+		<div class="newcom_add" onclick="navigateTo('{yun:}url m=wap c=job a=jobmap id=$row.uid{/yun}')">
+		
+		<div class="newcom_add_dz"><i class="newcom_add_dzicon"></i>{yun:}$row.address{/yun}</div>
+		
+        {yun:}if $row.x && $row.y{/yun}
+        
+            <div class="newcom_add_jl">距离<em id="distance"></em></div> 
+        <input type="hidden" id="map_x" value="{yun:}$mapx{/yun}"/>
+        <input type="hidden" id="map_y" value="{yun:}$mapy{/yun}"/>
+        {yun:}/if{/yun}
+          
+        </div>
+        {yun:}/if{/yun}
+    </div>
+
+
+    <!-- 导航栏 -->
+    <div class="companynav">
+        <ul>
+            <li data-type='jobCtrl' class=" tabCtrl">
+                <i id="jobCtrl_t" class="lis {yun:}if !$smarty.get.show{/yun}colorshow{yun:}/if{/yun}">在招岗位</i>
+                <i id="jobCtrl_d" class="navs {yun:}if !$smarty.get.show{/yun}Article_indicates{yun:}/if{/yun}"></i>
+            </li>
+            <li data-type='comCtrl' class=" tabCtrl">
+                <i id="comCtrl_t"
+                   class="lis {yun:}if $smarty.get.show{/yun}colorshow{yun:}/if{/yun}">公司介绍</i>
+                <i id="comCtrl_d" class="navs {yun:}if $smarty.get.show{/yun}Article_indicates{yun:}/if{/yun}"></i>
+            </li>
+            {yun:}if $config.com_msg_status == 1{/yun}
+            <li data-type='msgCtrl' class=" tabCtrl">
+                <i id="msgCtrl_t" class="lis">面试评价</i>
+                <i id="msgCtrl_d" class="navs"></i>
+            </li>
+            {yun:}/if{/yun}
+        </ul>
+    </div>
+
+    <!-- 卡片视图 -->
+    <div class="card_data_box jobCtrl cardCtrl {yun:}if $smarty.get.show{/yun}none{yun:}/if{/yun}">
+        {yun:}if $departmentNames{/yun}
+        <div class=" ">
+            <a href="javascript:void(0)" class="department_a department_a_cur" data-uid="{yun:}$smarty.get.id{/yun}">全部</a>
+            {yun:}foreach from=$departmentNames key=j item=v{/yun}
+            <a href="javascript:void(0)" class="department_a" data-name="{yun:}$v{/yun}" data-uid="{yun:}$smarty.get.id{/yun}">{yun:}$v{/yun}</a>
+            {yun:}/foreach{/yun}
+        </div>
+        {yun:}/if{/yun}
+
+        {yun:}assign var=uid value=$row.uid{/yun}
+        <!-- 卡片主体 -->
+        <div id="company_job_list">
+            {yun:}joblist namelen=8 comlen=12 ispage=0 uid='@row.uid' com_id='auto.id' islt=4 item=job_list name=joblist1{/yun}
+            <div class="recommend_post_card_box">
+                <!-- 卡片视图主体部分 -->
+                <a href="{yun:}url m=wap c=job a=comapply id=$job_list.id{/yun}" title="{yun:}$job_list.name{/yun}">
+                    <div class="recommend_post_card">
+                        <div class="recommend_post_card_top">
+                            <div class="recommend_post_card_name">{yun:}$job_list.name_n{/yun}</div>
+                            <div class="recommend_post_card_money">{yun:}$job_list.job_salary{/yun}</div>
+                        </div>
+						<div class="newjob_info"><span>{yun:}$job_list.job_city_one{/yun}-{yun:}$job_list.job_city_two{/yun}</span>
+						 {yun:}if $job_list.job_edu{/yun}
+						 <i class="newjob_info_line"></i><span>{yun:}$job_list.job_edu{/yun}学历</span>
+						 {yun:}/if{/yun}
+						 {yun:}if $job_list.job_exp{/yun}
+						<i class="newjob_info_line"></i> <span>{yun:}$job_list.job_exp{/yun}经验</span>
+						 {yun:}/if{/yun}
+						 
+						</div>
+						{yun:}if $job_list.welfarename{/yun}
+						<div class="welfare">
+							{yun:}foreach from=$job_list.welfarename item=waflist{/yun}
+							<span class="welfare_n">{yun:}$waflist{/yun}</span>
+							{yun:}/foreach{/yun}
+					    </div>
+						{yun:}/if{/yun}
+                        <div class="recommend_post_card_bottom">
+                            <div class="recommend_post_card_bottom_left">
+                                <div class="recommend_post_card_bottom_left_logo"><img src="{yun:}$job_list.logo{/yun}" alt="" width="100%"></div>
+                                <i class="recommend_post_card_bottom_left_word">{yun:}$job_list.com_name{/yun}</i>
+                            </div>
+                            <div class="recommend_post_card_bottom_right">{yun:}$job_list.time{/yun}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {yun:}joblistelse{/yun}
+            <div class="wap_member_no">该企业还没有发布职位信息!</div>
+            {yun:}/joblist{/yun}
+        </div>
+    </div>
+
+    <!-- 公司详情概况 -->
+    <div class="company_generalize comCtrl cardCtrl {yun:}if !$smarty.get.show{/yun}none{yun:}/if{/yun}">
+        <!-- 职位福利 -->
+        {yun:}if $row.welfare_n{/yun}
+        <div class="job_describe_bottom">
+            <div class="job_describe_cengter_header">公司福利</div>
+            <div class="job_describe_bottom_welfare">
+                <ul>
+                    {yun:}foreach from=$row.welfare_n item=waflist{/yun}
+                    <li>{yun:}$waflist{/yun}</li>
+                    {yun:}/foreach{/yun}
+                </ul>
+            </div>
+        </div>
+        {yun:}/if{/yun}
+
+        <!-- 关于我们 -->
+        <div class="About_Us">
+            <div class="job_describe_cengter_header">关于我们</div>
+            {yun:}if $row.content{/yun}
+                <p id="com_content" class="About_Us_body attention_to_new">{yun:}$row.content{/yun}</p>
+                <div class="com_show_cont none"><a href="javascript:;" onclick="showcc()"></a></div>
+            {yun:}else{/yun}
+            <div class="wap_member_no">该企业还没有填写公司简介!</div>
+            {yun:}/if{/yun}
+        </div>
+
+        <!-- 工商信息 -->
+        <div class="business_information none" id="businessInfo">
+            <div class="job_describe_cengter_header">工商信息</div>
+            <div id="com_business" class="business_information_body">
+                <p class="business_information_body_p"> 统一社会信用代码：<em id="creditCode"></em></p>
+                <p class="business_information_body_p"> 成立日期：<em id="estiblishTime"></em></p>
+                <p class="business_information_body_p"> 组织机构代码：<em id="orgNumber"></em></p>
+                <p class="business_information_body_p"> 经营期限：<em id="Time"></em></p>
+                <p class="business_information_body_p"> 企业类型：<em id="companyOrgType"></em></p>
+                <p class="business_information_body_p"> 登记机关：<em id="regInstitute"></em></p>
+                <p class="business_information_body_p"> 经营状态：<em id="regStatus"></em></p>
+                <p class="business_information_body_p"> 注册资本：<em id="regCapital"></em></p>
+                <p class="business_information_body_p"> 注册地址：<em id="regLocation"></em></p>
+                <p class="business_information_body_p"> 经营范围：<em id="businessScope"></em></p>
+                <div class="business_information_body_bot">
+                    <p class="business_information_body_p"> 数据来源： </p>
+                    <div class="business_information_body_logo">
+                        <a href="" class="tianyancha" id="tianyancha" target='_blank'> <img src="{yun:}$wap_style{/yun}/images/logo@2x.png" alt="" width="100%"> </a>
+                    </div>
+                </div>
+            </div>
+            <div class="on-off"><a href="javascript:void(0);" onclick="showbb()"></a></div>
+        </div>
+
+        <!-- 公司相册 -->
+        {yun:}if $show{/yun}
+        <div class="business_album">
+            <div class="job_describe_cengter_header photo_album">公司相册</div>
+            <div class="business_album_phone swiper-container" id="imgswiper">
+                <ul class="swiper-wrapper">
+                    {yun:}foreach from=$show item=v{/yun}
+                    <li class="swiper-slide imgPreview" data-group='comshow' data-src="{yun:}$v.picurl{/yun}"><img src="{yun:}$v.picurl{/yun}" alt="" width="100%" height="100%"></li>
+                    {yun:}/foreach{/yun}
+                </ul>
+            </div>
+        </div>
+        {yun:}/if{/yun}
+
+        {yun:}if $school_xjh{/yun}
+        <div class="business_album">
+            <div class="job_describe_cengter_header">校招宣讲会</div>
+            <ul class="wap_school_job">
+                {yun:}foreach item=clist from=$school_xjh{/yun}
+                <li>
+                    <div class="wap_school_jobname"><a href="{yun:}url m=wap c=school a=schoolacademyshow id=$clist.schoolid{/yun}" title="{yun:}$clist.sch_name{/yun}">{yun:}$clist.sch_name{/yun}</a></div>
+                    <div class="wap_school_xjhtime"><i class="wap_school_xjhtime_icon"></i>{yun:}$clist.stime|date_format:'%Y-%m-%d %H:%M'{/yun}-{yun:}$clist.etime|date_format:'%H:%M'{/yun}</div>
+                    <div class="wap_school_xjh_add"><i class="wap_school_xjhadd_icon"></i>{yun:}$clist.address{/yun}</div>
+                </li>
+                {yun:}/foreach{/yun}
+            </ul>
+        </div>
+        {yun:}/if{/yun}
+    </div>
+
+    <!-- 面试评价 -->
+    <div class="interview_assessment msgCtrl cardCtrl none">
+        {yun:}if $config.com_msg_status == 1 && $companymsg{/yun}
+        <div class="job_describe_cengter_header">面试评价</div>
+        {yun:}score uid=$row.uid item=score{/yun}
+        {yun:}if $score.num{/yun}
+       <div class="evaluate_pf_otherbox evaluate_pf_otherbox_bor">
+           <div class="evaluate_pf_left">
+               <div class="evaluate_pf_other">
+                   <div class="evaluate_pf_other_name">描述相符：</div>
+                   <div class="evaluate_pf_other_start">
+                       <div class="evaluate_pf_other_startbox" style="width:{yun:}$score.desscore/5*100{/yun}%"><i class="evaluate_pf_other_start_p"></i></div>
+                   </div>
+                   <div class="evaluate_pf_other_fs none">{yun:}$score.desscore{/yun}</div>
+               </div>
+               <div class="evaluate_pf_other">
+                   <div class="evaluate_pf_other_name">面试官：</div>
+                   <div class="evaluate_pf_other_start">
+                       <div class="evaluate_pf_other_startbox" style="width:{yun:}$score.hrscore/5*100{/yun}%"><i class="evaluate_pf_other_start_p"></i></div>
+                   </div>
+                   <div class="evaluate_pf_other_fs none">{yun:}$score.hrscore{/yun}</div>
+               </div>
+               <div class="evaluate_pf_other">
+                   <div class="evaluate_pf_other_name"> 公司环境：</div>
+                   <div class="evaluate_pf_other_start">
+                       <div class="evaluate_pf_other_startbox" style="width:{yun:}$score.comscore/5*100{/yun}%"><i class="evaluate_pf_other_start_p"></i></div>
+                   </div>
+                   <div class="evaluate_pf_other_fs none">{yun:}$score.comscore{/yun}</div>
+               </div>
+           </div>
+       
+           <div class="evaluate_pf_right">
+               <span class="evaluate_pf_right_fs">{yun:}$score.score{/yun}</span>分
+               <div class="evaluate_pf_p">综合评分</div>
+           </div>
+       </div>
+        {yun:}/if{/yun}
+        {yun:}commsg limit=5 id='auto.id' item=mlist{/yun}
+        <div class="recruiter">
+            <div class="recruiter_left"><img src="{yun:}$mlist.photo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);" alt="" width="100%"></div>
+            <div class="recruiter_center">
+                <div class="recruiter_center_name">{yun:}$mlist.name{/yun}</div>
+                <div class="recruiter_center_job">面试岗位：{yun:}if $mlist.jobname{/yun} <a href="{yun:}url m=wap c=job a=comapply id=$mlist.jobid{/yun}">{yun:}$mlist.jobname{/yun}</a>{yun:}else{/yun}职位已下架{yun:}/if{/yun}</div>
+            </div>
+            <div class="recruiter_right"></div>
+        </div>
+        <div class="newevaluate">
+            {yun:}foreach from=$mlist.tags item=v{/yun}
+            <div>{yun:}$v{/yun}</div>
+            {yun:}/foreach{/yun}
+        </div>
+        <div class="newevaluate_word">
+            <div class="newevaluate_word_p">
+                <p>面试过程：{yun:}$mlist.content{/yun}</p>
+                {yun:}if $mlist.othercontent{/yun}
+                <p>其他评价：{yun:}$mlist.othercontent{/yun}</p>
+                {yun:}/if{/yun}
+            </div>
+            <div class="pjtime">
+               {yun:}$mlist.ctime|date_format:"%Y-%m-%d"{/yun} 
+            </div>
+        </div>
+        {yun:}commsgelse{/yun}
+        <div class="wap_member_no">该企业尚未收到面试评价!</div>
+        {yun:}/commsg{/yun}
+        <!-- 查看按钮 -->
+        {yun:}if $mlist{/yun}
+        <div class="examine">
+            <div class="examine_btn"><a href="{yun:}url m=wap c=company a=msg id=$row.uid{/yun}">查看全部评价</a></div>
+        </div>
+        {yun:}/if{/yun}
+
+        {yun:}else{/yun}
+        <div class="wap_member_no">该企业尚未收到面试评价!</div>
+        {yun:}/if{/yun}
+    </div>
+</div>
+
+<div id="app" style="display: none;">
+    <!-- 投递简历弹出框 -->
+    <van-dialog v-model="telQrcodeBoxShow" title="联系方式" :show-confirm-button="false" close-on-click-overlay>
+        <div class="">
+            <div class="">
+                <div id="tel_wxqrcode" class="" v-html="telQrcode"></div>
+                <div class="">长按识别二维码查看联系方式</div>
+            </div>
+        </div>
+    </van-dialog>
+
+    <!--分享面板-->
+    <van-share-sheet v-model="shareShow" title="分享到" :options="shareoptions" @select="shareSelect"></van-share-sheet>
+
+    {yun:}if $config.sy_h5_share==1{/yun}
+    <div class="none" data-url='{yun:}url m=wap c=company a=share id=$row.id{/yun}' id="shareClick"></div>
+    {yun:}else{/yun}
+    <div class="none" id="shareClick"></div>
+    {yun:}/if{/yun}
+
+    <!--海报-->
+    <van-popup v-model="comHbShow" round closeable :style="{height:'90%',width:'90%',background:'none'}">
+        <div id="comHbBox">
+            <div class="hb_tc"><img :src="comHb" style="max-width: 100%;">
+                <div class="hb_tc_bth">
+                    <div @click="getComHb" class="hb_tc_hyz">换一张</div>
+                    <div class="hb_tc_bchb"><span class="hb_tc_bchb_c" @click="comHbTipShow=!comHbTipShow" v-if="comHbTipShow"> <i class="hb_tc_bchbicon"></i>长按图片保存 </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </van-popup>
+</div>
+
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/member_style.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+
+<script type="text/javascript">
+    var uid = '{yun:}$row.uid{/yun}',
+        wapurl = '{yun:}url m=wap{/yun}';
+    var config = {
+        url: '{yun:}url m=wap c=company a=share id=$row.uid{/yun}',
+        title: '{yun:}$row.name{/yun}-{yun:}$config.sy_webname{/yun}',
+        desc: '',
+        img: '{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+        img_title: '{yun:}$row.name{/yun}',
+        from: '{yun:}$config.sy_webname{/yun}'
+    };
+    const hbNum = '{yun:}$hbNum{/yun}';
+    var hbids = [];
+    '{yun:}foreach from=$hbids item=v{/yun}'
+    hbids.push('{yun:}$v{/yun}')
+    '{yun:}/foreach{/yun}'
+
+
+    var shareoptions = [
+        {
+            name: '微信',
+            icon: 'wechat',
+            className: 'wechat'
+        }
+    ];
+
+    '{yun:}if $hbNum > 0{/yun}'
+    shareoptions.splice(1, 0, {
+        name: '分享海报',
+        icon: 'poster',
+        className: 'poster'
+    });
+    '{yun:}/if{/yun}'
+
+    var comshowvue = new Vue({
+        el: '#app',
+        data: {
+            telQrcodeBoxShow: false,
+            telQrcode: '正在获取二维码...',
+
+            comid: uid,
+
+            comHbShow: false,
+            comHbNext: 0,
+            comHb: '',
+            comHbTipShow: true,
+
+            //分享
+            shareShow: false,
+            shareoptions: shareoptions
+
+        },
+        created(){
+            $('#app').css('display', 'block');
+        },
+        methods: {
+
+            telQrcodeBox: function () {
+                var that = this;
+                that.telQrcode = '<img src="index.php?c=company&a=telQrcode&id=' + uid + '" width="120" height="120">';
+                that.telQrcodeBoxShow = true;
+            },
+
+            shareSelect: function (e) {
+                var that = this;
+                var classname = e.className;
+                this.closetip();
+                if (classname == 'wechat') {
+                    $('#shareClick').click();
+                } else if (classname == 'poster') {
+                    that.getComHb();
+                }
+            },
+
+            getComHb: function () {
+                let next;
+                var that = this;
+                var hb = that.comHbNext;
+
+                showLoading('生成中...');
+
+                const id = that.comid;
+                const src = wapurl + '?c=ajax&a=getComHb&uid=' + id + '&hb=' + hbids[hb];
+
+                if (hb < (parseInt(hbNum) - 1)) {
+
+                    next = hb + 1;
+                } else {
+
+                    next = 0;
+                }
+
+                var hbImg = new Image();
+                hbImg.src = src;
+
+                hbImg.onload = function(){
+                    hideLoading();
+                    that.comHbNext = next;
+                    that.comHb = hbImg.src;
+                    that.comHbShow = true;
+                }
+            },
+
+            closetip: function () {
+                var that = this;
+                that.telQrcodeBoxShow = false;
+                that.shareShow = false;
+                that.ComHbShow = false;
+             }
+
+        }
+    });
+
+    function shareShow() {
+        comshowvue.$data.shareShow = !comshowvue.$data.shareShow;
+    }
+
+    function getComHb() {
+        comshowvue.getComHb();
+    }
+
+    function telQrcodeBox() {
+        comshowvue.telQrcodeBox();
+    }
+
+    $(function () {
+        $.post('{yun:}url m=wap c=ajax a=getbusiness{/yun}', {
+            name: '{yun:}$row.name{/yun}'
+        }, function (data) {
+            if (data) {
+                var business = eval('(' + data + ')');
+                $('#creditCode').html(business.creditCode);
+                $('#estiblishTime').html(business.estiblishTime);
+                $('#orgNumber').html(business.orgNumber);
+                $('#Time').html(business.fromTime + '至' + business.toTime);
+                $('#companyOrgType').html(business.companyOrgType);
+                $('#regInstitute').html(business.regInstitute);
+                $('#regStatus').html(business.regStatus);
+                $('#regLocation').html(business.regLocation);
+                $('#regCapital').html(business.regCapital);
+                $('#businessScope').html(business.businessScope);
+                $('#tianyancha').attr('href', 'https://www.tianyancha.com/company/' + business.companyId);
+                $('#businessInfo').show();
+            }
+        });
+    })
+    $('.tabCtrl').click(function () {
+
+        var tabtype = $(this).attr('data-type');
+        $('.cardCtrl').addClass('none');
+
+
+        $('.' + tabtype).removeClass('none');
+
+        $('.lis').removeClass('colorshow');
+        $('.navs').removeClass('Article_indicates');
+
+        $('#' + tabtype + '_t').addClass('colorshow');
+        $('#' + tabtype + '_d').addClass('Article_indicates');
+
+    })
+    $(function () {
+        var cheight = $("#com_content").height();
+        var bheight = $("#com_business").height();
+        if (parseInt(cheight) > 145) {
+            $("#com_content").attr('style', 'width:100%;height:145px; overflow:hidden');
+            $(".com_show_cont").show();
+        }
+        if (parseInt(bheight) > 145) {
+            $("#com_business").attr('style', 'line-height:30px;height:auto; overflow:hidden');
+            $(".on-off").show();
+        }
+        var myimgswiper = new Swiper('#imgswiper', {
+            direction: 'horizontal',
+            autoplay: true,
+            loop: false
+        });
+    });
+
+    function addtellog() {
+        $.post(wapurl + "?c=ajax&a=addJobTelLog", {
+            comid: '{yun:}$row.uid{/yun}',
+        }, function (data) {
+
+        });
+    }
+
+    function showcc() {
+        $("#com_content").attr('style', 'width:100%;height:auto; overflow:hidden');
+        $(".com_show_cont").addClass('com_show_cont2');
+        $(".com_show_cont").find('a').attr('onclick', 'hidecc()');
+    }
+
+    function hidecc() {
+        $("#com_content").attr('style', 'width:100%;height:145px; overflow:hidden');
+        $(".com_show_cont").removeClass('com_show_cont2');
+        $(".com_show_cont").find('a').attr('onclick', 'showcc()');
+    }
+
+    function showbb() {
+        $("#com_business").attr('style', 'line-height:30px;height:auto; overflow:hidden');
+        $(".on-off").find('a').attr('onclick', 'hidebb()');
+    }
+
+    function hidebb() {
+        $("#com_business").attr('style', 'line-height:30px;height:145px; overflow:hidden');
+        $(".on-off").find('a').html('');
+        $(".on-off").find('a').attr('onclick', 'showbb()');
+    }
+
+    $(document).ready(function () {
+        $(".department_a").click(function () {
+            $(".department_a").removeClass('department_a_cur');
+            $(this).addClass('department_a_cur');
+            var departmentName = $(this).attr('data-name');
+            var comuid = $(this).attr('data-uid');
+            var html = '';
+            $.ajax({
+                url: wapurl + "index.php?c=company&a=departmentjob",
+                data: {
+                    comuid: comuid,
+                    departmentName,
+                    departmentName
+                },
+                type: 'POST',
+                success: function (data) {
+                    var html = '';
+                    if (departmentName == '') {
+                        $("#company_job_list").attr("style", "display:none;");
+                    }
+                    var res = JSON.parse(data);
+                    for (let i in res) {
+
+                        html += '<div class="recommend_post_card_box">';
+                        html += '<div class="recommend_post_card">';
+                        html += '   <div class="recommend_post_card_top">';
+                        html += '      <div class="recommend_post_card_name">' + res[i].name +
+                            '</div>';
+                        html += '      <div class="recommend_post_card_money">' + res[i]
+                            .job_salary + '</div>';
+                        html += '    </div>';
+                        html += '    <div class="recommend_post_card_center">';
+                        html += '      <ul>';
+                        html += '         <li>' + res[i].job_city_one + '-' + res[i]
+                            .job_city_two + '</li>';
+                        if (res[i].job_edu) {
+                            html += '          <li>' + res[i].job_edu + '</li>';
+                        }
+                        if (res[i].job_exp) {
+                            html += '          <li>' + res[i].job_exp + '</li>';
+                        }
+
+                        html += '      </ul>';
+                        html += '     </div>';
+                        html += '     <div class="recommend_post_card_bottom">';
+                        html += '         <div class="recommend_post_card_bottom_left">';
+                        html +=
+                            '             <div class="recommend_post_card_bottom_left_logo">';
+                        html += '                 <img src="' + res[i].com_logo_n +
+                            '" alt="" width="100%">';
+                        html += '             </div>';
+                        html +=
+                            '             <i class="recommend_post_card_bottom_left_word">' +
+                            res[i].com_name + '</i>';
+                        html += '     </div>';
+                        html += '     <div class="recommend_post_card_bottom_right">' + res[i]
+                            .lastupdate_n + '</div>';
+
+                        html += '          </div>';
+                        html += '    </div>';
+                        html += '</div>';
+                    }
+
+                    $('#company_job_list').html(html);
+                }
+            });
+        });
+    });
+
+</script>
+{yun:}if $row.x && $row.y{/yun}
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script>
+<script>
+    //百度地图测距
+    var map = null;
+
+    function getdistance() {
+        var map_x = $("#map_x").val();
+        var map_y = $("#map_y").val();
+        if (map_x == 0 && map_y == 0) {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function (r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    $.post(wapurl + 'index.php?c=job&a=distance', {
+                        x: r.point.lng,
+                        y: r.point.lat
+                    }, function (data) {
+                    })
+                    $("#map_x").val(r.point.lng);
+                    $("#map_y").val(r.point.lat);
+                    map_x = r.point.lng;
+                    map_y = r.point.lat;
+                } else {
+                    if (this.getStatus() == "6") {
+                        showToast("开启手机定位后才能使用此功能", 2);
+                        return false;
+                    } else if (this.getStatus() == "7") {
+                        showToast("开启手机定位后才能使用此功能", 2);
+                        return false;
+                    } else {
+                        showToast("地图定位出错", 2);
+                        return false;
+                    }
+                }
+            }, {
+                enableHighAccuracy: true
+            })
+        }
+        var x = '{yun:}$row.x{/yun}',
+            y = '{yun:}$row.y{/yun}';
+        setTimeout(function () {
+            if (map_x > 0 && map_y > 0) {
+                var pointA = new BMap.Point(x, y);
+                var pointB = new BMap.Point(map_x, map_y);
+                var mapdistance = '(' + (map.getDistance(pointA, pointB) / 1000).toFixed(1) + 'km)';
+                $("#distance").html(mapdistance);
+            } else {
+                setTimeout(function () {
+                    getdistance();
+                }, 3000);
+            }
+        }, 1000);
+    }
+
+    $(function () {
+        map = new BMap.Map();
+        getdistance();
+    })
+</script>
+{yun:}/if{/yun}
+</body></html>

@@ -1,0 +1,39 @@
+{yun:}include file="$wapstyle/member/theader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<section>
+<div class="wap_member_tit wap_member_titw30">
+<ul>
+<li {yun:}if $smarty.get.state==''{/yun}class="wap_member_tit_cur"{yun:}/if{/yun}><a href="index.php?c=signup">全部</a></li>
+<li {yun:}if $smarty.get.state=='2'{/yun}class="wap_member_tit_cur"{yun:}/if{/yun}><a href="index.php?c=signup&state=2">未联系</a></li>
+<li {yun:}if $smarty.get.state=='1'{/yun}class="wap_member_tit_cur"{yun:}/if{/yun}><a href="index.php?c=signup&state=1">已联系</a></li>
+</ul>
+</div>
+</section>
+<section>
+<div class="wap_member_job_show">
+{yun:}foreach item=v from=$rows{/yun}
+{yun:}assign var="state" value=$v.order_state{/yun}
+<div class="wap_member_msg ">
+<div class="yun_m_job_list_zt">联&nbsp;系&nbsp; 人：{yun:}$v.name{/yun}{yun:}if $v.status=="1"{/yun}<span class="train_cl">已联系</span>{yun:}/if{/yun}</div>
+<div class="yun_m_job_list_zt">联系电话：{yun:}$v.phone{/yun}</div>
+<div class="yun_m_job_list_zt">报名课程：{yun:}$v.sub_name{/yun}</div>
+<div class="yun_m_job_list_zt">报名时间：{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</div>
+<div class="yun_m_job_list_zt">付款状态：{yun:}if $v.isprice==1{/yun}{yun:}$arr_data.paystate.$state{/yun}{yun:}else{/yun}<font color="red">到场支付</font>{yun:}/if{/yun}</div>
+<div class="yun_member_bth">
+<a href="javascript:void(0)" onclick="vant_del('确定删除该报名信息？','index.php?c=signup&delid={yun:}$v.id{/yun}&uid={yun:}$v.uid{/yun}');" class="yun_member_sublx">删除</a>
+{yun:}if $v.status!="1"{/yun}
+<a href="javascript:void(0)" onclick="vant_del('确定将该报名设为已联系？','index.php?c=signup&id={yun:}$v.id{/yun}&status=1')" class="yun_member_sublx">设为已联系</a>
+{yun:}/if{/yun}
+</div>
+</div>
+{yun:}foreachelse{/yun}
+<div class="wap_member_no">暂无相关信息</div>
+{yun:}/foreach{/yun}
+<div class="pages">{yun:}$pagenav{/yun}</div>
+
+</div>
+</section>
+</div>
+</body>
+</html>

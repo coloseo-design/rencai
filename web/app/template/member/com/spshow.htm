@@ -1,0 +1,226 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div id="mask" class="mask"></div>
+<div class="w1000">
+	<div class="admin_mainbody">
+		{yun:}include file="$comstyle/left.htm"{/yun}
+
+		<input type="hidden" id="comname" value="{yun:}$company.name{/yun}">
+
+		<div class="com_tit"><span class="com_tit_span">发布视频面试</span></div>
+
+		<div class="right_box">
+			<div class="admincont_box">
+
+				<div class="com_body">
+					<div class="com_new_tip mt20">
+						<span class="com_new_tip_h">温馨小提示</span>根据需求设置求职者面试门槛；不设置即表示都可以参与预约视频面试</div>
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+
+					<form name="MyForm" target="supportiframe" method="post" action="index.php?c=spviewadd&act=save" onsubmit="return CheckPost();"
+					 class="layui-form">
+
+
+						<div class="com_release_box" id="comjob">
+							<ul>
+								<div class="sp_tit">设置面试间</div>
+								<li>
+									<div class="com_release_name"><i class="ff0">*</i> 面试时间：</div>
+									<div class="com_release_cont">
+
+										<input type="text" name="sdate" id="sdate" lay-verify="sdate" value="{yun:}$row.sdate_n{/yun}" autocomplete="off"
+										 class="layui-input" lay-key="1" placeholder="设置面试开始时间" style="width: 500px;">
+
+									</div>
+								</li>
+
+								<li>
+									<div class="com_release_name"><i class="ff0">*</i> 选择职位：</div>
+									<div class="com_release_cont">
+										<div class="com_release_cont_text" style="position:relative">
+											<input type="text" name="job" id="job" class="layui-input xzjob" placeholder="选择职位" style="width: 500px;"
+											 autocomplete="off">
+											<div onclick="" class="news_expect_text_new_nth" title=""></div>
+										</div>
+									</div>
+								</li>
+								<div class="sp_tit">设置求职者面试要求</div>
+								<li>
+									<div class="com_release_name">工作经验：</div>
+									<div class="spshow_yq_box">
+										<div class="layui-form-item">
+											<div class="layui-input-inline">
+												<select name="exp" lay-filter="exp" id="exp">
+													<option value="">请选择</option>
+													{yun:}foreach from=$userdata.user_word key=j item=v{/yun}
+													<option value="{yun:}$v{/yun}" {yun:}if $row.exp==$v{/yun} selected{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}
+													 </option>
+													{yun:}/foreach{/yun} 
+												</select>
+											</div>
+										</div>
+									</div>
+								</li> 
+								<li>
+									<div class="com_release_name">学历要求：</div>
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<select name="edu" lay-filter="edu" id="edu">
+												<option value="">请选择</option>
+												{yun:}foreach from=$userdata.user_edu key=j item=v{/yun}
+												<option value="{yun:}$v{/yun}" {yun:}if $row.edu==$v{/yun} selected{yun:}/if{/yun}>{yun:}$userclass_name[$v]{/yun}
+												 </option> {yun:}/foreach{/yun} 
+											 </select> 
+										 </div> 
+									 </div> 
+								 </li> 
+								<li>
+									<div class="com_release_name">简历完整度要求：</div>
+
+									<div class="layui-form-item">
+										<div class="layui-input-block">
+											<input name="other[]" title="工作经历" {yun:}if in_array(1,$row.other_n){/yun}checked="checked"{yun:}/if{/yun}
+											 value="1" type="checkbox" lay-skin="primary">
+											<input name="other[]" title="教育经历" {yun:}if in_array(2,$row.other_n){/yun}checked="checked"{yun:}/if{/yun}
+											 value="2" type="checkbox" lay-skin="primary">
+											<input name="other[]" title="项目经历" {yun:}if in_array(3,$row.other_n){/yun}checked="checked"{yun:}/if{/yun}
+											 value="3" type="checkbox" lay-skin="primary">
+										</div>
+									</div>
+								</li>
+								<div class="sp_tit">备注视频面试</div>
+								<li>
+									<div class="com_release_name"> 信息备注：</div>
+									<div class="com_release_cont">
+										<input type="text" name="remark" id="remark" value="{yun:}$row.remark{/yun}" autocomplete="off" class="layui-input"
+										 lay-key="1" placeholder="添加备注信息，例：XXX等职位 - 2020/08/12 上午 面试专场" style="width: 500px;">
+									</div>
+								</li>
+
+								<li>
+									<input type="hidden" name="id" value="{yun:}$row.id{/yun}">
+									<input type="submit" name="submitBtn" id="submitBtn" value="提交" class="btn_01" style="text-align: center;" />
+								</li>
+							</ul>
+						</div>
+
+						<div id="jobdiv" class="spshow_tc_xzjob" style="display: none;">
+
+							<div class="spshow_tc_xzjob_box">
+								{yun:}foreach from=$job item=v key=k{/yun}
+								<div class="layui-input-block spshow_tc_job">
+									<span class="spshow_tc_job_xz">
+										<input type="checkbox" {yun:}if in_array($k,$row.jobid_n){/yun}checked="checked"{yun:}/if{/yun} id="jobid{yun:}$k{/yun}" name="jobid[]" data-jid="{yun:}$k{/yun}" value="{yun:}$v{/yun}" lay-skin="primary" title="" />
+									</span>
+									<div class="layui-input-inline">{yun:}$v{/yun}</div>
+								</div>
+								{yun:}/foreach{/yun}
+							</div>
+							<div class="spshow_tc_xzjob_btn">
+								<input type="hidden" name="jid" id="jid" value="">
+								<a href="javascript:void(0)" class="layui-btn layui-btn-normal spview_xzjob">确定</a>
+								<a href="javascript:void(0)" onclick="layer.closeAll()" class="layui-btn layui-btn-primary">取消</a>
+							</div>
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/formSelects-v4.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+ type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/formSelects-v4.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+	layui.use(['form', 'layer', 'laydate', 'table'], function() {
+		var form = layui.form,
+			layer = layui.layer,
+			laydate = layui.laydate,
+			formSelects = layui.formSelects,
+			$ = layui.$;
+		var table = layui.table;
+
+		laydate.render({
+			elem: '#sdate',
+			type: 'datetime',
+			format: 'yyyy-MM-dd HH:mm',
+			min: new Date().getTime()
+		});
+
+	});
+
+	$(document).ready(function() {
+		'{yun:}if $row.jobid_n!=""{/yun}'
+		var jobid_chk = [];
+		var jobid = [];
+		$('input[name="jobid[]"]:checked').each(function() {
+			jobid_chk.push($(this).val());
+			jobid.push($(this).attr("data-jid"));
+		});
+		$("#job").val(jobid_chk.join(','));
+		$("#jid").val(jobid.join(','));
+
+		'{yun:}/if{/yun}'
+		
+		$('.xzjob').focus(function() {
+			$.layer({
+				type : 1,
+				title : '选择职位',
+				border : [10 , 0.3 , '#000', true],
+				area : ['510px','auto'],
+				page : {dom :"#jobdiv"}
+			});
+		})
+		
+		$('.spshow_yq_div a').each(function() {
+			$(this).click(function() {
+		
+				$('.spshow_yq_div a').removeClass("spshow_yq_div_a_curr") //点击时先移除所以选中样式
+				$(this).addClass("spshow_yq_div_a_curr") //当前点击的添加选中样式
+		
+				var id = $(this).attr("data-id"); //获取data-id的值
+				$('.spshow_item').addClass("none") //点击时每个内容都隐藏
+				$('#' + id).removeClass("none") //职业data-id和内容id相同的显示
+			})
+		})
+		
+		$(".spview_xzjob").click(function() {
+			layer.closeAll();
+			var jobid_chk = [];
+			var jobid = [];
+		
+			$('input[name="jobid[]"]:checked').each(function() {
+		
+				jobid_chk.push($(this).val());
+				jobid.push($(this).attr("data-jid"));
+			});
+			$("#job").val(jobid_chk.join(','));
+			$("#jid").val(jobid.join(','))
+		})
+	});
+
+	function CheckPost() {
+
+		var sdate = $("#sdate").val();
+
+		if (sdate == "" || sdate == $("#sdate").attr('placeholder')) {
+			layer.msg("请选择开始日期！", 2, 8);
+			return false;
+		}
+		var jobid_chk = [];
+		var exp_chk = [];
+		var edu_chk = [];
+
+		$('input[name="jobid[]"]:checked').each(function() {
+			jobid_chk.push($(this).val());
+		});
+		if (jobid_chk.length == 0) {
+			layer.msg("请选择面试职位！", 2, 8);
+			return false;
+		}
+	}
+</script>
+
+{yun:}include file="$comstyle/footer.htm"{/yun}

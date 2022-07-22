@@ -1,0 +1,168 @@
+
+<script src="{yun:}$wap_style{/yun}/js/list_bottom.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script>
+<div id="joblist_wx_vue" class="none">
+	<template v-if="skeletonLoading && mapjob=='1'">
+		<div class="map_job_list" v-for="(item,skeletonKey) in skeletonLen" :key="skeletonKey">
+		    <div class="map_job_list_box">
+		        <van-skeleton :row-width="['100%', '50%', '100%']" :row="3"></van-skeleton>
+		    </div>
+		</div>
+	</template>
+	<template v-else>
+		<a v-for="item in joblist" :key="item.id" v-bind:href="item.wapurl" v-bind:title="item.name">
+		
+			<div class="tab_card">
+				<div class="tab_card_top">
+					<div class="tab_card_job">
+						<i class="tab_card_job_name">{{item.name}}</i>
+						<i class="tab_card_new" v-if="item.newtime">new</i>
+					   
+					</div>
+					<i class="tab_card_pay">{{item.job_salary}}</i>
+				</div>
+				<div class="newjob_info">
+					<span class="">{{item.job_city_one?item.job_city_one:''}}{{item.job_city_two?'-'+item.job_city_two:''}}</span>
+					
+					<i class="newjob_info_line" v-if="item.job_exp"></i><span v-if="item.job_exp" class="">{{item.job_exp}}经验</span>
+					
+					<i class="newjob_info_line" v-if="item.job_edu"></i><span v-if="item.job_edu" class="">{{item.job_edu}}学历</span>
+					
+					<span class="newjob_fw">
+						<img v-if="item.rec_n" src="{yun:}$wap_style{/yun}/images/icon_recommend.png" alt="">
+						<img v-if="item.urgent_n" src="{yun:}$wap_style{/yun}/images/jp.png" alt="" >
+					</span>
+				</div>
+				
+				<div  v-if="item.welfare_n"  class="welfare">
+					<span class="welfare_n" v-for="welfare in item.welfare_n" :key="welfare">{{welfare}}</span>
+				</div>
+				
+				<div class="tab_card_bottom">
+					<div class="card_bottom_logo">
+						<img v-bind:src="item.comlogo" alt="" style="width: 100%;">
+					</div>
+					<div class="card_bottom_word">{{item.com_name}}</div>
+					<img v-if="item.hotlogo" src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/mq.png" alt="名企" class="png" width="14" style="vertical-align:middle">
+					<img v-if="item.rating_logo" v-bind:src="item.rating_logo" style="vertical-align:middle; margin-left:3px;" width="14" height="14" /> 
+					<i  v-if="item.yyzz_status==1" class="job_qy_rz_icon"></i> 
+					
+					<i class="jl_name" v-if="item.dis">{{item.dis}}</i>
+				</div>
+			</div>
+		
+		</a>
+	</template>
+    <div v-if="mapjob=='1' && joblist.length==0" class="nearby_position" id="nocom">
+       <div class="wap_member_no"> 您的附近没有相关职位！ </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+		el: '#joblist_wx_vue',
+		data: {
+            skeletonLoading: true,
+            skeletonLen: new Array(15).fill(''),
+			joblist:[],
+			lookJobIds:[],
+            mapjob:''
+		}
+    });
+    
+    
+
+    var x = '{yun:}$smarty.get.mapx{/yun}';
+    var y = '{yun:}$smarty.get.mapy{/yun}';
+    //附近职位
+    if(mapjob=='1'){
+		var jobpage = 0;
+        app.$data.mapjob = '1';
+        if(app.$data.skeletonLoading){
+            app.$nextTick(function(){
+                document.getElementById('listdiv').insertAdjacentHTML('beforeend',$("#joblist_wx_vue").html());
+            })
+        }
+        if (x > 0 && y > 0) {
+            fetchData_list();
+        } else {
+            get_current_loaction();
+        }
+    }else{
+		var jobpage = 1;
+	}
+    
+
+    function get_current_loaction() {
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function (r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                $.post(wapurl + 'index.php?c=job&a=distance', {
+                    x: r.point.lng,
+                    y: r.point.lat
+                }, function (data) {
+                })
+                x = r.point.lng;
+                y = r.point.lat;
+                fetchData_list();
+            } else {
+                alert('failed' + this.getStatus());
+            }
+        }, {
+            enableHighAccuracy: true
+        });
+    }
+    //附近职位 end
+
+    function fetchData_list() {
+		jobpage++;
+        var searchurl = document.getElementById('searchurl').value;
+        var param = {searchurl: searchurl,page: jobpage};
+        
+        if(mapjob=='1'){
+            param.x = x;
+            param.y = y;
+        }
+
+        $.post(wapurl + 'index.php?c=job&a=ajaxLoad',param, function(res){
+            if(document.getElementById('pageLoading')){
+    			document.getElementById('pageLoading').classList.add('none');
+            }
+            
+            if(app.$data.skeletonLoading){
+                app.$data.skeletonLoading = false;
+				if(mapjob=='1'){
+					document.getElementById('listdiv').innerHTML='';
+				}
+            }
+            
+            if(res){
+                var data = eval('(' + res + ')');
+                
+                if(data.list.length > 0){
+                    app.$data.joblist = data.list;
+                    app.$data.lookJobIds = data.lookJobIds?data.lookJobIds:[];
+					app.$nextTick(function(){
+
+					    document.getElementById('listdiv').insertAdjacentHTML('beforeend',$("#joblist_wx_vue").html());
+					})
+                }else{
+                    if(mapjob=='1'){
+                        
+                        if(param.page==1){
+                            app.$nextTick(function(){
+                                document.getElementById('listdiv').insertAdjacentHTML('beforeend',$("#joblist_wx_vue").html());
+                            })
+                        }else if(document.getElementById('pageNoMore')){
+                            document.getElementById('pageNoMore').classList.remove('none');
+                        }
+                        
+                    }else if(document.getElementById('pageNoMore')){
+                        document.getElementById('pageNoMore').classList.remove('none');
+                    }
+                    
+				}
+            }
+
+        });
+    }
+</script>

@@ -1,0 +1,286 @@
+{yun:}include file="$wapstyle/header_lt.htm"{/yun}
+
+<section>
+    <div class="ltresume_bg">
+        <span class="resume_gx">{yun:}$Info.lastupdate{/yun} 更新</span> </div>
+    <div class="ltresume_info_pd">
+        <div class="ltresume_info_pd_c">
+            <div class="ltresume_info_pd_c_b">
+
+                <div class="ltresume_photo_box">
+                    {yun:}if $rec==1{/yun}
+                    <i class="yun_wap_resumetj">推荐</i> {yun:}/if{/yun}
+                    <div class="ltresume_photo">
+                        <div class="ltresume_photo_c"> <img src="{yun:}$Info.photo{/yun}"> {yun:}if $Info.sex==2 {/yun}<i class="user_tj_xg" style="right:2px;bottom:5px;"></i>{yun:}else{/yun}<i class="user_tj_xb" style="right:1px;bottom:5px;width:20px;height:20px;"></i>{yun:}/if{/yun}</div>
+
+                    </div>
+                    <div class="ltresume_info_n_c">
+                        <div style="padding-left:110px;">
+                            <div class="ltresume_user_name">
+                                {yun:}$Info.username_n{/yun}
+                                <span class="ltresume_user_nj">
+									({yun:}if $Info.sex {/yun}{yun:}$user_sex[$Info.sex]{/yun}{yun:}/if{/yun}，{yun:}if $Info.age==0{/yun}保密{yun:}else{/yun}{yun:}$Info.age{/yun}岁{yun:}/if{/yun})
+								</span> {yun:}if $Info.moblie_status==1 {/yun}<span class="yun_resume_info_sjrz"></span>{yun:}/if{/yun} {yun:}if $Info.idcard_status=='1'{/yun} <i class="yun_resume_info_sfrz"></i>{yun:}/if{/yun}
+                            </div>
+                            <div class="ltresume_user_info_p"><span class="ltresume_user_info_p_s"><i class="ltresume_user_info_xl"></i>{yun:}$Info.useredu{/yun}学历</span><span class="ltresume_user_info_p_s"><i class="ltresume_user_info_nl"></i>{yun:}$Info.user_exp{/yun}经验</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ltresume_info_pd_c_b">
+        <div class="ltresume_user_info_box">
+            {yun:}if $Info.arrayTag{/yun}
+            <div class="yun_resume_exp_p">
+                {yun:}foreach from=$Info.arrayTag item=v{/yun}
+                <span class="ltresume_user_bq">{yun:}$v{/yun}</span> {yun:}/foreach{/yun}
+            </div>
+            {yun:}/if{/yun}
+            <div class="ltresume_user_info_p_box">
+                {yun:}if $Info.height{/yun}
+                <span>{yun:}$Info.height{/yun}cm<i class="resume_user_info_p_line">|</i></span> {yun:}/if{/yun} {yun:}if $Info.weight{/yun}
+                <span>{yun:}$Info.weight{/yun}kg<i class="resume_user_info_p_line">|</i></span> {yun:}/if{/yun} {yun:}if $Info.user_marriage{/yun}
+                <span>{yun:}$Info.user_marriage{/yun}<i class="resume_user_info_p_line">|</i></span> {yun:}/if{/yun} {yun:}if $Info.nationality{/yun}
+                <span>{yun:}$Info.nationality{/yun}<i class="resume_user_info_p_line">|</i></span> {yun:}/if{/yun} {yun:}if $Info.living{/yun}
+                <span>现居{yun:}$Info.living{/yun}{yun:}if $Info.address{/yun}{yun:}/if{/yun}</span> {yun:}/if{/yun}
+            </div>
+        </div>
+</section>
+
+<section>
+    <div class="user_contnet mt10">
+
+        <div class="user_contnet_box mt10 ">
+            <div class="wap_title"><span class="">求职意向</span></div>
+            <ul class="user_contnet_ul">
+                <li class="com_show_li"><span class="user_contnet_info_n">期望职位：</span>
+                    <font color="#efb62e">{yun:}$Info.customjob{/yun}</font>
+                </li>
+                <li class="com_show_li"><span class="user_contnet_info_n">意向职能：</span><span class="user_list_yxjob">{yun:}$Info.jobname{/yun}</span></li>
+                <li class="com_show_li"><span class="user_contnet_info_n">期望薪水：</span> {yun:}if $Info.minsalary&&$Info.maxsalary{/yun} ￥{yun:}$Info.minsalary|floatval{/yun}-{yun:}$Info.maxsalary|floatval{/yun} {yun:}else if $Info.minsalary{/yun} ￥{yun:}$Info.minsalary|floatval{/yun}以上 {yun:}else{/yun} 面议 {yun:}/if{/yun}
+                </li>
+                <li class="com_show_li"><span class="user_contnet_info_n">工作性质：</span>{yun:}$Info.type{/yun}</li>
+                <li class="com_show_li"><span class="user_contnet_info_n">到岗时间：</span>{yun:}$Info.report{/yun}</li>
+                <li class="com_show_li"><span class="user_contnet_info_n">意向地点：</span> {yun:}foreach from=$Info.expectcity key=key item=v{/yun} {yun:}if $key
+                    <5{/yun} <span class="user_resume_yxzn">{yun:}$v{/yun}</span>{yun:}/if{/yun} {yun:}/foreach{/yun}
+                </li>
+                <li class="com_show_li"><span class="user_contnet_info_n">从事行业：</span>{yun:}$Info.hy{/yun}</li>
+                <li class="com_show_li"><span class="user_contnet_info_n">目前状态：</span>{yun:}$Info.jobstatus{/yun}</li>
+            </ul>
+        </div>
+        {yun:}if $Info.description{/yun}
+        <div class="user_contnet_box mt10 ">
+            <div class="wap_title"><span class="">自我评价</span></div>
+            <div class="jobshow_content_lh">{yun:}$Info.description{/yun} </div>
+
+        </div>
+        {yun:}/if{/yun}
+    </div>
+</section>
+<div class="user_contnet">
+    {yun:}if $Info.user_work{/yun}
+    <div class="user_contnet_box mt10">
+        <section class="com_post_title">
+            <div class="wap_title"><span class="">工作经历</span></div>
+            {yun:}foreach from=$Info.user_work item=worklist{/yun}
+            <div class="ltresume_show_list">
+                <div class="ltresume_show_name">{yun:}$worklist.name{/yun}</div>
+                <div class="ltresume_show_time">在职时间：{yun:}$worklist.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}if $worklist.edate{/yun}{yun:}$worklist.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                {yun:}if $worklist.title{/yun}
+                <div class="ltresume_show_p"> 任职职位：{yun:}$worklist.title{/yun}</div>
+                {yun:}/if{/yun}
+                {yun:}if $worklist.content{/yun}
+                <div class="ltresume_show_p"> 工作职责：{yun:}$worklist.content{/yun}</div>
+                {yun:}/if{/yun}
+            </div>
+            {yun:}/foreach{/yun}
+
+        </section>
+    </div>
+    {yun:}/if{/yun} {yun:}if $Info.user_edu{/yun}
+    <div class="user_contnet_box mt10">
+        <section class="com_post_title">
+            <div class="wap_title"><span class="">教育经历</span></div>
+            {yun:}foreach from=$Info.user_edu item=edulist{/yun}
+
+            <div class="ltresume_show_list">
+                <div class="ltresume_show_name">{yun:}$edulist.name{/yun}</div>
+                <div class="ltresume_show_time">在校时间：{yun:}$edulist.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}if $edulist.edate{/yun}{yun:}$edulist.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                {yun:}if $edulist.specialty{/yun}
+                <div class="ltresume_show_p"> 所学专业：{yun:}$edulist.specialty{/yun}</div>
+                {yun:}/if{/yun}
+                {yun:}if $edulist.education_n{/yun}
+                <div class="ltresume_show_p"> 最高学历：{yun:}$edulist.education_n{/yun}</div>
+                {yun:}/if{/yun}
+            </div>
+
+            {yun:}/foreach{/yun}
+        </section>
+    </div>
+    {yun:}/if{/yun} {yun:}if $Info.user_tra{/yun}
+    <div class="user_contnet_box mt10">
+        <section class="com_post_title">
+            <div class="wap_title"><span class="">培训经历</span></div>
+
+            {yun:}foreach from=$Info.user_tra item=traininglist{/yun}
+            <div class="ltresume_show_list">
+                <div class="ltresume_show_name">{yun:}$traininglist.name{/yun}</div>
+                <div class="ltresume_show_time">培训时间： {yun:}$traininglist.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}if $traininglist.edate{/yun}{yun:}$traininglist.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                {yun:}if $traininglist.title{/yun}
+                <div class="ltresume_show_p"> 培训方向：{yun:}$traininglist.title{/yun}</div>
+                {yun:}/if{/yun}
+                {yun:}if $traininglist.content{/yun}
+                <div class="ltresume_show_p"> 培训描述：{yun:}$traininglist.content{/yun}</div>
+                {yun:}/if{/yun}
+            </div>
+
+            {yun:}/foreach{/yun}
+        </section>
+    </div>
+    {yun:}/if{/yun} {yun:}if $Info.user_project{/yun}
+    <div class="user_contnet_box mt10">
+        <section class="com_post_title">
+            <div class="wap_title"><span class="">项目经历</span></div>
+            {yun:}foreach from=$Info.user_project item=projectlist{/yun}
+            <div class="ltresume_show_list">
+                <div class="ltresume_show_name">{yun:}$projectlist.name{/yun}</div>
+                <div class="ltresume_show_time">项目时间：{yun:}$projectlist.sdate|date_format:"%Y-%m"{/yun} 至 {yun:}if $projectlist.edate{/yun}{yun:}$projectlist.edate|date_format:"%Y-%m"{/yun}{yun:}else{/yun}至今{yun:}/if{/yun}</div>
+                {yun:}if $projectlist.title{/yun}
+                <div class="ltresume_show_p"> 担任职位：{yun:}$projectlist.title{/yun} </div>
+                {yun:}/if{/yun}
+                {yun:}if $projectlist.content{/yun}
+                <div class="ltresume_show_p"> 项目内容：{yun:}$projectlist.content{/yun}</div>
+                {yun:}/if{/yun}
+            </div>
+
+            {yun:}/foreach{/yun}
+        </section>
+    </div>
+    {yun:}/if{/yun} {yun:}if $Info.user_skill{/yun}
+    <div class="user_contnet_box mt10" id="resume_skill">
+        <section class="com_post_title">
+            <div class="wap_title"><span class="">职业技能</span></div>
+
+            {yun:}foreach from=$Info.user_skill item=skilllist{/yun}
+            <div class="ltresume_show_list">
+                <div class="ltresume_show_name">{yun:}$skilllist.name{/yun}</div>
+                <div class="ltresume_show_time">掌握时间：{yun:}$skilllist.longtime{/yun}年</aside>
+                </div>
+                {yun:}if $skilllist.picurl{/yun}
+                <div class="ltresume_show_p"> 证书图片：<img src="{yun:}$skilllist.picurl{/yun}" width="95" height="70" style="vertical-align:middle" /></div>{yun:}/if{/yun}
+            </div>
+
+            {yun:}/foreach{/yun}
+        </section>
+    </div>
+    {yun:}/if{/yun} {yun:}if $Info.user_other{/yun}
+    <div class="user_contnet_box mt10">
+        <section class="com_post_title">
+            <div class="wap_title"><span class="">其他信息</span></div>
+            {yun:}foreach from=$Info.user_other item=otherlist{/yun}
+            <div class="ltresume_show_list">
+            	{yun:}if $otherlist.name{/yun}
+                <div class="ltresume_show_name">标题：{yun:}$otherlist.name{/yun}</div>
+                {yun:}/if{/yun}
+                {yun:}if $otherlist.content{/yun}
+                <div class="ltresume_show_p"> 内容：{yun:}$otherlist.content{/yun}</div>
+                {yun:}/if{/yun}
+            </div>
+            {yun:}/foreach{/yun}
+        </section>
+    </div>
+    {yun:}/if{/yun}
+</div>
+</div>
+<div class="user_contnet">
+    <div class="user_contnet_box">
+        <section class="com_post_title" id="tel">
+            <div class="wap_title"><span class="">联系方式</span></div>
+            <div style="clear:both"></div>
+            {yun:}if $Info.m_status=="1"{/yun}
+            <div class="com_post_msg_bot">
+                <aside class="wap_touch_img"><em>联系手机：</em><span style="display:inline-block;width:150px;">{yun:}$Info.telphone{/yun}</span></aside>
+                {yun:}if $Info.basic_info=='1' && $Info.telhome{/yun}
+                <aside class="wap_touch_img"><em>联系座机：</em><span style="display:inline-block;width:150px;">{yun:}$Info.telhome{/yun}</span></aside>
+                {yun:}/if{/yun} {yun:}if $Info.email{/yun}
+                <aside class="wap_touch_img"><em>联系邮箱：</em>{yun:}$Info.email{/yun}</aside>{yun:}/if{/yun} {yun:}if $Info.homepage{/yun}
+                <aside class="wap_touch_img"><em>个人主页: </em>{yun:}$Info.homepage{/yun}{yun:}/if{/yun} {yun:}if $Info.idcard{/yun}
+                    <aside class="wap_touch_img"><em>身份证号: </em>{yun:}$Info.idcard{/yun} {yun:}if $Info.idcard_status==1 && $Info.idcard{/yun}<img src="{yun:}$config.sy_weburl{/yun}/app/template/resume/images/sfrz.png" title="身份已认证">已认证{yun:}/if{/yun}
+                    </aside>{yun:}/if{/yun} {yun:}if $Info.qq{/yun}
+                    <aside class="wap_touch_img"><em>联系Q Q：</em>{yun:}$Info.qq{/yun}</aside>{yun:}/if{/yun} {yun:}if $Info.domicile{/yun}
+                    <aside class="wap_touch_img"><em>详细地址：</em>{yun:}$Info.domicile{/yun}</aside>{yun:}/if{/yun} {yun:}if $Info.wxewm{/yun}
+                    <div class="two_vita_ewm_box"><img src="{yun:}$Info.wxewm{/yun}" width="120" height="120">
+                        <div class="two_vita_ewm_box_p">个人二维码</div>
+                    </div>
+                    {yun:}/if{/yun}
+            </div>
+            {yun:}else{/yun}
+            <div class="com_post_login">
+                <div class="com_post_look_toew">
+                    <div class="look_user_tel">{yun:}$Info.link_wapmsg{/yun}</div>
+                </div>
+            </div>
+            {yun:}/if{/yun}
+
+        </section>
+    </div>
+</div>
+{yun:}if $config.sy_chat_open ==1{/yun}
+<div class="yun_chat_new" onclick="resumeChat('{yun:}$Info.uid{/yun}','{yun:}$Info.id{/yun}','{yun:}$usertype{/yun}', '{yun:}$config.sy_chat_name{/yun}')"><span class="yun_chat_new_bth">{yun:}$config.sy_chat_name{/yun}</span></div>
+{yun:}/if{/yun}
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src='{yun:}$wap_style{/yun}/chat/chat.js?v={yun:}$config.cachecode{/yun}' type='text/javascript'></script>
+<script language="javascript" type="text/javascript">
+    // 查看联系方式，提示剩余下载简历数
+    function isDownResume(eid, num, url) {
+        showConfirm('您还可以查看' + num + '份简历，是否查看？', function(){
+            for_link(eid);
+        }, '取消', '查看');
+    }
+
+    function for_link(eid) {
+        $.post("{yun:}url m=wap c=ajax a=forlink{/yun}", {
+            eid: eid
+        }, function(data) {
+            var data = eval('(' + data + ')');
+            var status = data.status;
+            if(status == 1) {
+                showToast(data.msg);
+            } else if(status == 2) {
+                showConfirm(data.msg, function(){
+                    window.location.href = "member/index.php?c=getserver&id=" + eid + "&server=" + 2;
+                });
+            } else if(status == 3) {
+                location.reload(true);
+            } else if(status == 5) {
+                showToast(data.msg, 2, function() {
+                    window.location.href = wapurl + "member/index.php?c=rating";
+                });
+            }
+        });
+    }
+    //猎头下载简历积分模式
+    function lt_down_integral(eid, uid) {
+        $.post('{yun:}url m=wap c=ajax a=ltdownresume{/yun}', {
+            type: "integral",
+            eid: eid,
+            uid: uid
+        }, function(data) {
+            var data = eval('(' + data + ')');
+            var status = data.status;
+            var integral = data.integral;
+            if(status == 1) {
+                showToast(data.msg);
+                return false;
+            } else if(status == 2) {
+                showToast('您还有' + integral + integral_pricename + '！不够查看联系方式!');
+            } else if(status == 3) {
+                location.reload(true);
+            }
+        })
+    }
+</script>
+{yun:}include file="$wapstyle/public_previewimage.htm"{/yun}
+</body>
+</html>

@@ -1,0 +1,151 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+<link href="{yun:}$wap_style{/yun}/css/member/memberuserwap.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<style type="text/css" media="screen">
+	.deposit_header_reminder div{display: inline-block}
+</style>
+<div id="yunvue" class="none">
+	<div class="tx_wxtsbg">
+	<div class="tx_wxts">温馨提示：
+		<span v-if="withdraw_minmoney>0">单笔提现金额必须达到{{withdraw_minmoney}}元，</span>
+		<span v-if="withdraw_num>0">单次提现收取每笔{{withdraw_pound}}%手续费，</span>
+		<span v-if="withdraw_money>0">{{withdraw_money}}元以内及时到账，超过{{withdraw_money}}元需审核。</span>
+		注意：提现到微信账户，请先绑定微信 
+		</div>
+		
+	
+	
+    <div class="tx_body">
+        <div class="deposit_body_card">
+            <div class="deposit_money_body_card">
+                <div class="money_card_box">
+                    <div class="card_box_name">我的钱包</div>
+                    <div class="card_box_number">
+                        <i class="card_number_icon">￥</i> {{packfk}}</div>
+                </div>
+                <div class="money_card_hint"></div>
+                <div class="money_card_box">
+                    <div class="card_box_name">冻结金额</div>
+                    <div class="card_box_number">
+                        <i class="card_number_icon">￥</i> {{freeze}}</div>
+                </div>
+               
+            </div>
+            <div class="deposit_card_namebox">
+                <div class="deposit_card_name">真实姓名</div>
+                <div class="deposit_card_import">
+                    <input type="text" @input="inputname" placeholder="请输入真实姓名">
+                </div>
+            </div>
+            <div class="deposit_card_namebox">
+                <div class="deposit_card_name">提现金额</div>
+                <div class="deposit_card_importmoney">
+                    <input type="digit" v-model="price" @input="changeprice" 
+									maxlength="8" name="price" placeholder="请输入提现金额">
+                </div>
+            </div>
+        </div>
+        <div class="deposit_body_btn" @click="withdrawSubmit" v-if="next">立即提现</div>
+        <div class="deposit_body_btn" @click="withdrawSubmit" v-if="nextno">不可提现</div>
+    </div>
+</div>	</div>
+
+<script>  
+  new Vue({
+    el: '#yunvue',
+    data: {
+        withdraw_money: 0,
+		withdraw_num: 0,
+		withdraw_minmoney: 0,
+		withdraw_pound: 0,
+		next: false,
+		nextno: false,
+		packfk: 0,
+		freeze: 0,
+		price: '',
+		oprice: '',
+		statis: [],
+		real_name:''
+    },
+    watch: {
+    	price(newval){
+    		this.price = newval;
+    	}
+    },
+    created() {   
+     this.getStatis();
+    },
+    methods:{
+    	changeprice: function(e) {
+			this.oprice = e.target.value;
+			
+			var re = /^\d*\.{0,1}\d{0,2}$/;
+			if (re.exec(this.oprice)) {
+				this.price = this.oprice;
+			} else {
+				this.price = 0;
+			}
+		}, 
+		inputname:function(e){
+			this.real_name = e.target.value;
+
+		},   	
+      	getStatis:function(){
+    		showLoading();
+        	var that = this;
+        	var paramer = {rand: Math.random()};
+       		$.post('{yun:}url d=wxapp h=com m=finance c=getStatis{/yun}',paramer,function(data){
+          		hideLoading();      
+         		
+	          	if (data.error == 1) {
+					that.statis = data.data.statis;
+					that.withdraw_money = data.data.withdraw_money;
+					that.withdraw_num = data.data.withdraw_num;
+					that.withdraw_minmoney = data.data.withdraw_minmoney;
+					that.withdraw_pound = data.data.withdraw_pound;
+					that.packfk = that.statis.packfk > 0 ? that.statis.packfk : 0;
+					that.freeze = that.statis.freeze > 0 ? that.statis.freeze : 0;
+					that.next = (that.packfk >= that.withdraw_minmoney) ? true : false;
+					that.nextno = that.next ? false : true;
+				}
+           		 $("#yunvue").css('display', 'block');
+        	},'json');
+      	},
+      	withdrawSubmit:function(){
+    		var that = this;
+    		var minchangeprice = that.packprice_min_recharge;
+    		if(that.real_name == ''){    			
+				showToast('请填写真实姓名');
+    		}else if (that.price<1) {				
+				return showToast('请正确填写提现金额');
+			} else {
+				var paramer = {
+					'price': that.price,
+					'real_name': that.real_name,
+				};
+				$.post('{yun:}url d=wxapp h=com m=finance c=withdraw{/yun}',paramer,function(data){
+	          		hideLoading();      
+	         		
+		          	if (data.error == 1) {
+						showToast(data.msg,2, function() {
+                      		window.location.href="index.php?c=loglist";
+                    	});
+					}else if(data.error == 8){
+						showConfirm(data.msg, function() {
+                            window.location.href="index.php?c=binding";
+                        }, '取消', '前往绑定');
+					}else{
+						 showToast(data.msg);
+					}
+	           
+	        	},'json');
+			}
+    	},
+      	
+      	pageTo:function(url){
+         	window.location.href = url;
+      	}
+    } 
+  });
+</script>
+</body>
+</html>

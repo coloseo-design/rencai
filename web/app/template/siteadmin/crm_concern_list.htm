@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<!--[if IE 6]>
+<script src="./js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.admin_infoboxp_tj,');
+</script>
+<![endif]-->
+
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script type="text/javascript" src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+	<div class="infoboxp"> 
+		
+		<div class="admin_new_tip">
+			<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+			<div class="admin_new_tip_list_cont">
+				<div class="admin_new_tip_list">该页面展示了所有业务员全部的客户跟进记录。</div>
+				<div class="admin_new_tip_list">可输入名称关键字进行搜索，也可进行详细的高级搜索。</div>
+			</div>
+		</div>
+    
+		<div class="clear"></div>
+
+		<div class="admin_new_search_box">
+			<div class="admin_new_search_name">搜索类型：</div>
+			
+			<form action="index.php" name="myform" method="get" >
+				
+				<input type="hidden" name="m" value="crm_concern"/>
+				<input type="hidden" name="c" value="list"/>
+				<input type="hidden" name="status" value="{yun:}$smarty.get.status{/yun}"/>
+				<input type="hidden" name="rec" value="{yun:}$smarty.get.rec{/yun}"/>
+				<input type="hidden" name="time" value="{yun:}$smarty.get.time{/yun}"/>
+				<input type="hidden" name="rating" value="{yun:}$smarty.get.rating{/yun}"/>
+			
+				<div class="admin_Filter_text formselect" did="dcom_type"> 
+				  
+					<input type="button" {yun:}if $smarty.get.type=='1'||$smarty.get.type==''{/yun} value="企业名称" {yun:}elseif $smarty.get.type=='2'{/yun} value="用户名称" {yun:}elseif $smarty.get.type=='3'{/yun} value="联系人" {yun:}elseif $smarty.get.type=='4'{/yun} value="联系电话" {yun:}elseif $smarty.get.type=='5'{/yun} value="联系邮箱" {yun:}elseif $smarty.get.type=='6'{/yun} value="记录ID" {yun:}/if{/yun} class="admin_new_select_text" id="bcom_type">
+					
+					<input type="hidden" name="type" id="com_type" value="{yun:}if $smarty.get.type{/yun}{yun:}$smarty.get.type{/yun}{yun:}else{/yun}1{yun:}/if{/yun}"/>
+					
+					<div class="admin_Filter_text_box" style="display:none" id="dcom_type">
+					
+						<ul>
+							<li><a href="javascript:void(0)" onClick="formselect('1','com_type','企业名称')">企业名称</a></li>
+							<li><a href="javascript:void(0)" onClick="formselect('2','com_type','用户名称')">用户名称</a></li>  
+							<li><a href="javascript:void(0)" onClick="formselect('3','com_type','联系人')">联系人</a></li>  
+							<li><a href="javascript:void(0)" onClick="formselect('4','com_type','联系电话')">联系电话</a></li>  
+							<li><a href="javascript:void(0)" onClick="formselect('5','com_type','用户邮箱')">联系邮箱</a></li>
+							<li><a href="javascript:void(0)" onClick="formselect('6','com_type','用户ID')">跟进记录ID</a></li>
+						</ul>  
+					</div>
+
+				</div>
+
+				<input type="text" placeholder="输入你要搜索的关键字" name="keyword" class="admin_new_text">
+				<input type="submit" name='news_search' value="搜索" class="admin_new_bth"/>
+				
+				<a href="javascript:void(0);" onclick="$('.admin_screenlist_box').toggle();" class="admin_new_search_gj">高级搜索</a>
+			
+			</form>
+
+			{yun:}include file="siteadmin/admin_search.htm"{/yun}
+
+		</div>
+
+		<div class="clear"></div>  
+    
+		<div class="table-list" style="color:#898989">
+			<div class="admin_table_border">
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+					<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+					
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+							  
+								<th style="width:20px;">
+									<label for="chkall"><input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/></label>
+								</th>
+
+								<th> 
+									{yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun} 
+										<a href="{yun:}searchurl order=desc t=id m=crm_concern untype='order,t'{/yun}">
+											记录ID<img src="images/sanj.jpg"/>
+										</a>
+									{yun:}else{/yun} 
+										<a href="{yun:}searchurl order=asc t=id m=crm_concern untype='order,t'{/yun}">
+											记录ID<img src="images/sanj2.jpg"/>
+										</a> 
+									{yun:}/if{/yun} 
+								</th>
+
+								<th>业务员</th>
+								<th>企业id</th>
+								<th align="left">企业名称</th>
+								<th>联系人</th>
+								<th>电话/邮箱</th>
+								<th align="left">会员等级/到期时间</th>
+								<th>跟进时间</th>
+								<th>跟进方式</th>
+								<th>跟进内容简述</th>
+								<th>备注</th>
+								<th>跟进状态</th>
+								<th>下次回访时间</th>
+								<th>回访说明</th>
+ 							</tr>
+						</thead>
+
+						<tbody>
+							{yun:}foreach item=v key=key from=$rows{/yun}
+								<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+									<td>
+										<input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all"  name='del[]' onclick='unselectall()' rel="del_chk" email="{yun:}$v.email{/yun}" moblie="{yun:}$v.telphone{/yun}" style="margin-left:5px;"/>
+ 									</td>
+								
+									<td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.id{/yun}</span></td>
+
+									<td align="left" class="td1" style="text-align:center;">
+										<div class="mt5">{yun:}$v.admin_name{/yun}</div>
+										<div class="mt5">{yun:}$v.admin_username{/yun}</div>
+									</td>
+
+									<td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.comid{/yun}</span></td>
+								
+									<td align="left">
+
+										<div class="">
+											<a href="index.php?m=crm_customer&c=Imitate&uid={yun:}$v.comid{/yun}" target="_blank">{yun:}$v.username{/yun}</a>
+										</div>
+										
+										<div class="mt5">
+											<a href="{yun:}url m=company c=show id=$v.comid{/yun}" target="_blank" class="admin_com_name">{yun:}$v.name{/yun}</a>
+										</div>
+									</td>
+
+									<td>{yun:}$v.linkman{/yun}</td>
+
+									<td>{yun:}$v.linktel{/yun}<br/>{yun:}$v.linkmail{/yun}</td> 
+
+									<td align="left">
+										{yun:}if $v.vip_etime < strtotime('today') && $v.vip_time!=0{/yun}
+											{yun:}if $v.vip_done == 0{/yun}
+												 过期会员
+											{yun:}/if{/yun}
+										{yun:}else{/yun}
+											{yun:}$v.rating_name{/yun}
+										{yun:}/if{/yun}
+										{yun:}if $v.vip_etime{/yun}
+											<div class="mt5">{yun:}$v.vip_etime|date_format:"%Y-%m-%d"{/yun}</div>
+										{yun:}/if{/yun}{yun:}$list.uid{/yun}
+									</td>
+								
+									<td>{yun:}$v.time|date_format:"%Y-%m-%d"{/yun}</td>
+								
+									<td>
+										{yun:}if $v.type == 1{/yun}电话{yun:}elseif $v.type == 2{/yun}拜访{yun:}/if{/yun}
+									</td>
+
+									<td width="100" align="left">
+										{yun:}if $v.content{/yun} 
+											{yun:}$v.content|mb_substr:0:10:"utf-8"{/yun}
+											{yun:}if strlen($v.content)>10{/yun} 
+												<a href="javascript:void(0);" onclick="showInfo('跟进内容','{yun:}$v.id{/yun}','1')" class="admin_cz_sc">[更多]</a>
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									</td>
+									<td width="100" align="left">
+										{yun:}if $v.note{/yun} 
+											{yun:}$v.note|mb_substr:0:10:"utf-8"{/yun}
+											{yun:}if strlen($v.note)>10{/yun} 
+											<a href="javascript:void(0);" onclick="showInfo('备注内容','{yun:}$v.id{/yun}','2')" class="admin_cz_sc">[更多]</a>
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									</td>  
+
+									<td>
+										{yun:}if $v.status == 1{/yun}
+											等待客户反馈
+										{yun:}else if $v.status == 2{/yun}
+											已付费
+										{yun:}else if $v.status == 3{/yun}
+											拒绝付费
+										{yun:}else if $v.status == 4{/yun}
+											可能付费，需要再回访
+										{yun:}/if{/yun}
+									</td>
+									<td>{yun:}$v.nexttime|date_format:"%Y-%m-%d"{/yun}</td>
+									 <td width="100" align="left">
+									  {yun:}if $v.nextnote{/yun} 
+											{yun:}$v.nextnote|mb_substr:0:10:"utf-8"{/yun}
+											{yun:}if strlen($v.nextnote)>10{/yun} 
+											<a href="javascript:void(0);" onclick="showInfo('回访说明','{yun:}$v.id{/yun}','3')" class="admin_cz_sc">[更多]</a>
+											{yun:}/if{/yun}
+										{yun:}/if{/yun}
+									</td>
+								</tr>
+							{yun:}/foreach{/yun}
+						  
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+
+									<td colspan="12" class="digg">{yun:}$pagenav{/yun}</td>
+
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="showbox"  style="display:none; width: 480px; overflow:hidden"> 
+		<div id="showboxmsg" style="width:480px; padding:20px;height:350px; line-height:25px; font-size:14px; overflow:auto"></div>   
+	</div>
+ 
+	<script>
+
+		function set_rating(uid,name){
+			layer.iframe(
+				'index.php?m=crm_customer&c=getstatis&uid='+uid,
+				'客户['+name+']套餐设置',
+				['800px','600px'],
+				'auto',
+				{maxmin:true}
+			);
+		}
+
+		function showInfo(title,id,type){
+			var pytoken=$("#pytoken").val();
+			$.post("index.php?m=crm_concern&c=getContent",{id:id,type:type,pytoken:pytoken},function(data){
+				data=eval('('+data+')');
+				$('#showboxmsg').html(data.content);
+				$.layer({
+					type : 1,
+					title :title, 
+					closeBtn : [0 , true],
+					border : [10 , 0.3 , '#000', true],
+					area : ['500px','400px'],
+					page : {dom :"#showbox"}
+				});
+			});
+		}
+
+	</script>
+</body>
+</html>

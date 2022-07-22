@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+<meta name="description" content="{yun:}$description{/yun}" />
+<meta name="renderer" content="webkit"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/gq/free_job.css" type="text/css">
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/base.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+
+<script src="{yun:}$wap_style{/yun}/js/flexible.js?v={yun:}$config.cachecode{/yun}"></script>
+</head>
+<body>
+<div class="body_wap">
+    <header class="header_h">
+        <div class="header_fixed">
+            <div class="free_job_header"><a href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}" class="free_job_headername" id="pop_show">{yun:}$headertitle{/yun}</a>
+			{yun:}if $smarty.get.a=='task'{/yun}
+				{yun:}if $uid{/yun}
+
+					{yun:}if  $config.gq_pay_price==0{/yun}
+						{yun:}if $config.gq_number== 0{/yun}
+							<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="free_job_header_join">发布任务</a>
+						{yun:}else if $num > 0{/yun}
+							<a href="javascript:void(0);" onclick="taskadd('一天内只能发布{yun:}$config.gq_number{/yun}次，剩余可发布{yun:}$num{/yun}次','{yun:}url m=wap c=free a=addtask{/yun}')" class="free_job_header_join">发布任务</a>
+						{yun:}else{/yun}
+							<a href="javascript:void(0);" onclick="showToast('一天内只能发布{yun:}$config.gq_number{/yun}条项目任务！')" class="free_job_header_join">发布任务</a>
+						{yun:}/if{/yun}
+					{yun:}else{/yun}	
+						<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="free_job_header_join">发布任务</a>
+					{yun:}/if{/yun}
+				{yun:}else{/yun}
+					<a href="{yun:}url m=wap c=login{/yun}" class="free_job_header_join">发布任务</a>
+				{yun:}/if{/yun}
+
+			{yun:}/if{/yun}
+			</div>
+        </div>
+    </header>
+</div>

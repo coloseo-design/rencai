@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<title>后台管理</title>
+</head>
+
+<style>
+	.table_border{
+		border: 1px solid #e8eaec;
+		border-collapse: separate;
+		border-spacing: 0px 0px;
+		margin-top: 5px;
+	}
+	.table_border_tit{
+		text-align: left;
+		font-weight: bold;
+		padding-left: 10px;
+		font-size: 16px;
+	}
+	.table_border tr{
+		display: block;
+		height: 46px;
+		line-height: 46px;
+		border-bottom: 1px solid #e8eaec;
+	}
+	.table_border tr th{
+		width: 250px;
+	}
+	.layui-form-mid{
+		float: right;
+		line-height: 29px;
+		margin-left: 20px;
+	}
+	.layui-form-mid a{
+		color: #2d8cf0;
+		
+	}
+	.layui-form-radio{
+		margin-top: 0;
+		
+	}
+	.alladmin_c{width: 33.3%;float: left;margin-bottom: 10px;}
+		
+</style>
+
+<body class="body_ifm">
+<div class="infoboxp"> 
+	<div class="tabs_info">
+		<ul>
+			<li class="curr"> <a href="index.php?m=admin_user&c=wxMsgSet" class="report_uaer_list_on">微信通知设置</a></li>
+			<li ><a href="index.php?m=wx&c=qywxMsgList" >企业微信通知</a></li>
+		</ul>
+	</div>
+<div class="tty-tishi_top">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">设置通知之前，请先配置好微信通知设置,否则将无法收到通知。</div>
+</div>
+</div>
+<div class="clear"></div>
+
+<div class="tag_box">
+	
+	<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+	    <form name="myform1" target="supportiframe" action="index.php?m=admin_user&c=wmTypeSet" method="post" class="layui-form list_border" >
+	    	<div class="layui-form-item">
+				<div class="list_border_tit">通知方式</div>
+			</div>
+			<div class="layui-form-item">
+            	<label class="layui-form-label">通知方式：</label>
+				<div class="layui-input-inline t_w480" style="padding-top:5px; padding-bottom:20px;">
+					<input name="sy_admin_wmtype" value="1" title="微信模板通知" lay-filter="wmtype" {yun:}if $config.sy_admin_wmtype=="1" {/yun}
+							 checked {yun:}/if{/yun} type="radio" />
+					<input name="sy_admin_wmtype" value="2" title="企业微信通知" lay-filter="wmtype" {yun:}if $config.sy_admin_wmtype=="2" {/yun}
+					 checked {yun:}/if{/yun} type="radio" />
+				</div>
+				<div id="wxmb" class="{yun:}if $config.sy_admin_wmtype!='1'{/yun}none{yun:}/if{/yun}">
+					<div class="layui-form-item">
+						<label class="layui-form-label">提醒模板：</label>
+						<div class="layui-input-inline t_w480">
+							<input class="layui-input" type="text" name="wx_mbadmin" id="wx_mbadmin" value="{yun:}$config.wx_mbadmin{/yun}" size="60" maxlength="255" />
+						</div>
+						<span class="admin_web_tip"><a href="http://www.wanxiangku.com" target="_blank">微信模板消息通知设置教程<font color="#FF0000">查看教程>></font></a></span>
+						
+					</div>
+				</div>
+				<div id="qywx" class="{yun:}if $config.sy_admin_wmtype!='2'{/yun}none{yun:}/if{/yun}">
+					<div class="layui-form-item">
+						<label class="layui-form-label">企业ID：</label>
+						<div class="layui-input-inline t_w480">
+							<input class="layui-input" type="text" name="wx_qy_corpid" size="30" maxlength="255" value="{yun:}$config.wx_qy_corpid{/yun}">
+						</div>
+						<span class="admin_web_tip">在<a target="_blank" href='https://work.weixin.qq.com'>企业微信管理端</a>“我的企业”－“企业信息”下查看“企业ID”（需要有管理员权限）。</span>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">应用AgentId</label>
+						<div class="layui-input-inline t_w480">
+							<input class="layui-input" type="text" name="wx_qy_agentid" size="30" value="{yun:}$config.wx_qy_agentid{/yun}" maxlength="255">
+						</div>
+						<span class="admin_web_tip">在<a target="_blank" href='https://work.weixin.qq.com'>企业微信管理端</a>->“应用与小程序”->“应用”，点进某个应用，即可看到agentid。
+</span>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">应用SCERET</label>
+						<div class="layui-input-inline t_w480">
+							<input class="layui-input" type="text" name="wx_qy_secret" size="30" value="{yun:}$config.wx_qy_secret{/yun}" maxlength="255">
+						</div>
+						<span class="admin_web_tip">在<a target="_blank" href='https://work.weixin.qq.com'>企业微信管理端</a>->“应用与小程序”->“应用”->“自建”，点进某个应用，即可看到。</span>
+					</div>
+                    <div style="padding-left:200px;">
+					<div class="admin_web_tip">要想收到企业微信通知，需要在后台管理员账号中填写该用户在企业微信中的账号，并在对应企业微信应用中将该用户加入可见范围</div>
+					<div class="admin_web_tip">1，如何获取企业微信成员账号： 在<a target="_blank" href='https://work.weixin.qq.com'>企业微信管理端</a>->“通讯录”->点进某个成员的详情页，可以看到该成员的账号</div>
+					<div class="admin_web_tip">2，如何设置可见范围： 在<a target="_blank" href='https://work.weixin.qq.com'>企业微信管理端</a>->“应用管理”->点进上述应用AgentId对应应用，即可编辑可见范围</div>
+				</div></div>
+			</div>
+			
+
+			<div class="layui-form-item pdleft180">
+				<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}" />
+				<input class="layui-btn tty_sub" id="wxconfig" type="submit" name="msgconfig" value="提交" />&nbsp;&nbsp;
+				<input class="layui-btn tty_cz" type="reset" value="重置" />
+			</div>
+		</form>
+	    <table width="100%" class="table_form table_border">
+	    	
+
+			<tr class="admin_table_trbg" bgcolor="#f5f7fb">
+			  <th colspan="2" class="admin_bold_box">
+				<div class="table_border_tit">通知设置</div>
+			  </th>
+			</tr>
+			{yun:}foreach from=$wxmsgType key=k item=v{/yun}
+		    <tr>
+	            <th width="160">{yun:}$v.name{/yun}：</th>
+				{yun:}if $v.uid!=''{/yun}
+		            {yun:}foreach from=$adminlist key=adminK item=adminV{/yun}
+		            	{yun:}if in_array($adminV.uid,$v.uid_arr){/yun}
+		            	<td>{yun:}$adminV.username{/yun}</td>
+		            	{yun:}/if{/yun}
+		            {yun:}/foreach{/yun}
+		        {yun:}else{/yun}
+		        <td>暂未设置</td>
+	            {yun:}/if{/yun}
+	            <td>
+	              	<div class="layui-input-block">
+	                	<div class="layui-form-mid layui-word-aux"><a href="javascript:void(0);" onclick="showAllAdmin('{yun:}$v.type{/yun}');" >设置通知管理员</a> </div>
+               		</div>
+	            </td>
+	        </tr>
+	        {yun:}/foreach{/yun}
+	           
+	    </table>
+		
+	
+
+    <form name="myform" target="supportiframe" action="index.php?m=admin_user&c=wxMsgSave" method="post" class="layui-form">
+		<div class="" id="alladmin" style="display:none;padding:10px 0">
+			<div class="" style="padding:0 0 13px 25px; line-height:22px;">
+            <div class="">操作提示：</div>
+            <div class="">接收微信模板通知需要后台账号先<a class="admin_cz_sc" href="index.php?m=admin_user&c=myuser" style="padding-left:5px;color:#2d8cf0; text-decoration:underline">绑定微信</a></div>
+            <div class=""> 接收企业微信通知需要后台账号<a class="admin_cz_sc" href="index.php?m=admin_user" style="padding-left:5px;color:#2d8cf0; text-decoration:underline">填写企业微信账号</a></div>
+            </div>
+			{yun:}foreach from=$wxmsgType key=wk item=wv{/yun}
+			<div id="wmtype_{yun:}$wv.type{/yun}" class="wmtypeCrtl" style="display:none;overflow-y: auto;max-height: 170px;padding-left: 25px;">
+				{yun:}foreach from=$adminlist key=adminK item=adminV{/yun}
+				<div  class="layui-input-inline alladmin_c">
+					<input name="wmtype_{yun:}$wv.type{/yun}[]" value="{yun:}$adminV.uid{/yun}" title="{yun:}$adminV.username{/yun}" type="checkbox" lay-skin="primary" {yun:}if in_array($adminV.uid,$wv.uid_arr){/yun} checked {yun:}/if{/yun}/>
+				</div>
+				{yun:}/foreach{/yun}
+			</div>
+			{yun:}/foreach{/yun}
+			{yun:}if !empty($adminlist){/yun}
+			<div class="zph_tjlist tty_tc_botm" style="margin-top: 0;">
+				<input type="hidden" id="wmid" name="wmid" value="" />
+				<input class="t_tanc_btn" type="submit" name="update" value="修改" style="margin-left:0px;">
+			</div>
+			{yun:}/if{/yun}
+		</div>
+
+		<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+
+
+    </form>
+    
+</div>
+</div>
+<script> 
+layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+
+    form.on('radio(wmtype)', function(data){
+    	console.log(data.elem); //得到radio原始DOM对象
+		console.log(data.value); //被点击的radio的value值
+        //TODO 下面是我具体业务的处理代码，可忽略 ...
+        if(data.value=="1"){
+        	$('#qywx').hide();
+        	$('#wxmb').show();
+        }else if(data.value=="2"){
+        	$('#wxmb').hide();
+        	$('#qywx').show();
+        }
+   		
+    });
+
+});
+
+
+$(function(){
+	
+})
+function showAllAdmin(type){
+
+	$('.wmtypeCrtl').hide();
+
+	$('#wmid').val(type);
+
+	$('#wmtype_'+type).show();
+
+	$.layer({
+		type: 1,
+		title: '设置需要通知的管理员',
+		closeBtn: [0, true],
+		border: [10, 0.3, '#000', true],
+		area: ['400px', 'auto'],
+		page: {
+			dom: "#alladmin"
+		}
+	});
+
+}
+
+</script>
+</div>
+</body>
+</html>

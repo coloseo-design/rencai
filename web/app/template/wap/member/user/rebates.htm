@@ -1,0 +1,210 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<div id="yunvue" class="none">
+	<div class="m_tab">
+		<div class="m_tabbox ">
+			<ul class="">
+				<li :class="type == 'tj' ? 'm_tabactive' : ''" @click="pageTo('index.php?c=rebates&type=tj')">我推荐的悬赏
+				</li>
+				<li :class="type == 'cy' ? 'm_tabactive' : ''" @click="pageTo('index.php?c=rebates&type=cy')">我参与的悬赏
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--我推荐的猎头悬赏-->
+	<div class="m_cardbox">
+		<div class="m_cardbgbox">
+
+			<div class="m_cardbg" v-for="(item, rebateskey) in list" :key="rebateskey" v-if="type=='tj'">
+
+				<div class="reward_tit" @click="pageTo(item.wapjob_url)">
+					<span v-if="item.type==2" class="reward_tit_name">{{item.job_name}}</span>
+					<span v-else class="reward_tit_name">{{item.job_name}}</span>
+					<span class="reward_tit_zt"> 
+						<span v-if="item.status==0" class=" ">未查看</span>
+						<span v-else-if="item.status==1" class=" ">已查看</span>
+						<span v-else-if="item.status==2">已试用</span>
+						<span v-else-if="item.status==3">未通过</span>
+						<span v-else-if="item.status==4">已返利</span>
+					</span>
+				</div>
+				<div class="reward_comname" @click="pageTo(item.wapcom_url)">
+					<span v-if="item.type==3">{{item.com_name}}</span>
+					<span v-else>{{item.com_name}}</span>
+				</div>
+
+				<div class="reward_p"><span class="reward_pname">赏金总额</span> {{item.rebates}}{yun:}if
+					$config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元 {yun:}/if{/yun}
+				</div>
+				<div class="reward_p"><span class="reward_pname">推荐人才</span>{{item.name}}</div>
+				<div class="reward_p"><span class="reward_pname">推荐时间</span>{{item.lastupdate_n}}
+					<div class="reward_cz">
+						<span @click="pageTo('index.php?c=rebates_info&id='+item.id)" class="reward_cz_icon"> 
+							<img src="{yun:}$wap_style{/yun}/images/Apply_compile.png" alt="">
+						</span>
+						<span @click="rebatesdel(item.id,rebateskey);" class="reward_cz_icon"> 
+							<img src="{yun:}$wap_style{/yun}/images/resume_del.png" alt="">
+						</span>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+		<div class="m_cardbg  offer_reward_box" v-for="(item, rewardkey) in list" :key="rewardkey" v-if="type=='cy'">
+			<div class="reward_tit">
+				<span class="reward_tit_name" v-if="item.name">
+					<a href="javascript:void(0);" @click="pageTo(item.wapjob_url)" class="sq_jobpack_info_job">{{item.name}}</a>
+				</span>
+				<span class="reward_tit_name" v-else>职位已删除</span>
+				<div class="reward_tit_zt   ">{{item.log.nowmsg}}</div>
+			</div>
+			<div class="reward_p"><span class="reward_pname">申请日期</span> {{item.datetime_n}} </div>
+			<div class="reward_p"><span class="reward_pname">意向职位</span> {{item.jobclass}}</div>
+
+			<div class="reward_p">
+				<span class="reward_pname">基本信息</span> {{item.exp}}经验 
+				<span class="wap_member_msg_job_s">&nbsp;{{item.edu}}学历</span>
+			</div>
+		</div>
+	</div>
+	<div v-if="count ==2">
+		<van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" />
+	</div>
+<div class="m_cardbox">
+	<div class="wap_member_bgcar" v-show="count==0">
+		<div class="wap_member_no">暂无记录</div>
+	</div></div>
+
+</div>
+
+</div>
+<script>
+	var currentPage = parseInt('{yun:}$smarty.get.page{/yun}');
+	var type = '{yun:}$smarty.get.type{/yun}';
+	type = type ? type : 'tj';
+	var yunvue = new Vue({
+		el: '#yunvue',
+		data: {
+			list: [],
+			limit: 20,
+			total: 0,
+			page: currentPage ? currentPage : 1,
+			type: type
+		},
+		computed: {
+
+			count() {
+				if (this.total > this.limit) {
+					return 2;
+				} else if (this.list.length == 0) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		},
+		created() {
+			this.typeShow(type);
+		},
+		methods: {
+			typeShow: function(e) {
+				this.type = e;
+				if (e == 'tj') {
+
+					this.getrebateslog();
+				} else if (e == 'cy') {
+
+					this.getrewardlog();
+				}
+			},
+			getrebateslog: function() {
+				showLoading();
+				var that = this;
+				var paramer = {};
+				paramer['page'] = that.page;
+				paramer['limit'] = that.limit;
+				$.post('{yun:}url d=wxapp h=user m=reward c=rebates_reward{/yun}', paramer, function(res) {
+					hideLoading();
+
+					that.list = res.data;
+					that.total = res.total;
+					that.page = currentPage ? currentPage : 1;
+					that.type = type;
+					$("#yunvue").css('display', 'block');
+
+				}, 'json');
+			},
+			getrewardlog: function() {
+				showLoading();
+				var that = this;
+				var paramer = {};
+				paramer['page'] = that.page;
+				paramer['limit'] = that.limit;
+				$.post('{yun:}url d=wxapp h=user m=reward c=look_reward{/yun}', paramer, function(res) {
+					hideLoading();
+
+					that.list = res.data;
+					that.total = res.total;
+					that.page = currentPage ? currentPage : 1;
+					$("#yunvue").css('display', 'block');
+				}, 'json');
+			},
+			rebatesdel: function(id, key) {
+				let that = this
+				let param = {
+					id: id
+				};
+
+				showConfirm('确定删除', () => {
+					showLoading('删除中...')
+					$.post('{yun:}url d=wxapp h=user m=reward c=rebatesdel{/yun}', param, function(
+						data) {
+						hideLoading();
+						if (data.error == 1) {
+							showToast(data.msg, 2, function() {
+								that.list.splice(key, 1);
+							});
+						} else {
+							showToast(data.msg);
+						}
+					});
+				});
+
+			},
+			getStatus: function(id, status, key) {
+				let that = this
+				if (status == '26') {
+					window.location.href = 'index.php?c=arb&rewardid=' + id;
+
+				} else {
+					$.post('{yun:}url d=wxapp h=user m=reward c=logstatus{/yun}', {
+						rewardid: id,
+						status: status
+					}, function(data) {
+
+						if (data.error == 1) {
+							showToast('操作成功', 2, function() {
+								var rkey = key;
+								that.list[rkey].log = data.data;
+							});
+						} else {
+							showToast(data.error);
+						}
+					});
+				}
+
+			},
+			pageChange: function(e) {
+
+				location.href = 'index.php?c=rebates&type=' + this.type + '&page=' + e;
+			},
+			pageTo: function(url) {
+				window.location.href = url;
+			}
+		}
+	});
+</script>
+</body>
+</html>

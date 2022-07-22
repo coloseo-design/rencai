@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+			<div class="tabs_info">
+				<ul>
+					<li>
+						<a href="index.php?m=admin_app_config">APP配置</a>
+					</li>
+					<li class="{yun:}if $smarty.get.c=='version'{/yun}curr{yun:}/if{/yun}">
+						<a href="index.php?m=admin_app_config&c=version">版本更新</a>
+					</li>
+					<li class="{yun:}if $smarty.get.c=='xybox'{/yun}curr{yun:}/if{/yun}">
+						<a href="index.php?m=admin_app_config&c=xybox">首页提示</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			
+			{yun:}if $smarty.get.c=='version'{/yun}
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form class="layui-form" action="index.php?m=admin_app_config&c=saveversion" method="post" target="supportiframe">
+						<table width="100%" class="table_form">
+
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr">IOS版本名称：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="iosversion" id="iosversion" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.iosversion{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+									<span class="admin_web_tip">新版本未上架成功前不要改动</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr">IOS更新链接：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="iosurl" id="iosurl" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.iosurl{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+									<span class="admin_web_tip">一般不需要改动</span>
+								</td>
+							</tr>
+
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr">Android版本名称：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="androidversion" id="androidversion" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.androidversion{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+									<span class="admin_web_tip">新版本未上架成功前不要改动</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr">Android更新链接：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="androidurl" id="androidurl" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.androidurl{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+									<span class="admin_web_tip">一般不需要改动</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr">更新标题：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="apptitle" id="apptitle" autocomplete="off" class="layui-input" type="text" value="{yun:}$config.apptitle{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+									<span class="admin_web_tip">有信息版本改动时 修改版本号</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+							  <th width="160" class="t_fr">更新说明：</th>
+							  <td>
+								  <div class="layui-input-block">
+									<div class="layui-input-inline t_w480">
+										<textarea name="appcontent" cols="100" rows="5" class="layui-textarea" style="height:100px">{yun:}$config.appcontent{/yun}</textarea>
+									</div>
+								</div>
+									<span class="admin_web_tip">有新的版本更新时可以适当改动</span>
+							  </td>
+							</tr>
+							<tr>
+								<th width="160">强制更新：</th>
+								<td>
+									<div class="layui-input-block">
+										<input type="checkbox" name="sy_app_upforce" lay-skin="switch" lay-text="是|否" {yun:}if $config.sy_app_upforce=="1"
+										 {/yun} checked {yun:}/if{/yun} />
+									</div>
+									<span class="admin_web_tip">大的版本升级时，可以选择强制更新</span>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th></th>
+								<td>
+									<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+									<input class="admin_button tty_sub" type="submit" value="提交" />&nbsp;&nbsp;
+									<input class="admin_button tty_cz" type="reset" value="重置" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+			{yun:}elseif $smarty.get.c=='xybox'{/yun}
+			<div class="main_tag mt10">
+				<div class="tag_box">
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<form class="layui-form" action="index.php?m=admin_app_config&c=savexybox" method="post" target="supportiframe" autocomplete="off">
+						<table width="100%" class="table_form">
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr">提示标题：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline t_w480">
+											<input name="xyboxtitle" class="layui-input" type="text" value="{yun:}$appconfig.xyboxtitle{/yun}" size="60" maxlength="255" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+							  <th width="160" class="t_fr">提示内容：</th>
+							  <td>
+								<div class="layui-form-item">
+									<div class="layui-input-inline t_w480">
+										<textarea name="xyboxcontent" cols="100" rows="5" class="layui-textarea" style="height:100px">{yun:}$appconfig.xyboxcontent{/yun}</textarea>
+									</div>
+								</div>
+							  </td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<th width="160" class="t_fr"></th>
+								<td>
+									<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+									<input class="tty_sub" type="submit" value="提交" />&nbsp;&nbsp;
+									<input class="tty_cz" type="reset" value="重置" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+			{yun:}/if{/yun}
+		</div>
+		<script type="text/javascript">
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <title>{yun:}$title{/yun}</title>
+        <meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+        <meta name="description" content="{yun:}$description{/yun}" />
+        <meta http-equiv="X-UA-compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width" initial-scale="1" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no,email=no" />
+        <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width" />
+        <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/xjhlive.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+        <link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+
+    </head>
+	<body style="background-color: #808080">
+
+		<div id="xjhdiv" class="show_box">
+			<div class="chat_show_header">
+				<div class="chat_show_header_c">
+				<div class="xjh_show_wid">
+					<!-- 开头 -->
+					<div id="livebody" class="show_box_header">
+						<div class="xjh_zb_h">
+							<div class="number {yun:}if !$hit{/yun}none{yun:}/if{/yun}">观看人数：<span id="looknum"><script src="{yun:}url m=wap c=xjhlive a=GetHits id=$info.id hits=$info.hits{/yun}" ></script></span></div>
+						</div>
+						<div id="livediv">
+							{yun:}if $info.livestatus==1{/yun}
+							<div id="waitshow" class="show_box_header_bg">
+								<div class="show_box_header_bg_djs">预计倒计时</div>
+								<div class="show_box_header_bg_js">
+									<van-count-down :time="time" @finish="onFinish">
+										<template #default="timeData">
+											<span id="drest" class="block">{{ timeData.days }}</span>天
+											<span id="hrest" class="colon">{{ timeData.hours }}</span>时
+											<span id="mrest" class="block">{{ timeData.minutes }}</span>分
+											<span id="srest" class="colon">{{ timeData.seconds }}</span>秒
+										 </template>
+									</van-count-down>
+								</div>
+							  	
+								{yun:}if $substatus==1{/yun}
+								<div class="show_box_header_btn"><a href="javascript:void(0);" onclick="subxjh('{yun:}$info.id{/yun}')">预约观看</a></div>
+								{yun:}elseif $substatus==2{/yun}
+								<div class="show_box_header_btn">您已预约</div>
+								{yun:}/if{/yun}
+							
+							</div>
+							<div class="sp_img">
+								<div class="swiper-container" id="imgswiper">
+						            <div class="swiper-wrapper">
+									
+										{yun:}foreach item=pic from=$info.picarr{/yun}
+										<div class="swiper-slide" >
+										<img src="{yun:}$pic.url{/yun}" />
+										</div>
+										{yun:}/foreach{/yun}
+									</div>
+						            <!-- 如果需要分页器 -->
+						            <div class="swiper-pagination"></div>
+						        </div>
+								
+							</div>
+							{yun:}/if{/yun}
+							<div id="codvideo" class="{yun:}if $info.livestatus != 2{/yun}none{yun:}/if{/yun}">
+								<!--  点播 -->
+								{yun:}if $info.recordurl{/yun}
+								<div id="playered" class="player-size"></div>
+								<input type="hidden" id="playurl" value="{yun:}$info.recordurl{/yun}" />
+								{yun:}else{/yun}
+								<div class="zb_end_box">
+									<div class="zb_end_tit">直播已结束</div>
+									<div class="zb_end_tip">谢谢您的观看</div>
+								</div>
+								<div class="zb_end_bg"></div>
+								<div id="poster" class="sp_img">
+									<div class="swiper-container" id="imgswiper">
+							            <div class="swiper-wrapper">
+										
+											{yun:}foreach item=pic from=$info.picarr{/yun}
+											<div class="swiper-slide" >
+											<img src="{yun:}$pic.url{/yun}" />
+											</div>
+											{yun:}/foreach{/yun}
+										</div>
+							            <!-- 如果需要分页器 -->
+							            <div class="swiper-pagination"></div>
+							        </div>
+									
+								</div>
+								{yun:}/if{/yun}
+							</div>
+							
+							{yun:}if $info.livestatus == 3{/yun}
+							<!--  直播 -->
+							<div id="live_video" class="show_box_header_opacity">
+							</div>
+							{yun:}/if{/yun}
+							<input type="hidden" id="live_hls" value="{yun:}$info.hls{/yun}" />
+							<input type="hidden" id="live_stime" value="{yun:}$info.stime{/yun}" />
+							<input type="hidden" id="live_poster" value="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/livewaiting.png" />
+						</div>
+						
+						
+					</div>
+
+					<ul id="liveTab" class="chat_nav">
+						<li><a href="javascript:void(0)" class="show_box_menu_border">互动</a></li>
+						<li><a href="javascript:void(0)">活动介绍</a></li>
+						<li><a href="javascript:void(0)">企业推荐</a></li>
+						<li><a href="javascript:void(0)">职位</a></li>
+						
+					</ul>
+				</div></div>
+			</div>
+			<div class="show_box_menu">
+
+				<div class="show_box_menu_con">
+					<div id="chat_content" class="con1">
+						<div class="con1_tips">
+							<div>{yun:}$config.sy_xjh_notice{/yun}</div>
+						</div>
+						<div class="show_box_chat"></div>
+						
+						<div class="show_box_chat_foot">
+							<div class="show_box_chat_fix">
+								<div class="show_box_chat_input">
+								<div class="show_box_chat_box">
+								<a class="xjh_zb_fhui"  href="javascript:goBack();"></a>
+									{yun:}if $chatRight{/yun}
+										{yun:}if $black{/yun}
+										<div class="show_box_chat_text">
+											<i class="show_box_chat_icon"></i>
+											<input type="text" value="" maxlength="50" disabled placeholder="您已被禁言" />
+										</div>
+										<div id="send" class="seng_bth">发送</div>
+										{yun:}else{/yun}
+										<div class="show_box_chat_text">
+											<i class="show_box_chat_icon"></i>
+											<input type="text" id="send_content" maxlength="50" value="" onfocus="commonHide(this)" onblur="inputBlur()" placeholder="快来参与互动吧..." />
+										</div>
+										<span id="face" class="sendbq"></span>
+										<div id="send" class="seng_bth">发送</div>
+										<div id="commonly" class="showbq"></div>
+										{yun:}/if{/yun}
+										
+									{yun:}else{/yun}
+										<a class="show_box_chat_text" href="{yun:}url m=wap c=login{/yun}">
+											<i class="show_box_chat_icon"></i>
+											<input type="text" value="" maxlength="50" disabled placeholder="登录参与实时互动" style=" background:#fff" />
+										</a>
+										
+										<a id="login" href="{yun:}url m=wap c=login xid=$info.id{/yun}"  class="seng_bth">登录</a>
+										<style>
+										.show_box_chat_box{padding:8px 75px 8px 30px}
+										</style>
+									{yun:}/if{/yun}
+								</div>	
+							</div>
+						</div>
+					</div>
+				
+				</div>
+					<div class="con2" style="display: none;">
+						<div class="jianjie">
+							{yun:}$info.body{/yun}
+						</div>
+					</div>
+					<div class="con3" style="display: none;">
+						{yun:}foreach from=$comlist key=comk item=company{/yun}
+						<div id="nc_{yun:}$company.uid{/yun}" class="jiabing_list">
+							<div class="jiabing_name"><a href="{yun:}url m=wap c=company a=show id=$company.uid xid=$info.id{/yun}">{yun:}$company.name{/yun}</a></div>
+							<div class="jiabing_js">{yun:}$company.content{/yun}</div>
+							{yun:}if $company.content{/yun}
+							<div class="jiabing_jobzj none"><a href="{yun:}url m=wap c=company a=show id=$company.uid xid=$info.id{/yun}" class="jiabing_jobzj_more guideMsg">查看更多介绍></a></div>
+							{yun:}/if{/yun}
+						</div>
+						{yun:}foreachelse{/yun}
+						<div class="evaluate_pj_no"><i class="evaluate_pj_no_icon"></i>暂无企业信息</div>
+						{yun:}/foreach{/yun}
+					</div>
+					<div class="con4" style="display: none;">
+
+						<div id='xjjob_show' class="show_box_position">
+							
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="yunvue" class="none">
+			<van-popup v-model="ewmBox" position="center" round @closed="boxClose" :style="{'z-index': '100000'}">
+				<div class="wx_bdtck_pic" style="width:300px; text-align:center">
+					<img :src="ewmurl" width="200" height="200">
+				</div>
+				<div class="wx_bdtck_p" style=" width:300px;padding-bottom:10px; line-height:25px; text-align:center">关注公众号及时接收面试消息</div>
+			</van-popup>
+		</div>
+		{yun:}if $info.livestatus == 2{/yun}
+		<script src="{yun:}$config.sy_weburl{/yun}/js/live/qiniu-web-player-1.2.3.js"></script>
+		<style>
+			.player-size {
+				width: 100%;
+			    height: 220px;
+			}
+			@media screen and (max-width: 640px) {
+				.player-size {
+					width: 100%;
+					height: 220px;
+				}
+			}
+			.van-count-down{color: #f7f8fa}
+		</style>
+		{yun:}else{/yun}
+		<script src="https://imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.3.js" charset="utf-8"></script>
+		{yun:}/if{/yun}
+		<script>
+			var config = {
+			    url: '{yun:}url m=wap c=xjhlive a=show id=$info.id{/yun}',
+			    title: '{yun:}$info.name{/yun}-{yun:}$config.sy_webname{/yun}',
+			    desc: '',
+			    img: '{yun:}$info.pic_n{/yun}',
+			    img_title: '{yun:}$info.name{/yun}',
+			    from: '{yun:}$config.sy_webname{/yun}'
+			};
+			var weburl = "{yun:}$config.sy_weburl{/yun}";
+			var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}",
+				wapurl = "{yun:}$config.sy_wapdomain{/yun}/",
+				mine = {
+					usertype: '{yun:}$usertype{/yun}'
+				},
+				xjhsyncid = '{yun:}$info.syncid{/yun}',
+				xjhid = '{yun:}$info.id{/yun}',
+				chat_name = '{yun:}$config.sy_chat_name{/yun}',
+				uid = '{yun:}$uid{/yun}',
+				livestatus = '{yun:}$info.livestatus{/yun}',
+				usertype = '{yun:}$usertype{/yun}',
+				eid = '{yun:}$eid{/yun}',
+				mbstyle = '{yun:}$wap_style{/yun}',
+				isweiixn = '{yun:}$isweixin{/yun}',
+				getwxurl = '{yun:}url m=wap c=login a=wxlogin{/yun}',
+				getwxstatusurl = '{yun:}url m=wap c=login a=getwxloginstatus{/yun}';
+		</script>
+		{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+		<script src="{yun:}$wap_style{/yun}/js/xjhlive.js?v={yun:}$config.cachecode{/yun}" charset="utf-8"></script>
+		<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		{yun:}if $config.sy_chat_open == 1{/yun}
+		<script src="{yun:}$wap_style{/yun}/chat/yunliao/xjhsocket.js?v={yun:}$config.cachecode{/yun}"></script>
+		{yun:}/if{/yun}
+		<script>
+			var ewmurl = '{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_qcode{/yun}';
+			var myimgswiper = new Swiper('#imgswiper', {
+	            direction: 'horizontal',
+	            autoplay: true,
+	            loop: true
+	        });
+			var yunvue = new Vue({
+				el: '#yunvue',
+				data(){
+					return {
+						ewmBox: false,
+						ewmurl: ''
+					}
+				},
+				mounted() {
+					$("#yunvue").css('display','block');
+				},
+				methods:{
+					boxClose(){
+						window.location.reload();
+					}
+				}
+			})
+		</script>
+		{yun:}if $config.sy_wx_sharelogo{/yun}
+		<!--微信分享专用-->
+		<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}"></div>
+		{yun:}/if{/yun}
+	</body>
+</html>

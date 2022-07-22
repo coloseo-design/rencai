@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<title></title>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+	</head>
+	<body class="body_ifm">
+
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">生成请确保/data/xml/目录有可写权限，否则无法生成。</div>
+						<div class="admin_new_tip_list">在百度百聘平台，提交{yun:}$config.sy_weburl{/yun}/data/xml/baidu.xml网址即可。 </div>
+					</div>
+				</div>
+				<div class="clear"></div>
+
+				<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form target="supportiframe" action="" method="get" class="layui-form">
+					<input type="hidden" id="pytoken" value="{yun:}$pytoken{/yun}">
+					<input name="m" value="admin_baipin" type="hidden" />
+					<input name="c" value="add" type="hidden" />
+					<div class="tag_box mt10">
+						<table width="100%" class="table_form ">
+							<tr>
+								<th width="33%">XML保存路径：</th>
+								<td>
+									<div class="layui-input-block">
+										<div class="layui-input-inline">
+											<input type="text" placeholder="请输入XML保存路径" value="/data/xml/baidu.xml" size="30" autocomplete="off" readonly="readonly" class="layui-input t_w480">
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr class="admin_table_trbg">
+								<td class="ud" align="center" colspan="2">
+									<input class="layui-btn tty_sub" type="submit" id='madeindex' name="madeall" value="生成XML" />
+								</td>
+							</tr>
+						</table>
+
+					</div>
+				</form>
+			</div>
+		</div>
+		<script language="javascript">
+			layui.use(['layer', 'form', 'element', 'laydate'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					laydate = layui.laydate,
+					element = layui.element,
+					$ = layui.$;
+				//日期
+				laydate.render({
+					elem: '#time',
+					range: '~'
+				});
+			}); //end layui.use()
+
+			$(document).ready(function() {
+				$("#madeindex").click(function() {
+					var ii = parent.layer.load("正在生成...", 0);
+				});
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+	
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+	<div class="infoboxp">	
+		<div class="admin_new_tip">
+			<a href="javascript:;" class="admin_new_tip_close"></a>
+			<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+			<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+			<div class="admin_new_tip_list_cont">
+				<div class="admin_new_tip_list">该页面展示了网站所有的供求任务信息，可对供求任务进行编辑修改操作。</div>
+				<div class="admin_new_tip_list">可输入关键字进行搜索，也可进行详细的高级搜索。</div>
+				<div class="admin_new_tip_list">无付款：是后台没有设置发布项目任务金额</div>
+			</div>
+		</div>
+	<div id="status_div" style="display:none; width: 390px; ">
+            <div class="" style=" margin-top:10px; ">
+                <form class="layui-form" action="index.php?m=admin_gqtask&c=statis" target="supportiframe" method="post" id="statusform">
+                    <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+                        <tr>
+                            <th width="80">审核操作：</th>
+                            <td align="left">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input name="status" id="status1" value="1" title="正常" type="radio" />
+                                        <input name="status" id="status2" value="2" title="未通过" type="radio" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>审核说明：</th>
+                            <td align="left"> <textarea id="statusbody" name="statusbody" class="admin_explain_textarea"></textarea> </td>
+                        </tr>
+                        <tr>
+                            <td colspan='2' align="center">
+                                <input type="button" value='确认' onClick="statusform();" class="admin_examine_bth">
+                                <input type="button" id="zxxCancelBtn" onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" id="pytoken" name="pytoken" value="{yun:}$pytoken{/yun}">
+                    <input name="id" id="id" value="0" type="hidden">
+                </form>
+            </div>
+        </div>
+		<div class="clear"></div>
+	
+		<div class="admin_new_search_box">
+			<form action="index.php" name="myform" method="get" >
+				<input type="hidden" name="m" value="admin_gqtask"/>				
+				<div class="admin_new_search_name">搜索类型：</div>
+				<div class="admin_Filter_text formselect"  did='dtype'>
+					<input type="button" value="{yun:}if $smarty.get.type=='1' || $smarty.get.type==''{/yun}项目名称{yun:}else if $smarty.get.type=='2'{/yun}发布人{yun:}/if{/yun}" class="admin_new_select_text"  id="btype">
+					<input type="hidden" id='type' value="{yun:}if $smarty.get.type=='1' || $smarty.get.type==''{/yun}1{yun:}else{/yun}2{yun:}/if{/yun}" name='type'>
+					<div class="admin_Filter_text_box" style="display:none" id='dtype'>
+						<ul>
+							<li><a href="javascript:void(0)" onClick="formselect('1','type','项目名称')">项目名称</a></li>
+							<li><a href="javascript:void(0)" onClick="formselect('2','type','发布用户')">发布用户</a></li>
+						</ul>
+					</div>
+				</div>
+	
+				<input type="text" placeholder="输入你要搜索的关键字" name="keyword" class="admin_new_text">
+				<input type="submit" name='news_search' value="搜索" class="admin_new_bth">
+				<a href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();"   class="admin_new_search_gj">高级搜索</a>
+			</form>
+			{yun:}include file="siteadmin/admin_search.htm"{/yun}
+		</div>
+	
+		<div class="clear"></div>
+		
+		<div class="admin_statistics">
+	    	数据统计：
+			{yun:}if $smarty.get.uid!=""{/yun}
+				<span>{yun:}$total{/yun}</span>；
+			{yun:}else{/yun}
+				<em class="admin_statistics_s">总数：<span class="ajaxtaskall">0</span></em>
+				<em class="admin_statistics_s">未审核：<span class="ajaxtaskstatus1">0</span></em>
+				<em class="admin_statistics_s">未通过：<span class="ajaxtaskstatus2">0</span></em>
+				<em class="admin_statistics_s">已过期：<span class="ajaxtaskstatus3">0</span></em>
+				搜索结果：<span>{yun:}$total{/yun}</span>；
+			{yun:}/if{/yun}
+		</div>
+		   
+		<div class="clear"></div>
+	
+		<div class="table-list">
+			<div class="admin_table_border">
+				<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+				<form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+					<input name="m" value="admin_gqtask" type="hidden"/>
+					<input name="c" value="delgqtask" type="hidden"/>
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th style="width:20px;"> 
+									<label for="chkall"><input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/></label>
+								</th>
+								{yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun}
+									<th><a href="{yun:}searchurl order=desc t=id m=admin_gqtask untype='order,t'{/yun}">编号<img src="images/sanj.jpg"/></a></th>
+								{yun:}else{/yun}
+									<th><a href="{yun:}searchurl order=asc t=id m=admin_gqtask untype='order,t'{/yun}">编号<img src="images/sanj2.jpg"/></a></th>
+								{yun:}/if{/yun}
+								<th align="left" width="180">项目名称</th>
+								<th align="left" width="180">发布用户</th>
+								<th>发布/更新时间</th>
+								<th>浏览量</th>
+                <th>是否付款</th>
+								<th>审核状态</th>
+								<th class="admin_table_th_bg">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{yun:}foreach item=v key=key from=$rows{/yun}
+								<tr align="center"  {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+									<td>
+									<input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all" name='del[]' onclick='unselectall()' rel="del_chk" />
+									</td>
+									<td class="td1" style="text-align:center;width:50px;"><span>{yun:}$v.id{/yun}</span></td>
+									<td align="left">
+										<a href="javascript:void(0)" target="_blank">{yun:}$v.name{/yun}</a>
+									</td>
+									<td class="ud" align="left" width="180">
+										<div class="admin_job_comname">
+											<a href="javascript:void(0)" target="_blank" class="admin_cz_sc">{yun:}$v.gqname{/yun}</a>
+										</div>
+									</td>
+									<td class="td" align="center">
+										{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}
+										<div class="mt8">{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}</div>
+									</td>
+									<td class="td" align="center">{yun:}$v.hits{/yun}</td>
+                  	<td class="td" align="center">{yun:}if $v.pay==1{/yun}待付款{yun:}elseif $v.pay==2{/yun}已付款{yun:}else{/yun}无付款{yun:}/if{/yun}</td>
+									<td> 
+										{yun:}if ($v.ctime lt time() && $v.ctime>'0')||$v.status==1{/yun}
+                     {yun:}if $v.status==1{/yun}
+                          <span class="admin_com_Audited">已审核</span>
+                        {yun:}elseif $v.status==0{/yun}
+                          <span class="admin_com_noAudited">待审核</span>
+                        {yun:}elseif $v.status==2{/yun}
+                          <span class="admin_com_tg">未通过</span>
+                        {yun:}/if{/yun}
+                                     
+                      {yun:}else{/yun}
+                       <span class="admin_com_Lock">已过期</span>
+                      {yun:}/if{/yun}
+									</td>
+	
+	
+				
+									<td>
+										<div class="admin_new_bth_c"> 
+											<a href="javascript:;"pid="{yun:}$v.id{/yun}" status='{yun:}$v.status{/yun}' class="admin_new_c_bth admin_new_c_bthsh status" >审核</a> 
+											<a href="index.php?m=admin_gqtask&c=details&id={yun:}$v.id{/yun}"   class="admin_new_c_bth admin_new_c_bth_yl" >详情</a> 
+										</div>
+										<div class="admin_new_bth_c"> 
+											<a href="index.php?m=admin_gqtask&c=show&id={yun:}$v.id{/yun}" class="admin_new_c_bth ">修改</a> 
+											<a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=admin_gqtask&c=delgqtask&id={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a> 
+										</div>
+									</td>
+								</tr>
+							{yun:}/foreach{/yun}
+							
+							<tr>
+								<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)'/></td>
+								<td colspan="11" >
+									<label for="chkAll2">全选</label>
+									<input class="admin_button" type="button" name="delsub" value="审核" onClick="audall();" />
+									<input class="admin_button" type="button" name="delsub" value="删除" onClick="return really('del[]')" />
+								</td>
+								
+							</tr>
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="9" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+					<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		
+		layui.use([ 'layer', 'form' ], function() {
+			var layer 	= layui.layer, 
+				form 	= layui.form, 
+				$ 		= layui.$;
+		});
+	
+		var weburl = "{yun:}$config.sy_weburl{/yun}";
+		
+		$(function() {
+
+			/* 职位审核 */
+			$(".status").click(function() {
+				
+				var id = $(this).attr("pid");
+
+				$("#id").val(id);
+				
+				var status = $(this).attr("status");
+				$("#status" + status).attr("checked", true);
+	
+				layui.use([ 'form' ], function() {
+					var form = layui.form;
+						form.render();
+				});
+	
+				var pytoken = $("#pytoken").val();
+				$.post("index.php?m=admin_gqtask&c=lockinfo", {id : id,
+					pytoken : pytoken
+				}, function(msg) {
+  
+					$("#statusbody").val(msg);
+					add_class('项目审核', '390', '240', '#status_div', '');
+				});
+			});
+			
+		});
+		
+		/* 批量审核 */
+		function audall() {
+			var codewebarr = "";
+			$(".check_all:checked").each(function() {
+				
+				if (codewebarr == "") {
+					codewebarr = $(this).val();
+				} else {
+					codewebarr = codewebarr + "," + $(this).val();
+				}
+				
+			});
+			if (codewebarr == "") {
+				
+				parent.layer.msg("您还未选择任何信息！", 2, 8);
+				return false;
+				
+			} else {
+				
+				$("input[name=id]").val(codewebarr);
+				$("#statusbody").val('');				//批量审核，审核说明先清空，批量注释说明
+				$("input[name=status]").attr("checked", false);
+				add_class('批量审核', '390', '240', '#status_div', '');
+				
+			}
+		}
+		
+		/* 自动查询列表相关数据统计 */
+		$(document).ready(function() {
+			$.get("index.php?m=admin_gqtask&c=gqtaskNum", function(data) {
+				var datas = eval('(' + data + ')');
+				if (datas.taskAllNum) {
+					$('.ajaxtaskall').html(datas.taskAllNum);
+				}
+				if (datas.taskStatusNum1) {
+					$('.ajaxtaskstatus1').html(datas.taskStatusNum1);
+				}
+				if (datas.taskStatusNum2) {
+					$('.ajaxtaskstatus2').html(datas.taskStatusNum2);
+				}
+				if (datas.taskStatusNum3) {
+					$('.ajaxtaskstatus3').html(datas.taskStatusNum3);
+				}
+			});
+		});
+    function statusform(){
+				loadlayer();
+				$('#statusform').submit()
+    }
+	</script>
+
+</body>
+</html>

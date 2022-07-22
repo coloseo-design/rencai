@@ -1,0 +1,63 @@
+{yun:}include file="$wapstyle/header_train.htm"{/yun}
+<div class="train_teacher_showbox">
+<div class="train_teacher_showimg">
+<img src="{yun:}$teacher.pic{/yun}" class=""onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxteacher_icon{/yun}',2);" />
+
+
+</div>
+<div class="train_teacher_showname">{yun:}$teacher.name{/yun}</div>
+
+<div class="train_teacher_show_city">{yun:}$city_name[$teacher.cityid]{/yun}{yun:}if $city_name[$teacher.threecityid]{/yun}-{yun:}$city_name[$teacher.threecityid]{/yun}{yun:}/if{/yun}</div>
+<div class="train_teacher_showshy">{yun:}$industry_name[$teacher.hy]{/yun}</div>
+<div class="train_teacher_showschool">{yun:}$teacher.train_name{/yun}</div>
+<div class="train_teacher_showschool_gz">
+	{yun:}if $uid{/yun}
+		{yun:}if $usertype=='4'{/yun}
+			<a href="javascript:void(0)" onclick="showToast('培训用户不能关注讲师！');" class="">+ 关注</a> </div>	
+		{yun:}else{/yun} 	
+			{yun:}if $teacher.atn{/yun} 
+			<a href="javascript:void(0)" onclick="atnteacher('{yun:}$teacher.id{/yun}','{yun:}$teacher.uid{/yun}')" id='atn_{yun:}$teacher.id{/yun}' class="" >取消关注</a>	</div>		
+			{yun:}else{/yun}
+			<a href="javascript:void(0)" onclick="atnteacher('{yun:}$teacher.id{/yun}','{yun:}$teacher.uid{/yun}')" id='atn_{yun:}$teacher.id{/yun}' class="">+ 关注</a> </div>		
+			{yun:}/if{/yun}
+		{yun:}/if{/yun}			
+	{yun:}else{/yun} 
+		<a href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="">+ 关注</a> </div>	
+	{yun:}/if{/yun}  
+</div>
+
+<div class="train_teacher_showschool_hy">
+        培训方向：<a href="{yun:}url m=wap c=train a=teacher sid='`$teacher.sid`'{/yun}" class="train_teacher_z">{yun:}$subject_name[$teacher.sid]{/yun}</a>
+</div>
+
+
+
+<div class="train_agency_show_box">
+
+<div class="train_show_box_tit"><span class="train_show_box_tit_s">{yun:}$teacher.name{/yun}老师的简介</span></div>
+<div class="train_agency_show_box_c">
+     <div class="train_tech_jj" style="padding-top:10px;">{yun:}$teacher.content{/yun}</div>
+</div></div>
+<div class="train_agency_show_box">
+<div class="train_show_box_tit"><span class="train_show_box_tit_s">讲师的课程</div>
+<div class="train_agency_show_box_c">
+
+
+{yun:}foreach item=v from=$teachsub{/yun}
+
+<div class="train_agency_show_kc">
+<div class="train_agency_show_kc_pic"><a href="{yun:}url m=wap c=train a=subshow id='`$v.id`'{/yun}" class=""><img src="{yun:}$v.pic{/yun}"></a></div>
+<div class="train_agency_show_kcname"><a href="{yun:}url m=wap c=train a=subshow id='`$v.id`'{/yun}">{yun:}$v.name|mb_substr:0:15:'utf-8'{/yun}</a></div>
+<div class="train_agency_show_kcn">{yun:}$v.hours{/yun}课时</div>
+
+<div class="train_agency_show_kcp"><span class="train_index_money">￥{yun:}$v.price|floatval{/yun}</i> 元</span><span class="train_agency_show_kctime">{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}发布</span></div>
+
+</div>
+
+{yun:}foreachelse{/yun}
+<div class="wap_member_no">暂无培训课程信息！</div>
+{yun:}/foreach{/yun}</div></div>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/peixun.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+</body></html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="admin_new_tip">
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">该页面可配置云平台同步秘钥。</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="main_tag">
+				<div class="clear"></div>
+				<div class="admin_table_border">
+					<table width="100%" class="table_form">
+						<tr>
+							<th colspan="2" bgcolor="#f0f6fb"><span class="admin_bold">同步设置</span></th>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="220">appid：</th>
+							<td><input class="input-text tips_class" type="text" name="yptappid" id="yptappid" value="{yun:}$config.yptappid{/yun}" style="width: 250px;"/> <span class="admin_web_tip">提示：云平台同步接口appid</span></td>
+						</tr>
+						<tr class="admin_table_trbg">
+							<th width="220">secret：</th>
+							<td><input class="input-text tips_class" type="text" name="yptsecret" id="yptsecret" value="{yun:}$config.yptsecret{/yun}" style="width: 250px;"/> <span class="admin_web_tip">提示：云平台同步接口secret。请在站长管理中心查看</span></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="border-bottom:none;">
+								<input class="admin_button" id="config" type="button" name="config" value="提交" />&nbsp;&nbsp;
+								<input class="admin_button" type="reset" value="重置" />
+							</td>
+						</tr>
+					</table>
+
+
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id='pytoken' value="{yun:}$pytoken{/yun}">
+		<script>
+			$(function() {
+				$("#config").click(function() {
+					loadlayer();
+					$.post("index.php?m=admin_sync_config&c=save", {
+						config: $("#config").val(),
+						yptsecret: $("#yptsecret").val(),
+						yptappid: $("#yptappid").val(),
+						pytoken: $("#pytoken").val()
+					}, function(data, textStatus) {
+						parent.layer.closeAll('loading');
+						config_msg(data);
+					});
+				});
+			})
+
+	
+		</script>
+	</body>
+
+</html>

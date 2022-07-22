@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+	<div class="infoboxp"> 
+		<div class="tty-tishi_top">
+			
+			<div class="admin_new_tip">
+				<a href="javascript:;" class="admin_new_tip_close"></a>
+				<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">CRM资源池设定</div>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+			
+			<div class="tabs_info">
+				<ul>
+					<li class="curr"><a href="index.php?m=crm_set">资源配置</a></li>
+					<li class=""><a href="index.php?m=crm_set">返回</a></li>
+				</ul>
+			</div>
+		
+			<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+			<form action="index.php?m=crm_set&c=save" method="post" class="layui-form" name="myform" id="myform" target="supportiframe" enctype="multipart/form-data">
+			  	<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+  				
+  				<table width="100%" class="table_form table_form_thr">
+   					 
+   					<tr class="admin_comclass_add_list">
+     					<th style="float: left;">
+   							<div>会员类型：</div>
+     					</th> 
+    					<td>
+    						<div class="layui-input-block">
+    							{yun:}if !$novip{/yun}
+    							<div class="layui-input-inline">
+    								<input name="rating[]" {yun:}if in_array('999', $info.ratingId){/yun}checked{yun:}/if{/yun} lay-filter="rating" value="999" title="过期会员" type="checkbox" lay-skin="primary" />
+    							</div>
+    							{yun:}/if{/yun}
+    							{yun:}foreach from=$ratinglist item=v{/yun}
+    							<div class="layui-input-inline">
+									<input name="rating[]" {yun:}if in_array($v.id, $info.ratingId){/yun}checked{yun:}/if{/yun} lay-filter="rating" value="{yun:}$v.id{/yun}" title="{yun:}$v.name{/yun}" type="checkbox" lay-skin="primary" />
+								</div>
+								{yun:}/foreach{/yun}
+							</div>
+  						</td>
+   					</tr>
+				  	
+   					 
+   					<tr class="admin_comclass_add_list">
+     					<th style="float: left;">
+   							<div>周期设置：</div>
+     					</th>
+    					
+    					<td>
+    						<ul class="admin_comclass_add_n">
+					      		  
+						        <li> 
+						        	<span class="admin_comclass_add_n_s">跟进提醒</span>
+						          	<input type="text" name="follow_day" id="follow_day" class="admin_comclass_add_n_text" size="6" value="{yun:}$info.follow_day{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+						          	<span class="admin_comclass_add_n_dw">天</span>
+						        </li>
+						        <li> 
+						        	<span class="admin_comclass_add_n_s">释放周期</span>
+						          	<input type="text" name="release_day" id="release_day" class="admin_comclass_add_n_text" size="6" value="{yun:}$info.release_day{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+						        	<span class="admin_comclass_add_n_dw">天</span>
+						        </li>
+						        <li> 
+						        	<span class="admin_comclass_add_n_s">成交限定</span>
+						          	<input type="text" name="deal_day" id="deal_day" class="admin_comclass_add_n_text" size="6" value="{yun:}$info.deal_day{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+						          	<span class="admin_comclass_add_n_dw">天</span>
+						        </li>
+						        <li> 
+						        	<span class="admin_comclass_add_n_s">领取限定</span>
+						          	<input type="text" name="claim_day" id="claim_day" class="admin_comclass_add_n_text" size="6" value="{yun:}$info.claim_day{/yun}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')">
+						          	<span class="admin_comclass_add_n_dw">天</span>
+						        </li>
+					      	</ul>
+					      	<div><span class="admin_web_tip">1-跟进提醒：X天，超过X天未跟进，自动提醒跟进</span></div>
+					      	<div><span class="admin_web_tip">2-释放周期：X天，超过X天未跟进，自动释放至资源池（释放周期 大于 跟进提醒</span></div>
+					      	<div><span class="admin_web_tip">3-成交限定：X天，已领取为起始时间，当前会员等级在规定周期内未发生改变，自动释放至资源池</span></div>
+					      	<div><span class="admin_web_tip">4-领取限定：X天，资源释放后，上一任CRM在规定周期内禁止重复领取</span></div>
+							<div><span class="admin_web_tip">0 天 表示不限制</span></div>
+  						</td>
+   					</tr>
+					<tr class="admin_comclass_add_list">
+						<th>
+							<div>公海客户信息：</div>
+						</th>
+						<td>
+							<div class="layui-input-inline">
+								<input name="sy_crm_link" value="1" title="开放" {yun:}if $config.sy_crm_link=="1"{/yun}checked{yun:}/if{/yun} type="radio"/>
+								<input name="sy_crm_link" value="2" title="不开放" {yun:}if $config.sy_crm_link=="2"{/yun}checked{yun:}/if{/yun} type="radio"/>
+							</div>
+						</td>
+					</tr>
+				  	<tr> 
+				  		<th>&nbsp;</th>
+				   		<td>
+				  			<input name="id" type="hidden" value="{yun:}$info.id{/yun}">
+				  			<input class="layui-btn tty_sub" type="button"  id="config" value="提交">  
+				 		</td>
+				  	</tr>
+				</table>
+  			</form>  
+		</div>
+	
+	</div>
+
+
+	<script type="text/javascript">
+	
+	  	layui.use(['layer', 'form'], function(){
+	    	var layer = layui.layer
+	    		,form = layui.form
+	    		,$ = layui.$;
+	  	});
+	
+	  	$(function(){
+	      	$("#config").click(function(){
+
+	      		var followDay	=	$("#follow_day").val();
+	      		var releaseDay	=	$("#release_day").val();
+
+		      	if(releaseDay != '' && releaseDay != 0 && parseInt(followDay) > parseInt(releaseDay)){
+		      		parent.layer.msg("跟进提醒时间要小于释放周期！", 2, 8);
+		            return false;
+			    }
+
+			    $("#myform").submit();
+	      	});
+	    });
+	</script>
+</body>
+</html>

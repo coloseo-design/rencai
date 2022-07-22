@@ -1,0 +1,71 @@
+{yun:}include file="$trainstyle/header.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}"></script> 
+
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+
+<div class="clear"></div>
+
+<div class="training_content training_w980">
+
+	{yun:}include file="$trainstyle/left.htm"{/yun}
+	
+	<div class="right_column frt mt20">
+		
+		<div class="right_column_border">
+
+			<div class="right_column_h1"><span class="right_column_h1_span flt">金额管理</span></div>
+			
+			<div class="clear"></div>
+			
+			<div class="px_qb"> 
+				我的钱包：<span class="packloglost_box_money">￥{yun:}$statis.packpay{/yun}</span>&nbsp;&nbsp;&nbsp;		   
+				冻结金额：<span class="packloglost_box_money">￥{yun:}$statis.freeze{/yun}</span> 
+					
+				{yun:}if $config.sy_withdraw==1{/yun}<a href="index.php?c=subpay&act=withdraw" class="packloglost_box_money_bth">提现</a>{yun:}/if{/yun}
+				<a href="index.php?c=subpay&act=change" class="packloglost_box_money_bth packloglost_box_money_bth_c">转换成账户{yun:}$config.integral_pricename{/yun}</a>
+
+			</div>
+
+			<div class="clear"></div>
+
+			{yun:}if !empty($rows){/yun}
+
+				<div class="packloglost_box_l_b">
+							
+					<div class="kc_subpay_tit">报名费用列表</div>
+                    <div class="kc_subpay">
+						<table width="100%" cellpadding="0" cellspacing="0">
+                          <tr><th>课程名称</th><th>课程费用</th><th>报名时间</th></tr>
+                          {yun:}foreach from=$rows item=v{/yun}
+						
+                          <tr><td>网页设计</td><td><font color="#f60">+ {yun:}$v.order_price{/yun}</font></td><td>{yun:}$v.pay_time|date_format:"%Y-%m-%d %H:%M:%S"{/yun}</td></tr>
+                          	
+						{yun:}/foreach{/yun}
+                        
+                        
+                      
+                        </table>	
+                            
+                            </div>
+					<ul class="packloglost_box_list">
+						
+						
+					</ul>
+
+				</div>
+
+				<div class="clear"></div>
+				<div class="diggg">{yun:}$pagenav{/yun}</div>
+				<div class="clear"></div>
+
+			{yun:}else{/yun}
+
+				<div class="msg_no">您还没有课程报名收入。</div>
+
+			{yun:}/if{/yun}
+ 		<div> 
+	</div>
+	</div>	</div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

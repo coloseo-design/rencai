@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<title>{yun:}$title{/yun}</title>
+		<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width" initial-scale="1" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta name="format-detection" content="telephone=no,email=no" />
+		<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width" />
+		<script src="{yun:}$wap_style{/yun}/js/flexible.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/base.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/style.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yunwap.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+		<script>
+			var weburl = "{yun:}$config.sy_weburl{/yun}";
+			var wapurl = "{yun:}url m=wap{/yun}";
+		</script>
+	</head>
+
+	<body>
+		<!--分享助力助力页面-->
+		<div class="heap_box">
+			<a class="hd-lbtn"href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}"><i class="help_home"></i></a>
+			<div class="heap_three_quan"></div>
+			<div class="heap_four_quan"></div>
+			<div class="heap_five_quan"></div>
+			<div class="heap_box_frist">
+				<div class="heap_frist_quan"></div>
+				<div class="heap_two_quan"></div>
+				<div class="heap_writing">
+					<div class="help_h"><span class="help_h_bor">呼朋唤友</span></div>
+					<div class="help_fx">分享助力</div>
+					<div class="help_hy">当前已有 <span class="help_hy_n">{yun:}$row.zlnum{/yun}</span> 位好友帮TA助力</div>
+					<div class="help_time"></div>
+					{yun:}if $loginfo{/yun}
+					<div class="help_hey"><span class="help_heybth_end">您已助力</span></div>
+					{yun:}else{/yun}
+					<div class="help_hey"><a href="javascript:;" class="help_heybth">帮TA助力</a></div>
+					{yun:}/if{/yun}
+
+				</div>
+			</div>
+			<div class="help_com">
+				<div class="help_com_js">
+					<div class="help_com_logo"><img src="{yun:}$cominfo.logo{/yun}" width="50" height="50"></div>
+					<div class="help_comname">{yun:}$cominfo.name{/yun}</div>
+					<div class="help_cominfo">{yun:}$cominfo.pr_n{/yun}<span class="help_comname_line">|</span>{yun:}$cominfo.mun_n{/yun}<span class="help_comname_line">|</span>{yun:}$cominfo.hy_n{/yun}</div>
+				</div>
+				<div class="help_comtitbox">
+					<div class="help_comtit">
+						<span class="help_comtit_s"><i class="help_comtit_icon1"></i><i class="help_comtit_icon2"></i><i
+								class="help_comtit_icon3"></i>招聘岗位<i class="help_comtit_iconr1"></i><i
+								class="help_comtit_iconr2"></i><i class="help_comtit_iconr3"></i>
+						</span>
+					</div>
+				</div>
+				<!--list-->
+				{yun:}foreach from=$joblist item=list{/yun}
+				<div class="help_joblist">
+					<a href="{yun:}$list.wapurl{/yun}">
+						<div class="help_jobname">{yun:}$list.name{/yun}</div>
+						<div class="help_jobinfo"><span class="help_jobxz">{yun:}$list.job_salary{/yun}</span><span
+								class="help_comname_line">|</span>{yun:}$list.job_exp{/yun}经验<span
+								class="help_comname_line">|</span>{yun:}$list.job_edu{/yun}学历
+						</div>
+						<span class="help_joblook">查看</span>
+					</a>
+				</div>
+				{yun:}/foreach{/yun}
+
+				<!--list end-->
+				<div class="help_jobmore"><a href="{yun:}url m=wap c=company a=show id=$cominfo.uid{/yun}">查看更多职位 ></a>
+				</div>
+			</div>
+			{yun:}if $row.zlnum>0{/yun}
+			<div class="help_zl_user">
+				<div class="help_zl_user_tit">已有{yun:}$row.zlnum{/yun}人为TA助力了</div>
+				<div class="help_user">
+					{yun:}foreach from = $loglist item = log{/yun}
+					<img src="{yun:}$log.wxpic{/yun}" width="40" height="40">
+					{yun:}/foreach{/yun}
+
+				</div>
+			</div>
+			{yun:}/if{/yun}
+		</div>
+
+		<div class="zlsuccess none">
+			<div class="help_bg "></div>
+			<div class="help_ok">
+				<div class="help_ok_c">
+					<div class="help_ok_gx"></div>
+					<div class="help_ok_gxr"></div><span class="help_ok_gx_s">+1</span>
+
+					<div class="help_ok_p">助力成功</div>
+				</div>
+
+				<div class="help_ok_box"><a href="javascript:;" id="shareClick" class="help_ok_bth">邀请好友为TA助力</a></div>
+			</div>
+		</div>
+		<script src="{yun:}$wap_style{/yun}/js/jsMath.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+
+		<script>
+			var id = '{yun:}$smarty.get.id{/yun}';
+			var token = '{yun:}$smarty.get.token{/yun}';
+			var num = '{yun:}$row.zlnum{/yun}';
+			$(function() {
+				$('.help_heybth').click(function() {
+					showLoading()
+					$.post('index.php?c=friendhelp&a=addlog', {
+						id: id,
+						token: token
+					}, function(data) {
+						hideLoading();
+						data = eval('(' + data + ')');
+						if (data.error == '1') {
+							$('.help_hy').html('当前已有 <span class="help_hy_n">' + (parseInt(num) + 1) + '</span> 位好友帮TA助力');
+							$('.help_hey').html( '<div class="help_hey"><a href="javascript:;"  class="help_heybth_end">您已助力</a></div>');
+							$('.zlsuccess').show();
+						} else if (data.msg) {
+							showToast(data.msg, 2);
+						} else {
+							showToast('助力失败！', 2);
+						}
+					});
+				});
+				$('.zlsuccess').click(function() {
+					$(this).hide();
+				});
+			})
+
+			shareEnd('{yun:}$row.etime{/yun}');
+
+			var config = {
+				url: '{yun:}url m=wap c=friendhelp a=show id=$smarty.get.id token=$smarty.get.token{/yun}',
+				title: '{yun:}$title{/yun}',
+				desc: '{yun:}$description{/yun}',
+				img: '{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+				img_title: '{yun:}$job.name{/yun}',
+				from: '{yun:}$config.sy_webname{/yun}'
+			};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<title>后台管理-图表分析</title>
+
+	<style>
+		.layui-form-item{
+			margin-top: 10px;
+			/*margin-left: 10px;*/
+		}
+
+		.layui-form-label{
+			width: auto;
+		}
+
+		.sub-radio{
+			margin-left:100px;
+			border:1px dashed #c2c2c2;
+			display:inline-block
+		}
+
+		.layui-btn{
+			/*margin-left: 15px !important;*/
+		}
+
+		.layui-form{
+			margin-left: 25px;
+		}
+
+		.layui-form-label{
+			padding-left: 0px !important;
+		}
+
+		.layui-table{
+			margin-left: 25px;
+			width:95%;
+		}
+	</style>
+
+</head>
+
+<body class="body_ifm">
+
+<div class="infoboxp">
+	<div class="tty-tishi_top"> 
+	<div class="admin_new_tip" style="margin-bottom:10px;"> 
+		<a href="javascript:;" class="admin_new_tip_close"></a>
+		<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+		<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+		<div class="admin_new_tip_list_cont">
+			<div class="admin_new_tip_list">该页面展示了业务员 【{yun:}$ausername{/yun}】 的客户数量信息 。</div>
+ 		</div>
+	</div>
+	
+	<div class="tabs_info" style="height:36px;">
+		<ul>
+			<li class="curr"><a href="index.php?m=crm_statis&c=performance&uid={yun:}$smarty.get.uid{/yun}">客户数量</a></li>
+			<li><a href="index.php?m=crm_statis&c=concern&uid={yun:}$smarty.get.uid{/yun}">跟进记录</a></li>
+			<li><a href="index.php?m=crm_statis&c=amount&uid={yun:}$smarty.get.uid{/yun}">成交金额</a></li>
+		</ul>
+	</div>
+	
+	<div class="crm_searctime">
+		<ul>
+			<li {yun:}if $smarty.get.time=='' && !$smarty.get.stime && !$smarty.get.etime{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_statis&c=performance&uid={yun:}$smarty.get.uid{/yun}">全部</a></li>
+			<li {yun:}if $smarty.get.time==-1{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_statis&c=performance&time=-1&uid={yun:}$smarty.get.uid{/yun}">今天</a></li>
+			<li {yun:}if $smarty.get.time==1{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_statis&c=performance&time=1&uid={yun:}$smarty.get.uid{/yun}">昨天</a></li>
+			<li {yun:}if $smarty.get.time==7{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_statis&c=performance&time=7&uid={yun:}$smarty.get.uid{/yun}">7天内</a></li>
+			<li {yun:}if $smarty.get.time==30{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_statis&c=performance&time=30&uid={yun:}$smarty.get.uid{/yun}">30天内</a></li>
+			<li {yun:}if $smarty.get.time==90{/yun}class='curr'{yun:}/if{/yun}><a href="index.php?m=crm_statis&c=performance&time=90&uid={yun:}$smarty.get.uid{/yun}">90天内</a></li>
+			<li {yun:}if $smarty.get.stime || $smarty.get.etime {/yun}class='curr'{yun:}/if{/yun}><a href="javascript:void(0);" onclick='searchForm();'>自定义</a></li>
+		</ul>
+        	<div class="crm_time_choice_list" style="top:6px"><a href="javascript:void(0)"  class="crm_time_choice_list_a " onclick="return showDetail(this);">列表模式</a></div>
+	</div>
+	</div>
+	
+	
+<div style=" background:#fff; margin-top:10px;">
+	<div class="admin_index_statistics" style="display:block;">
+		<div class="admin_index_statistics_box">
+			<div class="admin_index_statistics_list">
+				<div class="admin_index_statistics_list_c">
+					<a class="admin_index_statistics_list_b">
+						<div class="admin_index_statistics_tit">客户总数</div>
+						<div class="admin_index_statistics_n">{yun:}$data[3]['all']{/yun} 人</div>
+						
+						<div class="admin_index_statistics_time">
+							<ul>
+								<li><div class="admin_index_statistics_time_t">本月</div><div class="admin_index_statistics_time_n">{yun:}$data[0]['all']{/yun}</div></li>
+								<li><div class="admin_index_statistics_time_t">本周</div><div class="admin_index_statistics_time_n">{yun:}$data[1]['all']{/yun}</div></li>
+								<li class=" admin_index_statistics_time_t_end">
+									<div class="admin_index_statistics_time_t">昨日</div>
+									<div class="admin_index_statistics_time_n">{yun:}$data[2]['all']{/yun}</div>
+								</li>
+							</ul>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="admin_index_statistics_list">
+				<div class="admin_index_statistics_list_c">
+					<a class="admin_index_statistics_list_b">
+						<div class="admin_index_statistics_tit">待跟进</div>
+						<div class="admin_index_statistics_n"> {yun:}$data[3]['new']{/yun} 人</div>
+						<div class="admin_index_statistics_time">
+							<ul>
+								<li><div class="admin_index_statistics_time_t">本月</div><div class="admin_index_statistics_time_n">{yun:}$data[0]['new']{/yun}</div></li>
+								<li><div class="admin_index_statistics_time_t">本周</div><div class="admin_index_statistics_time_n">{yun:}$data[1]['new']{/yun}</div></li>
+								<li class=" admin_index_statistics_time_t_end">
+									<div class="admin_index_statistics_time_t">昨日</div>
+									<div class="admin_index_statistics_time_n">{yun:}$data[2]['new']{/yun}</div>
+								</li>
+							</ul>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="admin_index_statistics_list">
+				<div class="admin_index_statistics_list_c">
+					<a class="admin_index_statistics_list_b">
+						<div class="admin_index_statistics_tit">已跟进</div>
+						<div class="admin_index_statistics_n"> {yun:}$data[3]['attention']{/yun} 人</div>
+						<div class="admin_index_statistics_time">
+							<ul>
+								<li><div class="admin_index_statistics_time_t">本月</div><div class="admin_index_statistics_time_n">{yun:}$data[0]['attention']{/yun}</div></li>
+								<li><div class="admin_index_statistics_time_t">本周</div><div class="admin_index_statistics_time_n">{yun:}$data[1]['attention']{/yun}</div></li>
+								<li class=" admin_index_statistics_time_t_end">
+									<div class="admin_index_statistics_time_t">昨日</div>
+									<div class="admin_index_statistics_time_n">{yun:}$data[2]['attention']{/yun}</div>
+								</li>
+							</ul>
+						</div>
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+ 	<div class="admin_atatic_chart" id="chart" style="width:1200px; height:300px; margin-left: 25px;"></div>
+   
+	<table class="layui-table" lay-skin="nob" style="display: none;" id="detail">
+		
+		<thead>
+			<tr id="detail_thead">
+				<th>日期</th>
+				<th>新增客户数</th>
+				<th>待跟进客户</th>
+				<th>已跟进客户</th>
+			</tr> 
+		</thead>
+		
+		<tbody id="detail_tbody">
+		  
+			{yun:}foreach from=$names item=date key=k{/yun}
+				<tr>
+					<td>{yun:}$date{/yun}</td>
+					<td>{yun:}$values[0]['data'][$k]{/yun}</td>
+					<td>{yun:}$values[1]['data'][$k]{/yun}</td>
+					<td>{yun:}$values[2]['data'][$k]{/yun}</td>
+				</tr>
+			{yun:}/foreach{/yun}
+
+			<tr>
+				<td>总计</td>
+				<td>{yun:}$totalAll{/yun}</td>
+				<td>{yun:}$totalNew{/yun}</td>
+				<td>{yun:}$totalAttention{/yun}</td>
+			</tr>
+		</tbody>
+
+	</table>
+	</div>
+</div>
+<form action='index.php' method='get' class='layui-form' style='display:none;' id="search_form"  autocomplete='off'>
+			
+	<input type="hidden" name="m" value="crm_statis" />
+	<input type="hidden" name="c" value="performance" />
+	<input type="hidden" name="uid" value="{yun:}$smarty.get.uid{/yun}" />
+	<div class="crm_record_list">
+		<div class="crm_record_name"><span class="admin_required_icon"></span>起始日期：</div>
+		<div class="crm_record_textbox">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<input type="text" id="stime" name="stime"  class="layui-input" style="width:300px">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="crm_record_list">
+		<div class="crm_record_name"><span class="admin_required_icon"></span>结束日期：</div>
+		<div class="crm_record_textbox">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<input type="text" id="etime" name="etime"  class="layui-input" style="width:300px">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="crm_record_list" >
+		<span class="crm_record_name">&nbsp;</span>
+		<div class="crm_record_textbox">
+			<input type="submit"  value='确认' class="admin_examine_bth">
+			<input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;">
+		</div> 	
+	</div>
+	
+</form>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/echarts_plain.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+    layui.use(['form', 'laydate'], function(){
+		var laydate = layui.laydate
+			,form = layui.form
+			,$ = layui.$;
+
+		laydate.render({
+			elem : '#stime' //指定元素
+			,type : 'date'
+		});
+		laydate.render({
+			elem : '#etime' //指定元素
+			,type : 'date'
+		});
+		var title = '{yun:}$title{/yun}';
+		var names = [
+			{yun:}foreach from=$names item=v key=k{/yun}
+				{yun:}if $k>0{/yun}
+					,
+				{yun:}/if{/yun}
+				'{yun:}$v{/yun}'
+			{yun:}/foreach{/yun}
+		];
+
+		var dataGroupNames = [
+			'客户总数',
+			'未跟进',
+			'已跟进'
+		];
+
+		var values = [
+			{yun:}foreach from=$values item=v key=k{/yun}
+				{yun:}if $k>0{/yun}
+					,
+				{yun:}/if{/yun}
+				{
+					name : '{yun:}$v["name"]{/yun}',
+					type : '{yun:}$v["type"]{/yun}',
+					label: {
+						normal: {
+							show:true,
+							position: 'top',
+							textStyle: {
+								color: '#27727B'
+							}
+						}
+					},
+					data : [
+						{yun:}foreach from=$v["data"] item=r key=kk{/yun}
+							{yun:}if $kk>0{/yun}
+								,
+							{yun:}/if{/yun}
+							parseFloat('{yun:}$r{/yun}')
+						{yun:}/foreach{/yun}
+					]
+				}
+			{yun:}/foreach{/yun}
+		];
+      
+		refreshBarChart(title, names, values, dataGroupNames);
+    });//end layui.use()
+
+    function query(){
+      window.location = 'index.php?m=crm_statis&c=performance&uid={yun:}$smarty.get.uid{/yun}&time=' + $("#time").val();
+      return false;
+    }
+
+    function refreshBarChart(title, names, values, dataGroupNames){
+		var option = {
+				tooltip : {
+					trigger: 'axis',
+					axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+						type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				title: {
+					text: title,
+					subtext: '{yun:}$config.sy_webname{/yun}'
+				},
+				legend: {
+					data: dataGroupNames
+				},
+				xAxis : [
+					{
+						type : 'category',
+						data : names
+					}
+				],
+				yAxis : [
+					{
+						type : 'value'
+					}
+				],
+				series : values,
+			};
+
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('chart'));
+
+		// 使用刚指定的配置项和数据显示图表。
+		myChart.setOption(option);
+    }
+
+    //查看详情
+var flag = true;
+function showDetail(o){
+	if(flag){
+		$("#chart").hide();
+		$("#detail").show();
+		flag = false;
+		$(o).html('图表模式');
+	}else{
+		$("#detail").hide();
+		$("#chart").show();
+		flag = true;
+		$(o).html('列表模式');
+	}
+	return false;
+}
+function searchForm(){
+	layer.open({
+		type: 1, 
+		anim: 5,
+		title: '自定义搜索',
+		content: $('#search_form'),  
+		area:["450px", "280"],
+		offset: ['20px', ''],
+	});
+}
+</script>
+</body>
+</html>

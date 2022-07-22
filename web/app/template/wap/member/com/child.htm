@@ -1,0 +1,114 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue" class="none">
+<section class="wap_member_box">
+    
+    <div class="Subclass" v-for="(item, infokey) in info" :key="infokey">
+        <div class="com_cardlist_tit">
+            <a href="javascript:void(0);" class="  ">{{item.username}}</a>
+        </div>
+      
+        <div class="com_member_hr_p1">
+            <span class="member_c9" >子账号ID </span> {{item.uid}}  &nbsp;&nbsp;&nbsp;
+        </div> 
+        <div class="com_member_hr_p1">
+            <span class="member_c9" >部门名称 </span>{{item.name}} &nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="com_member_hr_p1">
+            <span class="member_c9" >添加日期</span>{{item.ctime_n}}
+        </div>
+		<div class="interview_card_bom">
+		   <div class="card_bom_icon">
+		        <a href="javascript:void(0);" @click="pageTo('index.php?c=childassign&cuid='+item.uid)" @click="toPage('index.php?c=yqmbedit&yid='+item.id)"><img src="{yun:}$wap_style{/yun}/images/fptc.png" alt=""></a>
+		   </div>
+		   <div class="card_bom_icon">
+		                <a href="javascript:void(0);" @click="pageTo('index.php?c=childedit&cuid='+item.uid)"><img src="{yun:}$wap_style{/yun}/images/Apply_compile.png" alt=""></a>
+		   </div>
+		   <div class="card_bom_icon">
+		       <a href="javascript:void(0);" @click="del(item.uid,infokey)" class=" "><img src="{yun:}$wap_style{/yun}/images/resume_del.png" alt=""></a>
+		   </div>
+		</div>
+		
+       
+    </div>
+    <div class="wap_member_nobg" v-if="count==0">  <div class="wap_member_no">目前您还没有创建子账号</div></div>
+    <div v-if="total >limit" class="page_pd">
+    <van-pagination v-model="page" :total-items="total" :items-per-page="limit" force-ellipses @change="pageChange" /> 
+    </div>    
+</section>
+</div>
+
+<script type="text/javascript">
+    var currentPage = parseInt('{yun:}$smarty.get.page{/yun}');
+        currentPage = currentPage ? currentPage : 1;
+    new Vue({
+        el: '#yunvue',
+        data: {
+            info: [],
+            limit:4,       
+            total:0,            
+            page: currentPage,            
+        },
+        computed: {
+            count(){
+                if(this.total > this.limit){
+                    return 2;
+                }else if(this.info.length==0){
+                    return 0;
+                }else{
+                    return 1;
+                }
+            }
+        },
+        created() {   
+            this.getchilds();
+        },
+        methods:{
+            getchilds:function(){
+                var that = this;
+                var paramer = {};
+                paramer['page'] = that.page;
+                paramer['limit'] = that.limit;     
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=set c=child{/yun}',paramer,function(data){
+                    hideLoading();
+                    let list = data.data;
+                    if (data) {
+                        if (list && list.length > 0) {
+                            that.info = list;
+                        } 
+                    }                      
+                    that.total = data.total;
+                    that.page = currentPage;
+                    $("#yunvue").css('display', 'block');
+                },'json');
+            },
+            del:function(id,key){
+                var that = this;                
+                var paramer = {
+                    suid: id,                   
+                };
+                showConfirm('确定删除?', () => {
+                    showLoading('删除中...')
+                    $.post('{yun:}url d=wxapp h=com m=set c=del{/yun}', paramer, function(data){
+                        hideLoading();
+                        if (data.error == 1) {
+                            showToast(data.msg,2, function() {
+                                location.reload();   
+                            });
+                        } else {
+                            showToast(data.msg);
+                        }
+                    });
+                });
+            },
+            pageChange:function(e){          
+                location.href = 'index.php?c=child&page='+e;
+            },
+            pageTo:function(url){
+                window.location.href = url;
+            }
+        }
+    });
+</script>
+</body>
+</html>

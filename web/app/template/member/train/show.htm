@@ -1,0 +1,48 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+
+  {yun:}include file="$trainstyle/left.htm"{/yun}
+  <div class="right_column_environment frt mt20">
+    <div class="right_column_border_environment">
+      <div class="right_column_h1_environment"><span class="right_column_h1_span flt">机构环境</span></div>
+      <input class="tian_btn_02" type="button" onClick="location.href='index.php?c=addshow'" value="+ 添加机构环境">
+      <div class="ab_about_fj">
+        <ul>
+		{yun:}if $total{/yun}
+        {yun:}foreach item=v from=$rows{/yun}
+          <li><img src="{yun:}$v.picurl{/yun}">
+            <div class="ab_about_fj_b"><a href="javascript:;" data_url="{yun:}$v.picurl{/yun}" onclick="showpic(this)">预览 </a><em class="px_line">|</em><a href="javascript:void(0)" onclick="layer_del('确定删除该信息？','index.php?c=show&did={yun:}$v.id{/yun}');"> 删除</a></div>
+          </li>      
+        {yun:}/foreach{/yun}
+		      <div class="clear"></div>
+      {yun:}else{/yun}
+      <div class="msg_no">暂无相关信息</div>
+      {yun:}/if{/yun}
+        </ul>
+           <div class="pages"> {yun:}$pagenav{/yun}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	layui.use(['layer'], function() {
+		var layer = layui.layer,
+			$ = layui.$;
+	});	
+	function showpic(obj){
+		var url =	$(obj).attr('data_url');
+		var picjson={
+		  "data": [ {
+			  "src": url, //原图地址
+			  "thumb": url //缩略图地址
+			}]
+		}
+		layer.photos({
+			photos: picjson
+			,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+		});
+	}
+</script>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

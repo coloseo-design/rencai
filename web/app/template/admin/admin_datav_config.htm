@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="../js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="../js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="../js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" type="text/javascript"></script>
+		<title>后台管理</title>
+	</head>
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+
+				<div class="clear"></div>
+
+				<style type="text/css">
+					.layui-form-switch {
+						margin-top: 0;
+					}
+				</style>
+
+				<div>
+					<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+					<div class="datav_tit">实时数据大屏</div>
+					<form  class="layui-form">
+						<div class="datav_box">
+							<div class="datav_list"><span class="datav_list_name">大屏域名 </span><div class="datav_list_in">
+							
+						<input name="sy_datavurl" id="sy_datavurl" autocomplete="off" class="layui-input" type="text" value="{yun:}if $config.sy_datavurl{/yun}{yun:}$config.sy_datavurl{/yun}{yun:}else{/yun}{yun:}$config.sy_weburl{/yun}/datav{yun:}/if{/yun}" size="50" />	
+						</div><div class=""><span class="admin_web_tip">默认为网站域名用于生成预览连接</span></div>
+						</div> 
+						<div class="datav_list"><span class="datav_list_name">预览地址 </span>
+						<div class="datav_list_in_n">
+							<input name="datavurl" id="datavurl" autocomplete="off" value="{yun:}$url{/yun}" readonly class="datav_list_in_ninput" type="text" />	<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+							<input class="datav_list_bth " type="button" onclick="seturl();"  value="生成地址" style="right: -295px;" />
+							<input class="datav_list_bth " type="button" onclick="toDatav();"  value="预览" />
+							<input class="datav_list_bth_fz " type="button" onclick="copyurl();" value="复制链接" /> 
+						</div>
+							
+								
+									</div>
+						<div class="datav_list">
+						<div class="datav_list_zdy">
+							<div class="datav_list_zdy_name">可自定义大屏数据</div>
+							<div class="datav_list_zdy_p">大屏数据=网站数据+自定义基数</div>
+							<input class="datav_list_zdy_bth" type="button" onclick="diydatav();" value="自定义大屏数据" />	
+						</div>
+						<div class=""><span class="admin_web_tip">注：建议屏幕分辨率不低于1920*1080</span></div>
+						
+						 </div><div class="datav_list"><div class="datav_box_img"></div>	</div>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+			function copyurl() {
+				var value = document.querySelector('#datavurl');
+				value.select(); // 选择对象
+
+				if (document.execCommand("copy")) {
+					document.execCommand("copy");
+					layer.msg('已复制');
+				};
+			}
+			function seturl(mode){
+				parent.layer.confirm("生成新地址将导致原地址失效，继续生成？", function() {
+					
+					var pytoken = $("#pytoken").val();
+					var url = $("#sy_datavurl").val();
+					loadlayer();
+					$.post('index.php?m=admin_datav_config&c=seturl', {
+						url: url,
+						pytoken: pytoken
+					}, function(data) {
+						parent.layer.closeAll();
+						var data = eval('(' + data + ')');
+						if(data.err=='1'){
+							var _url = data.url;
+							$('#datavurl').val(_url);
+							if(mode=='todatav'){
+								window.open(_url);
+							}
+						}else{
+							parent.layer.msg('参数错误！', 2, 8);
+							return false;
+						}
+					});
+				});
+			}
+			function toDatav(){
+				var url = $('#datavurl').val();
+				if(url){
+					window.open(url);
+				}else{
+					seturl('todatav');
+					
+				}
+
+			}
+			function diydatav(){
+				$.layer({
+					type: 2,
+					shadeClose: true,
+					title: '自定义基数',
+					area: [($(window).width() - 30) +'px', ($(window).height() - 30) +'px'],
+					iframe: {src: 'index.php?m=admin_datav_config&c=diyData'},
+					close: function(){
+						
+						$('body').css('overflow-y', '');
+						
+					}
+				});
+			}
+		</script>
+
+	</body>
+</html>

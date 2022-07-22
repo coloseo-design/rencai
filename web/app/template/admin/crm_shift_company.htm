@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+<form action="index.php?m=admin_message&c=show" method="post" id='checkform'>
+  <input type="hidden" name="userid" id="userid" value="">
+  <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+</form>
+
+<div class="infoboxp">
+<div class="tty-tishi_top">
+	<div class="table-list">
+		<div class="admin_table_border">
+			<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+			
+			<form action="index.php"  target="supportiframe" name="myform" method="get" id='myform' class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width:180px;">选择业务员进行转移客户</label>
+					<div class="layui-input-inline">
+						<select name="new_uid" lay-filter="new_uid" id="new_uid">
+							<option value="">请选择业务员</option>
+							{yun:}foreach from=$new_uid item=r{/yun}
+								<option value="{yun:}$r['uid']{/yun}">{yun:}$r['name']{/yun}</option>
+							{yun:}/foreach{/yun}
+						</select>
+					</div>
+				</div>
+				
+
+				<table width="100%">
+					<thead>
+						<tr class="admin_table_top">
+							<th align="center" width="5%;">
+								<label for="chkall"><input type="checkbox" id='chkAll'  lay-filter="chkall" lay-skin="primary" /></label>
+							</th>
+
+							<th align="center" width="8%;" > 
+								{yun:}if $smarty.get.t=="uid" && $smarty.get.order=="asc"{/yun}
+									<a href="index.php?m=crm_salesman_list&c=shift_company&uid={yun:}$smarty.get.uid{/yun}&order=desc&t=uid">用户ID<img src="images/sanj.jpg"/></a> 
+								{yun:}else{/yun} 
+									<a href="index.php?m=crm_salesman_list&c=shift_company&uid={yun:}$smarty.get.uid{/yun}&order=asc&t=uid">用户ID<img src="images/sanj2.jpg"/></a> 
+								{yun:}/if{/yun}
+							</th>
+							<th align="left">企业名称</th>
+							<th align="left">跟进状态</th>
+							<th align="left">最近跟进时间</th>
+							<th class="admin_table_th_bg" align="center" width="20%;">操作</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{yun:}foreach item=v key=key from=$company{/yun}
+							<tr {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.uid{/yun}">
+								<td align="center" width="5%;">
+									<input type="checkbox" value="{yun:}$v.uid{/yun}" class="check_all"  name='comids' onclick='unselectall()' rel="del_chk" email="{yun:}$v.email{/yun}" moblie="{yun:}$v.telphone{/yun}" style="margin-left:5px;;" lay-skin="primary" />
+								</td>
+								<td align="center" width="8%;" class="td1">{yun:}$v.uid{/yun}</td>
+								<td align="left">{yun:}$v.name{/yun}</td>
+								<td align="left">{yun:}if $v.isfollow == 1{/yun}<span style="color: #1a7f0d;">正在跟进</span>{yun:}else{/yun}<span style="color: #ff2b00;">未跟进</span>{yun:}/if{/yun}</td>
+								<td align="left">{yun:}$v.f_time|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+								<td align="center" width="20%;">
+									<div class="admin_new_bth_c">
+										<a href="javascript:void(0);" class="admin_new_c_bth" pid="{yun:}$v.uid{/yun}" onclick="shift('{yun:}$v.uid{/yun}');">转移</a>
+									</div>
+								</td>
+							</tr>
+						{yun:}/foreach{/yun}
+						<tr>
+							<td align="center" width="5%;">
+								<input type="checkbox" id='chkAll2' lay-filter="chkall" lay-skin="primary"/>
+								
+							</td>
+							<td colspan="3">
+								<label for="chkAll2">全选</label>
+								<input class="admin_button" type="button" name="delsub" value="批量转移企业客户" onClick="assignMulti();" />
+							</td>
+						</tr>
+
+						{yun:}if $total > $config.sy_listnum {/yun}
+							<tr>
+								{yun:}if $pagenum==1{/yun}
+									<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}else if $pagenum == $pages{/yun}
+									<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+								{yun:}/if{/yun}
+								<td colspan="7" class="digg">{yun:}$pagenav{/yun}</td>
+							</tr>
+						{yun:}/if{/yun}
+					</tbody>
+				</table>
+				<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+
+layui.use(['layer', 'form'], function(){
+  var layer = layui.layer
+  ,form = layui.form
+  ,$ = layui.$;
+
+  form.on('checkbox(chkall)', function(data){
+    $(".check_all").prop("checked", this.checked);
+    form.render();
+  });
+  
+});
+
+var salesmanId = '{yun:}$smarty.get.uid{/yun}';
+
+//分配企业客户给业务员
+function shift(comid)
+{
+  if($("#new_uid").val() == ''){
+    layer.msg('请先选择业务员');
+    return false;
+  }
+loadlayer();
+  $.post('index.php?m=crm_salesman_list&c=ajax_shift',
+    { uid : salesmanId, comid : comid, new_uid : $("#new_uid").val(), pytoken: $("#pytoken").val()},
+    function(data)
+    {parent.layer.closeAll('loading');
+      if(data == 1){
+        layer.msg('转移成功', 2, 9, function(){
+          parent.layer.closeAll();
+          window.location = window.location;
+        });
+      }
+    }
+  );
+
+}
+
+//批量分配企业客户给业务员
+function assignMulti()
+{
+  // comids
+  var chk_value =[];
+  $('input[name="comids"]:checked').each(function(){
+    chk_value.push($(this).val());
+  }); 
+
+  if(chk_value.length == 0){
+    layer.msg('还未选择任何企业');
+    return false;
+  }
+
+  var comid = chk_value.join(',');
+  shift(comid);
+}
+
+</script>
+
+</body>
+</html>

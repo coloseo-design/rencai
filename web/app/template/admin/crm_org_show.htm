@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+	<title>组织架构</title>
+</head>
+
+<body class="body_ifm">
+		
+	<div class="crmorg_rg_cominfo">
+		<div class="tit">
+			{yun:}$orgInfo.name{/yun} 
+			<a href="javascript:;" onclick="upName('{yun:}$orgInfo.id{/yun}', '{yun:}$orgInfo.name{/yun}')" class="btn_edit">编辑</a>
+			{yun:}if $orgInfo.level!=1{/yun}
+				<a href="javascript:;" onclick="layer_del('确定要删除？', 'index.php?m=crm_org&c=delOrg&id={yun:}$orgInfo.id{/yun}');" class="btn_del">删除</a>
+			{yun:}/if{/yun}
+		</div>
+		{yun:}if $orgInfo.level == 3{/yun}
+		<div class="crmorg_rg_cominfo_link">
+			<a href="index.php?m=crm_org&c=orgShow&id={yun:}$orgInfo.ffid{/yun}">{yun:}$orgInfo.ffname{/yun}<i></i></a><a href="index.php?m=crm_org&c=orgShow&id={yun:}$orgInfo.fid{/yun}">{yun:}$orgInfo.fname{/yun}<i></i></a>{yun:}$orgInfo.name{/yun}
+		</div>
+		{yun:}else if $orgInfo.level == 2{/yun}
+		<div class="crmorg_rg_cominfo_link">
+			<a href="index.php?m=crm_org&c=orgShow&id={yun:}$orgInfo.fid{/yun}">{yun:}$orgInfo.fname{/yun}<i></i></a>{yun:}$orgInfo.name{/yun}
+		</div>
+		{yun:}else{/yun}
+		<div class="crmorg_rg_cominfo_link">
+			<a>{yun:}$orgInfo.name{/yun}</a>
+		</div>
+		{yun:}/if{/yun}
+	</div>
+		
+	{yun:}if $orgInfo.level < 3{/yun}
+	<div class="crmorg_rg_title_xj">下级部门</div>
+	
+	<div class="crmorg_rg_xj">
+		<div class="crmorg_rg_xjtit">
+			<a href="javascript:;" onclick="addSonPart();" class="add_zbm">添加子部门</a>
+		</div>
+		
+		<ul class="crmorg_rg_xjcon">
+			{yun:}foreach from=$orgInfo.list item=l{/yun}
+			<li><a href="index.php?m=crm_org&c=orgShow&id={yun:}$l.id{/yun}">{yun:}$l.name{/yun}（{yun:}$l.num{/yun}人）<i></i></a></li>
+			{yun:}/foreach{/yun}
+		</ul>
+		
+	</div>
+	{yun:}/if{/yun}
+		
+	<div class="crmorg_rg_title_ry">部门人员</div>
+	
+	<div class="crmorg_rg_bm">
+		<div class="crmorg_rg_bmtop">
+			<a href="javascript:;" onclick="addOrgU({yun:}$orgInfo.id{/yun});" class="crmorg_rg_bmtop_a crmorg_rg_bmtop_bmcy">添加成员</a>
+			
+		</div>
+		<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+		<form class="layui-form" action="index.php?m=crm_org&c=delOrgUser" name="myform" method="post" id='myform' target="supportiframe">
+	
+			<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+			
+			<table border="" cellspacing="" cellpadding="" class="crmorg_rg_table">
+				<thead>
+					<tr>
+						<th width="50"></th>
+						<th width="100">姓名</th>
+						<th>工号</th>
+						<th>手机</th>
+						<th>微信</th>
+						<th>Q Q</th>
+						<th>部门权限</th>
+						{yun:}if $orgInfo.level < 3{/yun}<th>子部门权限</th>{yun:}/if{/yun}
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{yun:}foreach from=$musers item=mv{/yun}
+					<tr>
+						<td><input type="checkbox" name='del[]' value="{yun:}$mv.uid{/yun}" lay-skin="primary"/></td>
+						<td>{yun:}$mv.name{/yun}</td>
+						<td>{yun:}$mv.uid{/yun}</td>
+						<td>{yun:}$mv.moblie{/yun}</td>
+						<td>{yun:}$mv.weixin{/yun}</td>
+						<td>{yun:}$mv.qq{/yun}</td>
+						<td>
+							<input type="checkbox" value="1" {yun:}if $mv.power==1{/yun}checked{yun:}/if{/yun} lay-skin="switch" lay-filter="switchPower" lay-text="ON|OFF" data-uid="{yun:}$mv.uid{/yun}" data-type="power"/>
+						</td>
+						{yun:}if $orgInfo.level < 3{/yun}
+						<td>
+							<input type="checkbox" value="1" {yun:}if $mv.spower==1{/yun}checked{yun:}/if{/yun} lay-skin="switch" lay-filter="switchPower" lay-text="ON|OFF" data-uid="{yun:}$mv.uid{/yun}" data-type="spower" />
+						</td>
+						{yun:}/if{/yun}
+						<td>
+							<a href="javascript:void(0);" onClick="layer_del('确定要删除？', 'index.php?m=crm_org&c=delOrgUser&id={yun:}$mv.uid{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+						</td>
+					</tr>
+					
+					{yun:}/foreach{/yun}
+					 <tr>
+						<td align="center"><input type="checkbox" lay-filter="allUser"  lay-skin="primary" /></td>
+						<td colspan="7" align="left">
+							<a href="javascript:;" onClick="return really('del[]')" class="crmorg_rg_bmtop_a crmorg_rg_bmtop_del" style="margin-left:15px;">批量删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div> 
+
+	
+	<input type="hidden" id="pytoken" value="{yun:}$pytoken{/yun}">
+	
+	<form action='index.php' method='post' class='layui-form' style='display:none;width:450px;' id="upnameDiv">
+		<div class="crm_record_list">
+			<div class="crm_record_name"><span class="admin_required_icon"></span>部门名称：</div>
+			<div class="crm_record_textbox">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id='upName' style='width:280px;' autocomplete="off">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="crm_record_list" >
+			<span class="crm_record_name">&nbsp;</span>
+           	<div class="crm_record_textbox">
+				<input type="hidden"  value='' id="upId" />
+				<input type="button"  value='确认' onclick="subUpName();" class="admin_examine_bth" />
+				<input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;" />
+			</div> 	
+		</div>
+		
+	</form>
+	
+	<form class="layui-form">
+		<div id="sonPartDiv" style="width:450px; display:none;margin-top: 10px;">
+			<table cellspacing='1' cellpadding='1' class="admin_examine_table">
+				<tbody>
+					<tr class="ui_td_11">
+						<th width="100">当前部门：</th>
+						<td>
+							<input type="hidden" name="fid" id="fid" value="{yun:}$orgInfo.id{/yun}" />
+							<span>{yun:}$orgInfo.name{/yun}</span>
+						</td>
+					</tr>
+					<tr class="ui_td_11">
+						<th>部门名称：</th>
+						<td>
+							<textarea id='sonName' name='sonName' class="add_class_textarea" style="width: 288px;"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<span class="admin_web_tip" style="padding-top: 0;">说明：可以添加多条分类（请按回车键换行，一行一个）</span>
+						</td>
+					</tr>
+					<tr class="ui_td_11">
+						<td class="ui_content_wrap" colspan='2' style="border-bottom:none">
+							<input class="admin_examine_bth" type="button" name="sub" value=" 添加 " onclick="savePart('index.php?m=crm_org&c=addOrg')" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	
+	<form class="layui-form">
+		<div id="orgUDiv" style="width:478px;display:none; margin-top: 10px; padding:0 20px;">
+		
+			<div id="puser" class="demo-transfer"></div>
+				<div class="layui-btn-container" style=" padding-top:10px; text-align:center">
+			  	<button type="button" class="layui-btn" lay-demotransferactive="getData" style=" background:#2d8cf0">确定</button>
+			  	<button type="button" class="layui-btn" lay-demotransferactive="reload" style=" background:#2d8cf0">重置</button>
+			</div>
+		</div>
+	</form>
+	
+	<script>
+		
+		function upName(id,name){
+
+			$("#upId").val(id);
+			$("#upName").val(name);
+			$.layer({
+				type : 1,
+				title :'编辑', 
+				closeBtn : [0 , true],
+				border : [10 , 0.3 , '#000', true],
+				area : ['auto','200px'],
+				offset: ['50px', '50px'],
+				page : {dom :"#upnameDiv"}
+			});
+		}
+
+		function subUpName(){
+			var id		=	$('#upId').val();
+			var name	=	$('#upName').val();
+			var pytoken	=	$('#pytoken').val();
+			loadlayer();
+			$.post("index.php?m=crm_org&c=upOrg",{id:id,name:name,pytoken:pytoken},function(data){
+				parent.layer.closeAll('loading');
+				
+				var data = eval('('+data+')');
+				
+				if(data.errcode == '9'){
+					parent.layer.msg(data.msg, 2, 9, function(){
+						location.reload();
+					});
+					
+				}else if (data.errcode == '8'){
+					parent.layer.msg(data.msg, 2, 8);
+					return false;
+				}
+			});
+		}
+
+		function addSonPart(){
+
+			$.layer({
+				type : 1,
+				title : '添加子部门',
+				offset: ['50px', '50px'],
+				closeBtn : [0 , true],
+				border : [10 , 0.3 , '#000', true],
+				area : ['auto','auto'],
+				page : {dom :"#sonPartDiv"}
+			});
+		}
+		function savePart(url){
+			
+			var pytoken	=	$("#pytoken").val();
+			var position= 	$.trim($("#sonName").val()).split("\n");
+			var name	=	position.join("-");
+			var fid		=	$("#fid").val();
+ 			if(position==''){
+				parent.layer.msg('部门名称不能为空！', 2, 8);return false;
+			}
+			loadlayer();
+			$.post(url,{name:name,fid:fid,pytoken:pytoken},function(msg){
+				parent.layer.closeAll('loading');
+				if(msg==1){
+					parent.layer.msg('已有此部门，请重新输入！', 2, 8);return false;
+				}else if(msg==2){
+					parent.layer.msg('添加成功！', 2,9,function(){location=location ;});return false;
+				}else if(msg==3){
+					parent.layer.msg('添加失败！', 2,8,function(){location=location ;});return false;
+				}
+			});
+		}
+
+		function addOrgU(id){
+
+			$.layer({
+				type : 1,
+				title : '成员调配',
+				offset: ['50px', '50px'],
+				closeBtn : [0 , true],
+				border : [10 , 0.3 , '#000', true],
+				area : ['auto','auto'],
+				page : {dom :"#orgUDiv"}
+			});
+		}
+
+		layui.use(['transfer', 'layer', 'util', 'form'], function(){
+			var $ = layui.$
+				,transfer = layui.transfer
+				,layer = layui.layer
+				,form = layui.form
+				,util = layui.util;
+
+			
+		  	//实例调用
+		    transfer.render({
+		    	elem: '#puser'
+			    ,title: ['业务员','部门成员']
+		      	,data: {yun:}$ausers{/yun}
+			  	,parseData: function(res){
+					return {
+						"value": res.uid //数据值
+						,"title": res.name //数据标题
+					}
+				}
+				,value:{yun:}$muserids{/yun}
+		      	,id: 'pmuser' //定义唯一索引
+			   	,showSearch: true
+			   	,height: 340
+		    })
+		    
+		    
+		    //批量办法定事件
+		    util.event('lay-demoTransferActive', {
+		   		getData: function(othis){
+		   		
+		        	var getData = 	transfer.getData('pmuser'); 	//获取右侧数据
+		        	var nUid	=	[];
+		        	for (var i=0;i<getData.length;i++){
+		        		nUid.push(getData[i]['value']);
+		        	}
+
+		        	if(nUid.length == 0){
+		        		parent.layer.msg('请选择需要加入部门的成员！', 2, 8);return false;
+			        }
+							        	
+		        	var pytoken	=	$('#pytoken').val();
+		        	var id		=	{yun:}$orgInfo.id{/yun};
+					loadlayer();
+		        	$.post('index.php?m=crm_org&c=addOrgUser',{id:id,uids:nUid,pytoken:pytoken},function(code){
+						parent.layer.closeAll('loading');
+						if(code==1){
+							parent.layer.msg('部门成员调配成功', 2,9,function(){location=location ;});return false;
+						}else if(code==2){
+							parent.layer.msg('部门成员调配失败！', 2, 8);return false;
+						}else if(code==3){
+							parent.layer.msg('参数错误，请重试！', 2,8,function(){location=location ;});return false;
+						}
+					}); 
+		      	}
+		      	,reload:function(){		       					//实例重载
+		        	transfer.reload('pmuser', {
+		          		title: ['业务员', '部门成员']
+		        		,data: {yun:}$ausers{/yun}
+				  		,parseData: function(res){
+							return {
+								"value": res.uid //数据值
+								,"title": res.name //数据标题
+							}
+						}
+		          		,value: {yun:}$muserids{/yun}
+		          		,showSearch: true
+		        	})
+		      	}
+		    });
+
+		  	//监听指定开关
+			form.on('switch(switchPower)', function(data){
+		      	var power	=	this.checked ? '1' : '0';
+		      	var uid		=	$(this).attr('data-uid');
+		      	var type	=	$(this).attr('data-type');
+		      	var pytoken	=	$('#pytoken').val();
+		      	$.post('index.php?m=crm_org&c=setCrmPower',{uid:uid,power:power,type:type,pytoken:pytoken},function(code){
+					parent.layer.closeAll('loading');
+					if(code==1){
+						parent.layer.msg('权限设置成功', 2,9,function(){location=location ;});return false;
+					}else if(code==2){
+						parent.layer.msg('权限设置失败！', 2, 8);return false;
+					}else if(code==3){
+						parent.layer.msg('参数错误，请重试！', 2,8,function(){location=location ;});return false;
+					}
+				}); 
+		      	
+		    });
+
+			form.on('checkbox(allUser)', function (data) {
+				$("input[name='del[]']").each(function () {
+					this.checked = data.elem.checked;
+				});
+				form.render('checkbox');
+			});
+		});
+
+		
+		 
+	</script>
+</body>
+</html>

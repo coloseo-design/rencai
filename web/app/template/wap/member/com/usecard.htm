@@ -1,0 +1,59 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="cardVue">
+	<div class="fp_infoboxall">
+            <ul class="fp_infobox addInvoice">
+        <li>
+            <span class="fp_name">卡号</span>
+             <div class="input-row">
+                <input name="card" type="text" v-model="card" class="yunset_sjtext" placeholder="请输入卡号"/>
+            </div>
+        </li>
+        <li>
+            <span class="fp_name">密码</span>
+             <div class="input-row">
+                <input name="password" type="password" v-model="password" class="yunset_sjtext" placeholder="请输入密码"/>
+            </div>
+        </li>
+    </ul>
+    <div class="yunset_bth_box"><input type="submit" name="submit" value="确定" class="pay_choose_btn_01" @click="useCard" /></div>
+</div></div>
+<script>
+    var cardVue = new Vue({
+        el: '#cardVue',
+        data: {
+            card: '',
+            password: ''
+        },
+        methods: {
+            useCard:function(){
+                var that = this;
+
+                if (that.card.length == 0){
+                    return showToast('卡号不能为空');
+                }
+                if (that.password.length == 0){
+                    return showToast('密码不能为空');
+                }
+
+                var paramer = {
+                    card: that.card,
+                    password: that.password
+                };
+                showLoading('请求中');
+                $.post('{yun:}url d=wxapp h=com m=set c=useCard{/yun}', paramer, function (data) {
+                    hideLoading();
+                    if (data.error == 1) {
+                        showToast(data.msg, 2, function () {
+                            window.location.href = 'index.php?c=finance';
+                        });
+                    } else {
+                        return showModal(data.msg)
+                    }
+                }, 'json');
+            }
+
+        }
+    });
+</script>
+</body>
+</html>

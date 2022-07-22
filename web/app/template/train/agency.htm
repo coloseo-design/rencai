@@ -1,0 +1,222 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<div class="clear"></div>
+<div class="training_content training_w980">
+<div class="training_cur ftl">
+<div class="training_cur_l ftl"><a href="{yun:}url m=train{/yun}">首页</a> > 培训机构 </div>
+</div>
+<div class="training_subject_search ftl ">
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">培训方向</div>
+<div class="training_subject_search_list_right ftl">
+<a href="{yun:}listurl m=train c=agency type=sid v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.sid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$subject_index{/yun}
+<a href="{yun:}listurl m=train c=agency type=sid v=$v{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.sid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$subject_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">机构性质</div>
+<div class="training_subject_search_list_right ftl">
+<a href="{yun:}listurl m=train c=agency type=pr v=0{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.pr{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$comdata.job_pr{/yun}
+<a href="{yun:}listurl m=train c=agency v=$v type=pr{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.pr==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">机构规模</div>
+<div class="training_subject_search_list_right ftl">
+<a href="{yun:}listurl m=train c=agency type=mun v=0 {/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.mun{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$comdata.job_mun{/yun}
+<a href="{yun:}listurl m=train c=agency v=$v type=mun{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.mun==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$comclass_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+{yun:}if !$smarty.get.provinceid&&!$smarty.get.cityid&&!$smarty.get.three_cityid{/yun}
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">机构地区</div>
+<div class="training_subject_search_list_right ftl">
+<a href="{yun:}listurl m=train c=agency type=provinceid v=0{/yun}" class="training_subject_search_tag {yun:}if  !$smarty.get.provinceid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$city_index{/yun}
+<a href="{yun:}listurl m=train c=agency  type=provinceid v=$v{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.provinceid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+{yun:}/if{/yun}
+
+{yun:}if $smarty.get.provinceid &&!$smarty.get.cityid&& !$smarty.get.three_cityid{/yun}
+	<div class="training_subject_search_list ftl">
+	<div class="training_subject_search_list_left ftl">机构城市</div>
+	<div class="training_subject_search_list_right ftl">
+	<a href="{yun:}listurl m=train c=agency untype='cityid'{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.cityid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+	{yun:}foreach item=v from=$city_type[$smarty.get.provinceid]{/yun}
+	<a href="{yun:}listurl m=train c=agency v=$v type=cityid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.cityid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a>
+	{yun:}/foreach{/yun}
+	</div>
+	</div>
+{yun:}elseif $smarty.get.provinceid && $smarty.get.cityid && !$city_type[$smarty.get.cityid]{/yun}
+	<div class="training_subject_search_list ftl">
+	<div class="training_subject_search_list_left ftl">机构城市</div>
+	<div class="training_subject_search_list_right ftl">
+	<a href="{yun:}listurl m=train c=agency untype='cityid'{/yun}" class="training_subject_search_tag {yun:}if !$smarty.get.cityid{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+	{yun:}foreach item=v from=$city_type[$smarty.get.provinceid]{/yun}
+	<a href="{yun:}listurl m=train c=agency v=$v type=cityid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.cityid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a>
+	{yun:}/foreach{/yun}
+	</div>
+	</div>
+{yun:}/if{/yun}
+
+{yun:}if $smarty.get.cityid{/yun}
+<div class="training_subject_search_list ftl">
+<div class="training_subject_search_list_left ftl">机构县区</div>
+<div class="training_subject_search_list_right ftl">
+<a href="{yun:}listurl m=train c=agency untype='three_cityid'{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.three_cityid==""{/yun}training_subject_search_cur{yun:}/if{/yun}">全部</a>
+{yun:}foreach item=v from=$city_type[$smarty.get.cityid]{/yun}
+<a href="{yun:}listurl m=train c=agency v=$v type=three_cityid{/yun}" class="training_subject_search_tag {yun:}if $smarty.get.three_cityid==$v{/yun}training_subject_search_cur{yun:}/if{/yun}">{yun:}$city_name[$v]{/yun}</a>
+{yun:}/foreach{/yun}
+</div>
+</div>
+{yun:}/if{/yun}
+
+<div class="training_subject_search_list ftl" >
+<div class="training_subject_search_list_left ftl">关&nbsp;键&nbsp; 字</div>
+<div class="training_subject_search_list_right ftl">
+<div class="sub_search">
+<form method="get" action="{yun:}if !$config.sy_traindir{/yun}index.php{yun:}else{/yun}{yun:}url m=train{/yun}{yun:}/if{/yun}">
+{yun:}if  !$config.sy_traindir{/yun}<input type="hidden" value="train" name="m" />{yun:}/if{/yun}
+<input type="hidden" name="c" value="agency" />
+<input type="text" name="keyword" value=""  placeholder="搜索机构" class="Search_Courses_text  ftl">
+<input type="submit" value="" class="Search_Courses_bth1 ftl">
+</form>
+</div>
+</div>
+</div>
+
+{yun:}if $smarty.get.sid||$smarty.get.pr||$smarty.get.mun||$smarty.get.provinceid||$smarty.get.cityid||$smarty.get.three_cityid||$smarty.get.keyword{/yun}
+<div class="Search_close_box">
+<div><div class="Search_clear"> <a href="{yun:}url m=train c=agency{/yun}"> 清除所选</a></div>
+<span class="Search_close_box_s">已选条件：</span></div>
+{yun:}if $smarty.get.sid{/yun} <a href="{yun:}listurl m=train c=agency untype='sid'{/yun}" class="Search_jobs_c_a disc_fac">培训方向：{yun:}$subject_name[$smarty.get.sid]{/yun}</a> {yun:}/if{/yun}
+{yun:}if $smarty.get.provinceid{/yun} <a href="{yun:}listurl m=train c=agency untype='provinceid'{/yun}" class="Search_jobs_c_a disc_fac">机构地区：{yun:}$city_name[$smarty.get.provinceid]{/yun}</a> {yun:}/if{/yun}
+{yun:}if $smarty.get.cityid{/yun} <a href="{yun:}listurl m=train c=agency untype='cityid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.cityid]{/yun}</a> {yun:}/if{/yun} 
+{yun:}if $smarty.get.three_cityid{/yun} <a href="{yun:}listurl m=train c=agency untype='three_cityid'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$city_name[$smarty.get.three_cityid]{/yun}</a> {yun:}/if{/yun} 
+{yun:}if $smarty.get.pr{/yun} <a href="{yun:}listurl m=train c=agency untype='pr'{/yun}" class="Search_jobs_c_a disc_fac">机构性质：{yun:}$comclass_name[$smarty.get.pr]{/yun}</a> {yun:}/if{/yun} 
+{yun:}if $smarty.get.mun{/yun} <a href="{yun:}listurl m=train c=agency untype='mun'{/yun}" class="Search_jobs_c_a disc_fac">机构规模：{yun:}$comclass_name[$smarty.get.mun]{/yun}</a> {yun:}/if{/yun} 
+{yun:}if $smarty.get.keyword{/yun} <a href="{yun:}listurl m=train c=agency untype='keyword'{/yun}" class="Search_jobs_c_a disc_fac">{yun:}$smarty.get.keyword{/yun}</a> {yun:}/if{/yun} 
+&nbsp; </div>
+{yun:}/if{/yun}
+</div>
+<div class="training_subject_closex">
+<div class="training_subject_title"><span class="training_subject_span">培训机构列表</span>
+ {yun:}if $agencykeyword{/yun}
+<em class="training_subject_tag ftl">您是不是要找： 
+{yun:}key limit=8 recom=1 type=10 item=keylist{/yun} <a href="{yun:}$keylist.url{/yun}" class="training_subject_tag_a" target="_blank">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun}
+</em>
+{yun:}else{/yun}
+<em class="training_subject_tag ftl">&nbsp;</em>
+{yun:}/if{/yun} 
+</div>
+<div class="clear"></div>
+<div class="training_subject_coy">共找到相关的机构 <span class="training_rec_subject_p">{yun:}$total{/yun}</span> 条</div>
+</div>
+<div class="training_subject_content ftl">
+<div class="training_subject ftl mt15">
+
+{yun:}foreach item=v from=$rows{/yun}
+
+<div class="training_kc_list">
+<div class="training_jg_boxpic ftl">{yun:}if $v.logo{/yun}
+<a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}">
+<img src="{yun:}$v.logo{/yun}" width="120" height="120">
+</a>
+{yun:}else{/yun}
+<a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}">
+<img src="{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}" width="120" height="120">
+</a>
+{yun:}/if{/yun}
+</div>
+
+<div class="training_kc_info">
+<div class="training_kc_name"><a href="{yun:}url m=train c=agencyshow id='`$v.uid`'{/yun}">{yun:}$v.name{/yun}</a> 
+{yun:}if $v.iscert==1{/yun}<img src="{yun:}$train_style{/yun}/images/yun_rz.jpg">{yun:}/if{/yun}</div>
+<div class="training_kc_info_js">{yun:}if $v.content{/yun}{yun:}$v.content|strip_tags|mb_substr:0:45:'utf-8'{/yun}…{yun:}/if{/yun}</div>
+
+<div class="training_kc_p"><span class="training_Courses_span">培训方向：</span> {yun:}$subject_name[$v.sid]{/yun}  
+<span class="training_Courses_span training_Courses_span_ml">机构课程：</span>{yun:}if $v.num==0{/yun}（{yun:}$v.num{/yun}）{yun:}else{/yun}<a style="color: red;" href="{yun:}url m=train c=mysubject id='`$v.uid`'{/yun}">（{yun:}$v.num{/yun}）</a>{yun:}/if{/yun}
+</div>
+<div class="training_kc_p">
+<span class="training_Courses_span">机构地区：</span>{yun:}$city_name[$v.provinceid]{/yun}
+<span class="training_Courses_span training_Courses_span_ml">机构性质：</span>{yun:}$comclass_name[$v.pr]{/yun}
+<span class="training_Courses_span training_Courses_span_ml">机构规模：</span>{yun:}$comclass_name[$v.mun]{/yun}
+</div>
+
+
+</div>
+
+
+<div class="training_Courses_zx ftr">
+{yun:}if $uid{/yun}
+{yun:}if $usertype==4{/yun}
+<a href="javascript:void(0)" onclick="layer.msg('只有个人用户和hr才可以咨询培训！',2,8);return false;"  class="training_Courses_zx_a">立即咨询</a>
+{yun:}else{/yun}
+<a href="javascript:zixun('{yun:}$v.uid{/yun}','');" class="training_Courses_zx_a">立即咨询</a>
+{yun:}/if{/yun}
+{yun:}else{/yun}
+<a href="javascript:showlogin(1)" class="training_Courses_zx_a">立即咨询</a>
+{yun:}/if{/yun}
+
+</div>
+</div>
+
+
+{yun:}foreachelse{/yun}
+<div class="seachno">
+          <div class="seachno_left"><img src="{yun:}$train_style{/yun}/images/search-no.gif" width="144" height="102"></div>
+          <div class="listno-content"> <strong>很抱歉，没有找到满足条件的机构</strong><br>
+            <span> 建议您：<br>
+            1、适当减少已选择的条件<br>
+            2、适当删减或更改搜索关键字<br>
+            </span> <span> 热门关键字：<br>
+
+     {yun:}key limit=8 recom=1 type=10 item=keylist{/yun} <a href="{yun:}$keylist.url{/yun}"  class="jos_tag_a"target="_blank">{yun:}$keylist.key_name{/yun}</a> {yun:}/key{/yun}
+     </span></div>
+        </div>
+{yun:}/foreach{/yun}
+</div>
+<!--分页-->
+<div class="clear"></div>
+<div class="pages">{yun:}$pagenav{/yun}</div>
+<!--分页-->
+</div>
+{yun:}include file="$trainstyle/right.htm"{/yun}
+</div>
+<!--咨询弹出框-->
+<div id="zixun" style="width:400px;background:#fff;" class="none">
+  <form name="myform" method="post" target="supportiframe" action="{yun:}url m=train c=zixun{/yun}" onsubmit="return check_zixun();">
+    <ul class="Sign_up_box" style="padding:10px;">
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">电话：</span>
+        <input type="text" id="phone" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')" name="phone" class="txt_input"></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">留言：</span>
+        <textarea class="txt_textarea" id="content" name="content"></textarea></li>
+        <li style="margin-top:10px;"><span class="Sign_up_box_span">&nbsp;</span>
+        <input type="submit" name="submit" value="提交" class="txt_input_submit"></li>
+        <input type="hidden" name="sid" value="" />
+        <input type="hidden" name="s_uid" value="" />
+    </ul>
+</form>
+</div>
+<!--咨询弹出框-->
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /><script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script><script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}";</script>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+DD_belatedPNG.fix('.png,.pagination li a ');
+</script>
+<![endif]-->
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$train_style{/yun}/js/train_public.js?v={yun:}$config.cachecode{/yun}"></script>
+<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+{yun:}include file="$trainstyle/footer.htm"{/yun}

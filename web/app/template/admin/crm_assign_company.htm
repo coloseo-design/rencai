@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+<form action="index.php?m=admin_message&c=show" method="post" id='checkform'>
+  <input type="hidden" name="userid" id="userid" value="">
+  <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+</form>
+<div class="infoboxp">
+<div class="tty-tishi_top">
+	<div class="table-list">
+		<div class="admin_table_border">
+		<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+		<form action="index.php"  target="supportiframe" name="myform" method="get" id='myform'>
+			<table width="100%">
+				<thead>
+					<tr class="admin_table_top">
+						<th style="width:5%;"><label for="chkall"><input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/></label></th>
+						<th align="left"> 
+							{yun:}if $smarty.get.t=="uid" && $smarty.get.order=="asc"{/yun}
+								<a href="index.php?m=crm_salesman_list&c=assign_company&uid={yun:}$smarty.get.uid{/yun}&order=desc&t=uid">用户ID<img src="images/sanj.jpg"/></a> 
+							{yun:}else{/yun} 
+								<a href="index.php?m=crm_salesman_list&c=assign_company&uid={yun:}$smarty.get.uid{/yun}&order=asc&t=uid">用户ID<img src="images/sanj2.jpg"/></a> 
+							{yun:}/if{/yun}
+						</th>
+						<th align="left">企业名称</th>
+						<th align="center" class="admin_table_th_bg">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{yun:}foreach item=v key=key from=$company{/yun}
+						<tr {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.uid{/yun}">
+							<td style="width:5%;" align="center">
+								<input type="checkbox" value="{yun:}$v.uid{/yun}" class="check_all"  name='comids[]' onclick='unselectall()' rel="del_chk" email="{yun:}$v.email{/yun}" moblie="{yun:}$v.telphone{/yun}" />
+							</td>
+							<td align="left" class="td1">{yun:}$v.uid{/yun}</td>
+							<td align="left">{yun:}$v.name{/yun}</td>
+							<td align="center">
+								<div class="admin_new_bth_c">
+									<a href="javascript:void(0);" class="admin_new_c_bth " pid="{yun:}$v.uid{/yun}" onclick="assign('{yun:}$v.uid{/yun}');">分配</a>
+								</div>
+							</td>
+						</tr>
+					{yun:}/foreach{/yun}
+					<tr>
+						<td align="center">
+							<input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' />
+							<label for="chkAll2">全选</label>
+						</td>
+						<td colspan="3"><input class="admin_button" type="button" name="delsub" value="批量分配企业客户" onClick="assignMulti();" /></td>
+ 					</tr>
+					{yun:}if $total > $config.sy_listnum {/yun}
+						<tr>
+							{yun:}if $pagenum==1{/yun}
+								<td colspan="2"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+							{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+								<td colspan="2"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+							{yun:}else if $pagenum == $pages{/yun}
+								<td colspan="2"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+							{yun:}/if{/yun}
+							<td colspan="2" class="digg">{yun:}$pagenav{/yun}</td>
+						</tr>
+					{yun:}/if{/yun}
+				</tbody>
+			</table>
+			<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+		</form>
+		</div>
+	</div>
+</div>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+
+layui.use(['layer', 'form'], function(){
+  var layer = layui.layer
+  ,form = layui.form
+  ,$ = layui.$;
+});
+
+var salesmanId = '{yun:}$smarty.get.uid{/yun}';
+
+//分配企业客户给业务员
+function assign(comid){
+	loadlayer();
+	$.post('index.php?m=crm_salesman_list&c=ajax_assign',{ uid : salesmanId, comid : comid, pytoken: $("#pytoken").val()}, function(data){
+		parent.layer.closeAll('loading');
+		  // if(data == 1){
+		layer.msg('分配成功', 2, 9, function(){
+			parent.layer.closeAll();
+				window.location = window.location;
+			});
+		  // }
+		}
+	);
+}
+
+//批量分配企业客户给业务员
+function assignMulti()
+{
+  // comids
+  var chk_value =[];
+  $('.check_all:checked').each(function(){
+    chk_value.push($(this).val());
+  }); 
+
+  if(chk_value.length == 0){
+    layer.msg('还未选择任何企业');
+    return false;
+  }
+
+  var comid = chk_value.join(',');
+  assign(comid);
+}
+</script>
+
+</body>
+</html>

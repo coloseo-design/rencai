@@ -1,0 +1,169 @@
+<link href="{yun:}$com_style{/yun}/images/compete.css?v={yun:}$config.cachecode{/yun}" type="text/css" rel="stylesheet"/>
+<!--职位竞争力分析---------------------------------------------------------------->
+
+<div class="competitive_power_box">
+<ul class="competitive_power_option">
+<li class="competitive_power_option_cur" data-id="salary">
+<a href="JavaScript:;">职位薪资</a><i class="competitive_power_option_line"></i></li>
+<li data-id="edu"><a href="JavaScript:;">学历要求</a><i class="competitive_power_option_line"></i></li>
+<li data-id="exp"><a href="JavaScript:;">经验要求</a><i class="competitive_power_option_line"></i></li>
+<li data-id="welfare"><a href="JavaScript:;">福利待遇</a><i class="competitive_power_option_line"></i></li>
+<li data-id="score"><a href="JavaScript:;">综合分析</a><i class="competitive_power_option_line"></i></li>
+</ul>
+<!--职位薪资-->
+<div class="competitive_power_cont powersalary" style="display:block;">
+<div class="competitive_power_left">
+<div class="competitive_power_section_tit">
+<span class="competitive_power_n1">薪资区间</span> 同行占比
+</div>
+<ul class="competitive_power_section">
+{yun:}foreach from=$List.salary item = cptsalary{/yun}
+<li>
+<span class="competitive_power_section_name">{yun:}$cptsalary.name{/yun}</span>
+<span class="competitive_power_section_proportion"><em style="width:{yun:}$cptsalary.perce{/yun}%"></em></span>
+<span class="competitive_power_section_proportion_n">{yun:}$cptsalary.perce{/yun}%</span>
+</li>
+{yun:}/foreach{/yun}
+
+</ul>
+</div>
+<div class="competitive_power_right">
+<div class="competitive_power_r_n">我的职位薪资</div>
+<div class="competitive_power_r_xz">{yun:}$List.jobinfo.job_salary{/yun}</div>
+<div class="competitive_power_r_analysis_h1">薪资竞争力分析：</div>
+{yun:}if $List.salaryStatis.min{/yun}
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_g"></i>高于<span class="competitive_power_r_analysis_n">{yun:}$List.salaryStatis.min{/yun}%</span>同行 </div> 
+{yun:}/if{/yun}
+{yun:}if $List.salaryStatis.max{/yun}
+
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_d"></i>低于<span class="competitive_power_r_analysis_n2">{yun:}$List.salaryStatis.max{/yun}%</span>同行 </div>  
+
+{yun:}/if{/yun}
+
+{yun:}if $List.salaryStatis.same{/yun}
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_p"></i>持平<span class="competitive_power_r_analysis_n3">{yun:}$List.salaryStatis.same{/yun}%</span>同行</div>
+{yun:}/if{/yun}
+</div>
+</div>
+<!--学历要求-->
+<div class="competitive_power_cont poweredu" style="display:none;">
+<div class="competitive_power_left">
+<div class="competitive_power_section_tit">
+<span class="competitive_power_n1">学历区间</span> 同行占比
+</div>
+<ul class="competitive_power_section">
+{yun:}foreach from=$List.edu item = cptedu{/yun}
+<li>
+<span class="competitive_power_section_name">{yun:}$cptedu.name{/yun}</span>
+<span class="competitive_power_section_proportion"><em style="width:{yun:}$cptedu.perce{/yun}%"></em></span>
+<span class="competitive_power_section_proportion_n">{yun:}$cptedu.perce{/yun}%</span>
+</li>
+{yun:}/foreach{/yun}
+
+</ul>
+</div>
+<div class="competitive_power_right">
+<div class="competitive_power_r_n">我的职位学历要求：</div>
+<div class="competitive_power_r_xz">{yun:}$List.jobinfo.job_edu{/yun}</div>
+<div class="competitive_power_r_analysis_h1">学历竞争力分析：</div>
+{yun:}if $List.eduStatis.min{/yun}
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_g"></i>高于<span class="competitive_power_r_analysis_n">{yun:}$List.eduStatis.min{/yun}%</span>同行 </div> 
+{yun:}/if{/yun}
+{yun:}if $List.eduStatis.max{/yun}
+
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_d"></i>低于<span class="competitive_power_r_analysis_n2">{yun:}$List.eduStatis.max{/yun}%</span>同行 </div>  
+
+{yun:}/if{/yun}
+
+{yun:}if $List.eduStatis.same{/yun}
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_p"></i>持平<span class="competitive_power_r_analysis_n3">{yun:}$List.eduStatis.same{/yun}%</span>同行</div>
+{yun:}/if{/yun}
+
+</div>
+</div>
+<!--经验要求-->
+<div class="competitive_power_cont powerexp" style="display:none;">
+<div class="competitive_power_left">
+<div class="competitive_power_section_tit">
+<span class="competitive_power_n1">经验区间</span> 同行占比
+</div>
+<ul class="competitive_power_section">
+{yun:}foreach from=$List.exp item = cptexp{/yun}
+
+<li>
+<span class="competitive_power_section_name">{yun:}$cptexp.name{/yun}</span>
+<span class="competitive_power_section_proportion"><em style="width:{yun:}$cptexp.perce{/yun}%"></em></span>
+<span class="competitive_power_section_proportion_n">{yun:}$cptexp.perce{/yun}%</span>
+</li>
+{yun:}/foreach{/yun}
+
+</ul>
+</div>
+<div class="competitive_power_right">
+<div class="competitive_power_r_n">我的职位经验要求：</div>
+<div class="competitive_power_r_xz">{yun:}$List.jobinfo.job_exp{/yun}</div>
+<div class="competitive_power_r_analysis_h1">经验竞争力分析：</div>
+{yun:}if $List.expStatis.min{/yun}
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_g"></i>高于<span class="competitive_power_r_analysis_n">{yun:}$List.expStatis.min{/yun}%</span>同行 </div> 
+{yun:}/if{/yun}
+{yun:}if $List.expStatis.max{/yun}
+
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_d"></i>低于<span class="competitive_power_r_analysis_n2">{yun:}$List.expStatis.max{/yun}%</span>同行 </div>  
+
+{yun:}/if{/yun}
+
+{yun:}if $List.expStatis.same{/yun}
+<div class="competitive_power_r_analysis"><i class="competitive_power_r_analysis_p"></i>持平<span class="competitive_power_r_analysis_n3">{yun:}$List.expStatis.same{/yun}%</span>同行</div>
+{yun:}/if{/yun}
+</div>
+</div>
+<!--福利待遇-->
+<div class="competitive_power_cont powerwelfare" style="display:none;">
+{yun:}if $List.welfare.my{/yun}
+
+<div class="competitive_power_fltit">我的优势</div>
+{yun:}foreach from=$List.welfare.my item=welStatis{/yun}
+<span class="competitive_power_fln">{yun:}$welStatis{/yun}</span>
+{yun:}/foreach{/yun}
+{yun:}/if{/yun}
+
+{yun:}if $List.welfare.else{/yun}
+
+<div class="competitive_power_fltit">同行优势</div>
+{yun:}foreach from=$List.welfare.else item=welStatis{/yun}
+<span class="competitive_power_myfl">{yun:}$welStatis{/yun}</span>
+{yun:}/foreach{/yun}
+{yun:}/if{/yun}
+
+</div>
+<!--综合分析-->
+<div class="competitive_power_cont powerscore" style="display:none;">
+<div class="competitive_analysis_pm"><span class="competitive_analysis_pm_n">{yun:}$List.scoreName{/yun}</span></div>
+<div class="competitive_analysis_name">职位竞争力</div>
+<div class="competitive_power_analysis_p">洞悉你的职位竞争力，助你提高胜算</div>
+<div class="competitive_power_analysis_tip_b">
+<div class="competitive_power_analysis_tip_t">综合分析：</div>
+<div class="">您的{yun:}$List.scoreMsg{/yun} </div>
+</div>
+</div>
+<!--分享end-->
+
+<div class="competitive_power_bz">注：以上来自{yun:}$config.sy_webname{/yun} 最新的2000份样本，数据仅供参考</div>
+</div>
+<script>
+$('.competitive_power_option li').mousemove(function(){
+	
+	$('.competitive_power_option li').removeClass('competitive_power_option_cur');
+
+	$(this).addClass('competitive_power_option_cur');
+
+	var powerId = $(this).attr('data-id');
+	
+	$('.competitive_power_cont').hide();
+
+	$('.power'+powerId).show();
+	
+});
+
+</script>
+<!--职位竞争力分析end------------------------------------------------------------------------->

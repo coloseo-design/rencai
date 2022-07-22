@@ -1,0 +1,284 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue">
+  <div class="m_taball">	<div class="m_taballbox">
+  <ul>
+        <li>
+            <a href="index.php?c=invoice">我的发票</a>
+        </li>
+        <li>
+            <a href="index.php?c=sqinvoice">发票索取</a>
+        </li>
+        <li class="m_taballactive">
+            <a href="index.php?c=invoice_info">发票信息</a>
+        </li>
+    </ul>  </div>
+        </div>
+    <div class="none" v-bind:class="{show: isload}">
+        <form onsubmit="return formSubmit(this)">
+			<div class="fp_infoboxall">
+            <ul class="fp_infobox addInvoice">
+              
+                    <li><span class="fp_name">发票抬头</span>
+                        <div class="input-row">
+                            <input name="invoicetitle" v-model="info.invoicetitle" placeholder="请输入发票抬头">
+                        </div>
+                    </li>
+
+                    <li><span class="fp_name">企业税号</span>
+                        <div class="input-row">
+                            <input name="registerno" v-model="info.registerno" placeholder="请填写企业税号">
+                        </div>
+                    </li>
+
+
+                    <li v-for="(item,tk) in typelist" :key="'type-' + tk">
+                        <span class="fp_name" v-if="tk == 0">发票类型</span>
+                        <div @click="istype = item.id" class="input-row">
+                            <i class="type1 member_set_meal_fk_xz"
+                               v-bind:class="{member_set_meal_fk_xz_cur:istype==item.id}"></i>{{item.name}}
+                        </div>
+                    </li>
+               
+                    <li><span class="fp_name">开户银行</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="bank" v-model="info.bank"
+                                   :placeholder="istype==1?'请填写企业开户银行(选填)':'请填写企业开户银行'">
+                        </div>
+                    </li>
+
+                    <li><span class="fp_name">开户账号</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="bankno" v-model="info.bankno"
+                                   :placeholder="istype==1?'请填写企业开户账号(选填)':'请填写企业开户账号'">
+                        </div>
+                    </li>
+
+                    <li><span class="fp_name">注册地址</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="opaddress" v-model="info.opaddress"
+                                   :placeholder="istype==1?'请填写企业注册地址(选填)':'请填写企业注册地址'">
+                        </div>
+                    </li>
+
+                    <li><span class="fp_name">注册固话</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="opphone" v-model="info.opphone"
+                                   :placeholder="istype==1?'请填写企业注册固话(选填)':'请填写企业注册固话'">
+                        </div>
+                    </li>
+                
+                    <li v-for="(item,sk) in stylelist" :key="'style-' + sk">
+                        <span class="fp_name" v-if="sk == 0">开票性质</span>
+                        <div @click="isstyle = item.id" class="input-row">
+                            <i class="style1 member_set_meal_fk_xz"
+                               v-bind:class="{member_set_meal_fk_xz_cur:isstyle==item.id}"></i>{{item.name}}
+                        </div>
+                    </li>
+             
+
+                    <li><span class="fp_name">收件人</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="linkman" v-model="info.linkman" placeholder="请填写收件人姓名">
+                        </div>
+                    </li>
+
+                    <li id='li_street' v-if="isstyle==1"><span class="fp_name">邮寄地址</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="street" v-model="info.street" placeholder="请填写邮寄地址">
+                        </div>
+                    </li>
+
+                    <li id='li_phone' v-if="isstyle==1"><span class="fp_name">手机号码</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="phone" v-model="info.phone" placeholder="请填写联系手机">
+                        </div>
+                    </li>
+
+                    <li id='li_email' v-if="isstyle==2"><span class="fp_name">电子邮箱</span>
+                        <div class="input-row">
+                            <input type="text" class="" name="email" v-model="info.email" placeholder="请填写电子邮箱">
+                        </div>
+                    </li>
+
+            
+            </ul>
+			
+			<input type="hidden" name="id" :value="info.id">
+			
+			<div class="yunset_bth_box">
+			    <input type="submit" value="保 存" class="btn btn-block btn-primary"/>
+			</div>
+        </form>
+    </div></div>
+    <div class="wap_member_no noInvoice" v-if="islook">
+        您暂时还没有添加发票信息
+        <div>
+            <a href="javascript:void(0)" @click="addShow();" class="wap_member_no_submit">添加信息</a>
+        </div>
+    </div>
+</div>
+<script>
+    var yunvue = new Vue({
+        el: '#yunvue',
+        data() {
+            return {
+                info: {},
+                typelist: [
+                    {
+                        id: '1',
+                        name: '企业普通发票'
+                    },
+                    {
+                        id: '2',
+                        name: '增值税专用票'
+                    },
+                ],
+                stylelist: [
+                    {
+                        id: '1',
+                        name: '纸质发票'
+                    },
+                    {
+                        id: '2',
+                        name: '电子发票'
+                    },
+                ],
+                istype: 1,
+                isstyle: 1,
+                limit: 20,
+                islook: false,
+                isload: false
+            };
+        },
+        created() {
+            this.getInvoiceinfo();
+        },
+        methods: {
+            getInvoiceinfo() {
+                var that = this;
+                var param = {
+                    page: that.page,
+                    limit: that.limit,
+                };
+
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=finance c=invoiceinfo{/yun}', param, function (data) {
+                    hideLoading();
+                    if (data.error != 2) {
+                        let res = data.data;
+                        if (res.invoicetitle == '') {
+                            that.isload = false;
+                            that.islook = true;
+                        } else {
+                            that.isload = true;
+                            that.islook = false;
+                        }
+                        that.info = res;
+                        that.isstyle = res.invoicestyle;
+                        that.istype = res.invoicetype;
+                    }
+                }, 'json')
+            },
+            addShow: function () {
+                this.isload = true;
+                this.islook = false;
+            },
+            typeshow(e) {
+                this.istype = e.target.value;
+            },
+            styleshow(e) {
+                this.isstyle = e.target.value;
+            },
+        }
+    });
+
+    function formSubmit(e) {
+        var yd = yunvue.$data;
+        if (e.invoicetitle.value.length == 0) {
+            showModal('请填写发票抬头');
+            return false;
+        } else if (e.registerno.value.length == 0) {
+            showModal('请填写企业登记税号');
+            return false;
+        }
+        if (yd.istype == '') {
+            showModal('请选择发票类型');
+            return false;
+        } else if (yd.istype == 2) {
+            if (e.bank.value.length == 0) {
+                showModal('请填写企业开户银行');
+                return false;
+            } else if (e.bankno.value.length == 0) {
+                showModal('请填写企业开户账号');
+                return false;
+            } else if (e.opaddress.value.length == 0) {
+                showModal('请填写企业注册地址');
+                return false;
+            } else if (e.opphone.value.length == 0) {
+                showModal('请填写企业注册固话');
+                return false;
+            }
+        }
+        if (yd.isstyle == '') {
+            showModal('请选择开票性质');
+            return false;
+        }
+        if (e.linkman.value.length == '') {
+            showModal('请填写收件人姓名');
+            return false;
+        }
+        if (yd.isstyle == 1) {
+            if (e.street.value.length == 0) {
+                showModal('请填写邮寄地址');
+                return false;
+            } else if (e.phone.value.length == 0) {
+                showModal('请填写收件人手机号');
+                return false;
+            } else if (isjsMobile(e.phone.value) == false) {
+                showModal('手机号码格式错误');
+                return false;
+            }
+        } else if (yd.isstyle == 2) {
+            if (e.email.value.length == 0) {
+                showModal('请填写电子邮箱');
+                return false;
+            } else if (check_email(e.email.value) == false) {
+                showModal('电子邮箱格式错误');
+                return false;
+            }
+        }
+        var param = {
+            invoicetitle: e.invoicetitle.value,
+            registerno: e.registerno.value,
+            invoicetype: yd.istype,
+            bank: e.bank.value,
+            bankno: e.bankno.value,
+            opaddress: e.opaddress.value,
+            opphone: e.opphone.value,
+            invoicestyle: yd.isstyle,
+            linkman: e.linkman.value,
+            street: e.street ? e.street.value : '',
+            phone: e.phone ? e.phone.value : '',
+            email: e.email ? e.email.value : '',
+            id: e.id.value,
+            source: 'wap'
+        };
+
+        showLoading('保存中');
+        $.post('{yun:}url d=wxapp h=com m=finance c=saveinvoiceinfo{/yun}', param, function (data) {
+            hideLoading();
+            let res = data.data;
+            if (res.error == 1) {
+                showToast('保存成功', 2, function () {
+                    yunvue.getInvoiceinfo();
+                });
+            } else {
+                showModal(res.msg);
+            }
+        }, 'json')
+        return false;
+    }
+</script>
+
+</body>
+</html>

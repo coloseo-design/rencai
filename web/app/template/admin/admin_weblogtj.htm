@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm" style="background:#f3f5f7">
+<div class="infoboxp">
+
+    <div class="weblogitj_tip">
+        说明：以下统计仅为对应动作触发次数，不代表实际操作成功，如：投递简历 20次，代表该用户点击简历投递20次，实际简历投递数以职位记录中简历投递记录为准
+    </div>
+
+    <div class="weblogitj_time">首次活跃</div>
+
+    <div class="weblogitj_user">用户信息</div>
+
+    <div class="weblogitj_show">
+        <!--求职者-->
+        <div class="weblogitj_list loguser" style="display: none;">
+            <div class="weblogitj_list_tit">求职者数据</div>
+            <div class="weblogitj_list_q">
+                <div class="weblogitj_list_q_n">0</div>
+                累计点击次数
+            </div>
+            <ul class="weblogitj_ul">
+                <li><i class="weblogitj_d"></i>搜索职位 <span class="weblogitj_n searchjob">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>浏览职位 <span class="weblogitj_n lookjob">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>投递简历 <span class="weblogitj_n sqjob">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>聊天沟通 <span class="weblogitj_n chat">0</span> 次</li>
+            </ul>
+        </div>
+
+        <!--企业数据-->
+        <div class="weblogizptj_list logcom" style="display: none;">
+            <div class="weblogitj_list_tit">企业数据</div>
+            <div class="weblogitj_list_q">
+                <div class="weblogitj_list_q_n">0</div>
+                累计点击次数
+            </div>
+            <ul class="  weblogitj_ul_qy">
+
+                <li><i class="weblogitj_d"></i>浏览简历 <span class="weblogitj_n lookresume">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>邀请面试 <span class="weblogitj_n inviteresume">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>聊天沟通 <span class="weblogitj_n chat">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>下载简历 <span class="weblogitj_n downresume">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>发布修改职位<span class="weblogitj_n addjob">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>推广服务 <span class="weblogitj_n promote">0</span> 次</li>
+                <li><i class="weblogitj_d"></i>浏览套餐/增值包 <span class="weblogitj_n pay">0</span> 次</li>
+            </ul>
+        </div>
+        <div class="weblogizptj_time">
+            <div class="weblogitj_list_tit">访问时间轴</div>
+
+            <div class="weblogitj_newtime ">
+                访问时间：
+                <span class="weblogitj_newtime_n" onclick="setTime(this, 2);">昨日</span>
+                <span class="weblogitj_newtime_n weblogitj_newtime_cur" onclick="setTime(this, 1);">今日</span>
+                <span class="weblogitj_newtime_n" onclick="setTime(this, 3);">3天内</span>
+                <span class="weblogitj_newtime_n" onclick="setTime(this, 4);">1周内</span>
+                <div class="weblogitj_list_time">
+                    <div class="weblogitj_list_timec">
+                        <input class="weblogitj_list_text" autocomplete="off" type="text" id="time" name="time" value="{yun:}$smarty.get.time{/yun}" placeholder="可选择时间段"/>
+                        <i class="t_tc_icon_time"></i>
+                    </div>
+                </div>
+            </div>
+            <div class=" weblogitj_listall">
+                <div class=" weblogitj_listall_c">
+                    <ul class="layui-timeline" id='loglist'></ul>
+
+                    <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+                    <input type="hidden" name="loguid" id='loguid' value="{yun:}$uid{/yun}">
+                    <input type="hidden" id='logtime' value="1">
+                    <input type="hidden" id='logtimes' value="">
+                    <input type="hidden" name="logpagenav" id='logpagenav' value="0">
+                    <input type="hidden" name="usertype" id='usertype' value="{yun:}$usertype{/yun}">
+                    <script type="text/javascript">
+                        layui.use(['laydate'], function () {
+                            var laydate = layui.laydate,
+                                $ = layui.$;
+                            laydate.render({
+                                elem: '#time',
+                                range: '~',
+                                done: function (value) {
+                                    setTimes(value);
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        getloglist(1);
+        getlogtj(1);
+    })
+
+    function setTime(obj, time) {
+        $('.weblogitj_newtime_n').removeClass('weblogitj_newtime_cur');
+        $(obj).addClass('weblogitj_newtime_cur');
+        $('#logpagenav').val(0);
+        $('#time').val('');
+        $('#logtimes').val('');
+        getloglist(time);
+        getlogtj(time);
+    }
+
+    function setTimes(value) {
+        $('.weblogitj_newtime_n').removeClass('weblogitj_newtime_cur');
+        $('#logpagenav').val(0);
+        $('#time').val(value);
+        $('#logtime').val('');
+        getloglist();
+        getlogtj();
+    }
+
+    function getloglist(time) {
+
+        var logtime = $('#logtime').val();
+        if (parseInt(time) > 0 && parseInt(logtime) > 0 && time != logtime) {
+            $('#logtime').val(time);
+            $('#loglist').html('');
+        }
+
+        var logtimes = $('#logtimes').val();
+        var times = $('#time').val();
+        if (times != '' && times != logtimes) {
+            $('#logtimes').val(times);
+            $('#loglist').html('');
+        }
+
+        var formdata = new FormData();
+        if (parseInt(time) > 0) {
+            formdata.append('time', time);
+        }
+
+        if (times != '') {
+            formdata.append('times', times);
+        }
+        formdata.append('pytoken', $("#pytoken").val());
+        formdata.append('uid', $("#loguid").val());
+        formdata.append('pagenav', $("#logpagenav").val());
+
+        $.ajax({
+            url: 'index.php?m=admin_weblog&c=getloglist',
+            type: 'post',
+
+            processData: false,
+            contentType: false,
+
+            data: formdata,
+            success: function (data) {
+
+                var dataJson = eval("(" + data + ")");
+                var logHtml = '';
+
+                if (dataJson.code == 1) {
+
+                    $('#logpagenav').val(dataJson.pagenav);
+                    var logList = dataJson.list;
+
+                    for (var i = 0; i < logList.length; i++) {
+                        logHtml += '<li class="layui-timeline-item">';
+                        logHtml += '<i class="layui-icon layui-timeline-axis">&#xe63f;</i>';
+                        logHtml += '<div class="layui-timeline-content layui-text">';
+                        logHtml += '<h5 class="layui-timeline-title">' + logList[i].timehis_n + '（' + logList[i].timeymd_n + '）[' + logList[i].ip + ']</h5>';
+                        logHtml += '<p>' + logList[i].info + '</p>';
+                        logHtml += '</div>';
+                        logHtml += '</li>';
+                    }
+                    logHtml += '<li class="layui-timeline-item morelist">';
+                    logHtml += '<i class="layui-icon layui-timeline-axis">&#xe63f;</i>';
+                    logHtml += '<div class="layui-timeline-content layui-text">';
+                    logHtml += '<h3 class="layui-timeline-title" onclick="getloglist(' + time + ');">加载更多...</h3>';
+                    logHtml += '</div>';
+                    logHtml += '</li>';
+                } else {
+
+                    logHtml += '<li class="layui-timeline-item">';
+                    logHtml += '<i class="layui-icon layui-timeline-axis">&#xe63f;</i>';
+                    logHtml += '<div class="layui-timeline-content layui-text">';
+                    logHtml += '<h3 class="layui-timeline-title">没有更多了</h3>';
+
+                    logHtml += '</div>';
+                    logHtml += '</li>';
+                }
+                $('.morelist').remove();
+                $('#loglist').append(logHtml);
+            }
+        })
+    }
+
+    function getlogtj(time) {
+
+        var usertype = $("#usertype").val();
+        var times = $('#time').val();
+        var formdata = new FormData();
+
+        if (parseInt(time) > 0) {
+            formdata.append('time', time);
+        }
+        if (times != '') {
+            formdata.append('times', times);
+        }
+        formdata.append('pytoken', $("#pytoken").val());
+        formdata.append('uid', $("#loguid").val());
+        formdata.append('usertype', $("#usertype").val());
+
+        $.ajax({
+            url: 'index.php?m=admin_weblog&c=getlogtj',
+            type: 'post',
+
+            processData: false,
+            contentType: false,
+
+            data: formdata,
+            success: function (data) {
+
+                var dataJson = eval("(" + data + ")");
+
+                if (dataJson.startlog) {
+                    $('.weblogitj_time').html('首次活跃 ' + dataJson.startlog);
+                }
+
+                if (dataJson.user_info) {
+                    $('.weblogitj_user').html('账户信息 ' + dataJson.user_info);
+                }
+
+                if (dataJson.lognum) {
+                    $('.weblogitj_list_q_n').html(dataJson.lognum);
+                }
+
+                if (dataJson.chat){
+                    $('.chat').html(dataJson.chat);
+                }
+
+                if (dataJson.lookjob) {
+                    $('.lookjob').html(dataJson.lookjob);
+                }
+
+                if (dataJson.searchjob) {
+                    $('.searchjob').html(dataJson.searchjob);
+                }
+
+                if (dataJson.sqjob) {
+                    $('.sqjob').html(dataJson.sqjob);
+                }
+
+                if (dataJson.lookresume) {
+                    $('.lookresume').html(dataJson.lookresume);
+                }
+
+                if (dataJson.inviteresume) {
+                    $('.inviteresume').html(dataJson.inviteresume);
+                }
+                if (dataJson.downresume) {
+                    $('.downresume').html(dataJson.downresume);
+                }
+
+                if (dataJson.addjob) {
+                    $('.addjob').html(dataJson.addjob);
+                }
+
+                if (dataJson.promote) {
+                    $('.promote').html(dataJson.promote);
+                }
+
+                if (dataJson.pay) {
+                    $('.pay').html(dataJson.pay);
+                }
+
+                if (usertype == '1') {
+                    $('.loguser').show();
+                } else if (usertype == '2') {
+                    $('.logcom').show();
+                }
+
+            }
+        })
+    }
+</script>
+</body>
+</html>

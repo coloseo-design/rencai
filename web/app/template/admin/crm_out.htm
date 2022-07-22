@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/workspace.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+	<script src="../js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="js/crm.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+	
+	<div class="infoboxp">
+		<div class="tty-tishi_top">
+		<div class="tabs_info">
+          	<ul>
+              	<li class="curr"><a href="index.php?m=crm_out">外出申请</a></li>
+          	</ul>
+	   	</div>
+	   	
+	   	<form action='index.php' method='get' class='layui-form' style='display:none;' id="search_form">
+			
+			<input type="hidden" name="m" value="crm_out" />
+			<div class="crm_record_list">
+				<div class="crm_record_name"><span class="admin_required_icon"></span>外出时间：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+ 								<select name="otime" id="otime" lay-filter='otime'>
+									<option value="" {yun:}if !$smarty.get.otime{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c untype='otime'{/yun}">全部</option>
+
+									<option value="1" {yun:}if $smarty.get.otime ==1{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='1' adt='otime' untype='otime'{/yun}">三天内</option>
+									<option value="2" {yun:}if $smarty.get.otime ==2{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='2' adt='otime' untype='otime'{/yun}">一周内</option>
+									<option value="3" {yun:}if $smarty.get.otime ==3{/yun}selected{yun:}/if{/yun} data-url="{yun:}searchurl m=$smarty.get.m c=$smarty.get.c adv='3' adt='otime' untype='otime'{/yun}">一月内</option>
+								</select>
+ 							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="crm_record_name"><span class="admin_required_icon"></span>外出原因：</div>
+				<div class="crm_record_textbox">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+ 								<select name="oreason" id="oreason" lay-filter='oreason'>
+ 								<option value="">请选择</option>
+ 								{yun:}foreach from=$outClass item=v{/yun}
+ 									<option value="{yun:}$v{/yun}" {yun:}if $smarty.get.oreason == $v{/yun}selected{yun:}/if{/yun}>{yun:}$crmClassName[$v]{/yun}</option>
+ 								{yun:}/foreach{/yun}
+								</select>
+ 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="crm_record_list" >
+				<span class="crm_record_name">&nbsp;</span>
+            	<div class="crm_record_textbox">
+					<input type="submit"  value='确认' class="admin_examine_bth">
+					<input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消' style="margin-left:10px;">
+				</div> 	
+			</div>
+			
+		</form>
+		
+	   	<div>	
+			<div class="crm_follow_up"><a href="javascript:void(0);" onclick='searchForm();' class="crm_follow_up_a crm_follow_up_sicon">搜索</a></div>
+			<div class="crm_follow_up"><a href="javascript:void(0);" id="newOut" data-new='1' class="crm_follow_up_a crm_follow_up_xj"> 外出 </a></div>
+        </div>
+        </div>
+	   
+	   	<iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+		<div class="tty_table-bom">
+		<form class="layui-form" action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+			
+			<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+			<input name="m" value="crm_out" type="hidden"/>
+			
+			<div class="table-list" style="color:#898989; margin-top:10px;">
+				<div class="admin_table_border">	
+					<table width="100%">
+						<thead>
+							<tr class="admin_table_top">
+								<th align="left"><div class="crm_listpd">外出原因</div></th>
+								<th align="left">客户信息</th>
+								<th align="left">联系人</th>
+								<th align="left">外出时间</th>
+								<th align="left">返回时间</th>
+								<th align="left" >备注</th>
+								<th align="left">申请时间</th>
+								<th align="left">状态</th>
+	 							<th style="width:80px;">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{yun:}foreach item=v key=key from=$tasks{/yun}
+								<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+									<td align="left"> 
+										<div class="crm_listpd">	
+											{yun:}$crmClassName[$v.reason]{/yun}
+										</div> 
+									</td>
+									<td align="left">
+										<a href="{yun:}url m=company c=show id=$v.uid{/yun}" target="_blank" class="admin_com_name">{yun:}$v.comname{/yun}</a>
+									</td>
+									<td align="left">
+										{yun:}$v.linkman{/yun}<br>{yun:}$v.linktel{/yun}
+									</td>
+									<td align="left">
+										{yun:}$v.stime|date_format:"%Y-%m-%d %H:%M"{/yun}
+									</td>
+									<td align="left">
+										{yun:}$v.etime|date_format:"%Y-%m-%d %H:%M"{/yun}
+									</td>
+									<td align="left">
+										<div style="width:240px">{yun:}$v.remark{/yun}</div>
+									</td>
+									<td align="left">
+										{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}
+									</td>
+									<td align="left">
+											
+										{yun:}if $v.status==1{/yun} 未审批
+										{yun:}elseif $v.status==2{/yun} 已同意
+										{yun:}elseif $v.status==3{/yun} 
+											<div style="width:240px">
+											未同意{yun:}if $v.statusbody{/yun}<br>原因：{yun:}$v.statusbody{/yun}{yun:}/if{/yun}
+											</div>
+										{yun:}/if{/yun}
+									</td>
+									<td>
+										{yun:}if $v.status==1{/yun}
+											<a href="javascript:void(0);" onClick="layer_del('确定要取消？', 'index.php?m=crm_out&c=del&id={yun:}$v.id{/yun}');" class="crm_submitqx  ">取消</a>
+										{yun:}/if{/yun}
+									</td>
+								</tr>
+							{yun:}/foreach{/yun}
+							
+							{yun:}if $total > $config.sy_listnum {/yun}
+								<tr>
+									{yun:}if $pagenum==1{/yun}
+										<td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}else if $pagenum == $pages{/yun}
+										<td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+									{yun:}/if{/yun}
+									<td colspan="6" class="digg">{yun:}$pagenav{/yun}</td>
+								</tr>
+							{yun:}/if{/yun}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
+	
+	<script>
+		
+		var weburl="{yun:}$config.sy_weburl{/yun}";
+		
+		layui.use(['form', 'laydate'], function(){
+			var form = layui.form
+				,laydate = layui.laydate
+				,$ = layui.$;
+				laydate.render({
+				elem: '#stime'
+				,type: 'datetime'
+			});
+			laydate.render({
+				elem: '#etime'
+				,type: 'datetime'
+			});
+		});
+		
+		function searchForm(){
+			layer.open({
+				type: 1, 
+				anim: 5,
+				title: '外出查询',
+				content: $('#search_form'),  
+				area:["450px", "auto"]
+			});
+		}
+	</script>
+	
+	{yun:}include file="$adminstyle/crm_public.htm"{/yun}
+</body>
+</html>

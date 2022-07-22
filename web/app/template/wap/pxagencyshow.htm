@@ -1,0 +1,266 @@
+{yun:}include file="$wapstyle/header_train.htm"{/yun}
+
+<div class="train_agency_show_combg" style=" background:url({yun:}$banner.pic{/yun}) no-repeat center center">
+    <div class="train_agency_show_combg_c"></div>
+</div>
+
+<style>
+    .img_auto img {
+        max-width: 100%;
+    }
+</style>
+
+<div class="train_agency_show_com">
+    <div class="train_agency_show_comlogo">
+        <img style="width:60px;height:60px;" src="{yun:}$row.logo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_px_icon{/yun}',2);" />
+    </div>
+
+    <div class="train_agency_show_comname">{yun:}$row.name{/yun}</div>
+
+    <div class="train_agency_show_comfx">
+        <span class="train_agency_show_com_city">{yun:}$city_name[$row.provinceid]{/yun} {yun:}$city_name[$row.cityid]{/yun} {yun:}$city_name[$row.threecityid]{/yun}</span>
+        <span class="train_agency_show_com_jn">{yun:}$subject_name[$row.sid]{/yun}</span>
+    </div>
+
+    <div class="train_agency_show_comzx">
+        {yun:}if $uid{/yun} {yun:}if $usertype!='4'{/yun} {yun:}if $isatn.id{/yun}
+        <a href="javascript:void(0)" onclick="teacheratn('{yun:}$row.uid{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="train_agency_show_gz">取消关注</a>
+        {yun:}else{/yun}
+        <a href="javascript:void(0)" onclick="teacheratn('{yun:}$row.uid{/yun}')" id='atn_{yun:}$row.uid{/yun}' class="train_agency_show_gz">关注</a>
+        {yun:}/if{/yun} {yun:}else{/yun}
+        <a href="javascript:void(0)" onclick="showToast('只有个人用户和hr才能关注', 2, 8)" class="train_agency_show_gz">关注</a>
+        {yun:}/if{/yun} {yun:}else{/yun}
+        <a href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="train_agency_show_gz">关注</a>
+        {yun:}/if{/yun}
+		{yun:}if $uid{/yun}
+        <a href="{yun:}url m=wap c=train a=zixun id=$row.uid{/yun}" class="train_agency_show_zx">咨询</a>
+		{yun:}else{/yun}
+		<a href="javascript:void(0)" onclick="pleaselogin('您还未登录账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="train_agency_show_zx">咨询</a>
+		{yun:}/if{/yun}
+    </div>
+
+</div>
+
+<div class="train_agency_show_box">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">机构简介</span></div>
+    <div class="train_agency_show_box_c">
+        <div class="train_agency_show_content">
+            <span class="train_agency_show_xz"> {yun:}$row.sdate{/yun}</span> {yun:}if $comclass_name[$row.pr]{/yun}<span class="train_agency_show_xz train_agency_show_hy">{yun:}$comclass_name[$row.pr]{/yun}</span>{yun:}/if{/yun}
+            <span class="train_agency_show_xz train_agency_show_rs">{yun:}$comclass_name[$row.mun]{/yun}</span>
+            <div id="contentshow" class="train_agency_show_content_js img_auto">{yun:}$row.shortcontent{/yun}</div>
+            <div id="contenthide" style="display:none;" class="img_auto">{yun:}$row.content{/yun}</div>
+            {yun:}if mb_strlen($row.content,'utf-8')>300{/yun}
+            <div class="train_jj_more">
+                <a id="ckcontent" href="javascript:void(0);">展开查看更多</a>
+            </div>
+            {yun:}/if{/yun}
+        </div>
+    </div>
+</div>
+
+{yun:}if $show{/yun}
+<div class="train_agency_show_box">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">机构环境</span></div>
+    <div class="swiper_banner">
+		<div class="swiper-container" id="imgswiper">
+			<div class="swiper-wrapper">
+ 			{yun:}foreach from=$show item=v{/yun}
+			<div class="swiper-slide">
+			 	<img src="{yun:}$v.picurl{/yun}" style="width:100%;height:160px;" alt="{yun:}$v.title{/yun}" />
+			</div>
+			{yun:}/foreach{/yun}
+			</div>
+        </div>
+    </div>
+</div>
+{yun:}/if{/yun}
+
+<div class="train_agency_show_box">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">联系方式</span></div>
+    <div class="train_agency_show_box_c">
+        {yun:}if $row.linkman{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">联&nbsp;系 人</span>{yun:}$row.linkman{/yun}</div>
+        {yun:}/if{/yun} {yun:}if $row.linkqq{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">QQ号码</span>{yun:}$row.linkqq{/yun}</div>
+        {yun:}/if{/yun} {yun:}if $row.linkphone{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">联系电话</span>{yun:}$row.linkphone{/yun}</div>
+        {yun:}/if{/yun} {yun:}if $row.linktel{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">手机号码</span>{yun:}$row.linktel{/yun}</div>
+        {yun:}/if{/yun} {yun:}if $row.linkmail{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">联系邮件</span>{yun:}$row.linkmail{/yun}</div>
+        {yun:}/if{/yun} {yun:}if $row.website{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">机构网址</span>
+            <a href="{yun:}$row.website{/yun}" rel="nofollow">{yun:}$row.website{/yun}</a>
+        </div>
+        {yun:}/if{/yun} {yun:}if $row.address{/yun}
+        <div class="train_agency_show_tel"><span class="train_agency_show_tel_s">机构地址</span>{yun:}$row.address{/yun}</div>
+        {yun:}/if{/yun}
+    </div>
+</div>
+
+{yun:}if $sublist{/yun}
+
+<div class="train_agency_show_box">
+
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">机构课程</span></div>
+    <div class="train_agency_show_box_c">
+        {yun:}foreach item=v from=$sublist{/yun}
+
+        <div class="train_agency_show_kc">
+            <div class="train_agency_show_kc_pic">
+                <a href="{yun:}url m=wap c=train a=subshow id='`$v.id`'{/yun}" class="">
+                	<img src="{yun:}$v.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxsubject_icon{/yun}',2);">
+               	</a>
+            </div>
+            <div class="train_agency_show_kcname">
+                <a href="{yun:}url m=wap c=train a=subshow id='`$v.id`'{/yun}">{yun:}$v.name|mb_substr:0:15:'utf-8'{/yun}</a>
+            </div>
+            <div class="train_agency_show_kcn">{yun:}$v.hours{/yun}课时</div>
+
+            <div class="train_agency_show_kcp"><span class="train_index_money">￥{yun:}$v.price|floatval{/yun}</i> 元</span><span class="train_agency_show_kctime">{yun:}$v.ctime|date_format:"%Y-%m-%d"{/yun}发布</span></div>
+
+        </div>
+
+        {yun:}/foreach{/yun}
+    </div>
+</div>
+
+{yun:}/if{/yun} {yun:}if $teach{/yun}
+<div class="train_agency_show_box">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">机构讲师</span></div>
+
+    {yun:}foreach item=v from=$teach{/yun}
+    <div class="train_agency_show_box_c">
+        <div class="train_agency_show_js">
+            <div class="train_agency_show_js_pic">
+                <a href="{yun:}url m=wap c=train a=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}"><img src="{yun:}$v.pic{/yun}" style="width:58px;height:58px;" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_pxteacher_icon{/yun}',2);" /></a>
+            </div>
+            <a href="{yun:}url m=wap c=train a=teamshow id='`$v.uid`' nid='`$v.id`'{/yun}" class="train_agency_show_js_name">{yun:}$v.name{/yun}</a><i class="train_agency_show_js_sc">{yun:}$subject_name[$v.sid]{/yun}讲师</i>
+            <div class="train_agency_show_js_city">{yun:}$city_name[$v.cityid]{/yun} | {yun:}$row.name|mb_substr:0:12:'utf-8'{/yun}</div>
+            <div class="train_agency_show_js_hy">擅长行业：{yun:}$industry_name[$v.hy]{/yun}</div>
+
+        </div>
+    </div>
+    {yun:}/foreach{/yun}
+</div>
+{yun:}/if{/yun}
+
+<div class="train_agency_show_box">
+    <div class="train_show_box_tit"><span class="train_show_box_tit_s">留言咨询</span>{yun:}if $row.uid!=$uid{/yun}
+
+        <a href="{yun:}url m=wap c=train a=zixun id='`$row.uid`'{/yun}" class="train_agency_show_tit_ly">我要留言
+        </a>
+
+        {yun:}/if{/yun}</div>
+    <div class="train_agency_show_box_c">
+
+        {yun:}foreach item=v from=$zixun{/yun}
+
+        <div class="train_word_list_bot">
+            <div class="train_word_list_w">
+                <div class="train_word_list_img_ft">
+                    <a href="{yun:}url m=wap c=ask a=myquestion uid='`$v.uid`'{/yun}"><img src="{yun:}$v.pic{/yun}" style="width:40px;height:40px;" onerror="showImgDelay(this,'{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);" /></a>
+                </div>
+                <div class="train_word_list_w_rtt">
+                    <span class="train_word_list_w_nm"><a href="{yun:}url m=wap c=ask a=myquestion uid='`$v.uid`'{/yun}">{yun:}$v.nickname{/yun}&nbsp;</a></span>
+                    <span>{yun:}$v.ctime|date_format:"%m月%d日"{/yun}</span>
+                </div>
+
+                <div class="train_word_list_yan">{yun:}$v.content{/yun}</div>
+
+            </div>
+        </div>
+
+        {yun:}foreachelse{/yun}
+        <div class="wap_member_no">该机构还没有留言!</div>
+        {yun:}/foreach{/yun} {yun:}if $zixun{/yun}
+
+        <div class="train_jg_more">
+            <a href="{yun:}url m=wap c=train a=zixun id='`$row.uid`'{/yun}">查看更多</a>
+        </div>
+
+        {yun:}/if{/yun}</div>
+</div>
+
+</div>
+
+<script src="{yun:}$wap_style{/yun}/js/train.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript" src="{yun:}$wap_style{/yun}/js/jquery.touchSlider.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/swiper/swiper.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<script src="{yun:}$wap_style{/yun}/js/swiper/swiper.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".main_visual").hover(function() {
+            $("#btn_prev,#btn_next").fadeIn()
+        }, function() {
+            $("#btn_prev,#btn_next").fadeOut()
+        });
+        $dragBln = false;
+        $(".train_jg_c").touchSlider({
+            flexible: true,
+            speed: 200,
+            btn_prev: $("#btn_prev"),
+            btn_next: $("#btn_next"),
+            paging: $(".flicking_con a"),
+            counter: function(e) {
+                $(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+            }
+        });
+        $(".train_jg_c").bind("mousedown", function() {
+            $dragBln = false;
+        });
+        $(".train_jg_c").bind("dragstart", function() {
+            $dragBln = true;
+        });
+        $(".train_jg_c a").click(function() {
+            if($dragBln) {
+                return false;
+            }
+        });
+        timer = setInterval(function() {
+            $("#btn_next").click();
+        }, 5000);
+        $(".main_visual").hover(function() {
+            clearInterval(timer);
+        }, function() {
+            timer = setInterval(function() {
+                $("#btn_next").click();
+            }, 5000);
+        });
+        $(".train_jg_c").bind("touchstart", function() {
+            clearInterval(timer);
+        }).bind("touchend", function() {
+            timer = setInterval(function() {
+                $("#btn_next").click();
+            }, 5000);
+        });
+    });
+	$(function(){
+		var myimgswiper = new Swiper('#imgswiper',{
+			direction: 'horizontal',
+			autoplay: true,
+			loop: true
+		});
+	});
+	// 关注机构
+	function teacheratn(uid){
+		if(uid){
+			$.post(wapurl+"index.php?c=ajax&a=atn_train",{uid:uid},function(data){
+				var data =eval('('+data+')');
+				if(data.errcode==1){
+					showToast(data.msg,2,function(){
+						window.location.reload();
+					});
+					return false;
+				}else {
+					showToast(data.msg,2);
+					return false;
+				}
+			});
+		}
+	}
+</script>
+</body>
+</html>

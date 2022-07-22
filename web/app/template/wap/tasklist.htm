@@ -1,0 +1,291 @@
+{yun:}include file="$wapstyle/fheader.htm"{/yun}
+<section class="wap_member">
+	{yun:}if $rows{/yun}
+	<div id="slider">
+		<van-tabs v-model="active">
+			<van-tab title="发布中">
+				<div id="zplist" style="border:none;">
+					{yun:}if $zp>0{/yun}
+					<ul>
+						{yun:}foreach item=v from=$rows{/yun}
+						{yun:}if $v.status==1 && $v.etime|date_format:"%Y-%m-%d">=$time|date_format:"%Y-%m-%d" &&
+						$v.state==1{/yun}
+						<li>
+							<div class="wap_member_msg ">
+								<div class="wap_member_date">
+									<span class="yun_m_job_date_n">&nbsp;
+										<a href="{yun:}url m=wap c=gqlist a=taskshow id=$v.id{/yun}"
+											class="job_list_jobname ">{yun:}$v.name{/yun}</a>
+									</span>
+									<div class="wap_member_date_r">已审核</div>
+								</div>
+								<div class="yun_m_job_list_zt">
+									预计工期：{yun:}$v.edate{/yun}天
+									<span class="wap_member_msg_job_s">浏览量：{yun:}$v.hits{/yun} </span>
+								</div>
+								<div class="yun_m_job_list_zt">更新时间：{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}
+								</div>
+								<div class="yun_member_bth">
+									<a href="javascript:void(0)" onclick="refrshtask({yun:}$v.id{/yun})"
+										class="yun_member_sub  ">刷新</a>
+									<a href="javascript:void(0)" onclick="freeset(2,{yun:}$v.id{/yun})"
+										class="yun_member_sub ">下架</a>
+									<a href="javascript:void(0)" onclick="deltask({yun:}$v.id{/yun})"
+										class="yun_member_sub  ">删除</a>
+									<a href="{yun:}url m=wap c=free a=addtask id=$v.id{/yun}"
+										class="yun_member_sub ">修改</a>
+								</div>
+							</div>
+						</li>
+						{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+					</ul>
+					{yun:}else{/yun}
+					<div class="wap_member_no">暂无供求任务
+						<div class="" style="text-align:center">
+							<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="wap_member_no_submit">发布供求任务</a>
+						</div>
+					</div>
+					{yun:}/if{/yun}
+				</div>
+			</van-tab>
+			<van-tab title="待审核">
+				<div id="shlist" style="border:none;">
+					{yun:}if $sh>0{/yun}
+					<ul>
+						{yun:}foreach item=v from=$rows{/yun}
+						{yun:}if $v.status!=1 && $v.etime|date_format:"%Y-%m-%d">=$time|date_format:"%Y-%m-%d" &&
+						$v.state==1{/yun}
+						<li>
+							<div class="wap_member_msg ">
+								<div class="wap_member_date">
+									<span class="yun_m_job_date_n">&nbsp;
+										<a href="{yun:}url m=wap c=gqlist a=taskshow id=$v.id{/yun}"
+											class="job_list_jobname com_member_hr_cblue">{yun:}$v.name{/yun}</a>
+									</span>
+									<div class="wap_member_date_r">
+										{yun:}if $v.status==2{/yun}
+										<span class="wap_member_wtg"
+											onclick="showToast('{yun:}$v.statusbody{/yun}');return false;">未通过</span>
+										{yun:}elseif $v.status==0{/yun}
+										<em>未审核</em>
+										{yun:}/if{/yun}
+									</div>
+								</div>
+								<div class="yun_m_job_list_zt">
+									预计工期：{yun:}$v.edate{/yun}天
+									<span class="wap_member_msg_job_s">浏览量：{yun:}$v.hits{/yun} </span>
+								</div>
+								<div class="yun_m_job_list_zt">更新时间：{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}
+								</div>
+								<div class="yun_member_bth">
+									<a href="javascript:void(0)" onclick="deltask({yun:}$v.id{/yun})"
+										class="yun_member_sub  ">删除</a>
+									<a href="{yun:}url m=wap c=free a=addtask id=$v.id{/yun}"
+										class="yun_member_sub ">修改</a>
+								</div>
+							</div>
+						</li>
+						{yun:}/if{/yun} {yun:}/foreach{/yun}
+					</ul>
+					{yun:}else{/yun}
+					<div class="wap_member_no">暂无供求任务
+						<div class="" style="text-align:center">
+							<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="wap_member_no_submit">发布供求任务</a>
+						</div>
+					</div>
+					{yun:}/if{/yun}
+				</div>
+			</van-tab>
+			<van-tab title="已过期">
+				<div id="gqlist" style="border:none;">
+					{yun:}if $gq>0{/yun}
+					<ul>
+						{yun:}foreach item=v from=$rows{/yun}
+						{yun:}if $v.etime|date_format:"%Y-%m-%d"<$time|date_format:"%Y-%m-%d" && $v.state==1{/yun} <li>
+							<div class="wap_member_msg ">
+								<div class="wap_member_date">
+									<span class="yun_m_job_date_n">&nbsp;
+										<a href="{yun:}url m=wap c=gqlist a=taskshow id=$v.id{/yun}"
+											class="job_list_jobname com_member_hr_cblue">{yun:}$v.name{/yun}</a>
+									</span>
+									<div class="wap_member_date_r">
+										{yun:}if $v.status==1{/yun} 已过期 {yun:}elseif $v.status==2{/yun}
+										<span class="wap_member_wtg"
+											onclick="showToast('{yun:}$v.statusbody{/yun}');return false;">未通过</span>
+										{yun:}elseif $v.state==0{/yun}
+										<em>未审核</em> {yun:}/if{/yun}
+									</div>
+								</div>
+								<div class="yun_m_job_list_zt">
+									预计工期：{yun:}$v.edate{/yun}天
+									<span class="wap_member_msg_job_s">浏览量：{yun:}$v.hits{/yun} </span>
+								</div>
+								<div class="yun_m_job_list_zt">更新时间：{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}
+								</div>
+								<div class="yun_member_bth">
+									<a href="javascript:void(0)" onclick="deltask({yun:}$v.id{/yun})"
+										class="yun_member_sub  ">删除</a>
+									<a href="{yun:}url m=wap c=free a=addtask id=$v.id{/yun}"
+										class="yun_member_sub ">修改</a>
+								</div>
+							</div>
+							</li>
+							{yun:}/if{/yun}
+							{yun:}/foreach{/yun}
+					</ul>
+					{yun:}else{/yun}
+					<div class="wap_member_no">暂无供求任务
+						<div class="" style="text-align:center">
+							<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="wap_member_no_submit">发布供求任务</a>
+						</div>
+					</div>
+					{yun:}/if{/yun}
+				</div>
+			</van-tab>
+			<van-tab title="已下架">
+				<div id="xjlist" style="border:none;">
+					{yun:}if $xj>0{/yun}
+					<ul>
+						{yun:}foreach item=v from=$rows{/yun}
+						{yun:}if $v.status==1 && $v.etime|date_format:"%Y-%m-%d">=$time|date_format:"%Y-%m-%d" &&
+						$v.state==2{/yun}
+						<li>
+							<div class="wap_member_msg ">
+								<div class="wap_member_date">
+									<span class="yun_m_job_date_n">&nbsp;
+										<a href="{yun:}url m=wap c=gqlist a=taskshow id=$v.id{/yun}"
+											class="job_list_jobname com_member_hr_cblue">{yun:}$v.name{/yun}</a>
+									</span>
+									<div class="wap_member_date_r">
+										{yun:}if $v.status==1{/yun} 已审核 {yun:}elseif $v.status==2{/yun}
+										<span class="wap_member_wtg"
+											onclick="showToast('{yun:}$v.statusbody{/yun}');return false;">未通过</span>
+										{yun:}elseif $v.state==0{/yun}
+										<em>未审核</em> {yun:}/if{/yun}
+									</div>
+								</div>
+								<div class="yun_m_job_list_zt">
+									预计工期：{yun:}$v.edate{/yun}天
+									<span class="wap_member_msg_job_s">浏览量：{yun:}$v.hits{/yun} </span>
+								</div>
+								<div class="yun_m_job_list_zt">更新时间：{yun:}$v.lastupdate|date_format:"%Y-%m-%d"{/yun}
+								</div>
+								<div class="yun_member_bth">
+									<a href="javascript:void(0)" onclick="freeset(1,{yun:}$v.id{/yun})"
+										class="yun_member_sub ">上架</a>
+
+									<a href="javascript:void(0)" onclick="deltask({yun:}$v.id{/yun})"
+										class="yun_member_sub  ">删除</a>
+									<a href="{yun:}url m=wap c=free a=addtask id=$v.id{/yun}"
+										class="yun_member_sub ">修改</a>
+								</div>
+							</div>
+						</li>
+						{yun:}/if{/yun}
+						{yun:}/foreach{/yun}
+					</ul>
+					{yun:}else{/yun}
+					<div class="wap_member_no">暂无供求任务
+						<div class="" style="text-align:center">
+							<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="wap_member_no_submit">发布供求任务</a>
+						</div>
+					</div>
+					{yun:}/if{/yun}
+				</div>
+			</van-tab>
+		</van-tabs>
+	</div>
+
+	{yun:}else{/yun}
+	<div class="wap_member_no">您还没有发布供求任务。
+		<div class="" style="text-align:center">
+			<a href="{yun:}url m=wap c=free a=addtask{/yun}" class="wap_member_no_submit">发布供求任务</a>
+		</div>
+	</div>
+
+	{yun:}/if{/yun}
+
+</section>
+<script>
+	var vm = new Vue({
+		el: '#slider',
+		data: {
+			active: 0
+		},
+	});
+
+	function deltask(id) {
+		showConfirm('确定删除供求任务', function() {
+			$.get(wapurl + "/index.php?c=free&a=deltask", {
+				id: id
+			}, function(data) {
+				if (data == 1) {
+					showToast('供求任务删除成功', 2, function() {
+						location.reload();
+					});
+				} else {
+					showToast('供求任务删除失败', 2);
+					return false;
+				}
+			});
+		})
+	}
+
+	function freeset(state, id) {
+		if (state == 1) {
+			showConfirm('确定要上架供求任务', function() {
+				$.get(wapurl + "/index.php?c=free&a=freeset", {
+					id: id,
+					state: state
+				}, function(data) {
+					if (data == 1) {
+						showToast('供求任务上架成功', 2, function() {
+							location.reload();
+						});
+					} else {
+						showToast('供求任务上架失败', 2);
+						return false;
+					}
+				});
+			})
+		} else {
+			showConfirm('确定要下架供求任务', function() {
+				$.get(wapurl + "/index.php?c=free&a=freeset", {
+					id: id,
+					state: state
+				}, function(data) {
+					if (data == 1) {
+						showToast('供求任务下架成功', 2, function() {
+							location.reload();
+						});
+					} else {
+						showToast('供求任务下架失败', 2);
+						return false;
+					}
+				});
+			})
+		}
+
+	}
+
+	function refrshtask(id) {
+		showConfirm('确定要刷新供求任务', function() {
+			$.get(wapurl + "/index.php?c=free&a=refrshtask", {
+				id: id
+			}, function(data) {
+				var res = eval('(' + data + ')');
+				if (res.url) {
+					showToast(res.msg, 2, function() {
+						window.location.href = res.url
+					});
+				} else {
+					showToast(res.msg, 2);
+					return false;
+				}
+			});
+		})
+	}
+</script>
+</body>
+</html>

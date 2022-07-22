@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+
+<div class="infoboxp">
+
+    <div class="admin_new_tip">
+        <a href="javascript:;" class="admin_new_tip_close"></a>
+        <a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+        <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>温馨提示</div>
+        <div class="admin_new_tip_list_cont">
+            <div class="admin_new_tip_list">该页面展示了职位刷新记录信息。</div>
+        </div>
+    </div>
+
+    <div class="tty-tishi_top">
+
+        <div class="tabs_info">
+            <ul>
+                <li {yun:}if $smarty.get.type == 1{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=admin_company_job&c=sxLog&type=1&uid={yun:}$smarty.get.uid{/yun}">全职日志</a></li>
+                <li {yun:}if $smarty.get.type == 2{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=admin_company_job&c=sxLog&type=2&uid={yun:}$smarty.get.uid{/yun}">兼职日志</a></li>
+                <li {yun:}if $smarty.get.type == 3{/yun}class="curr"{yun:}/if{/yun}><a href="index.php?m=admin_company_job&c=sxLog&type=3&uid={yun:}$smarty.get.uid{/yun}">猎头职位日志</a></li>
+            </ul>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="admin_new_search_box">
+            <form id="jobFormSearch" action="index.php" name="myform" method="get">
+                <input type="hidden" name="m" value="admin_company_job"/>
+                <input type="hidden" name="c" value="sxLog"/>
+                <input type="hidden" name="type" value="{yun:}$smarty.get.type{/yun}"/>
+
+                <div class="admin_new_search_name">搜索类型：</div>
+                <div class="admin_Filter_text formselect" did='dktype'>
+                    <input type="button" value="{yun:}if $smarty.get.k_type=='1' || $smarty.get.k_type==''{/yun}公司名称{yun:}else if $smarty.get.k_type=='2'{/yun}职位名称{yun:}/if{/yun}" class="admin_new_select_text" id="bktype">
+                    <input type="hidden" id='ktype' value="{yun:}if $smarty.get.ktype=='1' || $smarty.get.ktype==''{/yun}1{yun:}else{/yun}2{yun:}/if{/yun}" name='ktype'>
+                    <div class="admin_Filter_text_box" style="display:none" id='dktype'>
+                        <ul>
+                            <li><a href="javascript:void(0)" onClick="formselect('1','ktype','公司名称')">公司名称</a></li>
+                            <li><a href="javascript:void(0)" onClick="formselect('2','ktype','职位名称')">职位名称</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <input type="text" placeholder="输入你要搜索的关键字" name="keyword" class="admin_new_text">
+                <input type="submit" value="搜索" class="admin_new_bth">
+            </form>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+
+    <div class="tty_table-bom">
+        <div class="admin_statistics">
+            <span class="tty_sjtj_color">数据统计：</span>
+            <span>{yun:}$total{/yun}</span>；
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="table-list">
+            <div class="admin_table_border">
+                <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                <form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+                    <input name="m" value="admin_company_job" type="hidden"/>
+                    <input name="c" value="delSxLog" type="hidden"/>
+                    <table width="100%">
+                        <thead>
+                        <tr class="admin_table_top">
+                            <th style="width:20px;">
+                                <label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)'/></label>
+                            </th>
+                            {yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun}
+                            <th width="80"><a href="{yun:}searchurl order=desc t=id m=admin_company_job c=sxLog untype='order,t'{/yun}">编号<img src="images/sanj.jpg"/></a></th>
+                            {yun:}else{/yun}
+                            <th width="80"><a href="{yun:}searchurl order=asc t=id m=admin_company_job c=sxLog untype='order,t'{/yun}">编号<img src="images/sanj2.jpg"/></a></th>
+                            {yun:}/if{/yun}
+                            <th align="left" width="180">职位名称</th>
+                            <th align="" width="180">发布企业</th>
+                            <th align="center" width="180">刷新时间</th>
+                            <!--<th align="center" width="180">职位类型</th>-->
+                            <th align="center" width="180">端口</th>
+                            <th align="center" width="180">IP</th>
+                            <th class="admin_table_th_bg">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {yun:}foreach item=v key=key from=$rows{/yun}
+                        <tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+                        <td>
+                            <input type="checkbox" value="{yun:}$v.id{/yun}" class="check_all"  name='del[]' onclick='unselectall()' rel="del_chk"/>
+                        </td>
+                        <td class="td1" style="text-align:center;width:50px;"><span>{yun:}$v.id{/yun}</span></td>
+                        <td align="left">
+                            <a href="{yun:}$v.joburl{/yun}" target="_blank">{yun:}$v.job_name{/yun}</a>
+                        </td>
+                        <td><a href="{yun:}$v.comurl{/yun}" target="_blank" class="admin_cz_sc">{yun:}$v.com_name{/yun}</a></td>
+                        <td>{yun:}$v.r_time_n{/yun}</td>
+                        <!--<td>{yun:}$v.type_n{/yun}</td>-->
+                        <td>{yun:}$v.port_n{/yun}</td>
+                        <td>{yun:}$v.ip{/yun}</td>
+                        <td>
+                            <a href="javascript:;" onClick="layer_del('确定要删除？', 'index.php?m=admin_company_job&c=delSxLog&id={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+                        </td>
+                        </tr>
+                        {yun:}/foreach{/yun}
+
+                        <tr>
+                            <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)'/></td>
+                            <td colspan="11">
+                                <label for="chkAll2">全选</label>
+                                <input class="admin_button" type="button" name="delsub" value="删除" onClick="return really('del[]')"/>
+                            </td>
+
+                        </tr>
+                        {yun:}if $total > $config.sy_listnum {/yun}
+                        <tr>
+                            {yun:}if $pagenum==1{/yun}
+                            <td colspan="3"> 从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+                            {yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+                            <td colspan="3"> 从 {yun:}($pagenum-1) *
+                                $config.sy_listnum + 1{/yun} 到 {yun:}$pagenum * $config.sy_listnum{/yun} ，总共
+                                {yun:}$total{/yun} 条
+                            </td>
+                            {yun:}else if $pagenum == $pages{/yun}
+                            <td colspan="3"> 从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun}
+                                ，总共
+                                {yun:}$total{/yun} 条
+                            </td>
+                            {yun:}/if{/yun}
+                            <td colspan="9" class="digg">{yun:}$pagenav{/yun}</td>
+                        </tr>
+                        {yun:}/if{/yun}
+                        </tbody>
+                    </table>
+                    <input type="hidden" id="pytoken" name="pytoken" value="{yun:}$pytoken{/yun}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+    });
+</script>
+
+</body>
+</html>

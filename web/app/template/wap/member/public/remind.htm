@@ -1,0 +1,24 @@
+{yun:}if $remind.info{/yun}
+
+<script>
+    var wapurl = '{yun:}url m=wap{/yun}';
+    var url = '{yun:}$remind.url{/yun}';
+    var info = '{yun:}$remind.info{/yun}';
+    var btninfo = '{yun:}$remind.btn{/yun}';
+    var userchange = '{yun:}$config.sy_user_change{/yun}';
+    if (userchange == 1) {
+        showConfirm(info, function () {
+            location.href = url;
+        }, '切换身份', btninfo, function () {
+            changeUType();
+        });
+    } else {
+        showConfirm(info, function () {
+            location.href = url;
+        }, '退出登录', btninfo, function () {
+            islogout('{yun:}url m=wap c=loginout{/yun}', '确认退出吗？');
+        });
+    }
+</script>
+{yun:}/if{/yun}
+{yun:}include file="$wapstyle/member/public/changeutype.htm"{/yun}

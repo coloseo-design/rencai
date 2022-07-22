@@ -1,0 +1,107 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<div id="yunvue" class="none">
+    <div class="wap_member_box">
+		<form id="editchildForm">
+			<ul class="security ">
+				<li><span class="security_anme">用户名</span>
+					<div class="mui-input-row security_text">
+						<input type="text" name="username" :value="info.username" :disabled="disabled"  placeholder="请输入用户名" class="security_text_t">
+					</div>
+				</li>
+				<li><span class="security_anme">密码</span>                	
+					<div class="mui-input-row">
+                    <div class="password_pd security_text">
+						<input type="password"  value="" name="password" id="pwdId" placeholder="输入密码"class="security_text_t" autocomplete="off">
+					</div>	</div>
+				</li>
+				<li><span class="security_anme">部门</span>
+					<div class="mui-input-row security_text">
+						<input type="text" name="name" :value="info.name"  placeholder="请输入部门名称 , 如XXX分公司" class="security_text_t"autocomplete="off">
+					</div>
+				</li>
+			
+				
+			</ul>
+			<div class="security_bth">				
+				<div class="security_bth_but" name ="submit" @click="saveEdit" style="text-align:center">确认</div>&nbsp;&nbsp;
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	var cuid = parseInt('{yun:}$smarty.get.cuid{/yun}');
+	new Vue({
+        el: '#yunvue',
+        data: {
+            info: {},
+			cuid: cuid?cuid:'',
+			disabled:cuid?true:false           
+        },
+        created() {   
+            this.getinfo();
+        },
+        methods:{
+            getinfo:function(){
+                var that = this;
+                var paramer = {cuid: that.cuid};               
+                showLoading();
+                $.post('{yun:}url d=wxapp h=com m=set c=childedit{/yun}',paramer,function(data){
+                    hideLoading();
+                    
+                    if (data.error==1) {
+						let info = data.data;
+						that.info = info;
+					}else if(data.error==2){
+						showToast(data.msg,2,function(){
+							goBack();  
+						})
+					}else if(data.error==3){
+						showConfirm(data.msg,function(){							
+							window.location.href="index.php?c=server&server=createson";
+						},'不用了','去购买',function(){
+							goBack();  
+						})
+					}
+                    $("#yunvue").css('display', 'block');
+                },'json');
+            },
+            saveEdit:function(){
+            	var that = this;
+            	var v = getFormValue('editchildForm');
+            	var formData = {};
+				
+				var username = v.username;
+				var pass = v.password;
+				var name = v.name;
+            	if(username.trim()==''){
+            		return showToast('用户名不能为空!');
+            	}
+            	if(that.cuid==0 && pass.trim()==''){
+            		return showToast('密码不能为空!');
+            	}
+            	if(name.trim()==''){
+            		return showToast('部门名称不能为空!');
+            	}
+            	formData.password = pass;
+				formData.username = username;
+				formData.name = name;
+				if(that.cuid){
+					formData.cuid = that.cuid;
+				}
+				showLoading('保存中...');
+                $.post('{yun:}url d=wxapp h=com m=set c=childeditsave{/yun}',formData,function(data){
+                    hideLoading();
+                    if (data.error == 1) {
+						showToast(data.msg,2, function(){
+							goBack();  
+						});
+					} else {
+						showModal(data.msg);
+					}
+                },'json');    
+            }
+        }
+    });
+</script>
+</body>
+</html>

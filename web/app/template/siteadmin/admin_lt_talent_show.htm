@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">猎头简历库简历。</div>
+</div>
+</div>
+
+
+    <div class="tag_box mt10">
+      <table width="100%" class="table_form" style="background:#fff; font-size:14px;"> 
+      <tr><td bgcolor="#f0f6fb" colspan="2"><span class="admin_bold">简历详情</span></td></tr> 
+		<tr class="admin_table_trbg">
+			<th width="120" height="36">姓名：</th>
+			<td>{yun:}$Info.name{/yun}</td>
+		</tr>     
+        <tr >
+          <th height="36">性别：</th>
+          <td>{yun:}$Info.sex_n{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">年龄：</th>
+          <td>{yun:}$Info.age{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">现居住地：</th>
+          <td>{yun:}$Info.living{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">最高学历：</th>
+          <td>{yun:}$Info.edu_n{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">工作经验：</th>
+          <td>{yun:}$Info.exp_n{/yun}</td>
+        </tr>
+        <tr >
+          <th height="36">手机号码：</th>
+          <td>{yun:}$Info.linktel{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">意向岗位：</th>
+          <td>{yun:}$Info.jobname{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">从事行业：</th>
+          <td>{yun:}$Info.hy_n{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">期望薪资：</th>
+          <td>{yun:}$Info.salary{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">期望城市：</th>
+          <td>{yun:}$Info.city_one_n{/yun} {yun:}$Info.city_two_n{/yun} {yun:}$Info.city_three_n{/yun}</td>
+        </tr>
+			<tr >
+          <th height="36">求职状态：</th>
+          <td>{yun:}$Info.jobstatus_n{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">工作经历：</th>
+          <td>{yun:}$Info.expinfo{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">教育经历：</th>
+          <td>{yun:}$Info.eduinfo{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">项目经历：</th>
+          <td>{yun:}$Info.projectinfo{/yun}</td>
+        </tr>
+		<tr >
+          <th height="36">技能特长：</th>
+          <td>{yun:}$Info.skillinfo{/yun}</td>
+        </tr>
+      </table>
+    </div>
+</body>
+</html>

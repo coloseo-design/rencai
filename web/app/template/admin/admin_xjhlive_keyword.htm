@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">该页面展示了网站所有的宣讲会严禁词，可对用户宣讲会里发送的聊天信息进行过滤。</div>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+
+				<div class="admin_new_search_box">
+					<form action="index.php" name="myform" method="get">
+						<input name="m" value="admin_xjhlive_keyword" type="hidden" />
+						<div class="admin_new_search_name">关键字：</div>
+						<input type="text" value="" placeholder="请输入你要搜索的关键字" name='keyword' class="admin_new_text">
+						<input type="submit" value="搜索" name='search' class="admin_new_bth">
+					</form>
+					<a href="javascript:void(0);" onClick="add_class('添加严禁词','450','250','#houtai_div','')" class="admin_new_cz_tj"
+					 style="margin-left: 10px;">+ 添加严禁词</a>
+					{yun:}include file="admin/admin_search.htm"{/yun}
+				</div>
+			</div>
+
+			<div class="clear"></div>
+			<div class="tty_table-bom">
+				<div class="table-list">
+					<div class="admin_table_border">
+						<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form action="index.php?m=admin_xjhlive_keyword&c=del" name="myform" method="post" target="supportiframe" id='myform'>
+							<table width="100%">
+								<thead>
+									<tr class="admin_table_top">
+										<th style="width:20px;">
+											<label for="chkall">
+												<input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' />
+											</label>
+										</th>
+										<th> {yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun}
+											<a href="{yun:}searchurl order=desc t=id m=admin_xjhlive_keyword untype='order,t'{/yun}">ID<img src="images/sanj.jpg" /></a>
+											{yun:}else{/yun}
+											<a href="{yun:}searchurl order=asc t=id m=admin_xjhlive_keyword untype='order,t'{/yun}">ID<img src="images/sanj2.jpg" /></a>
+											{yun:}/if{/yun}
+										</th>
+										<th align="left">严禁词</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="layer_pic">
+
+									{yun:}foreach item=v key=key from=$rows{/yun}
+									<tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg" {yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+										<td><input type="checkbox" class="check_all" value="{yun:}$v.id{/yun}" name='del[]' onclick='unselectall()'
+											 rel="del_chk" /></td>
+										<td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.id{/yun}</span></td>
+										<td align="left">{yun:}$v.name{/yun}</td>
+										<td width="180">
+											<a href="javascript:;" onClick="layer_del('确定要删除？','index.php?m=admin_xjhlive_keyword&c=del&id={yun:}$v.id{/yun}');"
+											 class="admin_new_c_bth admin_new_c_bth_sc">删除</a>
+										</td>
+									</tr>
+									{yun:}/foreach{/yun}
+									<tr>
+										<td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+										<td colspan="2"><label for="chkAll2">全选</label>
+											<input class="admin_button" type="button" name="delsub" value="删除所选" onClick="return really('del[]')" />
+											&nbsp;&nbsp;
+									</tr>
+									{yun:}if $total > $config.sy_listnum {/yun}
+									<tr>
+										<td colspan="2" class="digg">{yun:}$pagenav{/yun}</td>
+									</tr>
+									{yun:}/if{/yun}
+								</tbody>
+
+							</table>
+							<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="houtai_div" style=" width:450px; display:none;">
+			<form class="layui-form">
+				<table cellspacing='1' cellpadding='1' class="admin_examine_table">
+					<tbody>
+						<tr>
+							<th class="t_fr" width="80">严禁词名称：</th>
+							<td>
+								<textarea id='classname' name="classname" class="add_class_textarea"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td>
+								<div class="add_class_div"><span class="admin_web_tip">说明：可以添加多条严禁词（请按回车键换行，一行一个）</span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="ui_content_wrap" colspan="2">
+								<input class="admin_examine_bth" type="button" name="sub" value=" 添加 " onclick="saveNclass('index.php?m=admin_xjhlive_keyword&c=add')"  style="margin: 10px 40px 0 0;"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+			</form>
+		</div>
+		<style>
+			.layui-layer-page .layui-layer-content {
+				overflow: visible !important;
+			}
+		</style>
+		<script>
+			layui.use(['form'], function() {
+				form = layui.form;
+			});
+		</script>
+	</body>
+</html>

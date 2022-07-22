@@ -1,0 +1,94 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.picker.min.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+<link rel="stylesheet" href="{yun:}$config_wapdomain{/yun}/js/mui/css/mui.poppicker.css?v={yun:}$config.cachecode{/yun}" type="text/css" />
+
+<form name="myform" method="post" action="">
+    <div class="invite_box">
+        <div class="invite_box_c">
+            <div class="invite_box_user">
+                <div class="invite_box_userpic">
+                    {yun:}if $resume.photo{/yun}
+                    <img src="{yun:}$resume.photo{/yun}" width="50" height="50"> 
+					{yun:}else{/yun}
+                    <img src="{yun:}$config.sy_weburl{/yun}/app/template/wap/images/r_tx.png" width="50" height="50"> 
+					{yun:}/if{/yun}
+                </div>
+                <div class="invite_box_username">{yun:}$resume.name{/yun}</div>
+                <div class="invite_box_userwant">TA想要找
+                    <font color="#f00">
+                        {yun:}$resume.job_classname{/yun}
+                    </font> 工作</div>
+            </div>
+            <div class="invite_box_about">
+                <div class="invite_box_list">
+                    <i class="invite_box_job_icon"></i>
+                    <span class="invite_box_list_name">面试职位</span>
+                    <div class="yun_newwap_text_box">
+                        <button class="mui-btn mui-btn-block" type='button'>{yun:}$job.name{/yun}</button>
+                    </div>
+                </div>
+                <div class="invite_box_list">
+                    <i class="invite_box_time_icon"></i>
+                    <span class="invite_box_list_name">面试时间</span>
+                       <div class="yun_newwap_text_box">
+                    <button id='intertimePicker' data-options='{"value":"{yun:}time()|date_format:"Y-m-d h-m"{/yun}","beginYear":{yun:}time()|date_format:"Y"{/yun}}' style="border:none">请选择面试时间</button>
+                    <input type="hidden" id="intertime" name="intertime" value="">
+                </div>
+                     </div>
+            </div>
+            <div class="invite_box_add">
+                <i class="invite_box_add_icon"></i>
+                <input id='address' value='{yun:}$job.address{/yun}' class="job_invite_text" placeholder="请填写面试地址">
+            </div>
+            <div class="invite_box_bc"> <i class="invite_box_sm_icon"></i>面试备注： ( 选填 ) </div>
+            <div class="invite_box_bc_box">
+                <textarea id="content" class="job_invite_textarea" placeholder="请输入面试备注 ( 选填 )"></textarea>
+            </div>
+        </div>
+        <div class="invite_box_tel_box">
+            <div class="invite_box_tel">
+                <i class="invite_box_pop_icon"></i>
+                <span class="invite_box_list_name">联系人</span>
+                <input id='linkman' value='{yun:}$job.link_man{/yun}' class="job_invite_text" placeholder="请填写联系人"> </div>
+            <div class="invite_box_tel">
+                <i class="invite_box_tel_icon"></i>
+                <span class="invite_box_list_name">联系电话</span>
+                <input id='linktel' value='{yun:}$job.link_moblie{/yun}' class="job_invite_text" placeholder="请填写联系电话"> </div>
+
+             <div class="yun_newwap_bth mt10">
+                <input type="hidden" id="rewardid" value="{yun:}$reward.id{/yun}">
+                <input type="hidden" id="jobid" value="{yun:}$job.id{/yun}">
+                <input class="reinputText2" onclick="invite();" type="button" value="发布面试邀请" style="color:#fff;border:none;">
+            </div>
+        </div>
+    </div>
+</form>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.picker.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/mui/mui.poppicker.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/rewardpay.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script>
+    (function($) {
+        $.init();
+        //邀请面试时间
+        var intertimePicker = document.getElementById('intertimePicker');
+        if(intertimePicker) {
+            var intertime = document.getElementById('intertime');
+            intertimePicker.addEventListener('tap', function() {
+                var optionsJson = this.getAttribute('data-options') || '{}';
+                var options = JSON.parse(optionsJson);
+                var picker = new $.DtPicker(options);
+                picker.show(function(rs) {
+                    intertime.value = rs.text;
+                    intertimePicker.innerText = rs.text;
+                    picker.dispose();
+                });
+            }, false);
+        }
+    })(mui)
+</script>
+
+</body>
+</html>

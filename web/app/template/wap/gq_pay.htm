@@ -1,0 +1,121 @@
+{yun:}include file="$wapstyle/fheader.htm"{/yun}
+<script>
+	(function() {
+		var num = '{yun:}$nopayorder{/yun}';
+
+		if (parseInt(num) > 0) {
+			showConfirm('您还有{yun:}$nopayorder{/yun}个订单未付款，是否继续充值！',
+				function() {
+					setTimeout(function() {
+						window.location.href = 'index.php?c=free&a=paylog';
+					}, 0)
+				}, '继续充值', '去付款'
+			);
+		}
+
+	})()
+	var gq_pay = '{yun:}$config.gq_pay_price{/yun}';
+</script>
+{yun:}if $smarty.get.type=='refresh'{/yun}
+<div class="pay_choice_box">
+	<form action="index.php?c=free&a=dingdan" method="post" onsubmit="return pay_form();">
+		<div class="pay_xymoney">
+			<span class="pay_xymoney_name">所需金额</span>
+			<div class="pay_xymoney_t"><em class="pay_xymoney_t_n"><span
+						id="price">{yun:}$config.gq_refrsh_pay{/yun}</span></em> 元</div>
+		</div>
+		<div id="pay_style" class="member_set_meal_fk_fbox mt10">
+			{yun:}if $config.wxpay==1{/yun}
+
+			<div class="member_set_meal_fk_fs member_set_meal_fk_fs_wx" onclick="paycheckt('wxpay');">
+				<i class="wxpay member_set_meal_fk_xz"></i>微信支付
+			</div>
+			{yun:}/if{/yun} {yun:}if $config.alipay==1{/yun}
+			<div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheckt('alipay');">
+				<i class="alipay member_set_meal_fk_xz"></i>支付宝
+			</div>
+
+			{yun:}/if{/yun}
+		</div>
+		{yun:}if $config.wxpay==1 || $config.alipay==1{/yun}
+		<div class="member_set_meal_fk_zf">
+			<input type="submit" class="member_set_meal_fk_zf_bth" value="确认支付">
+		</div>
+		{yun:}else{/yun}
+		<div class="pay_zfgb_tip">
+			<span>网站已关闭支付功能，请联系管理员！</span>
+		</div>
+		{yun:}/if{/yun}
+		<input type="hidden" value="refresh" name="type" />
+		<input type="hidden" value="" id="paytype" name="paytype" />
+		<input type="hidden" value="{yun:}$smarty.get.id{/yun}" name="id" />
+	</form>
+</div>
+{yun:}else{/yun}
+<div class="pay_choice_box">
+	<form action="index.php?c=free&a=dingdan" method="post" onsubmit="return pay_form();">
+		<div class="pay_xymoney">
+			<span class="pay_xymoney_name">所需金额</span>
+			<div class="pay_xymoney_t"><em class="pay_xymoney_t_n"><span
+						id="price">{yun:}$config.gq_pay_price{/yun}</span></em> 元</div>
+		</div>
+		<div id="pay_style" class="member_set_meal_fk_fbox mt10">
+			{yun:}if $config.wxpay==1{/yun}
+
+			<div class="member_set_meal_fk_fs member_set_meal_fk_fs_wx" onclick="paycheckt('wxpay');">
+				<i class="wxpay member_set_meal_fk_xz"></i>微信支付
+			</div>
+			{yun:}/if{/yun} {yun:}if $config.alipay==1{/yun}
+			<div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheckt('alipay');">
+				<i class="alipay member_set_meal_fk_xz"></i>支付宝
+			</div>
+
+			{yun:}/if{/yun}
+		</div>
+		{yun:}if $config.wxpay==1 || $config.alipay==1{/yun}
+		<div class="member_set_meal_fk_zf">
+			<input type="submit" class="member_set_meal_fk_zf_bth" value="确认支付">
+		</div>
+		{yun:}else{/yun}
+		<div class="pay_zfgb_tip">
+			<span>网站已关闭支付功能，请联系管理员！</span>
+		</div>
+		{yun:}/if{/yun}
+		<input type="hidden" value="" id="paytype" name="paytype" />
+		<input type="hidden" value="{yun:}$smarty.get.id{/yun}" name="id" />
+	</form>
+</div>
+{yun:}/if{/yun}
+
+
+<script language="javascript">
+	$(function() {
+
+		$("#pay_style").children(":first").click();
+
+	});
+
+	function paycheckt(type) {
+		var type;
+		if (type == "wxpay") {
+			$(".wxpay").addClass("member_set_meal_fk_xz_cur");
+			$(".alipay").removeClass("member_set_meal_fk_xz_cur");
+			$(".bank").removeClass("member_set_meal_fk_xz_cur");
+			$("#paytype").val('wxpay');
+			$(".paybank").hide();
+			$("#div_coupon").show();
+			$("#paymentform").attr("action", wapurl + "index.php?c=free&a=dingdan");
+		} else if (type == "alipay") {
+			$(".alipay").addClass("member_set_meal_fk_xz_cur");
+			$(".wxpay").removeClass("member_set_meal_fk_xz_cur");
+			$(".bank").removeClass("member_set_meal_fk_xz_cur");
+			$("#paytype").val('alipay');
+			$(".paybank").hide();
+			$("#div_coupon").show();
+			$("#paymentform").attr("action", wapurl + "index.php?c=free&a=dingdan");
+		}
+		
+	}
+</script>
+</body>
+</html>

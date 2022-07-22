@@ -1,0 +1,56 @@
+{yun:}include file="$wapstyle/header_school.htm"{/yun}
+<div class="wap_school_yx_name">{yun:}$row.schoolname{/yun}
+        {yun:}if $rows{/yun}
+         <a href="javascript:void(0);" onclick="academy('{yun:}$row.id{/yun}')" class="school_show_qxatn">取消关注</a>
+        {yun:}else{/yun}
+         <a href="javascript:;" onclick="academy('{yun:}$row.id{/yun}')" class="school_show_atn">关注</a>
+        {yun:}/if{/yun}
+</div>
+
+<div class="wap_school_yx_show_info">
+<div class="wap_school_yx_show_pic"><img src="{yun:}$row.photo{/yun}" width="50" height="50"></div>
+
+<div class="">学科类别：{yun:}$row.school_categty_n{/yun} </div>
+<div class="">就业信息网：{yun:}$row.schoolinternet{/yun} </div>
+<div class="">主管部门：{yun:}$row.school_department_n{/yun} </div>
+<div class="">学校地址：{yun:}$row.address{/yun}</div>
+<div class="">联系电话：{yun:}$row.school_phone{/yun}</div>
+</div>
+<div class="wap_school_yx_tit">本校宣讲会</div>
+{yun:}xjh item=xjhlist sid=$row.id limit=5 islt=4{/yun}
+<div class="wap_school_joblist">
+<a href="{yun:}url m=wap c=company a=show id=$xjhlist.uid{/yun}">
+<div class="wap_school_jobname">{yun:}$xjhlist.com_name{/yun}</div>
+<div class="wap_school_xjhtime"><i class="wap_school_xjhtime_icon"></i>{yun:}$xjhlist.xjh_date{/yun} {yun:}$xjhlist.xjh_shour{/yun}</div>
+<div class="wap_school_xjh_add"><i class="wap_school_xjhadd_icon"></i>{yun:}$xjhlist.address{/yun}</div>
+</a>
+</div>
+{yun:}/xjh{/yun}
+
+<div class="wap_school_yx_tip">
+<div class="wap_school_yx_tip_name">温馨提示</div>
+<div class="">同学们：</div>
+<div class="">少数宣讲会场次可能临时改变时间、地点、甚至取消。宣讲会开始前，可与相关企业和承办学校联系确认哦~
+</div>
+</div>
+
+<script>var wapurl="{yun:}url m=wap{/yun}";</script>
+<script>
+    function academy(id){
+        if(id){
+			showLoading()
+            $.post(wapurl+'index.php?c=ajax&a=atn_academy',{id:id},function(data){
+				hideLoading();
+				var data=eval('('+data+')');
+                if(data.errcode==1){
+					showToast(data.msg,2,function(){location.reload(true);});
+                }else{
+                    showToast(data.msg,2);
+                }
+                
+            });
+        }
+    }
+</script>
+</body>
+</html>

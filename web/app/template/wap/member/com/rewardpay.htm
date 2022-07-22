@@ -1,0 +1,126 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script>
+    var integral = '{yun:}$statis.pay{/yun}';
+    var jobid = '{yun:}$info.id{/yun}';
+    
+    function paycheck(type){
+    	if(type == "wxpay") {
+			$(".wxpay").addClass("member_set_meal_fk_xz_cur");
+			$(".alipay").removeClass("member_set_meal_fk_xz_cur");
+ 			$("#paytype").val('wxpay');
+		} else if(type == "alipay") {
+			$(".alipay").addClass("member_set_meal_fk_xz_cur");
+			$(".wxpay").removeClass("member_set_meal_fk_xz_cur");
+			$("#paytype").val('alipay');
+ 		}
+    }
+
+    function pay_form() {
+
+        var paytype = $("#paytype").val();
+        if(paytype == "") {
+            showToast('请选择一种支付方式！', 2);
+            return false;
+        }
+        return true;
+    }
+    function rewardPay(){
+    	var rewardid 	= $("#rewardid").val();
+    	var jobid 		= $("#jobid").val();
+    	var server 		= $("#server").val();
+    	var paytype 	= $("#paytype").val();
+    	
+    	if(paytype == ''){
+    		showToast('请选择支付方式！');
+    		return false;
+    	}
+    	 
+    	var ajaxUrl		= 'index.php?c=getOrder';
+    	
+    	$.post(ajaxUrl, {server : server, rewardid : rewardid, jobid : jobid, paytype : paytype}, function(data){
+    		
+    		var data = eval('(' + data + ')');
+    		
+    		if(data.error == '0') { // 下单成功成功
+    			wxpayShow = true;
+    			showToast(data.msg, 2, function() {
+    				location.href = data.url;
+    			});
+    			
+    			return false;
+    		} else {
+    			
+    			showToast(data.msg, 2, function() {
+    				location.reload(true);
+    			});
+    			
+    			return false;
+    			 
+
+    		}
+    	});
+    	
+    }
+</script>
+
+<section class="wap_member">
+
+    <div class="getserbver_box">
+
+        <form action="index.php?c=getOrder" method="post" onsubmit="return pay_form();">
+
+            <ul class="getserbver_box_list">
+
+                <li>
+                    <div class="getserbver_box_list_p">投递赏金：<span class="getserbver_box_s">{yun:}$rewardJob.sqmoney{/yun}</span> 元</div>
+                </li>
+
+                <li>
+                    <div class="getserbver_box_list_p">面试赏金：<span class="getserbver_box_s">{yun:}$rewardJob.invitemoney{/yun}</span> 元</div>
+                </li>
+
+                <li>
+                    <div class="getserbver_box_list_p">入职赏金：<span class="getserbver_box_s">{yun:}$rewardJob.offermoney{/yun}</span> 元</div>
+                </li>
+
+                <li>
+                    <div class="getserbver_box_list_p">总赏金：<span class="getserbver_box_s pricehtml">{yun:}$rewardJob.money{/yun}</span>元</div>
+                </li>
+            </ul>
+
+            {yun:}if $paytype.wxpay{/yun}
+             
+            <div class="member_set_meal_fk_fs member_set_meal_fk_fs_wx" onclick="paycheck('wxpay');">
+                <i class="wxpay member_set_meal_fk_xz"></i>微信支付
+            </div>
+            
+            {yun:}/if{/yun} {yun:}if $paytype.alipay{/yun}
+            
+            <div class="member_set_meal_fk_fs member_set_meal_fk_fs_zfb" onclick="paycheck('alipay');">
+                <i class="alipay member_set_meal_fk_xz"></i>支付宝
+            </div>
+            
+            {yun:}/if{/yun} 
+			{yun:}if $paytype.wxpay || $paytype.alipay{/yun}
+            <div class="member_set_meal_fk_zf">
+				<input type="button" class="member_set_meal_fk_zf_bth" value="确认支付" onclick='rewardPay();'>
+            </div>
+            {yun:}else{/yun}
+            <div class="pay_zfgb_tip">
+                    <span>网站已关闭支付功能，请联系管理员！</span>
+                </div>
+            {yun:}/if{/yun} {yun:}if $config.sy_freewebtel{/yun}
+            <div class="getserbver_box_tel">
+                <a href="tel:{yun:}$config.sy_freewebtel{/yun}">客服电话：{yun:}$config.sy_freewebtel{/yun}</a>
+            </div>{yun:}/if{/yun}
+
+            <input id="rewardid" name='rewardid' type="hidden" value="{yun:}$rewardJob.id{/yun}" />
+            <input id="jobid" name='jobid' type="hidden" value="{yun:}$rewardJob.jobid{/yun}" />
+            <input id="paytype" name='paytype' type="hidden" value="" />
+            <input id="server" name='server' type="hidden" value="rewardjob" />
+        </form>
+    </div>
+</section>
+<div class="clear"></div>
+</body>
+</html>

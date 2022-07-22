@@ -1,0 +1,372 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+    <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+<div class="com_tit"><span class="com_tit_span">我的发票</span></div>
+        <div class=right_box>
+          
+              		<div class="vip_boxshow">	<div class="vip_boxshow_c">
+          
+          <div class="report_uaer_list ">
+          	<div class="report_uaer_list_h1">开通超级会员</div>
+          	<div class="report_uaer_list_p">为企业提供多样化的套餐服务</div>
+               <ul>
+                 {yun:}if $config.com_vip_type==2{/yun}
+                 <li><a href="index.php?c=right" >套餐会员</a></li>
+                 {yun:}/if{/yun}
+                 
+                 {yun:}if $config.com_vip_type==1{/yun}
+                 <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+                 {yun:}/if{/yun}
+                 
+                 {yun:}if $config.com_vip_type==0{/yun}
+                 <li><a href="index.php?c=right" >套餐会员</a></li>
+                 <li><a href="index.php?c=right&act=time" >时间会员</a></li>
+                 {yun:}/if{/yun}
+                 {yun:}if $statis.rating_type != 2 && !$vipIsDown && $config.com_integral_online != 4 {/yun}
+          					<li><a href="index.php?c=right&act=added" >增值包</a></li>
+          			  {yun:}/if{/yun}
+               <li><a href="index.php?c=ad" > 购买广告位</a></li>
+               <li><a href="index.php?c=pay" >充值服务</a></li>
+               <li><a href="index.php?c=paylogtc" >我的服务</a></li>
+               <li><a href="index.php?c=paylog&consume=ok" >订单管理</a></li>
+               {yun:}if $config.sy_com_invoice == 1{/yun}
+                     <li  class="report_uaer_list_cur"><a href="index.php?c=invoice"  >发票管理</a></li>
+                   {yun:}/if{/yun}
+               <li><a href="index.php?c=coupon_list" >优惠卡券</a></li>
+               <li><a href="index.php?c=jobpack&act=loglist"  >赏金收益</a></li>
+                   {yun:}if $config.sy_help_open == 1{/yun}
+                   <li><a href="index.php?c=friendhelp" >好友助力</a></li>
+                   {yun:}/if{/yun}
+               <li a  href="index.php?c=integral">{yun:}$config.integral_pricename{/yun}管理</a></li>
+               </ul>
+             </div>
+          	
+                
+
+                <div class="hyfw_qh">
+                    <ul>
+                        <li>
+                            <a href="index.php?c=invoice&act=apply">发票索取</a>
+                        </li>
+                        <li>
+                            <a href="index.php?c=invoice">发票列表</a>
+                        </li>
+                        <li class="hyfw_qh_cur">
+                            <a href="index.php?c=invoice&act=info">发票信息管理</a>
+                        </li>
+                    </ul>
+                </div>
+              	<div class="paylogpc" >
+					<div class="fp_tip">
+                    重要提示：根据最新增值税管理办法要求，2017年7月1日起如需为企业（包括公司、非公司制企业法人、企业分支机构、个人独资企业、合伙企业和其他企业）开具增值税发票，需提供纳税人识别号或统一社会信用代码，否则该发票无法作为税收凭证。请准确选择发票抬头类型，若企业发票请填写有效税号信息。
+</div>
+                    <!--发票信息-->
+<div  class="com_tablefpbox">
+                    <div id="invoiceInfo">
+                        {yun:}if $row{/yun}
+                        <table class="com_tablefp " cellpadding="1" cellspacing="1">
+                            <tr class="com_tablefp_bg">
+                                <th colspan="2">发票信息</th>
+                            </tr>
+                            <tr>
+                                <th width="120">发票抬头</th>
+                                <td align="left">{yun:}$row.invoicetitle{/yun}</td>
+                            </tr>
+                            <tr>
+                                <th>发票类型</th>
+                                <td align="left">{yun:}if $row.invoicetype==2{/yun}增值税专用发票{yun:}else if $row.invoicetype==1{/yun}普通发票{yun:}/if{/yun}</td>
+                            </tr>
+
+                            <tr>
+                                <th>税务登记证号</th>
+                                <td align="left">{yun:}$row.registerno{/yun}</td>
+                            </tr>
+
+                            {yun:}if $row.bank{/yun}
+                            <tr>
+                                <th>开户银行</th>
+                                <td align="left">{yun:}$row.bank{/yun}</td>
+                            </tr>
+                            {yun:}/if{/yun} {yun:}if $row.bankno{/yun}
+                            <tr>
+                                <th>开户账号</th>
+                                <td align="left">{yun:}$row.bankno{/yun}</td>
+                            </tr>
+                            {yun:}/if{/yun} {yun:}if $row.opaddress{/yun}
+                            <tr>
+                                <th>注册所在地</th>
+                                <td align="left">{yun:}$row.opaddress{/yun}</td>
+                            </tr>
+                            {yun:}/if{/yun} {yun:}if $row.opphone{/yun}
+                            <tr>
+                                <th>注册固定电话</th>
+                                <td align="left">{yun:}$row.opphone{/yun}</td>
+                            </tr>
+                            {yun:}/if{/yun}
+                            <tr class="com_tablefp_bg">
+                                <th colspan="2">邮寄信息</th>
+                            </tr>
+
+                            <tr>
+                                <th>开票性质</th>
+                                <td align="left">{yun:}if $row.invoicestyle==2{/yun}电子发票{yun:}else if $row.invoicestyle==1{/yun}纸质发票{yun:}/if{/yun}</td>
+                            </tr>
+
+                            <tr>
+                                <th>收件人姓名</th>
+                                <td align="left">{yun:}$row.linkman{/yun}</td>
+                            </tr>
+
+                            {yun:}if $row.invoicestyle==1{/yun}
+                            <tr>
+                                <th>邮寄地址</th>
+                                <td align="left">{yun:}$row.street{/yun}</td>
+                            </tr>
+                            <tr>
+                                <th>手机号码</th>
+                                <td align="left">{yun:}$row.phone{/yun}</td>
+                            </tr>
+                            {yun:}elseif $row.invoicestyle==2{/yun}
+                            <tr>
+                                <th>电子邮箱</th>
+                                <td align="left">{yun:}$row.email{/yun}</td>
+                            </tr>
+                            {yun:}/if{/yun}
+
+                            <tr>
+                                <th>&nbsp;</th>
+                                <td align="">
+                                    <a href="javascript:void(0);" onclick="add_invoice_info()" class="com_tablefp_bth">修改发票信息</a>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        {yun:}else{/yun}
+
+                        <div class="msg_no">
+                            <p> 您还没有添加发票信息！</p>
+                            <a href="JavaScript:void(0);" onclick="add_invoice_info()" class="com_msg_no_bth com_submit">添加发票信息</a>
+                        </div>
+
+                        {yun:}/if{/yun}
+                    </div>
+
+                    <!--发票信息-->
+
+                    <div class="com_body" id="editInvoiceInfo" style="display: none;">
+                        <div class=admin_textbox_04>
+
+                            <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+
+                            <form action="{yun:}$now_url{/yun}" target="supportiframe" method="post" id='myform' class="layui-form" onsubmit="return checkInvoice();">
+                                <div class="jb_infobox" style="width: 100%;">
+                                    <div class="invoice_ture"> 确认发票信息</div>
+
+                                
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>填写发票抬头</span>
+                                        <input name="invoicetitle" id="title" type='text' class="invoice_text" placeholder="请填入发票抬头" value="{yun:}$row.invoicetitle{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>企业税号</span>
+                                        <input name="registerno" id="registerno" type='text' placeholder="请填入企业纳税人识别号" class="invoice_text" value="{yun:}$row.registerno{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>发票类型</span>
+                                        <input type="radio" id="type" name="invoicetype" lay-filter="type" value="1" {yun:}if $row.invoicetype!=2{/yun}checked{yun:}/if{/yun} title="企业普通发票" />
+                                        <input type="radio" id="type" name="invoicetype" lay-filter="type" value="2" {yun:}if $row.invoicetype==2{/yun}checked{yun:}/if{/yun} title="增值税专用票" />
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt ii" {yun:}if $row.invoicetype!=2{/yun}style="display: none;"{yun:}/if{/yun}>*</i>开户银行名称</span>
+                                        <input name="bank" id="bank" type='text' class="invoice_text" placeholder="请填入企业注册开户银行" value="{yun:}$row.bank{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt ii" {yun:}if $row.invoicetype!=2{/yun}style="display: none;"{yun:}/if{/yun}>*</i>开户账号</span>
+                                        <input name="bankno" id="bankno" type='text' class="invoice_text" placeholder="请填入企业注册开户账号" value="{yun:}$row.bankno{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt ii" {yun:}if $row.invoicetype!=2{/yun}style="display: none;"{yun:}/if{/yun}>*</i>注册场所在地</span>
+                                        <input name="opaddress" id="opaddress" type='text' class="invoice_text" placeholder="请填入企业注册所在地" value="{yun:}$row.opAddress{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt ii" {yun:}if $row.invoicetype!=2{/yun}style="display: none;"{yun:}/if{/yun}>*</i>注册固定电话</span>
+                                        <input name="opphone" id="opphone" type='text' class="invoice_text" placeholder="请填入企业注册固话" value="{yun:}$row.opphone{/yun}">
+                                    </div>
+
+                                    <div class="invoice_ture">邮寄信息</div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>发票性质</span>
+                                        <input type="radio" id="style" name="invoicestyle" lay-filter="style" value="1" {yun:}if $row.invoicestyle!=2{/yun}checked{yun:}/if{/yun} title="纸质发票" />
+                                        <input type="radio" id="style" name="invoicestyle" lay-filter="style" value="2" {yun:}if $row.invoicestyle==2{/yun}checked{yun:}/if{/yun} title="电子发票" />
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>联系人姓名</span>
+                                        <input name="linkman" id="linkman" type='text' class="invoice_text" placeholder="请填入联系人姓名" value="{yun:}$row.linkman{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list" id="div_street" {yun:}if $row.invoicestyle==2{/yun}style="display: none;" {yun:}/if{/yun}>
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>邮寄地址</span>
+                                        <input name="street" id="street" type='text' class="invoice_text" placeholder="请填入邮寄地址" value="{yun:}$row.street{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list" id="div_phone" {yun:}if $row.invoicestyle==2{/yun}style="display: none;" {yun:}/if{/yun}>
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>手机号码</span>
+                                        <input name="phone" id="phone" type='text' class="invoice_text" placeholder="请填入联系人手机号" value="{yun:}$row.phone{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list" id="div_email" {yun:}if $row.invoicestyle!=2{/yun}style="display: none;" {yun:}/if{/yun}>
+                                        <span class="invoice_textspan"><i class="invoice_textbt">*</i>电子邮箱</span>
+                                        <input name="email" id="email" type='text' class="invoice_text" placeholder="请填入电子邮箱" value="{yun:}$row.email{/yun}">
+                                    </div>
+
+                                    <div class="invoice_list">
+                                        <input name='uid' type='hidden' id='uid' value="{yun:}$uid{/yun}" />
+                                        <input name='id' type='hidden' id='id' value="{yun:}$row.id{/yun}" /> {yun:}if $row.id{/yun}
+                                        <button type="submit" name='submit' value='1' class="invoice_list_bth">修改</button> {yun:}else{/yun}
+                                        <button type="submit" name='submit' value='1' class="invoice_list_bth">提交</button> {yun:}/if{/yun}
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'layer'], function() {
+        var $ = layui.$,
+            form = layui.form,
+            layer = layui.layer;
+
+        form.on('radio(type)', function(data) {
+            if(data.value == 1) {
+                $(".ii").hide();
+            } else if(data.value == 2) {
+                $(".ii").show();
+            }
+        });
+
+        form.on('radio(style)', function(data) {
+            if(data.value == 1) {
+                $("#div_eamil").hide();
+                $("#div_street").show();
+                $("#div_phone").show();
+            } else if(data.value == 2) {
+                $("#div_email").show();
+                $("#div_street").hide();
+                $("#div_phone").hide();
+            }
+        });
+
+    });
+
+    function add_invoice_info() {
+        $("#invoiceInfo").hide();
+        $("#editInvoiceInfo").show();
+    }
+
+    function checkInvoice() {
+        var title = $.trim($("#title").val());
+        if(title == "") {
+            layer.msg("请填写发票抬头！", 2, 8);
+            return false;
+        }
+
+        var type = $('#wrap input[name="invoicetype"]:checked ').val();
+        if(type == "") {
+            layer.msg("请选择发票类型！", 2, 8);
+            return false;
+        }
+
+        var rno = $.trim($("#registerno").val());
+        if(rno == "") {
+            layer.msg("请填写企业税号！", 2, 8);
+            return false;
+        }
+
+        if(type == 2) {
+            var bank = $.trim($("#bank").val());
+            if(bank == "") {
+                layer.msg("请填写开户银行！", 2, 8);
+                return false;
+            }
+
+            var bankno = $.trim($("#bankno").val());
+            if(bankno == "") {
+                layer.msg("请填写开户账号！", 2, 8);
+                return false;
+            }
+
+            var opadd = $.trim($("#opaddress").val());
+            if(opadd == "") {
+                layer.msg("请填写注册所在地！", 2, 8);
+                return false;
+            }
+
+            var opphone = $.trim($("#opphone").val());
+            if(opphone == "") {
+                layer.msg("请填写注册固话！", 2, 8);
+                return false;
+            } else if(!isjsTell(opphone)) {
+                layer.msg("电话格式错误！", 2, 8);
+                return false;
+            }
+        }
+
+        var style = $('#wrap input[name="invoicestyle"]:checked ').val();
+        if(style == "") {
+            layer.msg("请选择发票开票性质！", 2, 8);
+            return false;
+        }
+
+        var linkman = $.trim($("#linkman").val());
+        if(linkman == "") {
+            layer.msg("请填写收件人姓名！", 2, 8);
+            return false;
+        }
+
+        if(style == 1) {
+            var street = $.trim($("#street").val());
+            if(street == "") {
+                layer.msg("请填写邮寄地址！", 2, 8);
+                return false;
+            }
+            var phone = $.trim($("#phone").val());
+            if(phone == "") {
+                layer.msg("请填写手机号码！", 2, 8);
+                return false;
+            } else if(!isjsMobile(phone)) {
+                layer.msg("手机格式错误！", 2, 8);
+                return false;
+            }
+        } else if(style == 2) {
+            var email = $.trim($("#email").val());
+            var myreg = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if(email == "") {
+                layer.msg("请填写电子邮箱！", 2, 8);
+                return false;
+            } else if(!myreg.test(email)) {
+                layer.msg("邮箱格式错误！", 2, 8);
+                return false;
+            }
+        }
+
+    }
+</script>
+{yun:}include file="$comstyle/footer.htm"{/yun}

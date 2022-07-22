@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>{yun:}$title{/yun}</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<script src="{yun:}$wap_style{/yun}/js/flexible.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/base.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/css/px/train.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+
+<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+
+<script>var wapurl="{yun:}url m=wap{/yun}";</script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script>
+</head>
+<body>
+<div class="itwap_head_box">
+<div class="itwap_head_box_c">
+<div class="itwap_head {yun:}if $tplmoblie.color{/yun}bg{yun:}$tplmoblie.color{/yun}{yun:}/if{/yun}">
+     <a class="hd-lbtn" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}"><i class="head_px_l"></i></a>
+     {yun:}if $topplaceholder{/yun}
+     <div class="itwap_head_search">
+          <div class="itwap_head_search_box">
+          <form method="get" action="index.php">
+		  <input type="hidden" name="c" value="{yun:}$smarty.get.c{/yun}" />
+          {yun:}if $smarty.get.a{/yun}<input type="hidden" name="a" value="{yun:}$smarty.get.a{/yun}" />{yun:}/if{/yun}
+          <div class="itwap_head_search_box_c">
+          <input class="itwap_head_search_text" type="text" name="keyword" value="{yun:}$smarty.get.keyword{/yun}" placeholder="{yun:}$topplaceholder{/yun}"/>
+          <input type="submit" value="" class="itwap_head_search_box_bth"/><i class="itwap_head_search_icon"></i>
+          </div>
+          </form>
+          </div>
+     </div>
+     {yun:}else{/yun}
+     <div class="itwap_head_tit">{yun:}$headertitle{/yun}</div>
+     {yun:}/if{/yun}
+     <div class="train_top_icon" onclick="footernav('train_top_icon_list')">
+          <div class="train_top_icon_rt">
+              <i class="train_nav_icon"></i>
+      
+               </div>
+          </div>      
+             <div class="train_top_icon_list" style="display:none;">
+                    <ul><li><a href="{yun:}url m=wap c=train{/yun}"><i class="train_indexnav_icon train_nav_icon_home"></i>培训首页</a></li>
+                        <li><a href="{yun:}url m=wap c=train a=subject{/yun}"><i class="train_indexnav_icon train_nav_icon_kc"></i>培训课程</a></li>
+                        <li><a href="{yun:}url m=wap c=train a=agency{/yun}"><i class="train_indexnav_icon train_nav_icon_jg"></i>培训机构</a></li>
+                        <li><a href="{yun:}url m=wap c=train a=teacher{/yun}"><i class="train_indexnav_icon train_nav_icon_js"></i>培训讲师</a></li>
+                    </ul>
+               <div class="train_top_icon_tt"></div>
+     </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,75 @@
+{yun:}include file="$trainstyle/header.htm"{/yun}
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+<div class="clear"></div>
+<div class="training_content training_w980">
+    {yun:}include file="$trainstyle/left.htm"{/yun}
+    <div class="right_column frt mt20">
+  <div class="right_column_border">
+    <div class="right_column_h1"><span class="right_column_h1_span flt">我推荐的悬赏</span></div>
+    <div class="clear"></div>
+    <div class="px_listbox">
+    {yun:}if !empty($rows){/yun}
+     <div class="px_tit">
+    <div class="px_tit_n px_tit_w250"><span class="px_tit_pd">职位名称</span></div>
+    <div class="px_tit_n px_tit_w150">企业名称</div>
+    <div class="px_tit_n px_tit_w100">悬赏金额</div>
+    <div class="px_tit_n px_tit_w120">我的推荐</div>
+    <div class="px_tit_n px_tit_w120">时间</div>
+    <div class="px_tit_n px_tit_w100">状态</div>
+    <div class="px_tit_n px_tit_w80">操作</div>
+    </div>
+    {yun:}/if{/yun}
+  
+      {yun:}foreach from=$rows item=v{/yun}
+      
+          <div class="px_list">
+    <div class="px_tit_n px_tit_w250"><span class="px_tit_pd">{yun:}if $v.type==2{/yun}
+        <font color="#FF0000">[企业]</font>  <a href="{yun:}url m=lietou c=jobcomshow id='`$v.job_id`'{/yun}" target="_blank" title="{yun:}$v.job_name{/yun}">{yun:}$v.job_name{/yun}</a>      {yun:}else{/yun} 
+       <font color="#FF0000">[猎头]</font>  <a href="{yun:}url m=lietou c=jobshow id='`$v.job_id`'{/yun}" target="_blank" title="{yun:}$v.job_name{/yun}">{yun:}$v.job_name{/yun}</a> 
+        {yun:}/if{/yun}</span></div>
+    <div class="px_tit_n px_tit_w150">{yun:}if $v.type==3{/yun} 
+        <a href="{yun:}url m=lietou c=headhunter uid='`$v.job_uid`'{/yun}" target="_blank" title="{yun:}$v.com_name{/yun}">{yun:}$v.com_name{/yun}</a> 
+        {yun:}else{/yun} 
+        <a href="{yun:}url m=company c=show id='`$v.job_uid`'{/yun}" target="_blank" title="{yun:}$v.com_name{/yun}">{yun:}$v.com_name{/yun} </a> 
+        {yun:}/if{/yun}</div>
+    <div class="px_tit_n px_tit_w100">{yun:}$v.rebates{/yun}{yun:}if $config.lt_rebates_name{/yun} {yun:}$config.lt_rebates_name{/yun} {yun:}else{/yun}元{yun:}/if{/yun} &nbsp;</div>
+    <div class="px_tit_n px_tit_w120">{yun:}$v.name{/yun}<a href="javascript:void(0);" onclick="showrebate('{yun:}$v.id{/yun}','{yun:}url m=ajax c=showrebates type=1{/yun}')">【查看】</a></div>
+    <div class="px_tit_n px_tit_w120">{yun:}$v.datetime|date_format:'%Y-%m-%d %H:%M'{/yun}</div>
+    <div class="px_tit_n px_tit_w100">{yun:}if $v.status=="0"{/yun}<span class="Not_browse">未查看</span>{yun:}elseif $v.status=="1"{/yun}<span class="yes_browse">已查看</span>
+        {yun:}elseif $v.status=="2"{/yun}已试用{yun:}elseif $v.status=="3"{/yun}未通过{yun:}elseif $v.status=="4"{/yun}已返利{yun:}/if{/yun}</div>
+    <div class="px_tit_n px_tit_w80"><a href="javascript:void(0)" onclick="layer_del('确定要删除我推荐的人才吗？', 'index.php?c=rebates&act=del&id={yun:}$v.id{/yun}');" class="List_dete cblue">删除</a></div>
+    </div>
+
+      {yun:}foreachelse{/yun}
+      <div class="msg_no">暂无相关信息<br><a class="msg_no_tj" href="{yun:}url m=reward{/yun}">去推荐</a></div>
+      <div class="clear"></div>
+      {yun:}/foreach{/yun} </div>
+    <div class="pages"> {yun:}$pagenav{/yun}</div>
+    <div> </div>
+  </div>
+    <div id="showrebate" style="display:none">
+     <div class="rebates_user_cont" style="padding:10px;">
+     <div class="rebates_user" style="width:100%;float:left;">   <div class="com_detail_jb"><span class="com_detail_l">基本信息</span></div></div>
+ <div class="rebates_user" style="width:49%;float:left;"> <i class="rebates_nm">  姓名：</i><span class="rebates_name" id="rebateuname"></span></div>
+ <div class="rebates_user"> <i class="rebates_nm"> 性别：</i><span id="rebatesex"></span></div>
+ <div class="rebates_user" style="width:49%;float:left;"> <i class="rebates_nm">  出生年月：</i><span id="rebatebirthday"></span></div>
+ <div class="rebates_user"><i class="rebates_nm">  最高学历：</i><span id="rebateedu"></span></div>
+ <div class="rebates_user" style="width:49%;float:left;"> <i class="rebates_nm"> 工作经验：</i><span id="rebateexp"></span></div>
+ <div class="rebates_user" style="width:49%;float:left;"><i class="rebates_nm">  联系手机：</i><span id="rebatetelphone"></span></div>
+  <div class="rebates_user" style="width:49%;float:left;"> <i class="rebates_nm"> 联系邮箱：</i><span id="rebateemail"></span></div>
+  
+<div class="rebates_user" style="width:100%;float:left;">   <div class="com_detail_jb"><span class="com_detail_l">求职意向</span></div></div>
+ <div class="rebates_user"> <i class="rebates_nm"> 从事行业：</i><span id="rebatehy"></span></div>
+ <div class="rebates_user"> <i class="rebates_nm"> 期望城市：</i> <span id="rebatecity"></span></div>
+ <div class="rebates_user"> <i class="rebates_nm"> 期望薪资：</i><span class="rebates_rage" id="rebatesalary"></span></div>
+ <div class="rebates_user"><i class="rebates_nm">  工作性质：</i><span id="rebatetype"></span></div>
+ <div class="rebates_user"><i class="rebates_nm">  到岗时间：</i><span id="rebatereport"></span></div>
+ <div class="rebates_user">   <i class="rebates_nm"> 期望职位：</i><span id="rebatejob_classid"></span>
+ 
+<div class="rebates_user" style="width:100%;float:left;">   <div class="com_detail_jb"><span class="com_detail_l">推荐理由</span></div></div>
+ <div class="rebates_user_box"> <textarea class="rebates_user_box_bx" id="rebatecontent"></textarea></div>
+    </div>
+</div>    </div>
+</div>    </div>
+</div>
+{yun:}include file="$trainstyle/footer.htm"{/yun} 

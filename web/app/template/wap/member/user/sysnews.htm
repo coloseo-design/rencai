@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <title>{yun:}$config.sy_webname{/yun}</title>
+        <meta name="keywords" content="人才招聘,网络招聘,wap" />
+        <meta name="description" content="人才招聘网wap网站" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <meta name="MobileOptimized" content="240" />
+        <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<script src="{yun:}$wap_style{/yun}/js/flexible.js?v={yun:}$config.cachecode{/yun}"></script>
+        <link href="{yun:}$wap_style{/yun}/css/base.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<link href="{yun:}$wap_style{/yun}/css/member/memberwap.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+		<link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+		<script>
+			window.localStorage.removeItem("needRefresh");
+			window.addEventListener('pageshow', function(){
+				var storage = window.localStorage.getItem("needRefresh");
+				if(storage){
+					window.location.reload();
+				}
+			})
+		</script>
+    </head>
+	<body>
+		<div class="m_header"><div class="m_header_cont">消息</div></div>
+		 
+			<!-- 页面整体部分 -->
+			<div class="min_body ">
+				<!-- 滑动模块 -->
+			   <div class="card msg_header_pd">
+				   <ul>
+					   <li data-url="invite" class="navigetali">
+						   <div class="card_logo">
+							   <img src="{yun:}$wap_style{/yun}/images/resume.png" alt="" width="100%" height="100%">
+								<div id="wkyqnum" class="card_logo_circle" style="display: none;">
+									<img src="{yun:}$wap_style{/yun}/images/ellipse.png" alt="" width="100%" height="100%">
+								</div>
+						   </div>
+						   <i class="card_word">面试通知</i>
+					   </li>
+					   <li data-url="sq" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/copy.png" alt="" width="100%" height="100%">
+						</div>
+						<i class="card_word">投递反馈</i>
+					   </li>
+					   {yun:}if $config.com_message{/yun}
+					   <li data-url="commsg" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/genius_consult.png" alt="" width="100%" height="100%">
+							<div id="commsgnum" class="card_logo_circle" style="display: none;">
+								<img src="{yun:}$wap_style{/yun}/images/ellipse.png" alt="" width="100%" height="100%">
+							</div>
+						</div>
+						<i class="card_word">职位咨询</i>
+					   </li>
+					   {yun:}/if{/yun}
+					   <li data-url="sxnews" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/sixin.png" alt="" width="100%" height="100%">
+							<div id="sxnum" class="card_logo_circle" style="display: none;">
+								<img src="{yun:}$wap_style{/yun}/images/ellipse.png" alt="" width="100%" height="100%">
+							</div>
+						</div>
+						<i class="card_word">系统消息</i>
+					   </li>
+				   </ul>
+			   </div>
+			   <!-- 页面整体对话框 -->
+			   <div class="dialog_box none" id="sysChatbox">
+				  <div class="dialog_box_tab">
+					 <div class="dialog_box_tab_left">
+						 <ul>
+							 <li onclick="chatulShow('all')">
+								 <i class="dialog_box_tab_left_all" :class="chatCate == 'all' ? 'dialog_box_tab_left_cur' : ''">全部</i>
+								 <i class="dialog_box_tab_left_nav" v-if="chatCate == 'all'"></i>
+							 </li>
+							 <li onclick="chatulShow('new')">
+								 <i class="dialog_box_tab_left_call" :class="chatCate == 'new' ? 'dialog_box_tab_left_cur' : ''">招呼</i>
+								 <i class="dialog_box_tab_left_n" v-if="chatCate == 'new'"></i>
+							 </li>
+							 <li onclick="chatulShow('old')">
+								 <i class="dialog_box_tab_left_communication" :class="chatCate == 'old' ? 'dialog_box_tab_left_cur' : ''">沟通中</i>
+								 <i class="dialog_box_tab_left_n" v-if="chatCate == 'old'"></i>
+							 </li>
+						 </ul>
+					 </div>
+					 <!--div class="dialog_box_tab_right">极速处理</div-->
+				  </div>
+				  <div id="listbox" class="dialog">
+					  <ul id="allchat">
+						  <li v-for="(item,ak) in allchat" :id="'chat_' + item.id" :onclick="'toChat(\''+item.id+'\','+item.tusertype+')'">
+							  <i class="allchat_jb" v-if="item.unread > 0">{{item.unread}}</i>
+							  <div class="dialog_job">
+								  <div class="dialog_job_head_portrait">
+									  <img :src="item.avatar" alt=""  width="100%" height="100%">
+								
+								  </div>
+								  <div class="dialog_job_data">
+									  <div class="dialog_job_data_top">
+											<div class="xx_name">
+											<i class="dialog_job_data_top_name">{{item.linkman}}</i>
+											<i class="dialog_job_data_top_job" v-if="item.usertype == 1">{{item.expect ? item.expect : ''}}</i>
+											<i class="dialog_job_data_top_job" v-else>{{item.username ? item.username : ''}}</i>
+										</div>
+										 <i class="dialog_job_data_top_time">{{item.time}}</i>
+									  </div>
+									  <div class="dialog_job_data_bom">
+										  <div class="dialog_job_data_bom_call" v-if="item.chating == 1">[新招呼]</div>
+										  <div class="dialog_job_data_bom_callword">{{item.content}}</div>
+									  </div>
+								  </div>
+							  </div>
+						  </li>
+						  <div class="chatno_tip" v-if="allchat.length == 0">暂无消息</div>
+					  </ul>
+					  <!--招呼-->
+					  <ul id="newchat" class="none">
+						  <li v-for="(item,ak) in newchat" :id="'chat_' + item.id" :onclick="'toChat(\''+item.id+'\','+item.tusertype+')'">
+							  <i class="allchat_jb" v-if="item.unread > 0">{{item.unread}}</i>
+							  <div class="dialog_job">
+								  <div class="dialog_job_head_portrait">
+									  <img :src="item.avatar" alt=""  width="100%" height="100%">
+								  </div>
+								  <div class="dialog_job_data">
+									  <div class="dialog_job_data_top">
+										<div class="xx_name">
+											<i class="dialog_job_data_top_name">{{item.linkman}}</i>
+											<i class="dialog_job_data_top_job" v-if="item.usertype == 1">{{item.expect}}</i>
+											<i class="dialog_job_data_top_job" v-else>{{item.username}}</i>
+										</div>
+										 <i class="dialog_job_data_top_time">{{item.time}}</i>
+									  </div>
+									  <div class="dialog_job_data_bom">
+										  <div class="dialog_job_data_bom_call">[新招呼]</div>
+										  <div class="dialog_job_data_bom_callword">{{item.content}}</div>
+									  </div>
+								  </div>
+							  </div>
+						  </li>
+						  <div class="chatno_tip none" v-if="newchat.length == 0">暂无消息</div>
+					  </ul>
+					  <!--沟通中-->
+					  <ul id="oldchat" class="none">
+						  <li v-for="(item,ak) in oldchat" :id="'chat_' + item.id" :onclick="'toChat(\''+item.id+'\','+item.tusertype+')'">
+							  <i class="allchat_jb" v-if="item.unread > 0">{{item.unread}}</i>
+							  <div class="dialog_job">
+								  <div class="dialog_job_head_portrait">
+									  <img :src="item.avatar" alt=""  width="100%" height="100%">
+								  </div>
+								  <div class="dialog_job_data">
+									  <div class="dialog_job_data_top">
+											  <div class="xx_name">
+											<i class="dialog_job_data_top_name">{{item.linkman}}</i>
+											<i class="dialog_job_data_top_job" v-if="item.usertype == 1">{{item.expect}}</i>
+											<i class="dialog_job_data_top_job" v-else>{{item.username}}</i>
+										</div>
+										 <i class="dialog_job_data_top_time">{{item.time}}</i>
+									  </div>
+									  <div class="dialog_job_data_bom">
+										  <div class="dialog_job_data_bom_callword">{{item.content}}</div>
+									  </div>
+								  </div>
+							  </div>
+						  </li>
+						  <div class="chatno_tip none" v-if="oldchat.length == 0">暂无消息</div>
+					  </ul>
+				  </div>
+
+			   </div>
+			</div>
+			<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/chat/chat.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script>
+				var sysapp = new Vue({
+					el: '#sysChatbox',
+					data: {
+						allchat: [],
+						newchat: [],
+						oldchat: [],
+						chatCate: 'all'
+					},
+					created() {
+						this.getSysmsg();
+					},
+					methods:{
+						getSysmsg() {
+							var self = this;
+							$.post('{yun:}url d=wxapp h=user m=msg c=sysnews{/yun}', {rand: Math.random()}, function(data){
+								var res = data.data;
+								if(res.sxnum > 0){
+									$("#sxnum").css('display', 'flex');
+								}
+								if(res.wkyqnum > 0){
+									$("#wkyqnum").css('display', 'flex');
+								}
+								if(res.commsgnum > 0){
+									$("#commsgnum").css('display', 'flex');
+								}
+							}, 'json');
+						}
+					}
+				});
+				var wapurl = '{yun:}url m=wap{/yun}',
+					mine = {usertype:"{yun:}$usertype{/yun}"},
+					apage = 0,
+					npage = 0,
+					opage = 0,
+					newshow = false,
+					oldshow = false;
+				
+				var needRefresh = window.sessionStorage.getItem("needRefresh");
+				if(needRefresh!='false' && needRefresh){
+					window.sessionStorage.setItem("needRefresh", false);
+					location.reload();
+				}
+				var mhurl = '{yun:}url d=wxapp m=chat c=getmh{/yun}';
+				$(function () {
+					typeof fetchData !== 'undefined' && fetchData();
+					// 消息页面-顶部导航点击
+					$(".navigetali").on("click", function() {
+						var url = $(this).attr('data-url');
+						window.location.href = wapurl + 'member/index.php?c=' + url + '&chat=1';
+					});
+				});
+			</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

@@ -1,0 +1,1066 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+*,
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: "微软雅黑";
+}
+
+body {
+    background: #000d4a url(../images/bg.jpg) center center;
+    background-size: cover;
+    color: #fff;
+    font-size: .1rem;
+}
+
+li {
+    list-style-type: none;
+}
+
+@font-face {
+    font-family: electronicFont;
+    src: url(../font/DS-DIGIT.TTF)
+}
+
+i {
+    margin: 0px;
+    padding: 0px;
+    text-indent: 0px;
+}
+
+img {
+    border: none;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #399bff;
+}
+
+a.active,
+a:focus {
+    outline: none !important;
+    text-decoration: none;
+}
+
+ol,
+ul,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    padding: 0;
+    margin: 0
+}
+
+a:hover {
+    color: #06c;
+    text-decoration: none !important
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.clearfix:after,
+.clearfix:before {
+    display: table;
+    content: " "
+}
+
+.clearfix:after {
+    clear: both
+}
+
+.pulll_left {
+    float: left;
+}
+
+.pulll_right {
+    float: right;
+}
+
+
+/*谷哥滚动条样式*/
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    position: absolute
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #5bc0de
+}
+
+::-webkit-scrollbar-track {
+    background-color: #ddd
+}
+
+
+/***/
+
+.loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    font-size: 18px;
+    z-index: 100000000;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1c;
+    text-align: center;
+}
+
+.loadbox {
+    position: absolute;
+    width: 160px;
+    height: 150px;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    margin-top: -100px;
+    margin-left: -75px;
+}
+
+.loadbox img {
+    margin: 10px auto;
+    display: block;
+    width: 40px;
+}
+
+.head {
+    height: 0.8rem;
+    margin-bottom: 0.2rem;
+    background: url(../images/header.png) no-repeat center center;
+    background-size: 100% 100%;
+    position: relative
+}
+
+.head h1 {
+    color: #fff;
+    text-align: center;
+    font-size: .4rem;
+    line-height: .8rem;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 5px #000000;
+}
+
+.head h1 img {
+    width: 1.5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.time {
+    position: absolute;
+    right: .15rem;
+    top: 0;
+    line-height: .75rem;
+    color: rgba(255, 255, 255, .7);
+    font-size: .26rem;
+    padding-right: .1rem;
+}
+
+.mainbox {
+    padding: 0 .2rem 0rem .2rem;
+    height: 90%
+}
+
+.mainbox>ul {
+    margin-left: -.1rem;
+    margin-right: -.1rem;
+    height: 100%
+}
+
+.mainbox>ul>li {
+    float: left;
+    padding: 0 .1rem;
+    height: 100%;
+    width: 30%
+}
+
+.mainbox>ul>li:nth-child(2) {
+    width: 40%
+}
+
+.boxall {
+    padding: 0 .2rem .2rem .2rem;
+    background: rgba(6, 48, 109, .5);
+    position: relative;
+    margin-bottom: .15rem;
+    z-index: 10;
+    /* overflow: hidden; */
+}
+
+.alltitle {
+    font-size: .2rem;
+    color: #fff;
+    line-height: .5rem;
+    position: relative;
+    border-bottom: 1px solid #01daed;
+    /* padding-left: .15rem */
+}
+
+.alltitle span {
+    display: block;
+    background: url(../images/hotjob.png)0 center no-repeat;
+    background-size: .40rem;
+    padding-left: 0.45rem;
+    /* border-bottom: 1px solid #01daed; */
+}
+
+.alltitleleft span {
+    background: url(../images/142.png)0 center no-repeat;
+    background-size: .40rem;
+    padding-left: 0.45rem;
+}
+
+.boxnav {
+    height: calc(100% - .65rem);
+}
+
+.row>li {
+    float: left;
+    height: 100%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 25%;
+}
+
+.h100 {
+    height: 100%;
+}
+
+.tit01 {
+    text-align: center;
+    color: white;
+    font-size: .16rem;
+    padding: .3rem 0 .05rem 0;
+}
+
+.piebox {
+    height: calc(100% - .5rem);
+    position: relative;
+}
+
+.row1 .bar1 {
+    height: 100%;
+    width: 100%;
+    /* background: url(../images/bg01.png) no-repeat;
+    background-size: 100% 100%; */
+    position: relative;
+    text-align: center;
+    /* background: rosybrown; */
+    overflow: hidden;
+}
+
+.bar1imgbg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+    animation: round_animate 4s linear infinite;
+    background: url(../images/esp_img.png) center center;
+    background-size: 100% 100%;
+}
+
+@keyframes round_animate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.bar1 span {
+    color: #fff;
+    font-size: .15rem;
+    display: block;
+    font-weight: normal;
+}
+
+.bar1 h3 {
+    color: #fef000;
+    font-size: .21rem;
+    position: relative;
+    z-index: 22;
+    margin-top: 0.23rem;
+}
+
+.bar1 p {
+    width: 80%;
+    line-height: 0.3rem;
+    /* background: linear-gradient(#049ee4, #034fcc); */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    /* border-radius: 0.3rem; */
+    z-index: 22;
+    background: url(../images/5.png) center center;
+    background-size: 100% 100%;
+}
+
+.row1 li {
+    padding: .2rem .1rem 0 .1rem;
+}
+
+.row1 {
+    margin-left: -.1rem;
+    margin-right: -.1rem;
+}
+
+.row1 .bar2 {
+    background: url(../images/bg02.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.row1 .bar2 h3 {
+    text-align: right;
+}
+
+.paim li>span {
+    width: .3rem;
+    height: .3rem;
+    text-align: center;
+    line-height: .3rem;
+    background: #878787;
+    border-radius: .05rem;
+    margin-right: .1rem;
+    font-size: .16rem;
+}
+
+.paim li:nth-child(1)>span {
+    background: #ed405d
+}
+
+.paim li:nth-child(2)>span {
+    background: #f78c44
+}
+
+.paim li:nth-child(3)>span {
+    background: #49bcf7
+}
+
+.paim li {
+    display: flex;
+    align-items: center;
+    height: 20%;
+}
+
+.pmbar {
+    position: relative;
+    display: flex;
+}
+
+.pmbar span {
+    background: linear-gradient(to right, #14b6ff, #9cefff);
+    display: inline-block;
+    vertical-align: middle;
+    height: .15rem;
+    border-radius: .5rem;
+}
+
+.pmbar i {
+    line-height: .2rem;
+    font-style: normal;
+    padding-left: .1rem;
+    color: #49bcf7
+}
+
+.pmnav {
+    width: calc(100% - .5rem)
+}
+
+.pmnav p {
+    color: #fff;
+    opacity: .6;
+    font-size: .15rem;
+    padding-bottom: .05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sqzs {
+    margin-right: .2rem;
+}
+
+.sqzs p {
+    padding: .2rem 0;
+    font-size: .22rem;
+}
+
+.sqzs h1 {
+    height: calc(100% - .65rem);
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    display: flex;
+    align-items: center;
+    color: #fef000;
+    font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+    font-weight: normal;
+    letter-spacing: 2px;
+    font-size: .85rem;
+    justify-content: center;
+    padding-bottom: .05rem;
+}
+
+.sec li {
+    height: 33.3333%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.sec li>div:nth-child(1) {
+    width: 85%
+}
+
+.sec .bar2 {
+    width: 70%;
+    margin: .1rem 0;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #00deff;
+    height: .3rem;
+    padding: .07rem;
+    border-radius: 1rem;
+}
+
+.sec .bar2 span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(to right, #14b6ff, #9cefff);
+    border-radius: 1rem;
+}
+
+.sec p {
+    display: flex;
+    align-items: center;
+    font-size: .26rem;
+}
+
+.sec p img {
+    width: .35rem;
+    margin-right: .15rem;
+}
+
+.barnav span {
+    text-align: center;
+    color: #f7e80d;
+    font-size: .24rem;
+    padding-left: .1rem;
+    line-height: .3rem;
+}
+
+.zaf {
+    text-align: center;
+}
+
+.zaf p {
+    justify-content: center
+}
+
+.zaf p img {
+    width: .18rem;
+    margin-right: 0;
+    ;
+}
+
+.zaf span {
+    color: #00d3ff;
+    font-family: Impact;
+    font-size: .35rem;
+}
+
+.zaf span i {
+    font-style: normal;
+    font-size: .18rem;
+}
+
+
+/* 新增 */
+
+.boxalllast {
+    width: 50%;
+    float: left;
+}
+
+.scrollrolltitle {
+    height: 0.45rem;
+    line-height: 0.45rem;
+}
+
+.scrollrolltitle p {
+    float: left;
+    text-align: center;
+    width: 20%;
+}
+
+.scrollrolltitle p:nth-child(2) {
+    width: 40%;
+}
+
+#scrollrolldemo1 {
+    width: 100%;
+    height: 90%;
+    overflow: hidden;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+#scrollrolldemo1 li {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    background: rgba(3, 74, 202, .5);
+}
+
+#scrollrolldemo1 li p {
+    float: left;
+    text-align: center;
+    width: 20%;
+}
+
+#scrollrolldemo1 li p:nth-child(2) {
+    width: 40%;
+}
+
+#scrollrolldemo1 li:nth-child(odd) {
+    background: rgba(3, 74, 202, 0);
+}
+
+
+/* 第二个 */
+
+#scrollrolldemo2 {
+    width: 100%;
+    height: 90%;
+    overflow: hidden;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+#scrollrolldemo2 li {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    background: rgba(3, 74, 202, .5);
+}
+
+#scrollrolldemo2 li p {
+    float: left;
+    text-align: center;
+    width: 20%;
+}
+
+#scrollrolldemo2 li p:nth-child(2) {
+    width: 40%;
+}
+
+#scrollrolldemo2 li:nth-child(odd) {
+    background: rgba(3, 74, 202, 0);
+}
+
+.boxnavnum {
+    height: calc(100% - 1.7rem);
+}
+
+
+/*  */
+
+.boxallot {
+    /* margin-top: 3%; */
+    line-height: 0.58rem;
+    background: none;
+    border-bottom: 1px solid #00d3ff;
+}
+
+.baxallleft {
+    width: 30%;
+    float: left;
+}
+
+.baxallleft span {
+    padding-left: 0.5rem;
+    display: block;
+    font-size: 0.18rem;
+    
+    background: url(../images/142.png) 0 center no-repeat;
+    background-size: 0.45rem;
+}
+
+.baxallright {
+    width: 70%;
+    /* background: #f90; */
+    float: right;
+    height: 0.3rem;
+    margin-top: 0.14rem;
+    overflow: hidden;
+    background: linear-gradient(84deg, #00A7FF 0%, rgba(0, 167, 255, 0) 100%);
+}
+
+.rollscroll {
+    /*border:1px solid red;*/
+    width: 100%;
+    overflow: hidden;
+    float: right;
+}
+
+.rollscroll li {
+    list-style: none;
+    width: 100%;
+    font-size: 0.18rem;
+    color: #fff;
+    padding-left: 10px;
+    line-height: 0.3rem;
+    overflow: hidden;
+    height: 0.3rem;
+    text-overflow: ellipsis;
+
+}
+
+.rollscroll li span {
+    display: block;
+    float: left;
+    width: 1rem;
+    height: 0.3rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #00d3ff;
+    width: 0.8rem;
+
+}
+
+
+/* er */
+
+.rollscroll2 {
+    /*border:1px solid red;*/
+    width: 100%;
+    overflow: hidden;
+    float: right;
+}
+
+.rollscroll2 li {
+    list-style: none;
+    width: 100%;
+    font-size: 0.18rem;
+    color: #fff;
+    padding-left: 10px;
+    line-height: 0.3rem;
+    overflow: hidden;
+    height: 0.3rem;
+    text-overflow: ellipsis;
+
+}
+
+.rollscroll2 li span {
+    display: block;
+    float: left;
+    width: 1rem;
+    height: 0.3rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #00d3ff;
+    width: 0.8rem;
+
+}
+
+.alltitleleft {
+    float: left;
+    width: 40%;
+}
+
+.alltitleright {
+    width: 60%;
+    margin-top: 0.1rem;
+    float: right;
+    height: 0.3rem;
+    overflow: hidden;
+    background: linear-gradient(84deg, #00A7FF 0%, rgba(0, 167, 255, 0) 100%);
+}
+
+.rollscroll3 ul li {
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.18rem;
+    color: #fff;
+    padding-left: 0.1rem;
+    line-height: 0.3rem;
+}
+
+.rollscroll3 ul li span {
+    display: block;
+    overflow: hidden;
+    width: 3.5rem;
+    white-space: nowrap;
+    padding-left: 0rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #00d3ff;
+    float: left;
+    line-height: 0.3rem;
+    background: none;
+}
+
+.rollscroll3 {
+    /*border:1px solid red;*/
+    width: 100%;
+    overflow: hidden;
+    float: right;
+}
+
+
+
+
+
+.registernum {
+    height: 1.1rem;
+    /* background: #f90; */
+    margin-top: 0.1rem;
+    overflow: hidden;
+}
+
+.registernumleft {
+    float: left;
+    width: 21%;
+    text-align: center;
+}
+
+.registernumleft p {
+    /* background-color: royalblue; */
+    line-height: 0.18rem;
+    margin: 0.11rem 0;
+}
+
+.registernumleft p:nth-child(3) {
+    width: 88%;
+    margin: auto;
+    padding: 0.05rem 0;
+    background: url(../images/5.png) center center;
+    background-size: 100% 100%;
+    /* background: linear-gradient(to right, #14b6ff, #9cefff); */
+}
+
+.registernumright {
+    width: 79%;
+    float: right;
+    height: 100%;
+    overflow: hidden;
+}
+
+.registernumright ul {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.registernumright ul li {
+    width: 20%;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    height: 100%;
+}
+
+.registernumright ul li img {
+    display: block;
+    width: 0.7rem;
+    height: 0.7rem;
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+    top: 0.06rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.registernumright ul li p {
+    position: relative;
+    z-index: 3;
+    color: #00d6f1;
+    margin-top: 0.23rem;
+}
+
+.registernumright ul li p span {
+    display: block;
+    color: #fff;
+}
+
+.registernumright ul li h4 {
+    font-weight: 500;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    bottom: 0.06rem;
+    margin: auto;
+}
+
+.boxalltext {
+    width: 1rem;
+    height: 0.3rem;
+    background: #f78c44;
+}
+
+.boxall .icon_l {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.boxall .icon_lbot {
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    z-index: 1;
+}
+
+.boxall .icon_rtop {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.boxall .icon_rbot {
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    z-index: 1;
+}
+
+.borderadius {
+    border-radius: 35px;
+    border: 1px solid #01fdff;
+}
+
+.beat {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    width: 85%;
+    right: 0;
+    margin: auto;
+    height: 10px;
+    transition: 1.5s;
+    background: url(../images/25.png);
+    -webkit-animation: upsanddowns 1.5s linear infinite;
+    animation: upsanddowns 1.5s linear infinite;
+    --height: 10px
+}
+
+@-webkit-keyframes upsanddowns {
+    30% {
+        height: 0
+    }
+
+    80% {
+        height: var(--height)
+    }
+}
+
+@keyframes upsanddowns {
+    30% {
+        height: 0
+    }
+
+    80% {
+        height: var(--height)
+    }
+}
+
+.left-line {
+    position: absolute;
+    top: 0.6rem;
+    left: 0;
+    width: 0;
+    height: 0.18rem;
+    overflow: hidden;
+    -webkit-animation: rightline 1s linear infinite;
+    animation: rightline 1s linear infinite;
+    --width: 3rem;
+}
+
+.left-line img {
+    width: 100%;
+    height: 0.18rem;
+}
+
+.right-line {
+    position: absolute;
+    top: 0.6rem;
+    right: 0;
+    width: 0;
+    height: 0.18rem;
+    overflow: hidden;
+    -webkit-animation: rightline 1s linear infinite;
+    animation: rightline 1s linear infinite;
+    --width: 3rem;
+}
+
+.right-line img {
+    width: 100%;
+    height: 0.18rem;
+}
+
+@-webkit-keyframes rightline {
+    0% {
+        width: 0
+    }
+
+    to {
+        width: var(--width)
+    }
+}
+
+@keyframes rightline {
+    0% {
+        width: 0
+    }
+
+    to {
+        width: var(--width)
+    }
+}
+
+.alltitleqiye b {
+    font-weight: 500;
+    float: right;
+    padding-right: 0.4rem;
+}
+
+/*新增*/
+.rollDataInfo {
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.activity {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    height: 27vh;
+    text-align: center;
+    padding: 10px 0;
+    background: rgba(6, 48, 109, .5);
+}
+
+.activity ul {
+    top: 0;
+    color: #666;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.activity li {
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /*border-bottom:1px solid #eee;*/
+    color: #fff;
+    padding-left: 0;
+}
+
+.activity li p {
+    width: 20%;
+    float: left;
+    overflow: hidden;
+    line-height: 0.6rem;
+    font-size: 0.18rem;
+}
+
+.activity li p:nth-child(2) {
+    width: 40%;
+}
+
+
+.activity2 {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    height: 27vh;
+    padding: 10px 0;
+    background: rgba(6, 48, 109, .5);
+    text-align: center;
+}
+
+.activity2 ul {
+    top: 10px;
+    color: #666;
+    position: relative;
+    overflow: hidden;
+}
+
+.activity2 li {
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /*border-bottom:1px solid #eee;*/
+    color: #fff;
+    padding-left: 0;
+}
+
+/*.activity2 li:nth-child(2n+2) {
+    background: #f90;
+}*/
+.activity2 li p {
+    width: 20%;
+    float: left;
+    overflow: hidden;
+    line-height: 0.6rem;
+    font-size: 0.18rem;
+}
+
+.activity2 li p:nth-child(2) {
+    width: 40%;
+}

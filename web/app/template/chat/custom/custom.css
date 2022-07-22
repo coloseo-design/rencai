@@ -1,0 +1,178 @@
+/*后台客服聊天*/
+.none{display: none;}
+.kefu_chatbox{width:950px;  background:#fff; }
+.kefu_chat_tit{width:100%;height:60px;background:#41494b;border-radius:5px 5px 0 0;position:relative}
+.kefu_chat_tit ul li{width:123px;float:left;height:60px;line-height:60px;text-align:center;cursor:pointer;color:#eee}
+.kefu_chat_tit ul li a{color:#fff;padding: 10px;}
+.kefu_chat_tit ul .kefu_chat_cur{color:#fff;position:relative}
+.kefu_chat_tit ul .kefu_chat_cur:after{width:40px;height:3px;margin-left:-20px;content:'';background:#2d8cf0;position:absolute;left:50%;bottom:0}
+.kefu_chat_tit ul .kefu_chat_cur a{color:#fff}
+.kefu_chat_tit ul li a:hover{text-decoration:none}
+.kefu_chatleft{width:259px;float:left;height:540px; overflow: auto;}
+.kefu_chatleftlist li{position:relative;border-bottom:1px solid #eee;padding:12px 0 15px 60px;cursor:pointer}
+.kefu_chatleftpic{width:40px;height:40px;border:1px solid #eee;border-radius:50%;position:absolute;left:10px;top:13px}
+
+
+/*.kefu_chat_subject{
+	position: relative;
+}*/
+.kefu_chat_number{
+	display: block;
+	padding: 0px 6px 1px 5px;
+	position: absolute;
+	background: #f30;
+	font-size: 12px;
+	color: #fff;
+	text-align: center;
+	line-height: 17px;
+	top: -4px;
+	right: -5px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+
+
+.kefu_chatleftpic img{width:40px;height:40px;border-radius:50%}
+.kefu_chatleftname{width:100%;height:25px;line-height:25px;overflow:hidden;white-space:normal;word-break:break-all}
+.kefu_chat_leftp{width:115px;height:15px;line-height:15px;overflow:hidden;white-space:normal;word-break:break-all;font-size:12px;color:#999}
+.kefu_chat_lefttime{position:absolute;bottom:15px;right:10px;font-size:12px;color:#999}
+.kefu_chatleftlistcur{background:#f8f8f8}
+.kefu_chatright{width:690px;height:540px;float:right;background:#f3f3f3;border-left:1px solid #eee}
+.kefu_chat_cont{width:100%;height:320px;overflow:hidden}
+.kefu_chat_cont_p{width:705px;height:305px;padding-bottom:15px;overflow:auto}
+.kefu_chat_pleft{padding-left:55px;margin-top:20px;position:relative;margin-left:15px}
+.kefu_chat_pleft .kefu_chat_pic{width:40px;height:40px;border:1px solid #eee;position:absolute;left:0;top:0;border-radius:50%;overflow:hidden}
+.kefu_chat_pleft .kefu_chat_pic img{width:40px;height:40px;border-radius:50%}
+.kefu_chat_pleft .kefu_chat_p{padding:10px 15px;border-radius:6px 6px 6px 0;background:#fff;display:inline-block;max-width:260px;line-height:22px}
+.kefu_chat_pleft .kefu_chat_p img{max-width:200px}
+.kefu_chat_prightbox{text-align:right}
+.kefu_chat_pright{padding-right:55px;margin-top:20px;position:relative;margin-right:25px}
+.kefu_chat_pright .kefu_chat_pic{width:40px;height:40px;border:1px solid #eee;position:absolute;right:0;top:0;border-radius:50%;overflow:hidden}
+.kefu_chat_pright .kefu_chat_pic img{width:40px;height:40px;border-radius:50%}
+.kefu_chat_pright .kefu_chat_p{padding:10px 15px;border-radius:6px 6px 0 6px;background:#4b8ff9;color:#fff;display:inline-block;max-width:260px;line-height:22px}
+.kefu_chat_pleft .kefu_chat_p img{max-width:200px}
+.kefu_chat_time{width:100%;text-align:center;color:#999;font-size:12px;padding-top:15px}
+.kefu_chat_textareabox{border-top:1px solid #eee;background:#fff;height:153px;padding:10px 20px}
+.kefu_chatright_user{height:45px;line-height:45px;padding-left:15px;border-bottom:1px solid #ddd;color:#333}
+.kefu_chat_cz{width:100%;height:30px}
+.kefu_chat_textarea{width:100%;height:80px;padding-bottom:10px}
+.kefu_chat_textarea textarea{width:100%;height:80px;border:none}
+.kefu_chat_textarea_p{text-align:right;color:#999}
+.kefu_chat_cz_icon{width:22px;height:22px;display:inline-block;margin-right:20px;background:url(../images/chat_bq.png) no-repeat; background-size:100%;cursor:pointer}
+.kefu_chat_tp_icon{width:22px;height:22px;display:inline-block;margin-right:20px;background:url(../images/chat_tj.png) no-repeat;background-size:100%;cursor:pointer;display:inline-block;position:relative}
+.chat_footer_czk_tj_bth{width:25px;position:absolute;left:0;top:0;opacity:0}
+.kefu_chat_table th{text-align:left;padding:10px;border-bottom:1px solid #eee}
+.kefu_chat_table td{border-bottom:1px solid #eee;padding:10px}
+.kefu_chat_tablenav{padding:20px 10px}
+.kefu_chat_tabletit{margin-right:20px}
+.kefu_chat_tablecur{color:#06f}
+.kefu_chat_tablecur a{ color:#06f}
+.chatjr{color:#06f;cursor: pointer;}
+.chat_jr_box{height:480px; overflow:auto}
+.kefu_chat_table_p{color:#999;font-size:12px;padding-top:5px}
+.chat_time_tip{color:#999;font-size:12px;padding-top:5px; text-align:center}
+.chat_time_tip_n{ display:inline-block;padding:4px 15px; background: #ccc;color:#fff;border-radius:3px;}
+.kefu_chat_table_user{padding-left:50px;position:relative}
+.kefu_chat_table_userpic{width:40px;height:40px;border:1px solid #eee;position:absolute;left:0;top:0;border-radius:50%;overflow:hidden}
+.kefu_chat_pleft .kefu_chat_table_userpic img{width:40px;height:40px;border-radius:50%}
+#cs_iframe{border:0;visibility:hidden;position:absolute;width:0;height:0}
+.kefu_chat_cz_bq_box{display:inline-block;position:relative}
+.showbq{background:#fff;width:470px;position:absolute;top:-215px;left:-10px;border-radius:5px;box-shadow:0 0 10px 0 rgb(111 116 132 / 20%)}
+.chat_footer_bth{width:80px;height:30px;border:1px solid #ff5050;border-radius:3px;background:#ff5050;color:#fff;margin-left:20px}
+.chat_face{position:relative;max-height:260px;overflow:auto;padding:10px;font-size:0}
+.chat_face li{cursor:pointer;display:inline-block;vertical-align:bottom;padding:5px 2px;text-align:center;-webkit-box-sizing:border-box!important;-moz-box-sizing:border-box!important;box-sizing:border-box!important}
+.chat_face li img{width:22px;height:22px}
+.chat_bq_img{width:24px}
+
+.pc_kf_box{width:690px;border:1px solid #eee;background:#f8f8f8; margin:50px auto;  font-size:14px;color:#666}
+.pc_kf_name{ background:#fff;padding:20px; font-size:16px;}
+
+.pc_kefu_chat_cont{width:100%;height:320px;overflow:hidden}
+.pc_kefu_chat_cont_p{width:705px;height:305px;padding-bottom:15px;overflow:auto}
+.pc_kefu_chat_pleft{padding-left:55px;margin-top:20px;position:relative;margin-left:15px}
+.pc_kefu_chat_pleft .pc_kefu_chat_pic{width:40px;height:40px;border:1px solid #eee;position:absolute;left:0;top:0;border-radius:50%;overflow:hidden}
+.pc_kefu_chat_pleft .pc_kefu_chat_pic img{width:40px;height:40px;border-radius:50%}
+.pc_kefu_chat_pleft .pc_kefu_chat_p{padding:10px 15px;border-radius:6px 6px 6px 0;background:#fff;display:inline-block;max-width:260px;line-height:22px}
+.pc_kefu_chat_pleft .pc_kefu_chat_p img{max-width:200px}
+.pc_kefu_chat_prightbox{text-align:right}
+.pc_kefu_chat_pright{padding-right:55px;margin-top:20px;position:relative;margin-right:25px}
+.pc_kefu_chat_pright .pc_kefu_chat_pic{width:40px;height:40px;border:1px solid #eee;position:absolute;right:0;top:0;border-radius:50%;overflow:hidden}
+.pc_kefu_chat_pright .pc_kefu_chat_pic img{width:40px;height:40px;border-radius:50%}
+.pc_kefu_chat_pright .pc_kefu_chat_p{padding:10px 15px;border-radius:6px 6px 0 6px;background:#4b8ff9;color:#fff;display:inline-block;max-width:260px;line-height:22px}
+.pc_kefu_chat_pleft .pc_kefu_chat_p img{max-width:200px}
+.pc_kefu_chat_time{width:100%;text-align:center;color:#999;font-size:12px;padding-top:15px}
+.pc_kefu_chat_textareabox{border-top:1px solid #eee;background:#fff;height:153px;padding:10px 20px}
+.pc_kefu_chatright_user{height:45px;line-height:45px;padding-left:15px;border-bottom:1px solid #ddd;color:#333}
+.pc_kefu_chat_cz{width:100%;height:30px}
+.pc_kefu_chat_textarea{width:100%;height:80px;padding-bottom:10px}
+.pc_kefu_chat_textarea textarea{width:100%;height:80px;border:none}
+.pc_kefu_chat_textarea_p{text-align:right;color:#999}
+.pc_kefu_chat_cz_icon{width:22px;height:22px;display:inline-block;margin-right:20px;background:url(../images/chat_bq.png) no-repeat; background-size:100%;cursor:pointer}
+.pc_kefu_chat_tp_icon{width:22px;height:22px;display:inline-block;margin-right:20px;background:url(../images/chat_tj.png) no-repeat;background-size:100%;cursor:pointer;display:inline-block;position:relative}
+.pc_kefu_chat_cz_bq_box{display:inline-block;position:relative}
+
+
+.chat_addresume{width:100%;height:500px; overflow: auto; font-family: "microsoft yahei";}
+.crm_chat{width:100%;height:40px; background-color: #f8f8f8;}
+.crm_chat_a{ display: inline-block; margin-left: 10px; margin-top: 5px;width:80px;height:35px;border-radius:6px 6px 0 0; text-align: center; line-height: 35px;}
+.crm_chat_a_cur{ background-color: #fff;color:#2d8cf0; font-weight: bold;}
+.chat_resumetit{ width:100%; position: relative; margin-top: 20px; padding-bottom: 20px;}
+.chat_resumetit_n{ font-weight: bold; font-size: 16px;color:#333;;}
+.chat_resumetit_tj{ 
+    height: auto; 
+    background: #f9fbfd;
+    text-align: center;
+    line-height: 22px;
+    padding: 10px 0px;
+    margin-top: 20px;
+}
+.chat_resumetit_tj .chat_resumetit_tjbth{width:120px;height:32px; line-height: 32px; background-color:#fff;color:#2778f8;border-radius:30px;border:1px solid #2778f8;; }
+.chat_resume_listbox{
+    padding: 20px 20px;
+    background: #f9fbfd;
+    border-radius: 8px;
+}
+.chat_resume_list{ padding-left: 80px; position: relative; min-height: 36px; margin-top: 10px;;}
+.chat_resume_list_name{width:80px; position: absolute;left:0px;top:0px;line-height: 38px}
+.chat_resume_name{width:80px; position: absolute;left:0px;top:0px; line-height: 38px;}
+.chat_resume_list .layui-form-item{ margin-bottom: 0px;;}
+.chat_user_hy{color:#999;padding:10px 0;}
+.chat_user_xz{color:#2d8cf0; font-size: 16px;}
+.chat_user_info{ font-size: 14px; padding-top: 10px;color:#666;font-family: "microsoft yahei";}
+.chat_user_p{color:#999; line-height: 25px;}
+.admin_yunnew_user_name_c{ position: relative;}
+
+.admin_saversume_tit{color:#333}
+.kefu_chatleft::-webkit-scrollbar {
+	/*滚动条整体样式*/
+	width: 6px;
+	/*高宽分别对应横竖滚动条的尺寸*/
+	height: 1px;
+}
+.kefu_chatleft::-webkit-scrollbar-thumb {
+	/*滚动条里面小方块*/
+	border-radius: 10px;	
+	background: #ccc9c7;
+}
+.kefu_chatleft::-webkit-scrollbar-track {
+	/*滚动条里面轨道*/
+	border-radius: 10px;
+	background: #fff;
+}
+.chat_addresume::-webkit-scrollbar {
+	/*滚动条整体样式*/
+	width: 6px;
+	/*高宽分别对应横竖滚动条的尺寸*/
+	height: 1px;
+}
+.chat_addresume::-webkit-scrollbar-thumb {
+	/*滚动条里面小方块*/
+	border-radius: 10px;	
+	background: #ccc9c7;
+}
+.chat_addresume::-webkit-scrollbar-track {
+	/*滚动条里面轨道*/
+	border-radius: 10px;
+	background: #fff;
+}

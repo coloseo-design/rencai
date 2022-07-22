@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<title>视频面试 - {yun:}$config.sy_webname{/yun}</title>
+		<meta name="keywords" content="{yun:}$keywords{/yun},wap" />
+		<meta name="description" content="{yun:}$description{/yun}" />
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<link rel="stylesheet" href="{yun:}$wap_style{/yun}/chat/css/chat.css?v={yun:}$config.cachecode{/yun}">
+	</head>
+	<body style="background:#242e36">
+		<div class="chat_msg_header" style="background:#242e36">
+			<span id="backicon" class="chat_msg_header_p_back"></span>
+			<span class="chat_msg_header_p" onclick="goBack()">视频面试间</span>
+		</div>
+
+		<!--1.刚进入面试间页面-->
+		<div id="splist">
+			<!--测试视频画面-->
+			<div id="csvideo" class="sp_cshm">
+				<div class="sp_cshmicon"></div>
+				测试视频画面是否正常显示
+				<div class="sp_cshm_bthbox">
+					<a href="javascript:void(0)" onclick="csvideo()" class="sp_cshm_bth">开始测试</a>
+				</div>
+			</div>
+
+			<!--面试间数据-->
+			<div class="msj_userztbox_c">
+				<div class="msj_userztbox">
+					<div class="msj_userzt msj_userztline">
+						<span id="subnum" class="msj_header_rsn_c">{yun:}if
+							$subnum{/yun}{yun:}$subnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}</span>预约总人数
+					</div>
+					<div class="msj_userzt msj_userztline">
+						<span id="linenum" class="msj_header_rsn_c">{yun:}if
+							$linenum{/yun}{yun:}$linenum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}</span>待面试人数
+					</div>
+					<div class="msj_userzt">
+						<span id="msnum" class="msj_header_rsn_c">{yun:}if $msnum{/yun}{yun:}$msnum{/yun}{yun:}else{/yun}0{yun:}/if{/yun}</span>已面试人数
+					</div>
+				</div>
+			</div>
+
+			<!--面试间简历列表-->
+			<div id="waitingUser" class="msj_list_c ">
+
+			</div>
+			<!--暂无用户排队-->
+			<div id="nouser" class="sp_mspd none">
+				<div class="sp_mspdicon"></div>
+				<div class="sp_mspd_p">暂无待面试用户</div>
+			</div>
+		</div>
+
+		<!--简历展示弹出框-->
+		<div id="nowresume" class="none">
+			<div class="spview_jobshowbg"></div>
+			<div class="spview_jobshow">
+				<div class="spview_jobshowtit">
+					<span class="spview_jobshowtitname">简历详细</span>
+					<a href="javascript:void(0);" onclick="closeResume()" class="spview_jobshowgb"></a>
+				</div>
+				<div class="spview_jobshow_c">
+					<div id="rinfo" class="spview_jobshow_h">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--简历展示 end-->
+
+		<!--面试间视频页面-->
+		<div id="sproom" class="none">
+			<!--切换摄像头-->
+			<!--i class="video_room_qh"></i-->
+			<!--大屏幕-->
+			<div id="bigvideo" class="video_room_frame">
+				<div style="height: 100%; flex: 1">
+					<div id="video-grid" class="video-box col-div" style="justify-content: flex-end">
+					</div>
+				</div>
+			</div>
+			<!--小屏幕-->
+			<div id="smallvideo" class="video_room_user">
+				<div style="height: 100%; flex: 1">
+					<div id="mine-video" class="video-box col-div" style="justify-content: flex-end">
+					</div>
+				</div>
+			</div>
+			<!--企业进入面试间测试视频-->
+
+			<!--等待对方接受邀请-->
+
+			<div id="spComment" class="sprequest_waitbox">
+				<div class="sprequest_waitiocn"></div>
+				<div class="sprequest_wait">正在等待对方接受邀请...</div>
+				<div class="sprequest_wait_time">预计等待时间<span id="spWait">60</span>秒</div>
+			</div>
+			<div id="hangdiv" class="video_hang_up">
+				<i id="hangUp" onclick="sendClosesp()" class="video_hang_upicon"></i>
+				<div class="video_hang_up_p">挂断</div>
+			</div>
+		</div>
+
+		<!--挂断-->
+
+		<!--面试间视频页面 end-->
+		
+		<!--邀请视频面试   start-->
+		<div id="spviewModal" class="none">
+			<div class="wapspms_bg"></div>
+			<div class="wapspms_show">
+				<div class="wapspms_com">
+					<div class="wapspms_comlogo"><img id="modalLogo" src=""></div>
+					<div class="wapspms_comname" id="modalName"></div>
+					<div>邀请你进行视频面试</div>
+				</div>
+				<div class="wapspms_cz">
+					<a href="javascript:void(0);" onclick="closeSp()" class="wapspms_cz_a"><i class="wapspms_cz_icon"></i><div class="wapspms_cz_p">拒绝</div></a>
+					<a href="javascript:void(0);" onclick="allowSp()" class="wapspms_cz_a wapspms_cz_aml"><i class="wapspms_cz_icon wapspms_cz_icon_js"></i><div class="wapspms_cz_p">接受</div></a>
+				</div>
+			</div>
+		</div>
+		<!--邀请视频面试   end-->
+		
+		<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/jquery-3.2.1.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config_wapdomain{/yun}/js/vant/lib/index.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" />
+		<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/abilitytest.js?v={yun:}$config.cachecode{/yun}"></script>
+		{yun:}if $isweixin{/yun}
+		{yun:}if strpos($config.sy_wapdomain, 'https://')!==false{/yun}
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js?v={yun:}$config.cachecode{/yun}"></script>
+		{yun:}else{/yun}
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js?v={yun:}$config.cachecode{/yun}"></script>
+		{yun:}/if{/yun}
+		<script>
+			wx.config({
+				appId: '{yun:}$signPackage.appId{/yun}',
+				timestamp: '{yun:}$signPackage.timestamp{/yun}',
+				nonceStr: '{yun:}$signPackage.nonceStr{/yun}',
+				signature: '{yun:}$signPackage.signature{/yun}',
+				jsApiList: ['onMenuShareTimeline'],
+				openTagList: ['wx-open-launch-weapp']
+			});
+			wx.ready(function() {
+				var clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				$("#launch-btn").css('width', clientWidth + 'px');
+				if(clientWidth < 375){
+				    $("#launch-btn").css('padding-left', '35px');
+				}
+			});
+		</script>
+		<div id="launch-weapp" style="display: none;">
+			<wx-open-launch-weapp id="launch-btn" username="{yun:}$wxpaydata.sy_xcxysid{/yun}" path="pages/spview/show.html?fr=wap&id={yun:}$spview.id{/yun}" >
+				<template>
+					<style>
+						.btn {
+							background:#f60;padding:8px 30px;font-size:16px;color:#fff;border-radius:20px;border:none;
+						}
+					</style>
+					<div style="padding-top:70px;color:#fff; text-align: center; line-height:30px">
+						<div class="">您的浏览器不支持视频面试功能...</div>
+						{yun:}if empty($wxpaydata.sy_xcxysid){/yun}
+						<div class="">相关参数未配置</div>
+						<div class="">无法打开微信小程序</div>
+						{yun:}else{/yun}
+						<div class="">可以使用微信小程序</div>
+						<div style="padding-top:10px;">
+							<button class="btn">打开小程序</button>
+						</div>	
+						{yun:}/if{/yun}
+					</div>
+				</template>
+			</wx-open-launch-weapp>
+		</div>
+		{yun:}/if{/yun}
+		<script>
+			var TrtcConfig = {
+				mine: '{yun:}$uid{/yun}',
+				commentID: '{yun:}$trtcConfig.commentID{/yun}',
+				userId: '{yun:}$trtcConfig.userId{/yun}',
+				roomId: '{yun:}$trtcConfig.roomId{/yun}',
+				sdkAppId: '{yun:}$trtcConfig.sdkAppId{/yun}',
+				csRoomId: '{yun:}$trtcConfig.csRoomId{/yun}',
+				userSig: '{yun:}$trtcConfig.userSig{/yun}',
+				spWait: '{yun:}$trtcConfig.spWait{/yun}',
+				status: '{yun:}if $subinfo.status{/yun}{yun:}$subinfo.status{/yun}{yun:}else{/yun}0{yun:}/if{/yun}'
+			};
+			var socketUrl = "{yun:}$config.sy_chat_weburl{/yun}";
+			var wapurl = '{yun:}url m=wap{/yun}';
+			var weburl = '{yun:}$config.sy_weburl{/yun}';
+			var sid = '{yun:}$spview.id{/yun}';
+			var usertype = '{yun:}$usertype{/yun}';
+			var xcxappid = '{yun:}$wxpaydata.sy_xcxappid{/yun}';
+			var viewuid = ''; //正在面试中的个人用户uid
+			var nowresumeUrl = '{yun:}url d=wxapp h=com m=spview c=getResume{/yun}';
+			var spviewPauseUrl = '{yun:}url d=wxapp h=com m=spview c=spviewPause{/yun}';
+			var getSubUrl = '{yun:}url d=wxapp h=com m=spview c=spviewPause{/yun}';
+			var spSuccessUrl = '{yun:}url d=wxapp h=com m=spview c=spSuccess{/yun}';
+			var splogUrl = '{yun:}url d=wxapp h=com m=spview c=splog{/yun}';
+			
+			var isSupport = startBrowserTest();
+			if (!isSupport) {
+				if ($("#launch-weapp").length > 0) {
+					$("#csvideo").css('display', 'none');
+					$("#sproom").css('display', 'none');
+					$("#launch-weapp").css('display', 'block');
+				} else {
+					var content = '您的浏览器不支持视频面试功能！<br>建议使用最新版Chrome浏览器';
+					if(xcxappid){
+						content += '<br>或者使用微信小程序';
+					}
+					showModal(content, function(){
+						window.history.replaceState({}, "", wapurl + 'member/');
+						window.location.reload();
+					});
+				}
+			} else {
+				document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/trtc.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+				document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/wapsocket.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+				document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/rtc-client.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+				document.write('<script src="{yun:}$config.sy_weburl{/yun}/js/trtc/index.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+				document.write('<script src="{yun:}$wap_style{/yun}/chat/sproom.js?v={yun:}$config.cachecode{/yun}"><\/script>');
+			}
+			
+			function goBack(){
+				if (navigator.userAgent.indexOf('Firefox') >= 0 ||
+					navigator.userAgent.indexOf('Opera') >= 0 ||
+					navigator.userAgent.indexOf('Safari') >= 0 ||
+					navigator.userAgent.indexOf('Chrome') >= 0 ||
+					navigator.userAgent.indexOf('WebKit') >= 0){
+			
+					if(window.history.length > 1){
+						window.history.go( -1 );
+					}else{
+						location.href = wapurl;
+					}
+				}else{ //未知的浏览器
+					window.history.go( -1 );
+				}
+			}
+		</script>
+	</body>
+</html>
