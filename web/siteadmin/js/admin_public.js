@@ -320,12 +320,14 @@ function check_email(strEmail) {
 	 return false;
  }
 function isjsMobile(obj) {
-	var reg= /^[1][3456789]\d{9}$/;   
+	// var reg= /^[1][3456789]\d{9}$/;   
 	
-    if (obj.length != 11) return false;
-    else if (!reg.test(obj)) return false;
-    else if (isNaN(obj)) return false;
-    else return true;
+    // if (obj.length != 11) return false;
+    // else if (!reg.test(obj)) return false;
+    // else if (isNaN(obj)) return false;
+    // else return true;
+	if (isNaN(obj)) return false;
+    return true;
 }
 function isjsTell(str) {
 //	var result = str.match(/^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/);

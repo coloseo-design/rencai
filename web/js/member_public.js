@@ -495,13 +495,14 @@ function check_email(strEmail){
 	 return false;
  }
 function isjsMobile(obj){
-	var reg= /^[1][3456789]\d{9}$/; //验证手机号码  
-	if(obj==''){
-		return false;
-	}else if(!reg.test(obj)){
-		return false;
-	}
-	return true;
+	// var reg= /^[1][3456789]\d{9}$/; //验证手机号码  
+	// if(obj==''){
+	// 	return false;
+	// }else if(!reg.test(obj)){
+	// 	return false;
+	// }
+	// return true;
+	return obj !== '';
 }
 function isjsTell(str) {
 //	var result = str.match(/^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/);

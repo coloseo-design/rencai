@@ -23,11 +23,12 @@
  */
 function CheckMobile($mobile)
 {
-    if (!preg_match("/1[3456789]{1}\d{9}$/", trim($mobile))) {
-        return false;
-    } else {
-        return true;
-    }
+    // if (!preg_match("/1[3456789]{1}\d{9}$/", trim($mobile))) {
+    //     return false;
+    // } else {
+    //     return true;
+    // }
+    return true;
 }
 
 function CheckRegUser($str)

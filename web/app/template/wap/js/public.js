@@ -45,11 +45,13 @@ function check_email(strEmail) {
  * @desc 手机号码验证
  */
 function isjsMobile(obj){
-	var reg= /^[1][3456789]\d{9}$/;   
-    if (obj.length != 11) return false;
-    else if (!reg.test(obj)) return false;
-    else if (isNaN(obj)) return false;
-    else return true;
+	// var reg= /^[1][3456789]\d{9}$/;   
+    // if (obj.length != 11) return false;
+    // else if (!reg.test(obj)) return false;
+    // else if (isNaN(obj)) return false;
+    // else return true;
+	if (isNaN(obj)) return false;
+    return true;
 }
 /**
  * @desc 电话验证
